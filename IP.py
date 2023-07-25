@@ -161,7 +161,7 @@ def meu_ip():
     random.shuffle(urls)  # Embaralha a lista de URLs
     while True:
         for url in urls:
-            print(url)
+            #print(url)
             try:
                 response = requests.get(url, timeout=10)
                 if response.status_code == 200:
