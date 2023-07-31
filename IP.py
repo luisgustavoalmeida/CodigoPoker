@@ -117,28 +117,41 @@ def tem_internet():
             response = requests.get(site_aleatorio, timeout=10)
             if response.status_code == 200 or response.status_code == 429:
                 print("Conexão com a internet ativa.")
+                cont_erro = 0
+                cont_erro2 = 0
                 com_internete = False
                 return True
+
         except Exception as e:
             print("Sem conexão com a internet. Encerrando os testes...")
             print(e)
             time.sleep(3)
             cont_erro += 1
+            print('contagem de erro 1: ', cont_erro)
+            if cont_erro >= 5:
+                cont_erro = 0
+                cont_erro2 = 0
+                if nome_usuario == "PokerIP":  # teste se o usuario do computador é o que troca IP se nao for fica esperando esta livre
+                    print("Vai par a função de trocar ip")
+                    conexao()  # chama a função que troca ip
+                elif (nome_usuario == "lgagu") and (nome_computador == "PC-I7-9700KF"):
+                    print("Vai par a função de trocar ip")
+                    conexao()  # chama a função que troca ip
             continue
 
-        if (cont_erro >= 5) or (cont_erro2 >= 20):
-            print('contagem de erro: ', cont_erro)
+        if cont_erro2 >= 20:
             cont_erro = 0
             cont_erro2 = 0
-            if (nome_usuario == "PokerIP"):  # teste se o usuario do computador é o que troca IP se nao for fica esperando esta livre
+            if nome_usuario == "PokerIP":  # teste se o usuario do computador é o que troca IP se nao for fica esperando esta livre
                 print("Vai par a função de trocar ip")
                 conexao()  # chama a função que troca ip
-                continue
             elif (nome_usuario == "lgagu") and (nome_computador == "PC-I7-9700KF"):
                 print("Vai par a função de trocar ip")
                 conexao()  # chama a função que troca ip
-                continue
             continue
+        print('contagem de erro 1: ', cont_erro)
+        print('contagem de erro 2: ', cont_erro2)
+
     return True
 def meu_ip():
     urls = [
@@ -210,6 +223,8 @@ def ip_troca_agora():
                 tem_internet()  # testa ate que internete esteja estavel
                 print("Vai para a função que zera a contagem")
                 Google.zera_cont_IP(celula) # Zera a contegem de ip na planilha
+                return
+            else:
                 return
 
 
@@ -434,7 +449,7 @@ def conexao():
         ativado = r"Imagens\Conexao\ativado.png"
         desativado = r"Imagens\Conexao\desativado.png"
         regiao_ativado_desativado = (conexao_x + 75, conexao_y + 292, 73, 22)
-        precisao = 0.9
+        precisao = 0.95
 
         while True:
 
@@ -447,7 +462,7 @@ def conexao():
                 if posicao_ativado is not None:
                     pyautogui.click(posicao_botao)  # Clica para desativar a coneção
                     print("foi desativado")
-
+                    time.sleep(0.5)
                     for i in range(100):
                         status = obter_status_conexao("Celular")
                         print('esperando desconectar')
@@ -461,7 +476,6 @@ def conexao():
                 if posicao_desativado is not None:
                     pyautogui.click(posicao_botao)  # Clica para ativar a coneção
                     print("foi ativado")
-
                     for i in range(100):
                         status = obter_status_conexao("Celular")
                         print('esperando conectar')
