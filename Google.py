@@ -63,15 +63,20 @@ dicionari_token_credencial_n = {'PC-I5-8600K_PokerIP':  ("token1.json", "credent
                                 'PC-R5-7600A_lgagu':    ("token14.json", "credentials4.json", 14),
                                 'PC-R5-7600A_Poker':    ("token15.json", "credentials4.json", 15),
 
-                                'PC-I7-11850H_PokerIP': ("token16.json", "credentials5.json", 16),
-                                'PC-I7-11850H_lgagu':   ("token17.json", "credentials5.json", 17),
-                                'PC-I7-11850H_Poker':   ("token18.json", "credentials5.json", 18),
+                                'PC-I5-13400A_PokerIP': ("token16.json", "credentials0.json", 16),
+                                'PC-I5-13400A_lgagu':   ("token17.json", "credentials0.json", 17),
+                                'PC-I5-13400A_Poker':   ("token18.json", "credentials0.json", 18),
 
                                 'PC-i3-8145U_PokerIP':  ("token19.json", "credentials5.json", 19),
 
                                 'PC-I7-9700KF_PokerIP': ("token22.json", "credentials5.json", 22),
                                 'PC-I7-9700KF_lgagu':   ("token23.json", "credentials5.json", 23),
-                                'PC-I7-9700KF_Poker':   ("token24.json", "credentials5.json", 24)}
+                                'PC-I7-9700KF_Poker':   ("token24.json", "credentials5.json", 24),
+
+                                'PC-I7-11850H_PokerIP': ("token16.json", "credentials5.json", 25),
+                                'PC-I7-11850H_lgagu': ("token17.json", "credentials5.json", 26),
+                                'PC-I7-11850H_Poker': ("token18.json", "credentials5.json", 27)
+                                }
 
 
 # dicionari_PC_usuario = {'PC-I5-8600K_PokerIP': 1, 'PC-I5-8600K_lgagu': 2, 'PC-I5-8600K_Poker': 3,
@@ -88,9 +93,10 @@ dicionari_PC_IP = {'PC-I5-8600K': "IP!F3",
                    'PC-I5-9400B': "IP!F9",
                    'PC-I5-9400C': "IP!F12",
                    'PC-R5-7600A': "IP!F15",
-                   'PC-I7-11850H': "IP!F18",
+                   'PC-I5-13400A': "IP!F18",
                    'PC-i3-8145U': "IP!F21",
-                   'PC-I7-9700KF': "IP!F24"}
+                   'PC-I7-9700KF': "IP!F24",
+                   'PC-I7-11850H': "IP!F27"}
 
 
 
