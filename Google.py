@@ -270,6 +270,7 @@ def reservar_linha(guia, endereco):
         #print("vai marcar :",valor)
         escrever_celula(valor_pc, guia, endereco)
         linha = endereco[1:]
+        time.sleep(1)
         values, id, senha, contagem_ip = lote_valor(guia, linha)
         values = int(values)
         if valor_pc != values: # testa se no meio do tempo putro computador ja pegou o id
