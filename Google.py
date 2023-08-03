@@ -104,6 +104,7 @@ valor_dicionario = dicionari_token_credencial_n[nome_completo]
 valor_pc = valor_dicionario[2] # numero do computador
 token = valor_dicionario[0]  # pega o primeiro item da tupla
 credentials = valor_dicionario[1]  # pega o segundo item da tuplas
+regiao2 = f"{dicionari_PC_IP[nome_computador]}" # pega a contagem de ip
 
 def credencial():
     #IP.tem_internet()
@@ -138,13 +139,15 @@ def credencial():
 
     return creds
 
-
+cred = credencial()
+service = build('sheets', 'v4', credentials=cred)
 
 def primeira_celula_vazia(guia):
+    print('primeira celula vazia')
     #Internet.tem_internet()
     # cred = carregar_credenciais()
-    cred = credencial()
-    service = build('sheets', 'v4', credentials=cred)
+    #cred = credencial()
+    #service = build('sheets', 'v4', credentials=cred)
     regiao = f"{guia}!D:D"  # 'R1!D:D'
     # Chame a API Sheets
     sheet = service.spreadsheets()
@@ -163,18 +166,55 @@ def primeira_celula_vazia(guia):
                 return f"D{i+1}"
             except ValueError:
                 return f"D{len(values)+1}"
-        except:
-            print(f"Ocorreu um erro ao obter o valor da célula:")
+
+        except Exception as e:
+            print(f"Ocorreu um erro ao obter o valor da célula:", e)
             print("Erro primeira_celula_vazia. Tentando novamente em 5 segundos...")
             time.sleep(5)
             IP.tem_internet()
 
 
+def primeira_celula_vazia2(guia, linha):
+    print('primeira celula vazia 2')
+    inicio = str (linha)
+    fim = str (int(linha) + 30)
+    #Internet.tem_internet()
+    # cred = carregar_credenciais()
+    #cred = credencial()
+    #service = build('sheets', 'v4', credentials=cred)
+    regiao = f"{guia}!D{inicio}:D{fim}"  # 'R1!D:D'
+    # Chame a API Sheets
+    sheet = service.spreadsheets()
+    while True:
+        try:
+            result = sheet.values().get(
+                spreadsheetId=planilha_id,
+                range=regiao,
+                majorDimension="COLUMNS",
+                valueRenderOption="UNFORMATTED_VALUE"
+            ).execute()
+            values = result.get('values', [[]])[0]
+
+            try:
+                i = values.index("")
+                return f"D{i+1}"
+            except ValueError:
+                return f"D{len(values)+1}"
+
+        except Exception as e:
+            print(f"Ocorreu um erro ao obter o valor da célula:", e)
+            print("Erro primeira_celula_vazia. Tentando novamente em 5 segundos...")
+            time.sleep(5)
+            IP.tem_internet()
+
+
+
+
 def escrever_celula(valor, guia, endereco):
     #Internet.tem_internet()
     # cred = carregar_credenciais()
-    cred = credencial()
-    service = build('sheets', 'v4', credentials=cred)
+    #cred = credencial()
+    #service = build('sheets', 'v4', credentials=cred)
     regiao = f"{guia}!{endereco}"  # 'R1!B150'
     while True:
         try:
@@ -201,8 +241,8 @@ def escrever_valores(valores, guia, endereco):
     #Os valores serão escritos nas células adjacentes começando pela célula especificada em endereco.
     #Internet.tem_internet()
     # cred = carregar_credenciais()
-    cred = credencial()
-    service = build('sheets', 'v4', credentials=cred)
+    #cred = credencial()
+    #service = build('sheets', 'v4', credentials=cred)
     regiao = f"{guia}!{endereco}"  # 'R1!B150'
     while True:
         try:
@@ -226,8 +266,8 @@ def escrever_valores(valores, guia, endereco):
 
 
 def escrever_valores_lote(valores, guia, linha):
-    cred = credencial()
-    service = build('sheets', 'v4', credentials=cred)
+    #cred = credencial()
+    #service = build('sheets', 'v4', credentials=cred)
     range_start = f"{guia}!E{linha}:H{linha}"
     data = {
         'range': range_start,
@@ -263,15 +303,21 @@ def reservar_linha(guia, endereco):
     contagem_ip = ""
     #print(valor)
     if valor_pc is not None:
-        #print("vai marcar :",valor)
-        escrever_celula(valor_pc, guia, endereco)
-        linha = endereco[1:]
-        time.sleep(0.3)
-        values, id, senha, contagem_ip = lote_valor(guia, linha)
-        values = int(values)
-        if valor_pc != values: # testa se no meio do tempo putro computador ja pegou o id
-            print("Pego por outro computador")
-            return False, id, senha, linha, contagem_ip
+        for i in range (30):
+            #print("vai marcar :",valor)
+            escrever_celula(valor_pc, guia, endereco)
+            linha = endereco[1:]
+            #time.sleep(0.3)
+            #values, id, senha, contagem_ip = lote_valor(guia, linha)
+            values = pega_valor(guia, endereco)
+            values = int(values)
+            if valor_pc == values:
+                print("Não teve concorrencia pela celula")
+                break
+            else:
+                print("Pego por outro computador")
+                endereco = primeira_celula_vazia(guia)
+
         time.sleep(1)
         values, id, senha, contagem_ip = lote_valor(guia, linha)
         values = int(values)
@@ -284,30 +330,17 @@ def reservar_linha(guia, endereco):
         #print("values :",values)
     else:
         print('A chave não existe no dicionário')
-    # if values is not None:
-    #     try:
-    #         values = int(values)
-    #         if valor_pc == values:
-    #             print("Não teve concorrencia pela celula")
-    #             return True, id, senha, linha, contagem_ip  # Retorna o valor testado, id, senha e linha
-    #         else:
-    #             print("Pego por outro computador")
-    #             return False, id, senha, linha, contagem_ip
-    #     except:
-    #         return False, id, senha, linha, contagem_ip
-    # else:
-    #     print("A célula está vazia")
-    #     return False, id, senha, linha, contagem_ip
+
 
 
 def lote_valor(guia, linha):
 
-    cred = credencial()
-    service = build('sheets', 'v4', credentials=cred)
+    #cred = credencial()
+    #service = build('sheets', 'v4', credentials=cred)
     regiao1 = f"{guia}!B{linha}:D{linha}" # regiao com a informação id senha e numero computador
-    print(regiao1)
-    regiao2 = f"{dicionari_PC_IP[nome_computador]}" # pega a contagem de ip
-    print(regiao2)
+    #print(regiao1)
+    #regiao2 = f"{dicionari_PC_IP[nome_computador]}" # pega a contagem de ip
+    #print(regiao2)
     regiao = [regiao1, regiao2]
 
     #print(regiao)
@@ -335,7 +368,7 @@ def lote_valor(guia, linha):
                 senha = values[1]
                 valor = values[2]
                 cont_IP = values [3]
-                print(cont_IP)
+                #print(cont_IP)
                 return valor, id, senha, cont_IP
 
         except:
@@ -349,8 +382,8 @@ def lote_valor(guia, linha):
 def pega_valor(guia, endereco):
     #Internet.tem_internet()
     # cred = carregar_credenciais()
-    cred = credencial()
-    service = build('sheets', 'v4', credentials=cred)
+    #cred = credencial()
+    #service = build('sheets', 'v4', credentials=cred)
     regiao = f"{guia}!{endereco}"  # 'R1!B150'
     while True:
         try:
@@ -373,8 +406,8 @@ def pega_valor(guia, endereco):
 
 def zera_cont_IP(endereco):
     # cred = carregar_credenciais()
-    cred = credencial()
-    service = build('sheets', 'v4', credentials=cred)
+    #cred = credencial()
+    #service = build('sheets', 'v4', credentials=cred)
     letra = endereco[0]  # obtém a primeira letra do endereço
     numero = int(endereco[1:])  # obtém o número do endereço
     endereco2 = letra + str(numero - 1)  # cria a variável com o endereço imediatamente inferior
@@ -405,8 +438,8 @@ def zera_cont_IP(endereco):
 def pega_ID_senha(guia, endereco):
     #Internet.tem_internet()
     # cred = carregar_credenciais()
-    cred = credencial()
-    service = build('sheets', 'v4', credentials=cred)
+    #cred = credencial()
+    #service = build('sheets', 'v4', credentials=cred)
     linha = re.sub("[^0-9]", "", endereco)# pega a linha
     regiao = f"{guia}!B{linha}:C{linha}"  # 'R1!B2:C2'
     while True:
@@ -431,8 +464,8 @@ def pega_ID_senha(guia, endereco):
 
 
 def escrever_IP_banido():
-    cred = credencial()
-    service = build('sheets', 'v4', credentials=cred)
+    #cred = credencial()
+    #service = build('sheets', 'v4', credentials=cred)
     ip, com_internet = IP.meu_ip()
     data_hora_atual = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     nome_computador = socket.gethostname()
@@ -478,10 +511,11 @@ def escrever_IP_banido():
 
 
 def credenciais(guia):
-    #print("credenciais")
+    print("credenciais")
     reservado = False
 
     while True:# pega a peimira celula vazia e pega as credenciais para entrar
+
         endereco = primeira_celula_vazia(guia)
 
         reservado, id, senha, linha, cont_IP = reservar_linha(guia, endereco)
@@ -489,6 +523,7 @@ def credenciais(guia):
         if reservado:
             cont_IP = int(cont_IP)
             return id, senha, linha, cont_IP
+        print('tentar credenciaias')
 
 
 def marca_horario(guia, linha):
