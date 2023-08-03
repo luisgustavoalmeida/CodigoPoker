@@ -139,14 +139,13 @@ def credencial():
 
     return creds
 
-cred = credencial()
+#cred = credencial()
 #service = build('sheets', 'v4', credentials=cred)
 
 def primeira_celula_vazia(guia):
+
     print('primeira celula vazia')
-    #Internet.tem_internet()
-    # cred = carregar_credenciais()
-    #cred = credencial()
+    cred = credencial()
     service = build('sheets', 'v4', credentials=cred)
     regiao = f"{guia}!D:D"  # 'R1!D:D'
     # Chame a API Sheets
@@ -174,9 +173,8 @@ def primeira_celula_vazia(guia):
 
 
 def escrever_celula(valor, guia, endereco):
-    #Internet.tem_internet()
-    # cred = carregar_credenciais()
-    #cred = credencial()
+
+    cred = credencial()
     service = build('sheets', 'v4', credentials=cred)
     regiao = f"{guia}!{endereco}"  # 'R1!B150'
     while True:
@@ -202,9 +200,8 @@ def escrever_celula(valor, guia, endereco):
 def escrever_valores(valores, guia, endereco):
     #recebe uma lista de valores como argumento valores. Essa lista será usada para preencher três células adjacentes.
     #Os valores serão escritos nas células adjacentes começando pela célula especificada em endereco.
-    #Internet.tem_internet()
-    # cred = carregar_credenciais()
-    #cred = credencial()
+
+    cred = credencial()
     service = build('sheets', 'v4', credentials=cred)
     regiao = f"{guia}!{endereco}"  # 'R1!B150'
     while True:
@@ -229,7 +226,8 @@ def escrever_valores(valores, guia, endereco):
 
 
 def escrever_valores_lote(valores, guia, linha):
-    #cred = credencial()
+
+    cred = credencial()
     service = build('sheets', 'v4', credentials=cred)
     range_start = f"{guia}!E{linha}:H{linha}"
     data = {
@@ -257,9 +255,8 @@ def escrever_valores_lote(valores, guia, linha):
 
 
 def reservar_linha(guia, endereco):
-    #Internet.tem_internet()
-    values = None
 
+    values = None
     id = ""
     senha = ""
     linha = ""
@@ -293,7 +290,7 @@ def reservar_linha(guia, endereco):
 
 def lote_valor(guia, linha):
 
-    #cred = credencial()
+    cred = credencial()
     service = build('sheets', 'v4', credentials=cred)
     regiao1 = f"{guia}!B{linha}:D{linha}" # regiao com a informação id senha e numero computador
     #print(regiao1)
@@ -339,9 +336,8 @@ def lote_valor(guia, linha):
 
 
 def pega_valor(guia, endereco):
-    #Internet.tem_internet()
 
-    #cred = credencial()
+    cred = credencial()
     service = build('sheets', 'v4', credentials=cred)
     regiao = f"{guia}!{endereco}"  # 'R1!B150'
     while True:
@@ -366,8 +362,8 @@ def pega_valor(guia, endereco):
             service = build('sheets', 'v4', credentials=cred)
 
 def zera_cont_IP(endereco):
-    # cred = carregar_credenciais()
-    #cred = credencial()
+
+    cred = credencial()
     service = build('sheets', 'v4', credentials=cred)
     letra = endereco[0]  # obtém a primeira letra do endereço
     numero = int(endereco[1:])  # obtém o número do endereço
@@ -399,9 +395,8 @@ def zera_cont_IP(endereco):
             IP.tem_internet()
 
 def pega_ID_senha(guia, endereco):
-    #Internet.tem_internet()
-    # cred = carregar_credenciais()
-    #cred = credencial()
+
+    cred = credencial()
     service = build('sheets', 'v4', credentials=cred)
     linha = re.sub("[^0-9]", "", endereco)# pega a linha
     regiao = f"{guia}!B{linha}:C{linha}"  # 'R1!B2:C2'
@@ -427,7 +422,8 @@ def pega_ID_senha(guia, endereco):
 
 
 def escrever_IP_banido():
-    #cred = credencial()
+
+    cred = credencial()
     service = build('sheets', 'v4', credentials=cred)
     ip, com_internet = IP.meu_ip()
     data_hora_atual = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
