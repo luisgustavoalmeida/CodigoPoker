@@ -415,44 +415,15 @@ def joga(x_origem, y_origem, id, senha, url, navegador):
     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
         return "sair da conta"
 
-    # for i in range(2):
-    #     # lipa tudo antes de começar vai para o lobby
-    #     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-    #         return "sair da conta"
-    #     Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
-    #     continua_jogando, tarefa = Tarefas.comparar_listas_fazendo_tarefa(tarefas_fazer, x_origem, y_origem)
-    #     print("tarefa que tem: \n",tarefa)
-    #     Limpa.fecha_tarefa(x_origem, y_origem)  # fecha a lista de tarefas diarias
-    #     if continua_jogando:
-    #         break
-
     while continua_jogando:  # permanece joghando
-
-        print('joga mesa')
-        Limpa.limpa_jogando(x_origem, y_origem)
         senta_com_maximo = False
+        print('joga mesa')
+        Limpa.fecha_tarefa(x_origem, y_origem)
+        Limpa.limpa_jogando(x_origem, y_origem)
         sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo)
         print("sentou")
-        if not sentou:
-            print("ainda nao esta sentado")
 
-            for num_mesa in lista_salas_niquel:
-                print('Mumero da mesa para tentar sentar: ', num_mesa)
-                IP.tem_internet()
-                if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-                    return "sair da conta"
-                #blind_certo = escolher_blind(x_origem, y_origem, '20/40')
-                blind_certo = sala_minima_niquel(x_origem, y_origem, num_mesa)
-                if blind_certo:
-                    duzentos, auto10 = ajuste_valor_niquel(x_origem, y_origem)
-
-                    sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo)
-
-                    if sentou and duzentos and auto10:
-                        print('esta tudo ok, slote e sentado')
-                        break
-
-        elif sentou:
+        if sentou:
             print("esta sentado")
             passa_corre_joga(x_origem, y_origem)
             auto10 = gira_10auto(x_origem, y_origem)
@@ -477,6 +448,30 @@ def joga(x_origem, y_origem, id, senha, url, navegador):
             Limpa.fecha_tarefa(x_origem, y_origem)
             #continua_jogando = True
             print("conmtinua jogando ", continua_jogando)
+        else:
+            print("ainda nao esta sentado")
+            for i in range(2):
+                for num_mesa in lista_salas_niquel:
+                    print('Mumero da mesa para tentar sentar: ', num_mesa)
+                    IP.tem_internet()
+                    if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
+                        return "sair da conta"
+                    # blind_certo = escolher_blind(x_origem, y_origem, '20/40')
+                    blind_certo = sala_minima_niquel(x_origem, y_origem, num_mesa)
+                    if blind_certo:
+                        duzentos, auto10 = ajuste_valor_niquel(x_origem, y_origem)
+
+                        sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo)
+
+                        if sentou and duzentos and auto10:
+                            print('esta tudo ok, slote e sentado')
+                            break
+            if not sentou:
+                print("rodou a lista de mesas 2x, da um F5 para recarregar as mesas")
+                IP.tem_internet()
+                print('f5')
+                pyautogui.press('f5')
+                time.sleep(15)
 
         meta, pontos = Tarefas.tem_tarefa_para_recolher(x_origem, y_origem, id, senha, url, navegador)
         if meta:
