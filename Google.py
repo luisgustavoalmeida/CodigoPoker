@@ -163,7 +163,6 @@ def primeira_celula_vazia(guia):
                 return f"D{i+1}"
             except ValueError:
                 return f"D{len(values)+1}"
-
         except:
             print(f"Ocorreu um erro ao obter o valor da célula:")
             print("Erro primeira_celula_vazia. Tentando novamente em 5 segundos...")
@@ -258,9 +257,6 @@ def reservar_linha(guia, endereco):
     #Internet.tem_internet()
     values = None
 
-    # valor_dicionario = dicionari_token_credencial_n[nome_completo]
-    # valor_pc = valor_dicionario[2] # numero do computador
-
     id = ""
     senha = ""
     linha = ""
@@ -270,7 +266,7 @@ def reservar_linha(guia, endereco):
         #print("vai marcar :",valor)
         escrever_celula(valor_pc, guia, endereco)
         linha = endereco[1:]
-        time.sleep(1)
+        time.sleep(0.3)
         values, id, senha, contagem_ip = lote_valor(guia, linha)
         values = int(values)
         if valor_pc != values: # testa se no meio do tempo putro computador ja pegou o id
@@ -278,23 +274,30 @@ def reservar_linha(guia, endereco):
             return False, id, senha, linha, contagem_ip
         time.sleep(1)
         values, id, senha, contagem_ip = lote_valor(guia, linha)
+        values = int(values)
+        if valor_pc == values:
+            print("Não teve concorrencia pela celula")
+            return True, id, senha, linha, contagem_ip  # Retorna o valor testado, id, senha e linha
+        else:
+            print("Pego por outro computador")
+            return False, id, senha, linha, contagem_ip
         #print("values :",values)
     else:
         print('A chave não existe no dicionário')
-    if values is not None:
-        try:
-            values = int(values)
-            if valor_pc == values:
-                print("Não teve concorrencia pela celula")
-                return True, id, senha, linha, contagem_ip  # Retorna o valor testado, id, senha e linha
-            else:
-                print("Pego por outro computador")
-                return False, id, senha, linha, contagem_ip
-        except:
-            return False, id, senha, linha, contagem_ip
-    else:
-        print("A célula está vazia")
-        return False, id, senha, linha, contagem_ip
+    # if values is not None:
+    #     try:
+    #         values = int(values)
+    #         if valor_pc == values:
+    #             print("Não teve concorrencia pela celula")
+    #             return True, id, senha, linha, contagem_ip  # Retorna o valor testado, id, senha e linha
+    #         else:
+    #             print("Pego por outro computador")
+    #             return False, id, senha, linha, contagem_ip
+    #     except:
+    #         return False, id, senha, linha, contagem_ip
+    # else:
+    #     print("A célula está vazia")
+    #     return False, id, senha, linha, contagem_ip
 
 
 def lote_valor(guia, linha):
@@ -484,7 +487,6 @@ def credenciais(guia):
         reservado, id, senha, linha, cont_IP = reservar_linha(guia, endereco)
 
         if reservado:
-
             cont_IP = int(cont_IP)
             return id, senha, linha, cont_IP
 
