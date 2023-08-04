@@ -142,90 +142,91 @@ def credencial():
 cred = credencial()
 service = build('sheets', 'v4', credentials=cred)
 
-# def primeira_celula_vazia(guia):
-#
-#     print('primeira celula vazia')
-#     cred = credencial()
-#     service = build('sheets', 'v4', credentials=cred)
-#     regiao = f"{guia}!D:D"  # 'R1!D:D'
-#     # Chame a API Sheets
-#     sheet = service.spreadsheets()
-#     while True:
-#         try:
-#             result = sheet.values().get(
-#                 spreadsheetId=planilha_id,
-#                 range=regiao,
-#                 majorDimension="COLUMNS",
-#                 valueRenderOption="UNFORMATTED_VALUE"
-#             ).execute()
-#             values = result.get('values', [[]])[0]
-#
-#             try:
-#                 i = values.index("")
-#                 return f"D{i+1}"
-#             except ValueError:
-#                 return f"D{len(values)+1}"
-#         except:
-#             print(f"Ocorreu um erro ao obter o valor da célula:")
-#             print("Erro primeira_celula_vazia. Tentando novamente em 5 segundos...")
-#             time.sleep(5)
-#             IP.tem_internet()
-
-linha_vazia_anterior = 1  # Inicializa a variável global
-intervalo_de_busca = 50
-
 def primeira_celula_vazia(guia):
-    global linha_vazia_anterior  # Indica que vamos utilizar a variável global
-    global intervalo_de_busca
+
     print('primeira celula vazia')
     global cred
     global service
     regiao = f"{guia}!D:D"  # 'R1!D:D'
     # Chame a API Sheets
     sheet = service.spreadsheets()
-
-
-
-
     while True:
-        print('linha vazia: ', linha_vazia_anterior)
         try:
             result = sheet.values().get(
                 spreadsheetId=planilha_id,
-                range=f"{guia}!D{linha_vazia_anterior}:D{linha_vazia_anterior + intervalo_de_busca}",
+                range=regiao,
                 majorDimension="COLUMNS",
                 valueRenderOption="UNFORMATTED_VALUE"
             ).execute()
-
             values = result.get('values', [[]])[0]
-
 
             try:
                 i = values.index("")
-
-                if nome_usuario == "lgagu":
-                    i = i + 1
-                elif nome_usuario == "Poker":
-                    i = i + 2
-
-                linha_vazia_anterior += i  # Atualiza a variável global com a próxima linha vazia
-                print('linha vazia: ', linha_vazia_anterior)
-                endereco = f"D{linha_vazia_anterior}"
-                print(endereco)
-                celula_vazia = celula_esta_vazia(guia, endereco)
-                if celula_vazia:
-                    return f"D{linha_vazia_anterior}"
-
+                return f"D{i+1}"
             except ValueError:
-                # Se o bloco não tiver célula vazia, ajuste a linha inicial para o próximo bloco
-                linha_vazia_anterior += intervalo_de_busca
-        except Exception as e:
-            print(f"Ocorreu um erro ao obter o valor da célula:", e)
+                return f"D{len(values)+1}"
+        except:
+            print(f"Ocorreu um erro ao obter o valor da célula:")
             print("Erro primeira_celula_vazia. Tentando novamente em 5 segundos...")
             time.sleep(5)
             IP.tem_internet()
             cred = credencial()
             service = build('sheets', 'v4', credentials=cred)
+
+#linha_vazia_anterior = 1  # Inicializa a variável global
+
+# def primeira_celula_vazia(guia):
+#     global linha_vazia_anterior  # Indica que vamos utilizar a variável global
+#     print('primeira celula vazia')
+#     global cred
+#     global service
+#
+#
+#     # Chame a API Sheets
+#     sheet = service.spreadsheets()
+#     intervalo_de_busca = 50
+#     while True:
+#         print('linha vazia: ', linha_vazia_anterior)
+#         try:
+#             result = sheet.values().get(
+#                 spreadsheetId=planilha_id,
+#                 range=f"{guia}!D{linha_vazia_anterior}:D{linha_vazia_anterior + intervalo_de_busca}",
+#                 majorDimension="COLUMNS",
+#                 valueRenderOption="UNFORMATTED_VALUE"
+#             ).execute()
+#
+#             values = result.get('values', [[]])[0]
+#             print(values)
+#
+#             if "" in values:
+#                 i = values.index("")
+#                 print(i)
+#
+#                 if nome_usuario == "lgagu":
+#                     i = i + 1
+#                 elif nome_usuario == "Poker":
+#                     i = i + 2
+#
+#                 linha_vazia_anterior += i  # Atualiza a variável global com a próxima linha vazia
+#                 print('linha vazia: ', linha_vazia_anterior)
+#                 endereco = f"D{linha_vazia_anterior}"
+#                 print(endereco)
+#                 celula_vazia = celula_esta_vazia(guia, endereco)
+#                 if celula_vazia:
+#                     return f"D{linha_vazia_anterior}"
+#
+#             else:
+#                 print("erro ao encontar o indice vazio")
+#                 # Se o bloco não tiver célula vazia, ajuste a linha inicial para o próximo bloco
+#                 linha_vazia_anterior += intervalo_de_busca
+#
+#         except Exception as e:
+#             print(f"Ocorreu um erro ao obter o valor da célula:", e)
+#             print("Erro primeira_celula_vazia. Tentando novamente em 5 segundos...")
+#             time.sleep(5)
+#             IP.tem_internet()
+#             cred = credencial()
+#             service = build('sheets', 'v4', credentials=cred)
 
 
 
