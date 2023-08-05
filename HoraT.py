@@ -3,7 +3,7 @@ import time
 import IP
 import pyautogui
 
-hora_roleta = 3  # defina o tempo disponivel para a roleta em horas
+hora_roleta = 4  # defina o tempo disponivel para a roleta em horas
 minutos_roleta = 59 # defina o tempo disponivel para a roleta em minutos
 
 tempo_total = 18000 # 5 horas em segudos
