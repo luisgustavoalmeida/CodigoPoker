@@ -545,11 +545,12 @@ def obter_status_conexao(nome_conexao):
         return "Conexão não encontrada"
 
 
-# def obter_nomes_conexoes():
-#     conexoes = psutil.net_if_stats()
-#     nomes = conexoes.keys()
-#     return nomes
-#
+def obter_nomes_conexoes():
+    conexoes = psutil.net_if_stats()
+    nomes = conexoes.keys()
+    print(nomes)
+    return nomes
+
 # # Exemplo de uso
 # nomes_conexoes = obter_nomes_conexoes()
 # for nome in nomes_conexoes:
@@ -576,3 +577,4 @@ def obter_status_conexao(nome_conexao):
 # conexao(tipo_conexao)
 
 # conexao()
+obter_nomes_conexoes()
