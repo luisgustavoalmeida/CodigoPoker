@@ -174,7 +174,7 @@ def primeira_celula_vazia2(guia):
             service = build('sheets', 'v4', credentials=cred)
 
 linha_vazia_anterior = 2  # Inicializa a variável global
-intervalo_de_busca = 50
+intervalo_de_busca = 500
 def primeira_celula_vazia(guia):
     global linha_vazia_anterior  # Indica que vamos utilizar a variável global
     global intervalo_de_busca
@@ -201,12 +201,12 @@ def primeira_celula_vazia(guia):
             try:
                 i = values.index("")
                 print(i)
-                intervalo_de_busca = 50
 
                 if nome_usuario == "lgagu":
-                    i = i + 1
+                    i += 1
                 elif nome_usuario == "Poker":
-                    i = i + 2
+                    i += 2
+
                 linha_vazia_anterior += i  # Atualiza a variável global com a próxima linha vazia
                 print('linha encontrada: ', linha_vazia_anterior)
                 endereco = f"D{linha_vazia_anterior}"
@@ -217,12 +217,12 @@ def primeira_celula_vazia(guia):
 
             except ValueError:
                 i = len(values)
-                if i < intervalo_de_busca +1 :
-                    intervalo_de_busca = 50
+                if i < intervalo_de_busca +1:
+
                     if nome_usuario == "lgagu":
-                        i = i + 1
+                        i += 1
                     elif nome_usuario == "Poker":
-                        i = i + 2
+                        i += 2
 
                     linha_vazia_anterior += i # Atualiza a variável global com a próxima linha vazia
                     print('linha encontrada: ', linha_vazia_anterior)
@@ -232,8 +232,8 @@ def primeira_celula_vazia(guia):
                     if celula_vazia:
                         return f"D{linha_vazia_anterior}"
 
-
-            linha_vazia_anterior += intervalo_de_busca
+                else:
+                    linha_vazia_anterior += intervalo_de_busca
 
         except Exception as e:
             print(f"Ocorreu um erro ao obter o valor da célula:", e)
