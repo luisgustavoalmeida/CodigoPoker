@@ -450,7 +450,7 @@ def conexao():
         ativado = r"Imagens\Conexao\ativado.png"
         desativado = r"Imagens\Conexao\desativado.png"
         regiao_ativado_desativado = (conexao_x + 75, conexao_y + 292, 73, 22)
-        precisao = 0.95
+        precisao = 0.9
 
         while True:
             app_top_window.set_focus()
@@ -461,10 +461,11 @@ def conexao():
 
                 posicao_ativado = localizar_imagem(ativado, regiao_ativado_desativado, precisao)
                 if posicao_ativado is not None:
+                    time.sleep(0.3)
                     pyautogui.click(posicao_botao)  # Clica para desativar a coneção
                     print("foi desativado")
-                    time.sleep(0.5)
-                    for i in range(100):
+                    time.sleep(0.3)
+                    for i in range(50):
                         status = obter_status_conexao("Celular")
                         print('esperando desconectar')
                         if status == "Desconectado":
