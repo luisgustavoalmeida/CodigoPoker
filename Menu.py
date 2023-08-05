@@ -18,7 +18,7 @@ import pyautogui
 import datetime
 
 from Variaveis_Globais import aviso_sistema_global, alterar_global_aviso_sistema
-global guia
+
 id = "x"
 guia = ""
 guia_recebida = ""
