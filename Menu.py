@@ -18,7 +18,7 @@ import pyautogui
 import datetime
 
 from Variaveis_Globais import aviso_sistema_global, alterar_global_aviso_sistema
-
+global guia
 id = "x"
 guia = ""
 guia_recebida = ""
@@ -30,9 +30,9 @@ url = str(Google.pega_valor('Dados', 'F1'))
 navegador = Seleniun.cria_nevegador()
 Seleniun.abrir_navegador(url, navegador)
 while True:
-    global guia
     alterar_global_aviso_sistema(False)
     guia = HoraT.mudar_guia(id, guia)
+
     print("guia:", guia)
     id, senha, linha, cont_IP = Google.credenciais(guia)
     if id == "":
