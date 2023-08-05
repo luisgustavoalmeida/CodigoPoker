@@ -209,6 +209,64 @@ def primeira_celula_vazia(guia):
             try:
                 i = values.index("")
                 print(i)
+                linha_vazia_anterior += i  # Atualiza a variável global com a próxima linha vazia
+                print('linha encontrada: ', linha_vazia_anterior)
+                endereco = f"D{linha_vazia_anterior}"
+                print(endereco)
+                return f"D{linha_vazia_anterior}"
+
+            except ValueError:
+                i = len(values)
+                print(i)
+                if i < intervalo_de_busca + 1:
+                    linha_vazia_anterior += i  # Atualiza a variável global com a próxima linha vazia
+                    print('linha encontrada: ', linha_vazia_anterior)
+                    endereco = f"D{linha_vazia_anterior}"
+                    print(endereco)
+                    return f"D{linha_vazia_anterior}"
+
+                else:
+                    linha_vazia_anterior += intervalo_de_busca
+
+        except Exception as e:
+            print(f"Ocorreu um erro ao obter o valor da célula:", e)
+            print("Erro primeira_celula_vazia. Tentando novamente em 5 segundos...")
+            time.sleep(5)
+            IP.tem_internet()
+            cred = credencial()
+            service = build('sheets', 'v4', credentials=cred)
+
+
+def primeira_celula_vazia0(guia):
+    global linha_vazia_anterior  # Indica que vamos utilizar a variável global
+    global intervalo_de_busca
+    global guia_antiga
+    print('primeira celula vazia')
+    global cred
+    global service
+    if guia_antiga != guia:
+        guia_antiga = guia
+        linha_vazia_anterior = 2
+
+        # Chame a API Sheets
+    sheet = service.spreadsheets()
+
+    while True:
+        print('linha vazia: ', linha_vazia_anterior)
+        try:
+            result = sheet.values().get(
+                spreadsheetId=planilha_id,
+                range=f"{guia}!D{linha_vazia_anterior}:D{linha_vazia_anterior + intervalo_de_busca}",
+                majorDimension="COLUMNS",
+                valueRenderOption="UNFORMATTED_VALUE"
+            ).execute()
+            values = result.get('values', [[]])[0]
+            print(values)
+
+            # Montar uma lista com os 50 valores do intervalo
+            try:
+                i = values.index("")
+                print(i)
 
                 if nome_usuario == "lgagu":
                     i += 1
@@ -341,6 +399,7 @@ def escrever_valores_lote(valores, guia, linha):
 
 def reservar_linha(guia, endereco):
     print("reservar_linha")
+    global linha_vazia_anterior
 
     values = None
     id = ""
@@ -358,6 +417,7 @@ def reservar_linha(guia, endereco):
         values = int(values)
         if valor_pc != values: # testa se no meio do tempo putro computador ja pegou o id
             print("Pego por outro computador", values)
+            linha_vazia_anterior += 15
             return False, id, senha, linha, contagem_ip
         time.sleep(1)
         values, id, senha, contagem_ip = lote_valor(guia, linha)
@@ -367,6 +427,7 @@ def reservar_linha(guia, endereco):
             return True, id, senha, linha, contagem_ip  # Retorna o valor testado, id, senha e linha
         else:
             print("Pego por outro computador")
+            linha_vazia_anterior += 15
             return False, id, senha, linha, contagem_ip
         #print("values :",values)
     else:
