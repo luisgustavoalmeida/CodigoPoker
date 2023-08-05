@@ -417,7 +417,7 @@ def reservar_linha(guia, endereco):
         values = int(values)
         if valor_pc != values: # testa se no meio do tempo putro computador ja pegou o id
             print("Pego por outro computador", values)
-            linha_vazia_anterior += 15
+            linha_vazia_anterior += 30
             return False, id, senha, linha, contagem_ip
         time.sleep(1)
         values, id, senha, contagem_ip = lote_valor(guia, linha)
@@ -427,7 +427,7 @@ def reservar_linha(guia, endereco):
             return True, id, senha, linha, contagem_ip  # Retorna o valor testado, id, senha e linha
         else:
             print("Pego por outro computador")
-            linha_vazia_anterior += 15
+            linha_vazia_anterior += 30
             return False, id, senha, linha, contagem_ip
         #print("values :",values)
     else:
