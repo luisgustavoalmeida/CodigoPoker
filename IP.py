@@ -453,7 +453,7 @@ def conexao():
         precisao = 0.95
 
         while True:
-
+            app_top_window.set_focus()
             posicao_celular = localizar_imagem(celular, regiao_celular, precisao)
             if posicao_celular is not None:
                 centro_celular = pyautogui.center(posicao_celular)  # Obtém o centro da posição da imagem encontrada
@@ -577,4 +577,3 @@ def obter_nomes_conexoes():
 # conexao(tipo_conexao)
 
 # conexao()
-obter_nomes_conexoes()
