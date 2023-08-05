@@ -142,7 +142,7 @@ def credencial():
 cred = credencial()
 service = build('sheets', 'v4', credentials=cred)
 
-def primeira_celula_vazia2(guia):
+def primeira_celula_vazia3(guia):
 
     print('primeira celula vazia')
     global cred
@@ -164,7 +164,8 @@ def primeira_celula_vazia2(guia):
                 i = values.index("")
                 return f"D{i+1}"
             except ValueError:
-                return f"D{len(values)+1}"
+                i = len(values)
+                return f"D{i+1}"
         except:
             print(f"Ocorreu um erro ao obter o valor da célula:")
             print("Erro primeira_celula_vazia. Tentando novamente em 5 segundos...")
@@ -173,16 +174,23 @@ def primeira_celula_vazia2(guia):
             cred = credencial()
             service = build('sheets', 'v4', credentials=cred)
 
+
 linha_vazia_anterior = 2  # Inicializa a variável global
 intervalo_de_busca = 500
+guia_antiga = None
+
 def primeira_celula_vazia(guia):
     global linha_vazia_anterior  # Indica que vamos utilizar a variável global
     global intervalo_de_busca
+    global guia_antiga
     print('primeira celula vazia')
     global cred
     global service
+    if guia_antiga != guia:
+        guia_antiga = guia
+        linha_vazia_anterior = 2
 
-    # Chame a API Sheets
+        # Chame a API Sheets
     sheet = service.spreadsheets()
 
     while True:
@@ -217,14 +225,14 @@ def primeira_celula_vazia(guia):
 
             except ValueError:
                 i = len(values)
-                if i < intervalo_de_busca +1:
+                if i < intervalo_de_busca + 1:
 
                     if nome_usuario == "lgagu":
                         i += 1
                     elif nome_usuario == "Poker":
                         i += 2
 
-                    linha_vazia_anterior += i # Atualiza a variável global com a próxima linha vazia
+                    linha_vazia_anterior += i  # Atualiza a variável global com a próxima linha vazia
                     print('linha encontrada: ', linha_vazia_anterior)
                     endereco = f"D{linha_vazia_anterior}"
                     print(endereco)
