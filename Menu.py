@@ -194,7 +194,7 @@ while True:
 
                     print("dia da semana", dia_da_semana)
 
-                    if dia_da_semana == 6: # testa se é sabado ou domingo
+                    if dia_da_semana == 6 or dia_da_semana == 0 or dia_da_semana == 5: # testa se é sabado ou domingo
                         if pyautogui.pixelMatchesColor((x_origem + 750), (y_origem + 38), (245, 218, 96), tolerance=10) \
                                 or pyautogui.pixelMatchesColor((x_origem + 802), (y_origem + 38), (245, 218, 96), tolerance=10):
                             print('conta sem upar')
