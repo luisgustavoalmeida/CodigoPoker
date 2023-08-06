@@ -17,13 +17,61 @@ import Genius
 import pyautogui
 import datetime
 
+import threading
+
 from Variaveis_Globais import aviso_sistema_global, alterar_global_aviso_sistema
 
+
+
 id = "x"
+senha = ""
+linha = ""
+cont_IP = 10
 guia = ""
 guia_recebida = ""
 LIMITE_IP = 5
 ja_fez_tutorial = True
+
+# Variáveis globais para as variáveis e controle da tarefa independente
+id_novo = ""
+senha_novo = ""
+linha_novo = ""
+cont_IP_novo = ""
+continuar_tarefa = False
+
+# Semaphore para iniciar a tarefa independente
+iniciar_tarefa = threading.Semaphore(0)
+# Semaphore para a tarefa independente indicar que terminou e aguardar novo comando
+tarefa_concluida = threading.Semaphore(0)
+
+# Função que será executada na tarefa independente
+def tarefa_independente():
+    global continuar_tarefa
+    global guia
+    global id_novo
+    global senha_novo
+    global linha_novo
+    global cont_IP_novo
+
+    while True:
+        # Aguardar o comando para iniciar a execução
+        iniciar_tarefa.acquire()
+
+        # Verificar se a tarefa deve continuar executando ou parar
+        if continuar_tarefa:
+            print("Executando tarefa independente...")
+
+            # Atualizar as variáveis
+            id_novo, senha_novo, linha_novo, cont_IP_novo = Google.credenciais(guia)  # pega id e senha para o proximo login
+
+            # Indicar que a tarefa terminou e está pronta para aguardar novo comando
+            tarefa_concluida.release()
+        else:
+            print("Tarefa independente parada.")
+
+# Iniciar a execução da tarefa independente
+tarefa = threading.Thread(target=tarefa_independente)
+tarefa.start()
 
 url = str(Google.pega_valor('Dados', 'F1'))
 
@@ -108,8 +156,14 @@ while True:
         if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
             break
 
+        # Comando para iniciar a tarefa independente
+        continuar_tarefa = True
+        iniciar_tarefa.release()
+
         ###########Roletas
         if guia != "T1":
+
+
 
             if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
                 break
@@ -198,7 +252,17 @@ while True:
             valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
             Google.escrever_valores_lote(valores, guia, linha) # escreve as informaçoes na planilha apartir da coluna E
 
-            id, senha, linha, cont_IP = Google.credenciais(guia) # pega id e senha par o proximo login
+            # Aguardar a tarefa terminar
+            tarefa_concluida.acquire()
+
+            # Exemplo de comando para pausar a tarefa independente
+            continuar_tarefa = False
+            iniciar_tarefa.release()
+
+            print(id)
+            print(id_novo)
+            #id, senha, linha, cont_IP = Google.credenciais(guia) # pega id e senha par o proximo login
+            id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
 
             # if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
             #     break
@@ -445,7 +509,8 @@ while True:
                         pontuacao_tarefas = OCR_tela.pontuacao_tarefas(x_origem, y_origem)
                     valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
                     Google.escrever_valores_lote(valores, guia, linha)  # escreve as informaçoes na planilha apartir da coluna E
-                    id, senha, linha, cont_IP = Google.credenciais(guia)  # pega id e senha par o proximo login
+                    #id, senha, linha, cont_IP = Google.credenciais(guia)  # pega id e senha par o proximo login
+                    id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
 
         Seleniun.sair_face(url, navegador)
         guia_recebida = HoraT.mudar_guia(id, guia)

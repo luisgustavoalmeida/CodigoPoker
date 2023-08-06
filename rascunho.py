@@ -250,3 +250,67 @@
 # #             continue
 # #
 # #
+
+#
+# import threading
+#
+# # Variáveis globais para as variáveis e controle da tarefa independente
+# variavel1 = 0
+# variavel2 = 0
+# continuar_tarefa = False
+#
+# # Semaphore para iniciar a tarefa independente
+# iniciar_tarefa = threading.Semaphore(0)
+#
+# # Semaphore para a tarefa independente indicar que terminou e aguardar novo comando
+# tarefa_concluida = threading.Semaphore(0)
+#
+# # Função que será executada na tarefa independente
+# def tarefa_independente():
+#     global continuar_tarefa
+#     global variavel1
+#     global variavel2
+#
+#     while True:
+#         # Aguardar o comando para iniciar a execução
+#         iniciar_tarefa.acquire()
+#
+#         # Verificar se a tarefa deve continuar executando ou parar
+#         if continuar_tarefa:
+#             # Atualizar as variáveis
+#             variavel1 += 1
+#             variavel2 -= 1
+#
+#             # Simular a execução da tarefa
+#             print("Executando tarefa independente...")
+#
+#             # Indicar que a tarefa terminou e está pronta para aguardar novo comando
+#             tarefa_concluida.release()
+#         else:
+#             print("Tarefa independente parada.")
+#
+# # Resto do código...
+#
+# # Iniciar a execução da tarefa
+# tarefa = threading.Thread(target=tarefa_independente)
+# tarefa.start()
+#
+# # O código principal pode continuar a partir daqui
+# # Ele pode acessar as variáveis atualizadas pela tarefa independente
+#
+# # Exemplo de comando para iniciar a tarefa independente
+# continuar_tarefa = True
+# iniciar_tarefa.release()
+#
+# # Aguardar a tarefa terminar
+# tarefa_concluida.acquire()
+#
+# # Exemplo de comando para pausar a tarefa independente
+# continuar_tarefa = False
+# iniciar_tarefa.release()
+#
+# # Aguardar a tarefa terminar
+# tarefa_concluida.acquire()
+#
+# # Agora a tarefa independente está pausada e pronta para aguardar um novo comando do código principal
+# # Você pode repetir esse processo quantas vezes for necessário para controlar a execução da tarefa independente.
