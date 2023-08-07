@@ -105,6 +105,7 @@ while True:
         pontuacao_tarefas = ""
         hora_atual = ""
         status_conta = None
+        valores = [""]
 
         if cont_IP >= LIMITE_IP or cont_IP < 0:  # se a contagem de ip ta fora da faixa vai para a função
             IP.ip()  # testa se o numero de contas esta dentro do limite antes de trocar ip
@@ -187,6 +188,8 @@ while True:
                 ## para pegar os pontos das tarefas
                 if roleta == 'roleta_1': # saber se roleta R1
 
+                    print("dia da semana", dia_da_semana)
+
                     conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador) #retorna se a conta ta upada ou nao
                     if conta_upada:
                         IP.f5_quando_internete_ocila(id, senha, url, navegador)
@@ -197,57 +200,6 @@ while True:
                         pontuacao_tarefas = OCR_tela.pontuacao_tarefas(x_origem, y_origem)
                         Limpa.fecha_tarefa(x_origem, y_origem)
 
-                elif roleta == 'roleta_2':
-
-                    print("dia da semana", dia_da_semana)
-
-                    if dia_da_semana == 6 or dia_da_semana == 0 or dia_da_semana == 5: # testa se é sabado ou domingo
-                        if pyautogui.pixelMatchesColor((x_origem + 750), (y_origem + 38), (245, 218, 96), tolerance=10) \
-                                or pyautogui.pixelMatchesColor((x_origem + 802), (y_origem + 38), (245, 218, 96), tolerance=10):
-                            print('conta sem upar')
-
-                            for i in range(20):
-                                time_sair = time.perf_counter()
-                                tempo_total = time_sair - time_rodou
-                                print('tempo que ja clicou no rodou', tempo_total)
-                                if tempo_total > 18:
-                                    print('ja pode sair do r2')
-                                    break
-                                time.sleep(1)
-                                pyautogui.doubleClick(x_origem + 683, y_origem + 14)  # clica no icone roleta, ja roda sozinho
-
-                            if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-                                break
-                            print('conta nao esta upada abre os iniciantes')
-
-                            Mesa.joga_uma_vez(x_origem, y_origem)
-                            time.sleep(2)
-                            Limpa.iniciantes(x_origem, y_origem)
-                            Limpa.limpa_total(x_origem, y_origem)
-
-                        elif 100000 < valor_fichas < 400000:
-                            for i in range(20):
-                                time_sair = time.perf_counter()
-                                tempo_total = time_sair - time_rodou
-                                print('tempo que ja clicou no rodou', tempo_total)
-                                if tempo_total > 18:
-                                    print('ja pode sair do r2')
-                                    break
-                                time.sleep(1)
-                                pyautogui.doubleClick(x_origem + 683, y_origem + 14)  # clica no icone roleta, ja roda sozinho
-
-                            if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-                                break
-                            print('conta nao esta upada abre os iniciantes')
-
-                            Mesa.joga_uma_vez(x_origem, y_origem)
-                            time.sleep(2)
-                            Limpa.iniciantes(x_origem, y_origem)
-                            Limpa.limpa_total(x_origem, y_origem)
-
-            # if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
-            #     break
-
             entrou_corretamente, stataus = Seleniun.teste_logado(id, senha, url, navegador)
             if entrou_corretamente is False:  # se nao entrou no face
                 Google.marca_caida(stataus, guia, linha)
@@ -255,13 +207,6 @@ while True:
 
             if hora_que_rodou is None:
                 hora_que_rodou = datetime.datetime.now().strftime('%H:%M:%S')
-
-
-
-            # id, senha, linha, cont_IP = Google.credenciais(guia) # pega id e senha par o proximo login
-
-            # if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
-            #     break
 
             if roleta == 'roleta_1': # saber se roleta R1 ja terminou de rodar para sair da conta
                 for i in range(50):
@@ -276,7 +221,7 @@ while True:
                     pyautogui.doubleClick(x_origem + 683, y_origem + 14)  # clica no icone da roleta para abir
                     if pyautogui.pixelMatchesColor((x_origem + 495), (y_origem + 315), (227, 120, 14), tolerance=20):  # testa de roleta 1 ta aberta
                         pyautogui.doubleClick(x_origem + 492, y_origem + 383)  # clica no meio da roleta para rodar
-                #Limpa.premio_r1(x_origem, y_origem)
+                Mesa.dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, valor_fichas, time_rodou, roleta)
 
             elif roleta == 'roleta_2':
                 for i in range(20):
@@ -288,7 +233,9 @@ while True:
                         break
                     time.sleep(0.3)
                     pyautogui.doubleClick(x_origem + 683, y_origem + 14)  # clica no icone roleta, ja roda sozinho
-                #Limpa.premio_r2(x_origem, y_origem)
+                Mesa.dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, valor_fichas, time_rodou, roleta)
+
+            valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
 
             #######################Tarefas
         elif guia == "T1":
@@ -495,9 +442,7 @@ while True:
             else:
                 if HoraT.fim_tempo_tarefa():
                     valores = [""]
-                    tarefa_concluida.acquire()
-                    Google.apagar_numerodo_pc(valores, guia, linha)  # apaga o nume do pc
-                    Google.apagar_numerodo_pc(valores, guia, linha_novo)  # apaga o nume do pc
+
                 else:
                     valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem)
                     hora_que_rodou = datetime.datetime.now().strftime('%H:%M:%S')
@@ -505,18 +450,12 @@ while True:
                     if conta_upada:
                         meta_atingida, pontuacao_tarefas = Tarefas.meta_tarefas(x_origem, y_origem)
                         pontuacao_tarefas = OCR_tela.pontuacao_tarefas(x_origem, y_origem)
-                    #valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
-                    #Google.escrever_valores_lote(valores, guia, linha)  # escreve as informaçoes na planilha apartir da coluna E
-                    #id, senha, linha, cont_IP = Google.credenciais(guia)  # pega id e senha par o proximo login
-                    #id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
-
-        # Aguardar a tarefa terminar
-        valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
+                    valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
 
         Seleniun.sair_face(url, navegador)
 
         print('espera terminar tarefa independente')
-
+        # Aguardar a tarefa terminar
         tarefa_concluida.acquire()
         print('tarefa independente liberada')
 
@@ -525,10 +464,14 @@ while True:
                 break
         print('tarefa independente terminada')
 
-        Google.escrever_valores_lote(valores, guia, linha)  # escreve as informaçoes na planilha apartir da coluna E
-
-        id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
-
+        if valores == [""]:
+            #  apaga os valore quando da a hoara de sair do tarefas
+            Google.apagar_numerodo_pc(valores, guia, linha)  # apaga o nume do pc
+            Google.apagar_numerodo_pc(valores, guia, linha_novo)  # apaga o nume do pc
+        else:
+            # escre os valores na planilha
+            Google.escrever_valores_lote(valores, guia, linha)  # escreve as informaçoes na planilha apartir da coluna E
+            id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
 
         guia_recebida = HoraT.mudar_guia(id, guia)
         if guia != guia_recebida:

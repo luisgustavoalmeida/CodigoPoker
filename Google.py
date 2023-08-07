@@ -415,22 +415,31 @@ def reservar_linha(guia, endereco):
         #values, id, senha, contagem_ip = lote_valor(guia, linha)
 
         values = pega_valor(guia, endereco)
-        values = int(values)
-        if valor_pc != values: # testa se no meio do tempo putro computador ja pegou o id
-            print("Pego por outro computador", values)
+        try:
+            values = int(values)
+            if valor_pc != values: # testa se no meio do tempo putro computador ja pegou o id
+                print("Pego por outro computador", values)
+                linha_vazia_anterior += 30
+                return False, id, senha, linha, contagem_ip
+            time.sleep(1)
+            values, id, senha, contagem_ip = lote_valor(guia, linha)
+
+            values = int(values)
+            try:
+                if valor_pc == values:
+                    print("Não teve concorrencia pela celula")
+                    return True, id, senha, linha, contagem_ip  # Retorna o valor testado, id, senha e linha
+                else:
+                    print("Pego por outro computador")
+                    linha_vazia_anterior += 30
+                    return False, id, senha, linha, contagem_ip
+                #print("values :",values)
+            except:
+                linha_vazia_anterior += 30
+                return False, id, senha, linha, contagem_ip
+        except:
             linha_vazia_anterior += 30
             return False, id, senha, linha, contagem_ip
-        time.sleep(1)
-        values, id, senha, contagem_ip = lote_valor(guia, linha)
-        values = int(values)
-        if valor_pc == values:
-            print("Não teve concorrencia pela celula")
-            return True, id, senha, linha, contagem_ip  # Retorna o valor testado, id, senha e linha
-        else:
-            print("Pego por outro computador")
-            linha_vazia_anterior += 30
-            return False, id, senha, linha, contagem_ip
-        #print("values :",values)
     else:
         print('A chave não existe no dicionário')
 

@@ -11,8 +11,8 @@ import IP
 import Tarefas
 import HoraT
 
-lista_salas_niquel = ('1769', '1768', '1767', '1766', '1765', '1546', '1545', '1543', '1542', '1541', '1540',
-                      '1538', '1537', '1536', '1535')
+lista_salas_niquel = ('1537',  '1538', '1546', '1542', '1545', '1543', '1541', '1540', '1536', '1535', '1769', '1768',
+                      '1767', '1766', '1765',)
 
 def localizar_imagem(imagem, regiao, precisao):
     try:
@@ -185,9 +185,6 @@ def sentar_mesa(x_origem, y_origem, senta_com_maximo):
                             return sentou
     print('nao esta dentro da mesa')
     return sentou
-
-
-
 def escolher_blind(x_origem, y_origem, blind):
     blinb_rolagem = {'1/2': (534, 478), '2/4': (534, 504), '5/10': (534, 530), '10/20': (534, 556), '20/40': (534, 582),
                      '20/50': (548, 478), '50/100': (548, 504), '100/200': (548, 530), '200/400': (548, 556), '500/1K': (548, 582),
@@ -570,6 +567,35 @@ def joga_uma_vez(x_origem, y_origem):
 
         time.sleep(1)
     return
+
+
+def dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, valor_fichas, time_rodou, roleta):
+    if dia_da_semana == 6 or dia_da_semana == 0 or dia_da_semana == 5:  # testa se é sabado ou domingo
+        if pyautogui.pixelMatchesColor((x_origem + 750), (y_origem + 38), (245, 218, 96), tolerance=10) \
+                or pyautogui.pixelMatchesColor((x_origem + 802), (y_origem + 38), (245, 218, 96), tolerance=10) \
+                or (100000 < valor_fichas < 400000):
+            print('conta para jogar mesa')
+            if roleta == 'roleta_2':
+                for i in range(20):
+                    time_sair = time.perf_counter()
+                    tempo_total = time_sair - time_rodou
+                    print('tempo que ja clicou no rodou', tempo_total)
+                    if tempo_total > 18:
+                        print('ja pode sair do r2')
+                        break
+                    time.sleep(1)
+                    pyautogui.doubleClick(x_origem + 683, y_origem + 14)  # clica no icone roleta, ja roda sozinho
+
+            Limpa.limpa_total(x_origem, y_origem)
+
+            print('conta nao esta upada abre os iniciantes')
+
+            joga_uma_vez(x_origem, y_origem)
+            time.sleep(2)
+            Limpa.iniciantes(x_origem, y_origem)
+            Limpa.limpa_total(x_origem, y_origem)
+    return
+
 
 
 
