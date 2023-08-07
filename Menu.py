@@ -513,6 +513,8 @@ while True:
         # Aguardar a tarefa terminar
         valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
 
+        Seleniun.sair_face(url, navegador)
+
         print('espera terminar tarefa independente')
 
         tarefa_concluida.acquire()
@@ -527,7 +529,7 @@ while True:
 
         id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
 
-        Seleniun.sair_face(url, navegador)
+
         guia_recebida = HoraT.mudar_guia(id, guia)
         if guia != guia_recebida:
             dia_da_semana = datetime.datetime.now().weekday()  # busca o dia da semana 0 segunda 1 terça ... 6 domeingo
