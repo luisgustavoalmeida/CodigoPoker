@@ -63,11 +63,14 @@ def tarefa_independente():
 
             # Atualizar as variáveis
             id_novo, senha_novo, linha_novo, cont_IP_novo = Google.credenciais(guia)  # pega id e senha para o proximo login
+            continuar_tarefa = False
 
             # Indicar que a tarefa terminou e está pronta para aguardar novo comando
             tarefa_concluida.release()
         else:
             print("Tarefa independente parada.")
+            # Indicar que a tarefa terminou de executar
+            tarefa_concluida.release()
 
 # Iniciar a execução da tarefa independente
 tarefa = threading.Thread(target=tarefa_independente)
@@ -252,17 +255,7 @@ while True:
             valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
             Google.escrever_valores_lote(valores, guia, linha) # escreve as informaçoes na planilha apartir da coluna E
 
-            # Aguardar a tarefa terminar
-            tarefa_concluida.acquire()
-
-            # Exemplo de comando para pausar a tarefa independente
-            continuar_tarefa = False
-            iniciar_tarefa.release()
-
-            print(id)
-            print(id_novo)
-            #id, senha, linha, cont_IP = Google.credenciais(guia) # pega id e senha par o proximo login
-            id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
+            # id, senha, linha, cont_IP = Google.credenciais(guia) # pega id e senha par o proximo login
 
             # if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
             #     break
@@ -499,7 +492,9 @@ while True:
             else:
                 if HoraT.fim_tempo_tarefa():
                     valores = [""]
+                    tarefa_concluida.acquire()
                     Google.apagar_numerodo_pc(valores, guia, linha)  # apaga o nume do pc
+                    Google.apagar_numerodo_pc(valores, guia, linha_novo)  # apaga o nume do pc
                 else:
                     valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem)
                     hora_que_rodou = datetime.datetime.now().strftime('%H:%M:%S')
@@ -510,7 +505,12 @@ while True:
                     valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
                     Google.escrever_valores_lote(valores, guia, linha)  # escreve as informaçoes na planilha apartir da coluna E
                     #id, senha, linha, cont_IP = Google.credenciais(guia)  # pega id e senha par o proximo login
-                    id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
+                    #id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
+
+        # Aguardar a tarefa terminar
+        tarefa_concluida.acquire()
+
+        id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
 
         Seleniun.sair_face(url, navegador)
         guia_recebida = HoraT.mudar_guia(id, guia)
