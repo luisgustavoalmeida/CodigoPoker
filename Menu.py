@@ -256,8 +256,7 @@ while True:
             if hora_que_rodou is None:
                 hora_que_rodou = datetime.datetime.now().strftime('%H:%M:%S')
 
-            valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
-            Google.escrever_valores_lote(valores, guia, linha) # escreve as informaçoes na planilha apartir da coluna E
+
 
             # id, senha, linha, cont_IP = Google.credenciais(guia) # pega id e senha par o proximo login
 
@@ -506,13 +505,23 @@ while True:
                     if conta_upada:
                         meta_atingida, pontuacao_tarefas = Tarefas.meta_tarefas(x_origem, y_origem)
                         pontuacao_tarefas = OCR_tela.pontuacao_tarefas(x_origem, y_origem)
-                    valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
-                    Google.escrever_valores_lote(valores, guia, linha)  # escreve as informaçoes na planilha apartir da coluna E
+                    #valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
+                    #Google.escrever_valores_lote(valores, guia, linha)  # escreve as informaçoes na planilha apartir da coluna E
                     #id, senha, linha, cont_IP = Google.credenciais(guia)  # pega id e senha par o proximo login
                     #id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
 
         # Aguardar a tarefa terminar
+        valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
+
+        print('espera terminar tarefa independente')
+
         tarefa_concluida.acquire()
+
+        while True:
+            if not continuar_tarefa:
+                break
+
+        Google.escrever_valores_lote(valores, guia, linha)  # escreve as informaçoes na planilha apartir da coluna E
 
         id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
 
