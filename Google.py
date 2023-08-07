@@ -413,6 +413,7 @@ def reservar_linha(guia, endereco):
         linha = endereco[1:]
         #time.sleep(0.3)
         #values, id, senha, contagem_ip = lote_valor(guia, linha)
+        time.sleep(0.3)
         values = pega_valor(guia, endereco)
         values = int(values)
         if valor_pc != values: # testa se no meio do tempo putro computador ja pegou o id
