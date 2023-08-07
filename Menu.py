@@ -516,10 +516,12 @@ while True:
         print('espera terminar tarefa independente')
 
         tarefa_concluida.acquire()
+        print('tarefa independente liberada')
 
         while True:
             if not continuar_tarefa:
                 break
+        print('tarefa independente terminada')
 
         Google.escrever_valores_lote(valores, guia, linha)  # escreve as informaçoes na planilha apartir da coluna E
 
