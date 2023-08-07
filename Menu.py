@@ -68,7 +68,7 @@ def tarefa_independente():
             # Indicar que a tarefa terminou e está pronta para aguardar novo comando
             tarefa_concluida.release()
         else:
-            print("Tarefa independente parada.")
+            print("&&&&&&&&     &&&&&&&&     Tarefa independente parada.     &&&&&&&&     &&&&&&&&")
             # Indicar que a tarefa terminou de executar
             tarefa_concluida.release()
 
