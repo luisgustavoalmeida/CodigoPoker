@@ -35,13 +35,6 @@ def cadeiras_livres(x_origem, y_origem):
             print(cadeiras_livres)
     print("esta mesa tem: ", cadeiras_livres, " cadeiras livres")
 
-# # dicionadios com as cordenada de buscas por cadiras vazias
-# prioridade_1_cadeira = {'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)}
-# prioridade_2_cadeira = {'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_3': (847, 366), 'cadeira_2': (828, 211), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131), 'cadeira_1': (659, 127)}
-# prioridade_3_cadeira = {'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211)}
-# prioridade_4_cadeira = {'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_9': (312, 131), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_8': (134, 194)}
-# prioridade_5_cadeira = {'cadeira_7': (118, 360), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)}
-
 def clica_seta_sentar(x_origem, y_origem):
 
     dicionari_PC_cadeira = {'PC-I5-8600K': {'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)},
@@ -321,11 +314,15 @@ def sala_minima_niquel(x_origem, y_origem, num_mesa):
     for i in range(20):
         if pyautogui.pixelMatchesColor((x_origem + 435), (y_origem + 264), (26, 29, 33), tolerance=5):  # testa se tem sala com pelo menos um lugar vazio, olha se tem preto no fim da barra de ocupação
             pyautogui.doubleClick(490 + x_origem, 263 + y_origem)  # clica para entar na sala vazia
-            for i in range(20):
+            for i in range(80):
+                Limpa.limpa_jogando(x_origem, y_origem)
                 if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (27, 92, 155), tolerance=19):  # testa se esta dentro da mesa
+                    Limpa.limpa_jogando(x_origem, y_origem)
                     blind_sala = OCR_tela.blind_sala(x_origem, y_origem)
                     print(blind_sala)
                     break
+                time.sleep(1)
+
             if blind_sala != None:
                 break
         else:
@@ -573,7 +570,7 @@ def dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, valor_fichas, time_rodo
     if dia_da_semana == 6 or dia_da_semana == 0 or dia_da_semana == 5:  # testa se é sabado ou domingo
         if pyautogui.pixelMatchesColor((x_origem + 750), (y_origem + 38), (245, 218, 96), tolerance=10) \
                 or pyautogui.pixelMatchesColor((x_origem + 802), (y_origem + 38), (245, 218, 96), tolerance=10) \
-                or (100000 < valor_fichas < 400000):
+                or (100000 < valor_fichas < 300000):
             print('conta para jogar mesa')
             if roleta == 'roleta_2':
                 for i in range(20):
