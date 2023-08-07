@@ -33,7 +33,7 @@ LIMITE_IP = 5
 ja_fez_tutorial = True
 
 # Variáveis globais para as variáveis e controle da tarefa independente
-id_novo = ""
+id_novo = "x"
 senha_novo = ""
 linha_novo = ""
 cont_IP_novo = ""
@@ -56,7 +56,7 @@ def tarefa_independente():
     while True:
         # Aguardar o comando para iniciar a execução
         iniciar_tarefa.acquire()
-
+        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
         # Verificar se a tarefa deve continuar executando ou parar
         if continuar_tarefa:
             print("Executando tarefa independente...")
@@ -66,6 +66,7 @@ def tarefa_independente():
             continuar_tarefa = False
 
             # Indicar que a tarefa terminou e está pronta para aguardar novo comando
+            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
             tarefa_concluida.release()
         else:
             print("&&&&&&&&     &&&&&&&&     Tarefa independente parada.     &&&&&&&&     &&&&&&&&")
@@ -85,11 +86,14 @@ while True:
     guia = HoraT.mudar_guia(id, guia)
 
     print("guia:", guia)
-    id, senha, linha, cont_IP = Google.credenciais(guia)
-    if id == "":
-        Seleniun.sair_face(url, navegador)
-        guia = HoraT.mudar_guia(id, guia)
+    if id == id_novo or id == "":
         id, senha, linha, cont_IP = Google.credenciais(guia)
+        if id == "":
+            Seleniun.sair_face(url, navegador)
+            guia = HoraT.mudar_guia(id, guia)
+            id, senha, linha, cont_IP = Google.credenciais(guia)
+    else:
+        id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
 
     url = str(Google.pega_valor('Dados', 'F1'))
     dia_da_semana = datetime.datetime.now().weekday() # busca o dia da semana 0 segunda 1 terça ... 6 domeingo
