@@ -43,10 +43,14 @@ def limpa_jogando(x_origem, y_origem):
 
     pyautogui.click(x_origem + 43, y_origem + 388) # clica no anel
 
-    pyautogui.click(821 + x_origem, 138 + y_origem) # clica no fechar tarefa
+
+    if (pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 117), (72, 71, 76), tolerance=5) or
+            pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 117), (22, 21, 23), tolerance=5)):
+        pyautogui.click(821 + x_origem, 138 + y_origem)  # clica no fechar tarefa
+        print('fecha lista tarefas')
 
     #voce ganhou 2500
-    if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 179), (71,0,148), tolerance=6):
+    elif pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 179), (71,0,148), tolerance=6):
         pyautogui.click(x_origem + 490, y_origem + 480, button='left')
         print("Voce ganhou 2500")
 
