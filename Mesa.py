@@ -313,6 +313,8 @@ def sala_minima_niquel(x_origem, y_origem, num_mesa):
     blind_sala = None
     for i in range(20):
         if pyautogui.pixelMatchesColor((x_origem + 435), (y_origem + 264), (26, 29, 33), tolerance=5):  # testa se tem sala com pelo menos um lugar vazio, olha se tem preto no fim da barra de ocupação
+            time.sleep(0.5)
+            pyautogui.doubleClick(490 + x_origem, 263 + y_origem)  # clica para entar na sala vazia
             pyautogui.doubleClick(490 + x_origem, 263 + y_origem)  # clica para entar na sala vazia
             for i in range(80):
                 Limpa.limpa_jogando(x_origem, y_origem)

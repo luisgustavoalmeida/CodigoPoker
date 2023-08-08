@@ -203,12 +203,12 @@ def primeira_celula_vazia(guia):
                 valueRenderOption="UNFORMATTED_VALUE"
             ).execute()
             values = result.get('values', [[]])[0]
-            print(values)
+            #print(values)
 
             # Montar uma lista com os 50 valores do intervalo
             try:
                 i = values.index("")
-                print(i)
+                #print(i)
                 linha_vazia_anterior += i  # Atualiza a variável global com a próxima linha vazia
                 print('linha encontrada: ', linha_vazia_anterior)
                 endereco = f"D{linha_vazia_anterior}"
@@ -217,7 +217,7 @@ def primeira_celula_vazia(guia):
 
             except ValueError:
                 i = len(values)
-                print(i)
+                #print(i)
                 if i < intervalo_de_busca + 1:
                     linha_vazia_anterior += i  # Atualiza a variável global com a próxima linha vazia
                     print('linha encontrada: ', linha_vazia_anterior)
