@@ -309,23 +309,30 @@ def sala_minima_niquel(x_origem, y_origem, num_mesa):
     pyautogui.write(num_mesa) #escreve o numero da sala na barra de busca
     print('mesa: ', num_mesa)
     time.sleep(0.5)
-
+    cont_erro_entrar_mesa = 0
     blind_sala = None
     for i in range(20):
         if pyautogui.pixelMatchesColor((x_origem + 435), (y_origem + 264), (26, 29, 33), tolerance=5):  # testa se tem sala com pelo menos um lugar vazio, olha se tem preto no fim da barra de ocupação
             pyautogui.doubleClick(490 + x_origem, 263 + y_origem)  # clica para entar na sala vazia
 
-            for i in range(80):
+            for i in range(40):
                 if pyautogui.pixelMatchesColor((x_origem + 435), (y_origem + 264), (26, 29, 33), tolerance=5):  # testa se tem sala com pelo menos um lugar vazio, olha se tem preto no fim da barra de ocupação
                     pyautogui.doubleClick(490 + x_origem, 263 + y_origem)  # clica para entar na sala vazia
+                    cont_erro_entrar_mesa += 1
 
                 Limpa.limpa_jogando(x_origem, y_origem)
+
                 if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (27, 92, 155), tolerance=19):  # testa se esta dentro da mesa
                     Limpa.limpa_jogando(x_origem, y_origem)
                     blind_sala = OCR_tela.blind_sala(x_origem, y_origem)
                     print(blind_sala)
                     break
+
                 time.sleep(1)
+
+                if cont_erro_entrar_mesa >= 5:
+                    Limpa.limpa_total(x_origem, y_origem)
+                    break
 
             if blind_sala != None:
                 break
