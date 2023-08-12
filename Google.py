@@ -666,8 +666,14 @@ def credenciais(guia):
         reservado, id, senha, linha, cont_IP = reservar_linha(guia, endereco)
 
         if reservado:
-            cont_IP = int(cont_IP)
-            return id, senha, linha, cont_IP
+            try:
+                cont_IP = int(cont_IP)
+                return id, senha, linha, cont_IP
+            except Exception as error:
+                print(error)
+                time.sleep(5)
+                continue
+
         print('tentar credenciaias')
 
 
