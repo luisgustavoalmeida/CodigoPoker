@@ -13,8 +13,7 @@ import pytesseract
 import Origem_pg
 import IP
 import difflib
-from Variaveis_Globais import alterar_global_aviso_sistema
-
+import Variaveis_Globais
 from PIL import Image
 
 
@@ -604,7 +603,7 @@ def aviso_do_sistema():
                 print('foi encontrado um: Aviso do sistema')
                 if 'cancelada' in valor:
                     print("Mesagem: ", valor)
-                    alterar_global_aviso_sistema(True)
+                    Variaveis_Globais.alterar_global_aviso_sistema(True)  # muda o valor da variavel global destinado a sair da cont
                     return True
         else:
             return False
@@ -627,6 +626,7 @@ def aviso_sistema(x_origem, y_origem):
                 print('foi encontrado um: Aviso do sistema')
                 if 'cancelada' in valor:
                     print("Mesagem: ", valor)
+                    Variaveis_Globais.alterar_global_aviso_sistema(True) # muda o valor da variavel global destinado a sair da conta
                     resposta = "sair da conta"
                     return True, resposta
                 elif 'atualizar' in valor:

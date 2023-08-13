@@ -9,7 +9,8 @@ import IP
 import Seleniun
 import Slot
 
-from Variaveis_Globais import aviso_sistema_global
+
+
 
 #x_origem, y_origem = Origem_pg.carregado_origem()
 #print(x_origem, y_origem)

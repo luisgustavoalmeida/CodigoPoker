@@ -21,7 +21,7 @@ import threading
 
 from Variaveis_Globais import aviso_sistema_global, alterar_global_aviso_sistema
 
-
+global aviso_sistema_global
 
 id = "x"
 senha = ""
@@ -107,6 +107,7 @@ while True:
         status_conta = None
         valores = [""]
 
+
         if cont_IP >= LIMITE_IP or cont_IP < 0:  # se a contagem de ip ta fora da faixa vai para a função
             IP.ip()  # testa se o numero de contas esta dentro do limite antes de trocar ip
 
@@ -171,8 +172,6 @@ while True:
         ###########Roletas
         if guia != "T1":
 
-
-
             if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
                 break
 
@@ -233,7 +232,7 @@ while True:
                         break
                     time.sleep(0.3)
                     pyautogui.doubleClick(x_origem + 683, y_origem + 14)  # clica no icone roleta, ja roda sozinho
-                Mesa.dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, valor_fichas, time_rodou, roleta)
+                #Mesa.dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, valor_fichas, time_rodou, roleta)
 
             valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
 

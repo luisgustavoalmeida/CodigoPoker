@@ -346,8 +346,6 @@ def sala_minima_niquel(x_origem, y_origem, num_mesa):
         print("Esta na sala errada")
         return False
 
-
-
 def gira_niquel(x_origem, y_origem):
     posicao_10auto = None
     regiao = (207 + x_origem, 652 + y_origem, 58, 13) # (x, y, largura, altura)
@@ -381,12 +379,15 @@ def gira_10auto(x_origem, y_origem):
 
 def passa_corre_joga(x_origem, y_origem): # para se fazer tarefas
     print("jogando")
+    jogou_uma_vez = False
     # se nao esta com v azul dentro do quadrado branco e se esta com quadrado branco
     if (not pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (59, 171, 228), tolerance=1)) \
             and (pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (255, 255, 255), tolerance=1)):
         pyautogui.click((x_origem + 337), (y_origem + 605))
         time.sleep(0.3)
         print("foi encontado o quadrado")
+        jogou_uma_vez = True
+
     else:
         print("nao tem quadrado branco")
         # testa se o valor nao foi aumentado ou seja igual a 40 ou 80
@@ -397,9 +398,11 @@ def passa_corre_joga(x_origem, y_origem): # para se fazer tarefas
             if (valor == 40) or (valor == 80):
                 pyautogui.click((x_origem + 337), (y_origem + 605))# clica no passar
                 print("tem que passar")
+                jogou_uma_vez = True
             else:
                 pyautogui.click((x_origem + 528), (y_origem + 605))  # clica no correr
                 print("tem que correr")
+                jogou_uma_vez = True
 
         # se nao tem area branca com valor
         elif pyautogui.pixelMatchesColor((x_origem + 343), (y_origem + 599), (255, 255, 255), tolerance=1): # testa se tem um v de pagar
@@ -407,6 +410,9 @@ def passa_corre_joga(x_origem, y_origem): # para se fazer tarefas
             # if pyautogui.pixelMatchesColor((x_origem + 528), (y_origem + 603), (255, 255, 255), tolerance=1):
             print("ta com x branco do correr")
             pyautogui.click((x_origem + 528), (y_origem + 605))  # clica no correr
+            jogou_uma_vez = True
+
+    return jogou_uma_vez
 
 def joga(x_origem, y_origem, id, senha, url, navegador):
 
@@ -520,9 +526,9 @@ def joga_uma_vez(x_origem, y_origem):
                 continua_jogando = False
                 print('apareceu a mensagem pode sair')
         else:
-            if pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 604), (255, 255, 255), tolerance=5):
-                jogou_uma_vez = True
-                print('jougou uma vez')
+            # if pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 604), (255, 255, 255), tolerance=5):
+            #     jogou_uma_vez = True
+            #     print('jougou uma vez')
             time_sair = time.perf_counter()
             tempo_total = time_sair - time_entrou
             print('tempo que esta esperando', tempo_total)
@@ -540,7 +546,8 @@ def joga_uma_vez(x_origem, y_origem):
 
         if sentou:
             print("esta sentado")
-            passa_corre_joga(x_origem, y_origem)
+            if passa_corre_joga(x_origem, y_origem):
+                jogou_uma_vez = True
         else:
             if jogou_uma_vez:
                 if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
