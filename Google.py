@@ -333,7 +333,7 @@ def escrever_celula(valor, guia, endereco):
         except:
             print(f"Ocorreu um erro ao obter o valor da célula:")
             print("Erro escrever_celula. Tentando novamente em 5 segundos...")
-            time.sleep(5)
+            #time.sleep(5)
             IP.tem_internet()
             cred = credencial()
             service = build('sheets', 'v4', credentials=cred)
@@ -411,39 +411,71 @@ def reservar_linha(guia, endereco):
 
         escrever_celula(valor_pc, guia, endereco)
         linha = endereco[1:]
-        time.sleep(0.3)
+        #time.sleep(0.3)
         #values, id, senha, contagem_ip = lote_valor(guia, linha)
-
-        values = pega_valor(guia, endereco)
+        time.sleep(1)
+        values, id, senha, contagem_ip = lote_valor(guia, linha)
         try:
             values = int(values)
-            if valor_pc != values: # testa se no meio do tempo putro computador ja pegou o id
-                print("Pego por outro computador", values)
-                linha_vazia_anterior += 30
+            if valor_pc == values:
+                print("Não teve concorrencia pela celula")
+                return True, id, senha, linha, contagem_ip  # Retorna o valor testado, id, senha e linha
+            else:
+                print("Pego por outro computador")
+                linha_vazia_anterior += 40
                 return False, id, senha, linha, contagem_ip
-            time.sleep(1)
-            values, id, senha, contagem_ip = lote_valor(guia, linha)
-
-            values = int(values)
-            try:
-                if valor_pc == values:
-                    print("Não teve concorrencia pela celula")
-                    return True, id, senha, linha, contagem_ip  # Retorna o valor testado, id, senha e linha
-                else:
-                    print("Pego por outro computador")
-                    linha_vazia_anterior += 30
-                    return False, id, senha, linha, contagem_ip
-                #print("values :",values)
-            except:
-                linha_vazia_anterior += 30
-                return False, id, senha, linha, contagem_ip
+            #print("values :",values)
         except:
-            linha_vazia_anterior += 30
+            linha_vazia_anterior += 40
             return False, id, senha, linha, contagem_ip
+
     else:
         print('A chave não existe no dicionário')
 
-
+# def reservar_linha(guia, endereco):
+#     print("reservar_linha")
+#     global linha_vazia_anterior
+#
+#     values = None
+#     id = ""
+#     senha = ""
+#     linha = ""
+#     contagem_ip = ""
+#     #print(valor)
+#     if valor_pc is not None:
+#
+#         escrever_celula(valor_pc, guia, endereco)
+#         linha = endereco[1:]
+#         #time.sleep(0.3)
+#         #values, id, senha, contagem_ip = lote_valor(guia, linha)
+#
+#         values = pega_valor(guia, endereco)
+#         try:
+#             values = int(values)
+#             if valor_pc != values: # testa se no meio do tempo putro computador ja pegou o id
+#                 print("Pego por outro computador", values)
+#                 linha_vazia_anterior += 40
+#                 return False, id, senha, linha, contagem_ip
+#             time.sleep(1)
+#             values, id, senha, contagem_ip = lote_valor(guia, linha)
+#             try:
+#                 values = int(values)
+#                 if valor_pc == values:
+#                     print("Não teve concorrencia pela celula")
+#                     return True, id, senha, linha, contagem_ip  # Retorna o valor testado, id, senha e linha
+#                 else:
+#                     print("Pego por outro computador")
+#                     linha_vazia_anterior += 40
+#                     return False, id, senha, linha, contagem_ip
+#                 #print("values :",values)
+#             except:
+#                 linha_vazia_anterior += 40
+#                 return False, id, senha, linha, contagem_ip
+#         except:
+#             linha_vazia_anterior += 40
+#             return False, id, senha, linha, contagem_ip
+#     else:
+#         print('A chave não existe no dicionário')
 
 def lote_valor(guia, linha):
 
@@ -492,6 +524,7 @@ def lote_valor(guia, linha):
             service = build('sheets', 'v4', credentials=cred)
 
 def pega_valor(guia, endereco):
+    print('pega_valor')
     global cred
     global service
     regiao = f"{guia}!{endereco}"  # 'R1!B150'
@@ -503,7 +536,7 @@ def pega_valor(guia, endereco):
                 range=regiao).execute()
             # Extrai o valor da célula e retorna
             values = result.get('values', [])
-            #print("o valor escrito na celula é :", values[0][0])
+            print("o valor escrito na celula é :", values[0][0])
             return values[0][0]
 
         # except (socket.gaierror, TransportError, ServerNotFoundError) as error:
@@ -547,6 +580,10 @@ def zera_cont_IP(endereco):
 
     global cred
     global service
+
+    cred = credencial()
+    service = build('sheets', 'v4', credentials=cred)
+
     letra = endereco[0]  # obtém a primeira letra do endereço
     numero = int(endereco[1:])  # obtém o número do endereço
     endereco2 = letra + str(numero - 1)  # cria a variável com o endereço imediatamente inferior

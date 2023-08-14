@@ -83,20 +83,26 @@ navegador = Seleniun.cria_nevegador()
 Seleniun.abrir_navegador(url, navegador)
 while True:
     alterar_global_aviso_sistema(False)
+
     guia = HoraT.mudar_guia(id, guia)
+
+    url = str(Google.pega_valor('Dados', 'F1'))
 
     print("guia:", guia)
     if id == id_novo or id == "":
         id, senha, linha, cont_IP = Google.credenciais(guia)
+
         if id == "":
             Seleniun.sair_face(url, navegador)
             guia = HoraT.mudar_guia(id, guia)
             id, senha, linha, cont_IP = Google.credenciais(guia)
+
     else:
         id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
 
-    url = str(Google.pega_valor('Dados', 'F1'))
+
     dia_da_semana = int(datetime.datetime.now().weekday()) # busca o dia da semana 0 segunda 1 terça ... 6 domeingo
+
     #login
     while True:
         #parte deo codigo que faz loguin
@@ -111,11 +117,16 @@ while True:
         if cont_IP >= LIMITE_IP or cont_IP < 0:  # se a contagem de ip ta fora da faixa vai para a função
             IP.ip()  # testa se o numero de contas esta dentro do limite antes de trocar ip
 
+        # # Comando para iniciar a tarefa independente
+        # continuar_tarefa = True
+        # iniciar_tarefa.release()
+
         entrou_corretamente, stataus = Seleniun.fazer_login(id, senha, url, navegador)
         if entrou_corretamente is False:  # se nao entrou no face
             print("conta nao entou no Facebook")
             Google.marca_caida(stataus, guia, linha)
             break
+
 
         while True:
 
@@ -134,6 +145,9 @@ while True:
         if entrou_corretamente is False:  # se nao entrou no face
             Google.marca_caida(stataus, guia, linha)
             break
+
+
+
         ja_fez_tutorial = True
         if status_conta != 'Carregada':  # testa status da conta
             if status_conta == 'Banida':  # se aconta esta banida
@@ -524,6 +538,7 @@ while True:
         while True:
             if not continuar_tarefa:
                 break
+            time.sleep(0.3)
         print('tarefa independente terminada')
 
         if valores == [""]:
@@ -542,3 +557,4 @@ while True:
             guia = guia_recebida
             id, senha, linha, cont_IP = Google.credenciais(guia)  # pega id e senha par o proximo login
         guia = guia_recebida
+
