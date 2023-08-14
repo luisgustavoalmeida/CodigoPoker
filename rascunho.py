@@ -314,3 +314,4 @@
 #
 # # Agora a tarefa independente está pausada e pronta para aguardar um novo comando do código principal
 # # Você pode repetir esse processo quantas vezes for necessário para controlar a execução da tarefa independente.
+

@@ -96,7 +96,7 @@ while True:
         id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
 
     url = str(Google.pega_valor('Dados', 'F1'))
-    dia_da_semana = datetime.datetime.now().weekday() # busca o dia da semana 0 segunda 1 terça ... 6 domeingo
+    dia_da_semana = int(datetime.datetime.now().weekday()) # busca o dia da semana 0 segunda 1 terça ... 6 domeingo
     #login
     while True:
         #parte deo codigo que faz loguin
@@ -280,12 +280,20 @@ while True:
                     OCR_tela.tarefas_diaris_trocar(x_origem, y_origem)
                     conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)  # retorna se a conta ta upada ou nao
                     meta_atingida, pontuacao_tarefas = Tarefas.meta_tarefas(x_origem, y_origem)
-                    lista_tarefas_fazer = Tarefas.comparar_listas(x_origem, y_origem)
+                    lista_tarefas_fazer, pontos_disponiveis = Tarefas.comparar_listas(x_origem, y_origem, dia_da_semana)
                     print('numero de tarefas para serem feitos: ', len(lista_tarefas_fazer))
                     print('lista de tarefas para se fazer: ', lista_tarefas_fazer)
                     if lista_tarefas_fazer:
-                        print("\n\n Foi encontrado ao menos uma tarefa\n\n")
+                        print("\n\n Não há tarefas para serem feitas\n\n")
                         break
+
+                    if dia_da_semana == 5: # testa se é sabado ultimo dia das tarefas
+                        if ((pontuacao_tarefas + pontos_disponiveis) < 150) and (pontuacao_tarefas < 150):
+                            print('\n\nA soma dos pontos disponiveis e os pontos feitos não atigem 200, o máximo que pode atingir é:', pontuacao_tarefas + pontos_disponiveis)
+                            break
+                        if ((pontuacao_tarefas + pontos_disponiveis) < 200) and (pontuacao_tarefas >= 150):
+                            print('\n\nA soma dos pontos disponiveis e os pontos feitos não atigem 200, o máximo que pode atingir é:', pontuacao_tarefas + pontos_disponiveis)
+                            break
 
                     if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
                         break
@@ -321,7 +329,7 @@ while True:
                     Tarefas.recolher_tarefa(x_origem, y_origem)  # recolhe se tiver alguma tarefa batida
                     conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
                     meta_atingida, pontuacao_tarefas = Tarefas.meta_tarefas(x_origem, y_origem)
-                    lista_tarefas_fazer = Tarefas.comparar_listas(x_origem, y_origem)
+                    lista_tarefas_fazer, pontos_disponiveis = Tarefas.comparar_listas(x_origem, y_origem, dia_da_semana)
 
                 if HoraT.fim_tempo_tarefa():
                     Limpa.limpa_total(x_origem, y_origem)
@@ -330,6 +338,17 @@ while True:
                     break
                 if (len(lista_tarefas_fazer) <= 0) or meta_atingida or (valor_fichas < 40000):
                     break
+                if dia_da_semana == 5:  # testa se é sabado ultimo dia das tarefas
+                    if ((pontuacao_tarefas + pontos_disponiveis) < 150) and (pontuacao_tarefas < 150):
+                        print(
+                            '\n\nA soma dos pontos disponiveis e os pontos feitos não atigem 200, o máximo que pode atingir é:',
+                            pontuacao_tarefas + pontos_disponiveis)
+                        break
+                    if ((pontuacao_tarefas + pontos_disponiveis) < 200) and (pontuacao_tarefas >= 150):
+                        print(
+                            '\n\nA soma dos pontos disponiveis e os pontos feitos não atigem 200, o máximo que pode atingir é:',
+                            pontuacao_tarefas + pontos_disponiveis)
+                        break
                 elif 'Jogar 100 vezes nas Cartas Premiadas' in lista_tarefas_fazer\
                         or 'Jogar 50 vezes nas Cartas Premiadas' in lista_tarefas_fazer\
                         or 'Jogar 10 vezes nas Cartas Premiadas' in lista_tarefas_fazer:
@@ -345,7 +364,7 @@ while True:
                     Tarefas.recolher_tarefa(x_origem, y_origem)  # recolhe se tiver alguma tarefa batida
                     conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
                     meta_atingida, pontuacao_tarefas = Tarefas.meta_tarefas(x_origem, y_origem)
-                    lista_tarefas_fazer = Tarefas.comparar_listas(x_origem, y_origem)
+                    lista_tarefas_fazer, pontos_disponiveis = Tarefas.comparar_listas(x_origem, y_origem, dia_da_semana)
 
                 if HoraT.fim_tempo_tarefa():
                     Limpa.limpa_total(x_origem, y_origem)
@@ -354,6 +373,17 @@ while True:
                     break
                 if (len(lista_tarefas_fazer) <= 0) or meta_atingida or (valor_fichas < 40000):
                     break
+                if dia_da_semana == 5:  # testa se é sabado ultimo dia das tarefas
+                    if ((pontuacao_tarefas + pontos_disponiveis) < 150) and (pontuacao_tarefas < 150):
+                        print(
+                            '\n\nA soma dos pontos disponiveis e os pontos feitos não atigem 200, o máximo que pode atingir é:',
+                            pontuacao_tarefas + pontos_disponiveis)
+                        break
+                    if ((pontuacao_tarefas + pontos_disponiveis) < 200) and (pontuacao_tarefas >= 150):
+                        print(
+                            '\n\nA soma dos pontos disponiveis e os pontos feitos não atigem 200, o máximo que pode atingir é:',
+                            pontuacao_tarefas + pontos_disponiveis)
+                        break
                 elif 'Ganhar 100.000 fichas nas Cartas Premiadas' in lista_tarefas_fazer \
                         or 'Ganhar 30.000 fichas nas Cartas Premiadas' in lista_tarefas_fazer \
                         or 'Ganhar 4.000 fichas nas Cartas Premiadas' in lista_tarefas_fazer:
@@ -369,7 +399,7 @@ while True:
                     Tarefas.recolher_tarefa(x_origem, y_origem)  # recolhe se tiver alguma tarefa batida
                     conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
                     meta_atingida, pontuacao_tarefas = Tarefas.meta_tarefas(x_origem, y_origem)
-                    lista_tarefas_fazer = Tarefas.comparar_listas(x_origem, y_origem)
+                    lista_tarefas_fazer, pontos_disponiveis = Tarefas.comparar_listas(x_origem, y_origem, dia_da_semana)
 
                 if HoraT.fim_tempo_tarefa():
                     Limpa.limpa_total(x_origem, y_origem)
@@ -378,6 +408,17 @@ while True:
                     break
                 if (len(lista_tarefas_fazer) <= 0) or meta_atingida or (valor_fichas < 40000):
                     break
+                if dia_da_semana == 5:  # testa se é sabado ultimo dia das tarefas
+                    if ((pontuacao_tarefas + pontos_disponiveis) < 150) and (pontuacao_tarefas < 150):
+                        print(
+                            '\n\nA soma dos pontos disponiveis e os pontos feitos não atigem 200, o máximo que pode atingir é:',
+                            pontuacao_tarefas + pontos_disponiveis)
+                        break
+                    if ((pontuacao_tarefas + pontos_disponiveis) < 200) and (pontuacao_tarefas >= 150):
+                        print(
+                            '\n\nA soma dos pontos disponiveis e os pontos feitos não atigem 200, o máximo que pode atingir é:',
+                            pontuacao_tarefas + pontos_disponiveis)
+                        break
                 elif 'Jogar no Casino Genius Pro 100 vezes' in lista_tarefas_fazer\
                         or 'Jogar no Casino Genius Pro 50 vezes' in lista_tarefas_fazer\
                         or 'Jogar no Casino Genius Pro 10 vezes' in lista_tarefas_fazer:
@@ -393,7 +434,7 @@ while True:
                     Tarefas.recolher_tarefa(x_origem, y_origem)  # recolhe se tiver alguma tarefa batida
                     conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
                     meta_atingida, pontuacao_tarefas = Tarefas.meta_tarefas(x_origem, y_origem)
-                    lista_tarefas_fazer = Tarefas.comparar_listas(x_origem, y_origem)
+                    lista_tarefas_fazer, pontos_disponiveis = Tarefas.comparar_listas(x_origem, y_origem, dia_da_semana)
 
                 if HoraT.fim_tempo_tarefa():
                     Limpa.limpa_total(x_origem, y_origem)
@@ -402,6 +443,17 @@ while True:
                     break
                 if (len(lista_tarefas_fazer) <= 0) or meta_atingida or (valor_fichas < 40000):
                     break
+                if dia_da_semana == 5:  # testa se é sabado ultimo dia das tarefas
+                    if ((pontuacao_tarefas + pontos_disponiveis) < 150) and (pontuacao_tarefas < 150):
+                        print(
+                            '\n\nA soma dos pontos disponiveis e os pontos feitos não atigem 200, o máximo que pode atingir é:',
+                            pontuacao_tarefas + pontos_disponiveis)
+                        break
+                    if ((pontuacao_tarefas + pontos_disponiveis) < 200) and (pontuacao_tarefas >= 150):
+                        print(
+                            '\n\nA soma dos pontos disponiveis e os pontos feitos não atigem 200, o máximo que pode atingir é:',
+                            pontuacao_tarefas + pontos_disponiveis)
+                        break
                 elif 'Ganhar 100.000 fichas no Casino Genius Pro' in lista_tarefas_fazer \
                         or 'Ganhar 30.000 fichas no Casino Genius Pro' in lista_tarefas_fazer \
                         or 'Ganhar 4.000 fichas no Casino Genius Pro' in lista_tarefas_fazer:
@@ -417,7 +469,7 @@ while True:
                     Tarefas.recolher_tarefa(x_origem, y_origem)  # recolhe se tiver alguma tarefa batida
                     conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
                     meta_atingida, pontuacao_tarefas = Tarefas.meta_tarefas(x_origem, y_origem)
-                    lista_tarefas_fazer = Tarefas.comparar_listas(x_origem, y_origem)
+                    lista_tarefas_fazer, pontos_disponiveis = Tarefas.comparar_listas(x_origem, y_origem, dia_da_semana)
 
                 if HoraT.fim_tempo_tarefa():
                     Limpa.limpa_total(x_origem, y_origem)
@@ -426,6 +478,17 @@ while True:
                     break
                 if (len(lista_tarefas_fazer) <= 0) or meta_atingida or (conta_upada is False) or (valor_fichas < 40000):
                     break
+                if dia_da_semana == 5:  # testa se é sabado ultimo dia das tarefas
+                    if ((pontuacao_tarefas + pontos_disponiveis) < 150) and (pontuacao_tarefas < 150):
+                        print(
+                            '\n\nA soma dos pontos disponiveis e os pontos feitos não atigem 200, o máximo que pode atingir é:',
+                            pontuacao_tarefas + pontos_disponiveis)
+                        break
+                    if ((pontuacao_tarefas + pontos_disponiveis) < 200) and (pontuacao_tarefas >= 150):
+                        print(
+                            '\n\nA soma dos pontos disponiveis e os pontos feitos não atigem 200, o máximo que pode atingir é:',
+                            pontuacao_tarefas + pontos_disponiveis)
+                        break
                 elif 'Apostar 20 fichas ou mais em 9 linhas do caca' in lista_tarefas_fazer\
                         or 'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 150 vezes' in lista_tarefas_fazer\
                         or 'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 70 vezes' in lista_tarefas_fazer\

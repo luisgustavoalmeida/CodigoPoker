@@ -61,10 +61,6 @@ caminho_tesseract = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 if not os.path.isfile(caminho_tesseract):
     raise Exception("Caminho do executável do Tesseract inválido")
 
-#x_origem, y_origem = Origem_pg.carregado_origem()
-#print(x_origem, y_origem)
-
-
 def OCR_regiao (regiao, config, inveter_cor, fator_ampliacao,contraste):
 
     try:
@@ -111,7 +107,7 @@ def OCR_regiao (regiao, config, inveter_cor, fator_ampliacao,contraste):
             # Remove os espaços em branco no início e no final do texto
             texto = texto.strip()  # remove os espaços em branco (espaços, tabulações e quebras de linha) no início e no final da string
             # print("___________________\n")
-            # print("OCR_tela. Texto encontrado pelo OCR: \n", texto)
+            #print("OCR_tela. Texto encontrado pelo OCR: \n", texto)
             # print("\n___________________")
             return texto
         else:
@@ -283,7 +279,37 @@ def tarefas_diaris_posicao2(x_origem, y_origem):
         return lista
     return lista
 
+dicionario_tarefas_fazer = {#caça-níquel da mesa
+                            'Jogar o caca-niquel da mesa 150 vezes': 30,
+                            'Jogar o caca-niquel da mesa 70 vezes': 20,
+                            'Jogar o caca-niquel da mesa 10 vezes': 10,
+                            'Ganhar 100.000 fichas no caca niquel da mesa': 30,
+                            'Ganhar 30.000 fichas no caca niquel da mesa': 20,
+                            'Ganhar 10.000 fichas no caca niquel da mesa': 10,
+                            # Casino Genius
+                            'Jogar no Casino Genius Pro 100 vezes': 30,
+                            'Jogar no Casino Genius Pro 50 vezes': 20,
+                            'Jogar no Casino Genius Pro 10 vezes': 10,
+                            'Ganhar 100.000 fichas no Casino Genius Pro': 30,
+                            'Ganhar 30.000 fichas no Casino Genius Pro': 20,
+                            'Ganhar 4.000 fichas no Casino Genius Pro': 10,
+                            #Cartas Premiadas
+                            'Jogar 100 vezes nas Cartas Premiadas': 30,
+                            'Jogar 50 vezes nas Cartas Premiadas': 20,
+                            'Jogar 10 vezes nas Cartas Premiadas': 10,
+                            'Ganhar 100.000 fichas nas Cartas Premiadas': 30,
+                            'Ganhar 30.000 fichas nas Cartas Premiadas': 20,
+                            'Ganhar 4.000 fichas nas Cartas Premiadas': 10,
+                            #Poker Slot
+                            'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 150 vezes': 30,
+                            'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 70 vezes': 20,
+                            'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 10 vezes': 10,
+                            'Ganhar 100.000 fichas no caca niquel slot poker': 30,
+                            'Ganhar 30.000 fichas no caca niquel slot poker': 20,
+                            'Ganhar 10.000 fichas no caca niquel slot poker': 10}
+
 def tarefas_diaris(x_origem, y_origem):
+
     lista = []
     lista2 = []
     # Define a região de interesse
@@ -318,12 +344,8 @@ def tarefas_diaris(x_origem, y_origem):
                                 if item not in lista:
                                     # inclui na lista o itens nao repitidos
                                     lista.append(item)
-                            #print(lista)
-                            return lista
-            else:
-                #print(lista)
-                return lista
             time.sleep(2)
+
     #print(lista)
     return lista
 
@@ -378,15 +400,13 @@ def tarefas_diaris_trocar(x_origem, y_origem):
                        'Tirar Sequencia 2 vezes em mesas com blinds maiores que 100',
                        'Tirar Trinca 2 vezes em mesas com blinds maiores que 100']
 
-
-
         # Define a região de interesse
         config = '--psm 6 --oem 1'
         inveter_cor = True
         fator_ampliacao = 1
         contraste = 1
         #config = None
-        print('\n\n OCR tarefas diarias  troca\n')
+        #print('\n\n OCR tarefas diarias troca\n')
         regiao0 = (x_origem + 274, y_origem + 268, x_origem + 591, y_origem + 310)
         regiao1 = (x_origem + 274, y_origem + 348, x_origem + 591, y_origem + 390)
         regiao2 = (x_origem + 274, y_origem + 428, x_origem + 591, y_origem + 470)
@@ -398,7 +418,7 @@ def tarefas_diaris_trocar(x_origem, y_origem):
 
         for i, regiao in enumerate(regioes):
 
-            print(i)
+            #print(i)
 
             if i == 4:
                 pyautogui.doubleClick(708 + x_origem, 418 + y_origem)  # rola para ver se a tarefa esta na segunda parte
@@ -412,13 +432,13 @@ def tarefas_diaris_trocar(x_origem, y_origem):
                 print(texto)
                 lista_trocar_tarefa.append(texto)
 
-        print(lista_trocar_tarefa)
+        #print(lista_trocar_tarefa)
 
         for item in para_trocar:
             matches = difflib.get_close_matches(item, lista_trocar_tarefa, n=1, cutoff=0.985)
             if matches:
                 posicao = lista_trocar_tarefa.index(matches[0])
-                print(f'O item "{item}" da lista "para_trocar" é semelhante a "{matches[0]}" na posição {posicao} da lista "lista_trocar_tarefa".')
+                #print(f'O item "{item}" da lista "para_trocar" é semelhante a "{matches[0]}" na posição {posicao} da lista "lista_trocar_tarefa".')
 
                 if posicao <= 3:
                     pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
@@ -444,53 +464,6 @@ def tarefas_diaris_trocar(x_origem, y_origem):
                 break
     print('nao tem tarefa na lista de troca')
 
-# def remover_termos(texto):
-#     if texto is None:
-#         return []
-#
-#     termos = ['rico tab bien odio ia Lana nina iodo iii ua ind ias de 50', 'ua a nn ao Cidia ias ini fundir insira E en,',
-#               'unas boina ia iara ia caia so uniiitn tias', 'iu da age dai ain adiantado iria daria',
-#               'ia a nao tis io dial us iria vãs,', 'TA AAm e mA a Eg NE eRr aaA', 'ESET EN) TN RI E e RR E',
-#               '& 1000 PN ke. São', 'S +500 BP +11)', "em es = ou CO'", '1000 A)1000 A', '6 +2000 P+30', 'C200  BPD0 |',
-#               '* +500 B 10', 'l; *1000 [A', '6 2000 B 30', 'B 500 B 10', 'C200  BPD0', '& 500 B 10', '3 +500 A/)',
-#               'E 27 a/) =', '6 500 B 10', 'B 500 A/)', '& 1000 A)', 'Sum CEPE.', 'pc ai fa', '6 500 R/', 'º +500 /',
-#               'E 27 a =', 'pacos ra', '4 500 Po', 'pç ai fa', 'paços ra', '& 500 [A', '& 1000 P', '1000 UA)', 'B +s00 A',
-#               '& 1000 A', '1000 [A', 'pião SO', 'poça fo', '2000 B0', '1000 A)', '200 BP0', 'poça fa', 'B 500 /',
-#               '2000 BP', '500 Bi)', '2000 PD', 'POA fo', '100 Pn', '200 PD', '500 Bi', '200 BP', '0 BA /', ') [A;/',
-#               'poo P0', 'SM Pt', 'os“ 3', '500 A', '|||.', ') R/', ') ”', '/ -', '/ ”', 'P0', '[A', 'B0', ')', '/']
-#
-#     # Remover termos do texto
-#     for termo in termos:
-#         texto = texto.replace(termo, '')
-#
-#     # Remover linhas vazias entre textos
-#     linhas = texto.split('\n')
-#     texto_formatado = []
-#     linha_vazia = False
-#
-#     for linha in linhas:
-#         if linha.strip() == '':
-#             if linha_vazia:
-#                 texto_formatado.append(linha)
-#                 linha_vazia = False
-#             else:
-#                 linha_vazia = True
-#         else:
-#             texto_formatado.append(linha)
-#             linha_vazia = False
-#
-#     texto_formatado = '\n'.join(texto_formatado)
-#
-#     # Extrair itens de texto formatado
-#     itens = texto_formatado.split('\n\n')
-#
-#     # Remover caracteres indesejados e formar a lista final
-#     lista = [item.replace('\n', ' ').strip().rstrip('.').replace("í", "i").replace("ç", "c") for item in itens if len(item) > 34]
-#
-#     #print(lista)
-#
-#     return lista
-
 
 def remover_termos(texto):
     if texto is None:
@@ -505,34 +478,13 @@ def remover_termos(texto):
     texto = re.sub(r'caca\nniquel', 'caca niquel', texto)
 
     # print('Texto sem Ç, sem Í, sem .')
-    # print(texto)
-
-    termos =['Jogar o caca-niquel da mesa 150 vezes',
-             'Jogar o caca-niquel da mesa 70 vezes',
-             'Jogar o caca-niquel da mesa 10 vezes',
-             'Jogar no Casino Genius Pro 100 vezes',
-             'Jogar no Casino Genius Pro 50 vezes',
-             'Jogar no Casino Genius Pro 10 vezes',
-             'Ganhar 100.000 fichas no Casino Genius Pro',
-             'Ganhar 30.000 fichas no Casino Genius Pro',
-             'Ganhar 4.000 fichas no Casino Genius Pro',
-             'Jogar 100 vezes nas Cartas Premiadas',
-             'Jogar 50 vezes nas Cartas Premiadas',
-             'Jogar 10 vezes nas Cartas Premiadas',
-             'Ganhar 100.000 fichas nas Cartas Premiadas',
-             'Ganhar 30.000 fichas nas Cartas Premiadas',
-             'Ganhar 4.000 fichas nas Cartas Premiadas',
-             'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 150 vezes',
-             'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 70 vezes',
-             'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 10 vezes','Consiga Flush ou qualquer mao superior nas mesas OMAHA',
-                ]
+    #print(texto)
 
     linhas = texto.split('\n')
-    texto_formatado = '\n'.join([linha for linha in linhas if linha.strip() in termos or linha.strip() == ''])
+    texto_formatado = '\n'.join([linha for linha in linhas if linha.strip() in dicionario_tarefas_fazer.keys() or linha.strip() == ''])
 
-
-    # print('Texto')
-    # print(texto_formatado)
+    #print('Texto')
+    #print(texto_formatado)
 
     # Extrair itens de texto formatado
     itens = texto_formatado.split('\n')
@@ -541,8 +493,8 @@ def remover_termos(texto):
     #lista = [item.replace('\n', ' ').strip() for item in itens if len(item) > 34]
     lista = [re.sub(r'\s+', ' ', item.replace('\n', ' ').strip()) for item in itens if len(item) > 34]
 
-    # print('lista')
-    # print(lista)
+    #print('lista')
+    #print(lista)
     return lista
 
 
@@ -651,8 +603,7 @@ def aviso_sistema(x_origem, y_origem):
 #
 #x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
 # tarefas_diaris_trocar(x_origem, y_origem)
-
-# tarefas_diaris(x_origem, y_origem)
+#tarefas_diaris(x_origem, y_origem)
 # # # # # # # # # print(y_origem)
 # # # # # # # # # # # valor_apostar(x_origem, y_origem)
 # # # # # # # # # #
