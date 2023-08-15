@@ -87,7 +87,7 @@ def f5_quando_internete_ocila(id, senha, url, navegador):
         except Exception as e:
             print("Sem conexão com a internet...")
             print(e)
-            #time.sleep(5)
+            time.sleep(5)
             conectado = False
 
 
