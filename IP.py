@@ -70,7 +70,7 @@ def f5_quando_internete_ocila(id, senha, url, navegador):
     conectado = True
     while True:
         try:
-            response = requests.get('http://www.google.com', timeout=1)
+            response = requests.get('http://www.google.com', timeout=2)
             #if response.status_code == 200:
             if response.status_code == 200 or response.status_code == 429:
                 print("Conexão com a internet ativa. ")
