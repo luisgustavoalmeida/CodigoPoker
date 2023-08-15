@@ -158,7 +158,7 @@ def limpa_pequeno(x_origem, y_origem):
             aviso_sistema, resposta = OCR_tela.aviso_sistema(x_origem, y_origem)
             if resposta == "sair da conta":
                 print("sair da conta")
-                return True
+                return "sair da conta"
 
     # clica no Normal
     elif pyautogui.pixelMatchesColor((x_origem + 162), (y_origem + 160), (12, 72, 108), tolerance=5):
@@ -212,7 +212,7 @@ def limpa_pequeno(x_origem, y_origem):
         if aviso_sistema:
             if resposta == "sair da conta":
                 print("sair da conta")
-                return True
+                return "sair da conta"
 
 
 

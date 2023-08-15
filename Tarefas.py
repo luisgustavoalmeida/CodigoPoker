@@ -124,7 +124,7 @@ def comparar_listas(x_origem, y_origem, dia_da_semana):
                 lista_do_dia.append(chave)
 
     print(lista_do_dia)
-    print("Pontos disponiveis: ", pontos_disponiveis)
+    print("Pontos disponiveis para serem feritos: ", pontos_disponiveis)
 
     return lista_do_dia, pontos_disponiveis
 

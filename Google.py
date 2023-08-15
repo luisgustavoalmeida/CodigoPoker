@@ -726,12 +726,13 @@ def marca_banida(status, guia, linha):
     escrever_celula(status, guia, endereco)
 
 def marca_caida(status, guia, linha):
-    endereco = f"D{linha}"
-    escrever_celula('x', guia, endereco)
+    if status != 'Banida':
+        endereco = f"D{linha}"
+        escrever_celula('x', guia, endereco)
     endereco = f"G{linha}"
     escrever_celula(status, guia, endereco)
-    endereco = f"L{linha}"
-    escrever_celula(status, guia, endereco)
+    # endereco = f"L{linha}"
+    # escrever_celula(status, guia, endereco)
 
 
 def marca_ip(guia, linha):

@@ -99,7 +99,7 @@ def teste_logado(id, senha, url, navegador):
     if "/pokerbrasil?" in url_atual: # se nao esta logado
         #print("teste_logado ok")
         entrou = True
-        status = "ok"
+        status = 'Carregada'
         return entrou, status
 
     elif "/pokerbrasil?" not in url_atual:  # se nao esta logado
@@ -140,7 +140,7 @@ def fazer_login(id, senha, url, navegador):
                             #https://apps.facebook.com/pokerbrasil?vtype&amfmethod=appLinkFanPageAward&SignedParams=JrLALkSch1wuQxrULK6SWLAcpjTOb9Pmi5QvavvikU0.eyJhY3QiOiJmcCIsImZwX2FpZCI6IjU5ODUifQ&fbclid=IwAR252AFFL560939epg6Ki4tzNtLvgQJiZISVIZXFPjjBpBp5TNLBNX6TFXk
                             print("A conta está certa.")
                             entrou = True
-                            status = "ok"
+                            status = 'Carregada'
                             return entrou, status
 
                         elif "/checkpoint/" in url_atual:
