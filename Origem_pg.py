@@ -131,7 +131,7 @@ def carregado_origem(id, senha, url, navegador):#navegador
 
 
             # Espera x segundos antes da próxima tentativa
-            time.sleep(1)
+            #time.sleep(1)
             IP.f5_quando_internete_ocila(id, senha, url, navegador)
             entrou_corretamente, stataus = Seleniun.teste_logado(id, senha, url, navegador)
 

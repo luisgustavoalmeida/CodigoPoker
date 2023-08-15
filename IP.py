@@ -66,11 +66,11 @@ def testa_trocar_IP():
         return
 
 def f5_quando_internete_ocila(id, senha, url, navegador):
-    #print('f5_quando_internete_ocila')
+    print('f5_quando_internete_ocila')
     conectado = True
     while True:
         try:
-            response = requests.get('http://www.google.com', timeout=5)
+            response = requests.get('http://www.google.com', timeout=1)
             #if response.status_code == 200:
             if response.status_code == 200 or response.status_code == 429:
                 print("Conexão com a internet ativa. ")
@@ -81,12 +81,12 @@ def f5_quando_internete_ocila(id, senha, url, navegador):
                     except Exception as e:
                         print('erro autogui: ', e)
 
-                entrou_corretamente, stataus = Seleniun.teste_logado(id, senha, url, navegador)
+                    entrou_corretamente, stataus = Seleniun.teste_logado(id, senha, url, navegador)
                 return True
         except Exception as e:
             print("Sem conexão com a internet...")
             print(e)
-            time.sleep(5)
+            #time.sleep(5)
             conectado = False
 
 

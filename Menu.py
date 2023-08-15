@@ -238,14 +238,15 @@ while True:
 
                 elif roleta == 'roleta_2':
                     for i in range(20):
+                        pyautogui.doubleClick(x_origem + 683, y_origem + 14)  # clica no icone roleta, ja roda sozinho
                         time_sair = time.perf_counter()
                         tempo_total = time_sair - time_rodou
                         print('tempo que ja clicou no rodou',tempo_total)
-                        if tempo_total >= 0.2:
+                        if tempo_total >= 0.5:
                             print('ja pode sair do r2')
                             break
                         time.sleep(0.3)
-                        pyautogui.doubleClick(x_origem + 683, y_origem + 14)  # clica no icone roleta, ja roda sozinho
+                        #pyautogui.doubleClick(x_origem + 683, y_origem + 14)  # clica no icone roleta, ja roda sozinho
                     #Mesa.dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, valor_fichas, time_rodou, roleta)
 
                 valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
