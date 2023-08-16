@@ -195,9 +195,11 @@ def meu_ip():
 
 def nao_tem_internet():
     for i in range(20):
+        site_aleatorio = random.choice(sites)
         try:
-            response = requests.get('http://www.google.com', timeout=1)
-            if response.status_code == 200:
+            response = requests.get(site_aleatorio, timeout=4)
+            # if response.status_code == 200:
+            if response.status_code == 200 or response.status_code == 429:
                 print("Conexão com a internet ativa.")
                 time.sleep(0.5)  # Espera por 5 segundos antes de fazer o próximo teste
         except Exception as e:
