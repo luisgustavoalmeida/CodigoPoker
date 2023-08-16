@@ -31,12 +31,12 @@ nome_usuario = os.getlogin()
 # Obter o nome do computador
 nome_computador = socket.gethostname()
 LIMITE_IP = 5
-if nome_usuario == "PokerIP":  # teste se o usuario do computador é o que troca IP se nao for fica esperando esta livre
-    LIMITE_IP = 5
-elif (nome_usuario == "lgagu") and (nome_computador == "PC-I7-9700KF"):
-    LIMITE_IP = 5
-else:
-    LIMITE_IP = 4
+# if nome_usuario == "PokerIP":  # teste se o usuario do computador é o que troca IP se nao for fica esperando esta livre
+#     LIMITE_IP = 5
+# elif (nome_usuario == "lgagu") and (nome_computador == "PC-I7-9700KF"):
+#     LIMITE_IP = 5
+# else:
+#     LIMITE_IP = 4
 
 print("limite de troca de IP: ", LIMITE_IP)
 
