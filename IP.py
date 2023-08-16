@@ -44,6 +44,18 @@ valor_dicionario = dicionari_PC_IP[nome_computador]
 celula = valor_dicionario[0]  # pega o primeiro item da tupla
 tipo_conexao = valor_dicionario[1]  # pega o segundo item da tuplas
 
+sites = [
+    'http://www.google.com',
+    'http://www.facebook.com',
+    'http://www.twitter.com',
+    'http://www.youtube.com',
+    'http://www.instagram.com',
+    'http://www.linkedin.com',
+    'http://www.github.com',
+    'http://www.reddit.com',
+    'http://www.amazon.com',
+    'http://www.netflix.com'
+]
 def usuario_IP_nao():
     #nome_usuario = os.getlogin()
     if nome_usuario != "PokerIP":
@@ -69,8 +81,9 @@ def f5_quando_internete_ocila(id, senha, url, navegador):
     print('f5_quando_internete_ocila')
     conectado = True
     while True:
+        site_aleatorio = random.choice(sites)
         try:
-            response = requests.get('http://www.google.com', timeout=3)
+            response = requests.get(site_aleatorio, timeout=3)
             #if response.status_code == 200:
             if response.status_code == 200 or response.status_code == 429:
                 print("Conexão com a internet ativa. ")
@@ -95,19 +108,6 @@ def tem_internet():
     cont_erro2 = 0
     cont_erro = 0
     #print('tem_internet')
-
-    sites = [
-        'http://www.google.com',
-        'http://www.facebook.com',
-        'http://www.twitter.com',
-        'http://www.youtube.com',
-        'http://www.instagram.com',
-        'http://www.linkedin.com',
-        'http://www.github.com',
-        'http://www.reddit.com',
-        'http://www.amazon.com',
-        'http://www.netflix.com'
-    ]
 
     com_internete = True
     while com_internete:
