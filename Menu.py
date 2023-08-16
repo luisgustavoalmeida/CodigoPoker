@@ -123,7 +123,9 @@ while True:
     #login
     while True:
         #parte deo codigo que faz loguin
-        ip, com_internet = IP.meu_ip()  # obtem meu endereço de IP
+        #ip, com_internet = IP.meu_ip()  # obtem meu endereço de IP
+        ip = ""
+        hora_que_rodou = 0
         valor_fichas = ""
         pontuacao_tarefas = ""
         hora_atual = ""
@@ -136,8 +138,9 @@ while True:
 
         while roda:
 
-            if cont_IP >= LIMITE_IP or cont_IP < 0:  # se a contagem de ip ta fora da faixa vai para a função
-                IP.ip(LIMITE_IP)  # testa se o numero de contas esta dentro do limite antes de trocar ip
+            #if cont_IP >= LIMITE_IP or cont_IP < 0:  # se a contagem de ip ta fora da faixa vai para a função
+            IP.ip(LIMITE_IP)  # testa se o numero de contas esta dentro do limite antes de trocar ip
+
             print('____________________ manda iniciar a tarefa independete_________________')
             # Comando para iniciar a tarefa independente
             continuar_tarefa = True
@@ -266,7 +269,7 @@ while True:
                         #pyautogui.doubleClick(x_origem + 683, y_origem + 14)  # clica no icone roleta, ja roda sozinho
                     #Mesa.dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, valor_fichas, time_rodou, roleta)
 
-                valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
+                #valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
                 roda = False
                 break
 
@@ -548,9 +551,11 @@ while True:
                         if conta_upada:
                             meta_atingida, pontuacao_tarefas = Tarefas.meta_tarefas(x_origem, y_origem)
                             pontuacao_tarefas = OCR_tela.pontuacao_tarefas(x_origem, y_origem)
-                        valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
+                        #valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
                 roda = False
                 break
+        ip, com_internet = IP.meu_ip()  # obtem meu endereço de IP
+        valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
 
         Seleniun.sair_face(url, navegador)
 
@@ -600,4 +605,6 @@ while True:
             guia = guia_recebida
             id, senha, linha, cont_IP = Google.credenciais(guia)  # pega id e senha par o proximo login
         guia = guia_recebida
+
+        #cont_IP = IP.contagem_IP()
 

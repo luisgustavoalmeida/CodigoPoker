@@ -228,6 +228,15 @@ def ip_troca_agora():
         else:
             return
 
+def contagem_IP():
+    while True:
+        try:
+            cont_IP = int(Google.pega_valor('IP', celula))  # pega o valor de contas que ja rodaram no IP atual
+            print("A contagem atual de IP é:", cont_IP)
+            return cont_IP
+        except Exception as e:
+            print(e)
+            continue
 
 def ip(LIMITE_IP):
 
