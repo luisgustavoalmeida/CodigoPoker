@@ -156,22 +156,18 @@ def tem_internet():
     return True
 def meu_ip():
     urls = [
-        'https://api.ipify.org',
-        'http://checkip.amazonaws.com',
-        'http://ipinfo.io/ip',
-        'http://whatismyip.akamai.com',
-        'http://ipecho.net/plain',
-        'http://myexternalip.com/raw',
-        'http://ip.42.pl/raw',
-        'http://ipecho.net/plain',
-        'http://eth0.me',
-        'http://myip.dnsomatic.com',
-        'http://ifconfig.me/ip',
-        'https://ipv4.icanhazip.com/',
-        'http://ipv4.ident.me/',
-        'https://ipv4.icanhazip.com/',
-        'http://whatismyipv4.net'
-    ]
+            'https://api.ipify.org',
+            'http://checkip.amazonaws.com',
+            'http://ipinfo.io/ip',
+            'http://whatismyip.akamai.com',
+            'http://ip.42.pl/raw',
+            'http://eth0.me',
+            'http://myip.dnsomatic.com',
+            'https://ipv4.icanhazip.com/',
+            'http://ipv4.ident.me/',
+            'https://ipv4.icanhazip.com/',
+            'http://whatismyipv4.net']
+
     random.shuffle(urls)  # Embaralha a lista de URLs
     while True:
         for url in urls:
