@@ -81,9 +81,9 @@ def f5_quando_internete_ocila(id, senha, url, navegador):
     print('f5_quando_internete_ocila')
     conectado = True
     while True:
-        site_aleatorio = random.choice(sites)
+
         try:
-            response = requests.get(site_aleatorio, timeout=4)
+            response = requests.get('http://www.google.com', timeout=5)
             #if response.status_code == 200:
             if response.status_code == 200 or response.status_code == 429:
                 print("Conexão com a internet ativa. ")
@@ -195,11 +195,9 @@ def meu_ip():
 
 def nao_tem_internet():
     for i in range(20):
-        site_aleatorio = random.choice(sites)
         try:
-            response = requests.get(site_aleatorio, timeout=4)
-            # if response.status_code == 200:
-            if response.status_code == 200 or response.status_code == 429:
+            response = requests.get('http://www.google.com', timeout=3)
+            if response.status_code == 200:
                 print("Conexão com a internet ativa.")
                 time.sleep(0.5)  # Espera por 5 segundos antes de fazer o próximo teste
         except Exception as e:
