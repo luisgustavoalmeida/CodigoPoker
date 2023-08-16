@@ -30,7 +30,7 @@ global aviso_sistema_global
 nome_usuario = os.getlogin()
 # Obter o nome do computador
 nome_computador = socket.gethostname()
-LIMITE_IP = 5
+LIMITE_IP = 6
 # if nome_usuario == "PokerIP":  # teste se o usuario do computador é o que troca IP se nao for fica esperando esta livre
 #     LIMITE_IP = 5
 # elif (nome_usuario == "lgagu") and (nome_computador == "PC-I7-9700KF"):
@@ -141,12 +141,13 @@ while True:
             #if cont_IP >= LIMITE_IP or cont_IP < 0:  # se a contagem de ip ta fora da faixa vai para a função
             IP.ip(LIMITE_IP)  # testa se o numero de contas esta dentro do limite antes de trocar ip
 
+            entrou_corretamente, stataus_facebook = Seleniun.fazer_login(id, senha, url, navegador)
+
             print('____________________ manda iniciar a tarefa independete_________________')
             # Comando para iniciar a tarefa independente
             continuar_tarefa = True
             iniciar_tarefa.release()
 
-            entrou_corretamente, stataus_facebook = Seleniun.fazer_login(id, senha, url, navegador)
             if entrou_corretamente is False:  # se nao entrou no face
                 print("conta nao entou no Facebook")
                 #Google.marca_caida(stataus_facebook, guia, linha)
@@ -554,6 +555,7 @@ while True:
                         #valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
                 roda = False
                 break
+
         ip, com_internet = IP.meu_ip()  # obtem meu endereço de IP
         valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
 
@@ -579,20 +581,24 @@ while True:
             id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
 
         elif status_poker == 'Banida':
+
             print("Conta não entou, o Statos é: ", status_poker)
             Google.marca_caida(status_poker, guia, linha)
             id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
 
         elif status_poker == 'Atualizar':
+
             print("Conta não entou, o Statos é: ", status_poker)
             id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
 
         elif entrou_corretamente is True:  # se nao entrou no face
 
             if hora_fim_tarefa is True:
+                valores = [""]
                 #  apaga os valore quando da a hoara de sair do tarefas
                 Google.apagar_numerodo_pc(valores, guia, linha)  # apaga o nume do pc
                 Google.apagar_numerodo_pc(valores, guia, linha_novo)  # apaga o nume do pc
+
             else:
                 # escre os valores na planilha
                 Google.escrever_valores_lote(valores, guia, linha)  # escreve as informaçoes na planilha apartir da coluna E

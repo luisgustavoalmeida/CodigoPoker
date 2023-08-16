@@ -413,7 +413,7 @@ def reservar_linha(guia, endereco):
         linha = endereco[1:]
         #time.sleep(0.3)
         #values, id, senha, contagem_ip = lote_valor(guia, linha)
-        time.sleep(1.5)
+        time.sleep(2)
         values, id, senha, contagem_ip = lote_valor(guia, linha)
         try:
             values = int(values)
