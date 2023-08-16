@@ -16,7 +16,7 @@ import Seleniun
 import pygetwindow as gw
 import subprocess
 
-
+LIMITE_IP = 5
 
 # chave nome do computador : tupla( valor 1 celula , valor 2 tipo de conexão)
 # "F3" de 3 em 3       #"modem" ou "vero"
@@ -59,20 +59,20 @@ sites = [
 def usuario_IP_nao():
     #nome_usuario = os.getlogin()
     if nome_usuario != "PokerIP":
-        ip()
+        ip(LIMITE_IP)
         return
 def usuario_IP_sim():
     #nome_usuario = os.getlogin()
     if nome_usuario == "PokerIP":
-        ip()
+        ip(LIMITE_IP)
         return
 
 def testa_trocar_IP():
     if (nome_usuario == "PokerIP") and (nome_computador != "PC-I7-9700KF"):  # teste se o usuario do computador é o que troca IP se nao for fica esperando esta livre
-        ip()
+        ip(LIMITE_IP)
         return
     elif (nome_usuario == "lgagu") and (nome_computador == "PC-I7-9700KF"):
-        ip()
+        ip(LIMITE_IP)
         return
     else:
         return
