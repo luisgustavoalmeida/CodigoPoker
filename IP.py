@@ -83,7 +83,7 @@ def f5_quando_internete_ocila(id, senha, url, navegador):
     while True:
         site_aleatorio = random.choice(sites)
         try:
-            response = requests.get(site_aleatorio, timeout=3)
+            response = requests.get(site_aleatorio, timeout=4)
             #if response.status_code == 200:
             if response.status_code == 200 or response.status_code == 429:
                 print("Conexão com a internet ativa. ")
