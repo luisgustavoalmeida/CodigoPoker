@@ -16,7 +16,7 @@ import Seleniun
 import pygetwindow as gw
 import subprocess
 
-LIMITE_IP = 5
+
 
 # chave nome do computador : tupla( valor 1 celula , valor 2 tipo de conexão)
 # "F3" de 3 em 3       #"modem" ou "vero"
@@ -81,7 +81,6 @@ def f5_quando_internete_ocila(id, senha, url, navegador):
     print('f5_quando_internete_ocila')
     conectado = True
     while True:
-
         try:
             response = requests.get('http://www.google.com', timeout=5)
             #if response.status_code == 200:
@@ -230,9 +229,9 @@ def ip_troca_agora():
             return
 
 
-def ip():
+def ip(LIMITE_IP):
 
-    LIMITE_IP = 5
+    #LIMITE_IP = 5
 
     while True:
 

@@ -16,6 +16,8 @@ import Slot
 import Genius
 import pyautogui
 import datetime
+import os
+import socket
 
 import threading
 
@@ -23,13 +25,28 @@ from Variaveis_Globais import aviso_sistema_global, alterar_global_aviso_sistema
 
 global aviso_sistema_global
 
+
+# Obter o nome de usuário
+nome_usuario = os.getlogin()
+# Obter o nome do computador
+nome_computador = socket.gethostname()
+LIMITE_IP = 5
+if nome_usuario == "PokerIP":  # teste se o usuario do computador é o que troca IP se nao for fica esperando esta livre
+    LIMITE_IP = 5
+elif (nome_usuario == "lgagu") and (nome_computador == "PC-I7-9700KF"):
+    LIMITE_IP = 5
+else:
+    LIMITE_IP = 4
+
+print("limite de troca de IP: ", LIMITE_IP)
+
 id = "x"
 senha = ""
 linha = ""
 cont_IP = 10
 guia = ""
 guia_recebida = ""
-LIMITE_IP = 5
+
 ja_fez_tutorial = True
 
 # Variáveis globais para as variáveis e controle da tarefa independente
@@ -120,7 +137,7 @@ while True:
         while roda:
 
             if cont_IP >= LIMITE_IP or cont_IP < 0:  # se a contagem de ip ta fora da faixa vai para a função
-                IP.ip()  # testa se o numero de contas esta dentro do limite antes de trocar ip
+                IP.ip(LIMITE_IP)  # testa se o numero de contas esta dentro do limite antes de trocar ip
             print('____________________ manda iniciar a tarefa independete_________________')
             # Comando para iniciar a tarefa independente
             continuar_tarefa = True

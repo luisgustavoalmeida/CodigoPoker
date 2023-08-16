@@ -231,7 +231,7 @@ def primeira_celula_vazia(guia):
         except Exception as e:
             print(f"Ocorreu um erro ao obter o valor da célula:", e)
             print("Erro primeira_celula_vazia. Tentando novamente em 5 segundos...")
-            time.sleep(5)
+            #time.sleep(5)
             IP.tem_internet()
             cred = credencial()
             service = build('sheets', 'v4', credentials=cred)
@@ -362,7 +362,7 @@ def escrever_valores(valores, guia, endereco):
         except:
             print(f"Ocorreu um erro ao obter o valor da célula:")
             print("Erro escrever_valores. Tentando novamente em 5 segundos...")
-            time.sleep(5)
+            #time.sleep(5)
             IP.tem_internet()
             cred = credencial()
             service = build('sheets', 'v4', credentials=cred)
@@ -392,7 +392,7 @@ def escrever_valores_lote(valores, guia, linha):
         except:
             print(f"Ocorreu um erro ao escrever os valores:")
             print("Erro escrever_valores_lote. Tentando novamente em 3 segundos...")
-            time.sleep(5)
+            #time.sleep(5)
             IP.tem_internet()
             cred = credencial()
             service = build('sheets', 'v4', credentials=cred)
