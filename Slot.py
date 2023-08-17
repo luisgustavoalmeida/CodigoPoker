@@ -4,6 +4,7 @@ import IP
 import Tarefas
 import Limpa
 import pyautogui
+import Origem_pg
 # Desabilitar o fail-safe
 pyautogui.FAILSAFE = False
 pyautogui.PAUSE = 0
@@ -17,7 +18,7 @@ def localizar_imagem(imagem, regiao, precisao):
         time.sleep(2)
         return None
 
-def abre_slot(x_origem, y_origem):
+def abre_slot(x_origem, y_origem, joga_vezes):
     print('abre_slot')
     while True:
         for i in range(40):
@@ -38,7 +39,7 @@ def abre_slot(x_origem, y_origem):
 
                 print("Slot Classico, entrou")
 
-                ajustado = ajustar_valor(x_origem, y_origem)
+                ajustado = ajustar_valor(x_origem, y_origem, joga_vezes)
                 if ajustado:
                     return True
 
@@ -91,13 +92,18 @@ def testa_slot_lipo(x_origem, y_origem):
         time.sleep(0.3)
 
 
-def ajustar_valor(x_origem, y_origem):
+def ajustar_valor(x_origem, y_origem, joga_vezes):
     print('ajustar_valor')
 
     Limpa.aviso_canto_lobby(x_origem, y_origem)  # fecha propaganda
     imagem1 = r'Imagens\Slot\linhas9.png'
     regiao1 = (230 + x_origem, 591 + y_origem, 55, 19)  # (x, y, largura, altura)
-    imagem2 = r'Imagens\Slot\aposta20.png'
+
+    if joga_vezes:
+        imagem2 = r'Imagens\Slot\aposta20.png'
+    else:
+        imagem2 = r'Imagens\Slot\aposta200.png'
+
     regiao2 = (379 + x_origem, 591 + y_origem, 55, 18)  # (x, y, largura, altura)
     precisao = 0.98
 
@@ -123,29 +129,22 @@ def ajustar_valor(x_origem, y_origem):
             time.sleep(0.2)
     return False
 
-def solot_joga_vezes(x_origem, y_origem, id, senha, url, navegador):
-
-    tarefas_fazer = ('Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 150 vezes',
-                     'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 70 vezes',
-                     'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 10 vezes')
+def solot_joga_vezes(x_origem, y_origem, id, senha, url, navegador, joga_vezes):
+    if joga_vezes:
+        tarefas_fazer = ('Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 150 vezes',
+                         'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 70 vezes',
+                         'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 10 vezes')
+    else:
+        tarefas_fazer = ('Ganhar 100.000 fichas no caca niquel slot poker',
+                         'Ganhar 30.000 fichas no caca niquel slot poker',
+                         'Ganhar 10.000 fichas no caca niquel slot poker')
 
     continua_jogando = True
 
     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
         return "sair da conta"
 
-    # for i in range(2):
-    #     # lipa tudo antes de começar vai para o lobby
-    #     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-    #         return "sair da conta"
-    #     Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
-    #     continua_jogando, tarefa = Tarefas.comparar_listas_fazendo_tarefa(tarefas_fazer, x_origem, y_origem)
-    #     print("tarefa que tem: \n",tarefa)
-    #     Limpa.fecha_tarefa(x_origem, y_origem)  # fecha a lista de tarefas diarias
-    #     if continua_jogando:
-    #         break
-
-    abre_slot(x_origem, y_origem)
+    abre_slot(x_origem, y_origem, joga_vezes)
     cont_jogadas_troca_ip = 0
 
     while continua_jogando: # permanece joghando cartas premiadas ate nao ter mais a mição jogar x vezes
@@ -157,7 +156,7 @@ def solot_joga_vezes(x_origem, y_origem, id, senha, url, navegador):
             cont_jogadas_troca_ip = 0
             IP.testa_trocar_IP()
         cont_jogadas_troca_ip += 1
-        slot_aberto = abre_slot(x_origem, y_origem)
+        slot_aberto = abre_slot(x_origem, y_origem, joga_vezes)
         if slot_aberto == True:
             print('espera girar na cor certa')
             for i in range(20):
@@ -187,9 +186,10 @@ def solot_joga_vezes(x_origem, y_origem, id, senha, url, navegador):
                 return
         #cartas_vezes = True
         Limpa.fecha_tarefa(x_origem, y_origem)  # fecha a lista de tarefas diarias
-        abre_slot(x_origem, y_origem)
+        abre_slot(x_origem, y_origem, joga_vezes)
     return
 
 # x_origem, y_origem = Origem_pg.x_y()
-# #solot_joga_vezes(x_origem, y_origem)
-# abre_slot(x_origem, y_origem)
+# # #solot_joga_vezes(x_origem, y_origem)
+# #abre_slot(x_origem, y_origem, False)
+# ajustar_valor(x_origem, y_origem, False)

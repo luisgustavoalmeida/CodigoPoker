@@ -6,7 +6,7 @@
 #
 # # Exemplo de uso
 # x = 700
-# y = 612
+# y = 674
 #
 #
 # # x_origem = 322
@@ -23,7 +23,7 @@
 #
 #
 # x = (x_origem + 700)
-# y = (y_origem + 117)
+# y = (y_origem + 674)
 # tolerancia = 0
 # pyautogui.moveTo(x, y)
 # for i in range(100):

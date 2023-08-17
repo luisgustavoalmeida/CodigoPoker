@@ -276,6 +276,8 @@ while True:
 
             #######################Tarefas
             elif guia == "T1":
+
+                parar_tarefas = False
                 lista_tarefas_fazer = []
                 for i in range(2):
                     print('\n TAREFAS \n')
@@ -287,72 +289,24 @@ while True:
                     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
                         break
 
-
-                    for i in range(2):
-
-                        if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-                            break
-
-                        Aneis.recolhe_aneis(x_origem, y_origem)
-
-                        print('\n\n procurando tarefas...\n\n')
-                        valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem)
-                        print("Valor da fichas: ", valor_fichas)
-                        if valor_fichas < 40000: # se a conta tem menos de 110K vai para a proxima
-                            print('quantidade de fichas insuficiente para jogar')
-                            break
-
-                        conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)  # retorna se a conta ta upada ou nao
-                        print("Conta upada: ", conta_upada)
-                        if conta_upada is False: # se a conta nao esta upada passa par a proxima
-                            break
-
-                        Tarefas.recolher_tarefa(x_origem, y_origem)  # recolhe se tiver alguma tarefa batida
-                        conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
-                        meta_atingida, pontuacao_tarefas = Tarefas.meta_tarefas(x_origem, y_origem)
-                        print("Meta atigida :", meta_atingida)
-                        if meta_atingida or (conta_upada is False) or (valor_fichas < 40000): # se a meta ja foi atingida vai para a proxima
-                            break
-
-                        conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)  # retorna se a conta ta upada ou nao
-                        OCR_tela.tarefas_diaris_trocar(x_origem, y_origem)
-                        conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)  # retorna se a conta ta upada ou nao
-                        meta_atingida, pontuacao_tarefas = Tarefas.meta_tarefas(x_origem, y_origem)
-                        lista_tarefas_fazer, pontos_disponiveis = Tarefas.comparar_listas(x_origem, y_origem, dia_da_semana)
-                        print('numero de tarefas para serem feitos: ', len(lista_tarefas_fazer))
-                        print('lista de tarefas para se fazer: ', lista_tarefas_fazer)
-                        if lista_tarefas_fazer:
-                            print("\n\n Não há tarefas para serem feitas\n\n")
-                            break
-
-                        if dia_da_semana == 5: # testa se é sabado ultimo dia das tarefas
-                            if ((pontuacao_tarefas + pontos_disponiveis) < 150) and (pontuacao_tarefas < 150):
-                                print('\n\nA soma dos pontos disponiveis e os pontos feitos não atigem 200, o máximo que pode atingir é:', pontuacao_tarefas + pontos_disponiveis)
-                                break
-                            if ((pontuacao_tarefas + pontos_disponiveis) < 200) and (pontuacao_tarefas >= 150):
-                                print('\n\nA soma dos pontos disponiveis e os pontos feitos não atigem 200, o máximo que pode atingir é:', pontuacao_tarefas + pontos_disponiveis)
-                                break
-
-                        if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
-                            break
-                        time.sleep(2)
-                        if Limpa.limpa_total(x_origem, y_origem):
-                            break
+                    if Limpa.limpa_total(x_origem, y_origem):
+                        parar_tarefas = True
+                        break
 
                     if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
                         break
-
-                    if HoraT.fim_tempo_tarefa():
-                        Limpa.limpa_total(x_origem, y_origem)
-                        break
-
-                    if (len(lista_tarefas_fazer) <= 0) or meta_atingida or (valor_fichas < 40000):
+                    (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,lista_tarefas_fazer,
+                     pontos_disponiveis) = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url,
+                                                                                 navegador, dia_da_semana)
+                    print("--------------parte 1---------------")
+                    if parar_tarefas:
                         break
 
                     ##### se tem alguma tarefa para ser feita vai começar deste ponto
-                    elif 'Jogar o caca-niquel da mesa 150 vezes' in lista_tarefas_fazer\
-                            or 'Jogar o caca-niquel da mesa 70 vezes' in lista_tarefas_fazer\
-                            or 'Jogar o caca-niquel da mesa 10 vezes' in lista_tarefas_fazer:
+                    if ('Jogar o caca-niquel da mesa' in lista_tarefas_fazer
+                            or 'Jogar o caca-niquel da mesa 150 vezes' in lista_tarefas_fazer
+                            or 'Jogar o caca-niquel da mesa 70 vezes' in lista_tarefas_fazer
+                            or 'Jogar o caca-niquel da mesa 10 vezes' in lista_tarefas_fazer):
 
                         print('jogar mesa')
                         time.sleep(1)
@@ -360,182 +314,111 @@ while True:
                         Mesa.joga(x_origem, y_origem, id, senha, url, navegador)
                         time.sleep(1)
 
-                        if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-                            break
-                        Aneis.recolhe_aneis(x_origem, y_origem)
-                        conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)  # retorna se a conta ta upada ou nao
-                        Tarefas.recolher_tarefa(x_origem, y_origem)  # recolhe se tiver alguma tarefa batida
-                        conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
-                        meta_atingida, pontuacao_tarefas = Tarefas.meta_tarefas(x_origem, y_origem)
-                        lista_tarefas_fazer, pontos_disponiveis = Tarefas.comparar_listas(x_origem, y_origem, dia_da_semana)
+                        (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
+                         lista_tarefas_fazer, pontos_disponiveis) \
+                            = Tarefas.testa_continuar_fazendo_tarefa(x_origem,y_origem, id, senha,
+                                                                     url, navegador, dia_da_semana)
+                    print("--------------parte 2---------------")
+                    if parar_tarefas:
+                        break
 
-                    if HoraT.fim_tempo_tarefa():
-                        Limpa.limpa_total(x_origem, y_origem)
-                        break
-                    if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
-                        break
-                    if (len(lista_tarefas_fazer) <= 0) or meta_atingida or (valor_fichas < 40000):
-                        break
-                    if dia_da_semana == 5:  # testa se é sabado ultimo dia das tarefas
-                        if ((pontuacao_tarefas + pontos_disponiveis) < 150) and (pontuacao_tarefas < 150):
-                            print(
-                                '\n\nA soma dos pontos disponiveis e os pontos feitos não atigem 200, o máximo que pode atingir é:',
-                                pontuacao_tarefas + pontos_disponiveis)
-                            break
-                        if ((pontuacao_tarefas + pontos_disponiveis) < 200) and (pontuacao_tarefas >= 150):
-                            print(
-                                '\n\nA soma dos pontos disponiveis e os pontos feitos não atigem 200, o máximo que pode atingir é:',
-                                pontuacao_tarefas + pontos_disponiveis)
-                            break
-                    elif 'Jogar 100 vezes nas Cartas Premiadas' in lista_tarefas_fazer\
-                            or 'Jogar 50 vezes nas Cartas Premiadas' in lista_tarefas_fazer\
-                            or 'Jogar 10 vezes nas Cartas Premiadas' in lista_tarefas_fazer:
+                    if ('vezes nas Cartas Premiadas' in lista_tarefas_fazer
+                            or 'Jogar 100 vezes nas Cartas Premiadas' in lista_tarefas_fazer
+                            or 'Jogar 50 vezes nas Cartas Premiadas' in lista_tarefas_fazer
+                            or 'Jogar 10 vezes nas Cartas Premiadas' in lista_tarefas_fazer):
                         print('jogar cartas premidas vezes')
 
                         print("\n\n Faz Cartas premiadas vezes... \n\n")
                         Cartas.cartas_premidas_joga_vezes(x_origem, y_origem, id, senha, url, navegador)
 
-                        if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-                            break
-                        Aneis.recolhe_aneis(x_origem, y_origem)
-                        conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)  # retorna se a conta ta upada ou nao
-                        Tarefas.recolher_tarefa(x_origem, y_origem)  # recolhe se tiver alguma tarefa batida
-                        conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
-                        meta_atingida, pontuacao_tarefas = Tarefas.meta_tarefas(x_origem, y_origem)
-                        lista_tarefas_fazer, pontos_disponiveis = Tarefas.comparar_listas(x_origem, y_origem, dia_da_semana)
+                        (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
+                         lista_tarefas_fazer, pontos_disponiveis) \
+                            = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha,
+                                                                     url, navegador, dia_da_semana)
+                    print("--------------parte 3---------------")
+                    if parar_tarefas:
+                        break
 
-                    if HoraT.fim_tempo_tarefa():
-                        Limpa.limpa_total(x_origem, y_origem)
-                        break
-                    if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
-                        break
-                    if (len(lista_tarefas_fazer) <= 0) or meta_atingida or (valor_fichas < 40000):
-                        break
-                    if dia_da_semana == 5:  # testa se é sabado ultimo dia das tarefas
-                        if ((pontuacao_tarefas + pontos_disponiveis) < 150) and (pontuacao_tarefas < 150):
-                            print(
-                                '\n\nA soma dos pontos disponiveis e os pontos feitos não atigem 200, o máximo que pode atingir é:',
-                                pontuacao_tarefas + pontos_disponiveis)
-                            break
-                        if ((pontuacao_tarefas + pontos_disponiveis) < 200) and (pontuacao_tarefas >= 150):
-                            print(
-                                '\n\nA soma dos pontos disponiveis e os pontos feitos não atigem 200, o máximo que pode atingir é:',
-                                pontuacao_tarefas + pontos_disponiveis)
-                            break
-                    elif 'Ganhar 100.000 fichas nas Cartas Premiadas' in lista_tarefas_fazer \
-                            or 'Ganhar 30.000 fichas nas Cartas Premiadas' in lista_tarefas_fazer \
-                            or 'Ganhar 4.000 fichas nas Cartas Premiadas' in lista_tarefas_fazer:
+                    if ('fichas nas Cartas Premiadas' in lista_tarefas_fazer
+                            or 'Ganhar 100.000 fichas nas Cartas Premiadas' in lista_tarefas_fazer
+                            or 'Ganhar 30.000 fichas nas Cartas Premiadas' in lista_tarefas_fazer
+                            or 'Ganhar 4.000 fichas nas Cartas Premiadas' in lista_tarefas_fazer):
                         print('jogar cartas preimiadas valor')
 
                         print("\n\n Faz Cartas premiadas valor... \n\n")
                         Cartas.cartas_premidas_joga_valor(x_origem, y_origem, id, senha, url, navegador, lista_tarefas_fazer, valor_fichas)
 
-                        if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-                            break
-                        Aneis.recolhe_aneis(x_origem, y_origem)
-                        conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)  # retorna se a conta ta upada ou nao
-                        Tarefas.recolher_tarefa(x_origem, y_origem)  # recolhe se tiver alguma tarefa batida
-                        conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
-                        meta_atingida, pontuacao_tarefas = Tarefas.meta_tarefas(x_origem, y_origem)
-                        lista_tarefas_fazer, pontos_disponiveis = Tarefas.comparar_listas(x_origem, y_origem, dia_da_semana)
+                        (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
+                         lista_tarefas_fazer, pontos_disponiveis) \
+                            = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha,
+                                                                     url, navegador, dia_da_semana)
 
-                    if HoraT.fim_tempo_tarefa():
-                        Limpa.limpa_total(x_origem, y_origem)
+                    if parar_tarefas:
                         break
-                    if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
-                        break
-                    if (len(lista_tarefas_fazer) <= 0) or meta_atingida or (valor_fichas < 40000):
-                        break
-                    if dia_da_semana == 5:  # testa se é sabado ultimo dia das tarefas
-                        if ((pontuacao_tarefas + pontos_disponiveis) < 150) and (pontuacao_tarefas < 150):
-                            print(
-                                '\n\nA soma dos pontos disponiveis e os pontos feitos não atigem 200, o máximo que pode atingir é:',
-                                pontuacao_tarefas + pontos_disponiveis)
-                            break
-                        if ((pontuacao_tarefas + pontos_disponiveis) < 200) and (pontuacao_tarefas >= 150):
-                            print(
-                                '\n\nA soma dos pontos disponiveis e os pontos feitos não atigem 200, o máximo que pode atingir é:',
-                                pontuacao_tarefas + pontos_disponiveis)
-                            break
-                    elif 'Jogar no Casino Genius Pro 100 vezes' in lista_tarefas_fazer\
-                            or 'Jogar no Casino Genius Pro 50 vezes' in lista_tarefas_fazer\
-                            or 'Jogar no Casino Genius Pro 10 vezes' in lista_tarefas_fazer:
+
+                    if ('Jogar no Casino Genius Pro' in lista_tarefas_fazer
+                            or 'Jogar no Casino Genius Pro 100 vezes' in lista_tarefas_fazer
+                            or 'Jogar no Casino Genius Pro 50 vezes' in lista_tarefas_fazer
+                            or 'Jogar no Casino Genius Pro 10 vezes' in lista_tarefas_fazer):
                         print('Jogar Casino genius vezes')
 
                         print("\n\n Faz as Genius vezes... \n\n")
                         Genius.genius_joga_vezes(x_origem, y_origem, id, senha, url, navegador)
 
-                        if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-                            break
-                        Aneis.recolhe_aneis(x_origem, y_origem)
-                        conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)  # retorna se a conta ta upada ou nao
-                        Tarefas.recolher_tarefa(x_origem, y_origem)  # recolhe se tiver alguma tarefa batida
-                        conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
-                        meta_atingida, pontuacao_tarefas = Tarefas.meta_tarefas(x_origem, y_origem)
-                        lista_tarefas_fazer, pontos_disponiveis = Tarefas.comparar_listas(x_origem, y_origem, dia_da_semana)
+                        (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
+                         lista_tarefas_fazer, pontos_disponiveis) \
+                            = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha,
+                                                                     url, navegador, dia_da_semana)
+                    print("--------------parte 4---------------")
+                    if parar_tarefas:
+                        break
 
-                    if HoraT.fim_tempo_tarefa():
-                        Limpa.limpa_total(x_origem, y_origem)
-                        break
-                    if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
-                        break
-                    if (len(lista_tarefas_fazer) <= 0) or meta_atingida or (valor_fichas < 40000):
-                        break
-                    if dia_da_semana == 5:  # testa se é sabado ultimo dia das tarefas
-                        if ((pontuacao_tarefas + pontos_disponiveis) < 150) and (pontuacao_tarefas < 150):
-                            print(
-                                '\n\nA soma dos pontos disponiveis e os pontos feitos não atigem 200, o máximo que pode atingir é:',
-                                pontuacao_tarefas + pontos_disponiveis)
-                            break
-                        if ((pontuacao_tarefas + pontos_disponiveis) < 200) and (pontuacao_tarefas >= 150):
-                            print(
-                                '\n\nA soma dos pontos disponiveis e os pontos feitos não atigem 200, o máximo que pode atingir é:',
-                                pontuacao_tarefas + pontos_disponiveis)
-                            break
-                    elif 'Ganhar 100.000 fichas no Casino Genius Pro' in lista_tarefas_fazer \
-                            or 'Ganhar 30.000 fichas no Casino Genius Pro' in lista_tarefas_fazer \
-                            or 'Ganhar 4.000 fichas no Casino Genius Pro' in lista_tarefas_fazer:
+                    if ('fichas no Casino Genius Pro' in lista_tarefas_fazer
+                            or 'Ganhar 100.000 fichas no Casino Genius Pro' in lista_tarefas_fazer
+                            or 'Ganhar 30.000 fichas no Casino Genius Pro' in lista_tarefas_fazer
+                            or 'Ganhar 4.000 fichas no Casino Genius Pro' in lista_tarefas_fazer):
                         print('Jogar Casino genius valor')
 
                         print("\n\n Faz Genius valor... \n\n")
                         Genius.genius_joga_valor(x_origem, y_origem, id, senha, url, navegador, lista_tarefas_fazer)
 
-                        if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-                            break
-                        Aneis.recolhe_aneis(x_origem, y_origem)
-                        conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)  # retorna se a conta ta upada ou nao
-                        Tarefas.recolher_tarefa(x_origem, y_origem)  # recolhe se tiver alguma tarefa batida
-                        conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
-                        meta_atingida, pontuacao_tarefas = Tarefas.meta_tarefas(x_origem, y_origem)
-                        lista_tarefas_fazer, pontos_disponiveis = Tarefas.comparar_listas(x_origem, y_origem, dia_da_semana)
+                        (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
+                         lista_tarefas_fazer, pontos_disponiveis) \
+                            = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha,
+                                                                     url, navegador, dia_da_semana)
+                    print("--------------parte 5---------------")
+                    if parar_tarefas:
+                        break
 
-                    if HoraT.fim_tempo_tarefa():
-                        Limpa.limpa_total(x_origem, y_origem)
-                        break
-                    if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
-                        break
-                    if (len(lista_tarefas_fazer) <= 0) or meta_atingida or (conta_upada is False) or (valor_fichas < 40000):
-                        break
-                    if dia_da_semana == 5:  # testa se é sabado ultimo dia das tarefas
-                        if ((pontuacao_tarefas + pontos_disponiveis) < 150) and (pontuacao_tarefas < 150):
-                            print(
-                                '\n\nA soma dos pontos disponiveis e os pontos feitos não atigem 200, o máximo que pode atingir é:',
-                                pontuacao_tarefas + pontos_disponiveis)
-                            break
-                        if ((pontuacao_tarefas + pontos_disponiveis) < 200) and (pontuacao_tarefas >= 150):
-                            print(
-                                '\n\nA soma dos pontos disponiveis e os pontos feitos não atigem 200, o máximo que pode atingir é:',
-                                pontuacao_tarefas + pontos_disponiveis)
-                            break
-                    elif 'Apostar 20 fichas ou mais em 9 linhas do caca' in lista_tarefas_fazer\
+                    if 'Apostar 20 fichas ou mais em 9 linhas do caca' in lista_tarefas_fazer\
                             or 'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 150 vezes' in lista_tarefas_fazer\
                             or 'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 70 vezes' in lista_tarefas_fazer\
                             or 'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 10 vezes' in lista_tarefas_fazer:
 
-                        print('jogar caça niquel poker slote')
+                        print('Jogar caça niquel poker slote')
 
-                        print("\n\n Faz Slote... \n\n")
-                        Slot.solot_joga_vezes(x_origem, y_origem, id, senha, url, navegador)
+                        (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
+                         lista_tarefas_fazer, pontos_disponiveis) \
+                            = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha,
+                                                                     url, navegador, dia_da_semana)
+                    print("--------------parte 6---------------")
+                    if parar_tarefas:
+                        break
+
+                    if 'fichas no caca niquel slot poker' in lista_tarefas_fazer\
+                            or 'Ganhar 100.000 fichas no caca niquel slot poker' in lista_tarefas_fazer\
+                            or 'Ganhar 30.000 fichas no caca niquel slot poker' in lista_tarefas_fazer\
+                            or 'Ganhar 10.000 fichas no caca niquel slot poker' in lista_tarefas_fazer:
+
+                        print('Ganhar caça niquel poker slote')
+
+                        (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
+                         lista_tarefas_fazer, pontos_disponiveis) \
+                            = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha,
+                                                                     url, navegador, dia_da_semana)
+                    print("--------------parte 7---------------")
+                    if parar_tarefas:
+                        break
 
                 if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
                     print('ja esta logado sai')

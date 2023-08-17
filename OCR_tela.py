@@ -304,9 +304,9 @@ dicionario_tarefas_fazer = {#caça-níquel da mesa
                             'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 150 vezes': 30,
                             'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 70 vezes': 20,
                             'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 10 vezes': 10,
-                            'Ganhar 100.000 fichas no caca niquel slot poker': 30,
-                            'Ganhar 30.000 fichas no caca niquel slot poker': 20,
-                            'Ganhar 10.000 fichas no caca niquel slot poker': 10}
+                            'Ganhar 100.000 fichas no caca niquel Slot Poker': 30,
+                            'Ganhar 30.000 fichas no caca niquel Slot Poker': 20,
+                            'Ganhar 10.000 fichas no caca niquel Slot Poker': 10}
 
 def tarefas_diaris(x_origem, y_origem):
 
@@ -345,7 +345,7 @@ def tarefas_diaris(x_origem, y_origem):
                                     # inclui na lista o itens nao repitidos
                                     lista.append(item)
             time.sleep(2)
-
+    #print("tarefas_diaris")
     #print(lista)
     return lista
 
@@ -478,13 +478,13 @@ def remover_termos(texto):
     texto = re.sub(r'caca\nniquel', 'caca niquel', texto)
 
     # print('Texto sem Ç, sem Í, sem .')
-    #print(texto)
+    # print(texto)
 
     linhas = texto.split('\n')
     texto_formatado = '\n'.join([linha for linha in linhas if linha.strip() in dicionario_tarefas_fazer.keys() or linha.strip() == ''])
 
-    #print('Texto')
-    #print(texto_formatado)
+    # print('Texto')
+    # print(texto_formatado)
 
     # Extrair itens de texto formatado
     itens = texto_formatado.split('\n')
@@ -493,8 +493,8 @@ def remover_termos(texto):
     #lista = [item.replace('\n', ' ').strip() for item in itens if len(item) > 34]
     lista = [re.sub(r'\s+', ' ', item.replace('\n', ' ').strip()) for item in itens if len(item) > 34]
 
-    #print('lista')
-    #print(lista)
+    # print('lista')
+    # print(lista)
     return lista
 
 
@@ -601,10 +601,10 @@ def aviso_sistema(x_origem, y_origem):
 # #
 # # # #         #aviso_do_sistema()
 #
-#x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
-# tarefas_diaris_trocar(x_origem, y_origem)
-#tarefas_diaris(x_origem, y_origem)
-# # # # # # # # # print(y_origem)
+# x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
+# # tarefas_diaris_trocar(x_origem, y_origem)
+# tarefas_diaris(x_origem, y_origem)
+# # # # # # # # # # print(y_origem)
 # # # # # # # # # # # valor_apostar(x_origem, y_origem)
 # # # # # # # # # #
 # # # # # # # # # # # # valor = blind_sala(x_origem, y_origem)

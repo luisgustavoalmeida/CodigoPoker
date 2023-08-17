@@ -9,12 +9,14 @@ import time
 import OCR_tela
 import datetime
 import Limpa
+import Aneis
+import HoraT
 import Origem_pg
 # from fuzzywuzzy import fuzz #pip install fuzzywuzzy
 # import Levenshtein #pip install python-Levenshtein
 
 
-tarefas_fazer = (#caça-níquel da mesa
+tarefas_fazerF = (#caça-níquel da mesa
                 'Jogar o caca-niquel da mesa 150 vezes',
                 'Jogar o caca-niquel da mesa 70 vezes',
                 'Jogar o caca-niquel da mesa 10 vezes',
@@ -71,9 +73,9 @@ dicionario_tarefas_fazer_sabado = {#caça-níquel da mesa
                             'Jogar o caca-niquel da mesa 150 vezes': 30,
                             'Jogar o caca-niquel da mesa 70 vezes': 20,
                             'Jogar o caca-niquel da mesa 10 vezes': 10,
-                            'Ganhar 100.000 fichas no caca niquel da mesa': 30,
-                            'Ganhar 30.000 fichas no caca niquel da mesa': 20,
-                            'Ganhar 10.000 fichas no caca niquel da mesa': 10,
+                            #'Ganhar 100.000 fichas no caca niquel da mesa': 30,
+                            #'Ganhar 30.000 fichas no caca niquel da mesa': 20,
+                            #'Ganhar 10.000 fichas no caca niquel da mesa': 10,
                             # Casino Genius
                             'Jogar no Casino Genius Pro 100 vezes': 30,
                             'Jogar no Casino Genius Pro 50 vezes': 20,
@@ -92,9 +94,9 @@ dicionario_tarefas_fazer_sabado = {#caça-níquel da mesa
                             'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 150 vezes': 30,
                             'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 70 vezes': 20,
                             'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 10 vezes': 10,
-                            'Ganhar 100.000 fichas no caca niquel slot poker': 30,
-                            'Ganhar 30.000 fichas no caca niquel slot poker': 20,
-                            'Ganhar 10.000 fichas no caca niquel slot poker': 10}
+                            'Ganhar 100.000 fichas no caca niquel Slot Poker': 30,
+                            'Ganhar 30.000 fichas no caca niquel Slot Poker': 20,
+                            'Ganhar 10.000 fichas no caca niquel Slot Poker': 10}
 
 
 def localizar_imagem(imagem, regiao, precisao): # ainda tem que implementar
@@ -129,57 +131,27 @@ def comparar_listas(x_origem, y_origem, dia_da_semana):
     return lista_do_dia, pontos_disponiveis
 
 
-
-# def comparar_listas(x_origem, y_origem):
-#     lista_comum = []
-#     lista_tarefas_disponivel = OCR_tela.tarefas_diaris(x_origem, y_origem)
-#     print('lista lida pelo OCR: \n', lista_tarefas_disponivel)
-#
-#     lista_comum = list(set(tarefas_fazer).intersection(lista_tarefas_disponivel))
-#
-#     print('\n---------------------------------------\n')
-#
-#     print("Tarefas para serem feitas: \n",lista_comum)
-#
-#     print('\n---------------------------------------\n')
-#
-#     return lista_comum
-
 def comparar_listas_fazendo_tarefa(tarefas_fazer, x_origem, y_origem):
     lista_comum = []
     continua_jogando = False
     lista_tarefas_disponivel = OCR_tela.tarefas_diaris_posicao1(x_origem, y_origem)
 
-    for item in tarefas_fazer:
-        if item in lista_tarefas_disponivel:
-            print('comparar_listas_fazendo_tarefa', item)
+
+    for chave in tarefas_fazer:
+        if chave in lista_tarefas_disponivel:
+            print('comparar_listas_fazendo_tarefa', chave)
             continua_jogando = True
-            return continua_jogando, item
+            return continua_jogando, chave
 
     lista_tarefas_disponivel = OCR_tela.tarefas_diaris_posicao2(x_origem, y_origem)
 
-    for item in tarefas_fazer:
-        if item in lista_tarefas_disponivel:
-            print('comparar_listas_fazendo_tarefa', item)
+    for chave in tarefas_fazer:
+        if chave in lista_tarefas_disponivel:
+            print('comparar_listas_fazendo_tarefa', chave)
             continua_jogando = True
-            return continua_jogando, item
+            return continua_jogando, chave
 
     return continua_jogando, None
-
-
-
-    # if lista_tarefas_disponivel is not None:
-    #     lista_comum = list(set(tarefas_fazer).intersection(lista_tarefas_disponivel))
-    #
-    #     print("Tarefas para serem feitas: \n")
-    #     for item in lista_comum:
-    #         print(item)
-    #         print('continua jogando')
-    #         continua_jogando = True
-    #         return continua_jogando
-    #     print('para de jogar')
-    #     return continua_jogando
-
 
 
 def comparar_imagens(tarefas_fazer, x_origem, y_origem):
@@ -226,8 +198,6 @@ def comparar_imagens_tarefa(tarefas_fazer, x_origem, y_origem):# procura as tare
             return True, nome_tarefa
     return False, None
 
-
-
 def recolher_tarefa(x_origem, y_origem):
     posicao_recolher_tarefa_y = (542, 463, 384, 305)
     clique_recolher = []
@@ -253,9 +223,7 @@ def recolher_tarefa(x_origem, y_origem):
         for recolhe in clique_recolher:
             pyautogui.doubleClick(x_origem + 670, y_origem + recolhe)  # clica no recolher
         time.sleep(1)
-
     return
-
 
 def meta_tarefas(x_origem, y_origem):
     pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
@@ -291,6 +259,68 @@ def tem_tarefa_para_recolher(x_origem, y_origem, id, senha, url, navegador):
 
     else:
         return None, None
+
+def testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador, dia_da_semana):
+    parar_tarefas = False
+
+    if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
+        parar_tarefas = True
+        
+    valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem)
+    Aneis.recolhe_aneis(x_origem, y_origem)
+    Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)  # retorna se a conta ta upada ou nao
+    recolher_tarefa(x_origem, y_origem)  # recolhe se tiver alguma tarefa batida
+    Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)  # retorna se a conta ta upada ou nao
+    OCR_tela.tarefas_diaris_trocar(x_origem, y_origem)
+    conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
+    meta_atingida, pontuacao_tarefas = meta_tarefas(x_origem, y_origem)
+    lista_tarefas_fazer, pontos_disponiveis = comparar_listas(x_origem, y_origem, dia_da_semana)
+    
+    print('__________________________________________________________________')
+    print("Valor fichas :", valor_fichas)
+    print('Numero de tarefas disponiveis: ', len(lista_tarefas_fazer))
+    print('lista de tarefas para se fazer: ', lista_tarefas_fazer)
+    print('Pontuação tarefas:', pontuacao_tarefas)
+    print('Pontos disponiveis :', pontos_disponiveis)
+    print("Meta atigida :", meta_atingida)
+    print("Conta upada: ", conta_upada)
+    print('__________________________________________________________________')
+
+
+    if HoraT.fim_tempo_tarefa():
+        Limpa.limpa_total(x_origem, y_origem)
+        print('fim do horario destinado a tarefas')
+        parar_tarefas = True
+    elif conta_upada is False:
+        print('Conta não esta upada')
+        parar_tarefas = True        
+    elif Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
+        print('ja esta lofado')
+        parar_tarefas = True
+    elif valor_fichas < 40000:  # se a conta tem menos de 110K vai para a proxima
+        print('quantidade de fichas insuficiente para jogar')
+        parar_tarefas = True
+    elif (len(lista_tarefas_fazer) <= 0):
+        print("lista de trarefas vazia")
+        parar_tarefas = True
+    elif meta_atingida:
+        print("meta do dia atigida")
+        parar_tarefas = True
+    elif dia_da_semana == 5:  # testa se é sabado ultimo dia das tarefas
+        print('ultimo dia das tarefas')
+        if ((pontuacao_tarefas + pontos_disponiveis) < 150) and (pontuacao_tarefas < 150):
+            print(
+                '\n\nA soma dos pontos disponiveis e os pontos feitos não atigem 200, o máximo que pode atingir é:',
+                pontuacao_tarefas + pontos_disponiveis)
+            parar_tarefas = True
+        if ((pontuacao_tarefas + pontos_disponiveis) < 200) and (pontuacao_tarefas >= 150):
+            print(
+                '\n\nA soma dos pontos disponiveis e os pontos feitos não atigem 200, o máximo que pode atingir é:',
+                pontuacao_tarefas + pontos_disponiveis)
+            parar_tarefas = True
+
+
+    return parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas, lista_tarefas_fazer, pontos_disponiveis
 
 #
 # #

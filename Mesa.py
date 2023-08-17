@@ -10,6 +10,7 @@ import OCR_tela
 import IP
 import Tarefas
 import HoraT
+import Origem_pg
 
 lista_salas_niquel = ('1537',  '1538', '1546', '1542', '1545', '1543', '1541', '1540', '1536', '1535', '1769', '1768',
                       '1767', '1766', '1765',)
@@ -59,6 +60,7 @@ def clica_seta_sentar(x_origem, y_origem):
     return False
 
 def sentar_mesa(x_origem, y_origem, senta_com_maximo):
+    print('sentar_mesa')
     sentou = False
     # testa se esta aparecendo o botao azul "Jogar agora"
 
@@ -165,7 +167,7 @@ def sentar_mesa(x_origem, y_origem, senta_com_maximo):
                                     sentou = False
                                     return sentou
                                 else:
-                                    print('sentou')
+                                    print('sentar_mesa , sentou')
                                     sentou = True
                                     return sentou
 
@@ -432,7 +434,7 @@ def joga(x_origem, y_origem, id, senha, url, navegador):
         Limpa.fecha_tarefa(x_origem, y_origem)
         Limpa.limpa_jogando(x_origem, y_origem)
         sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo)
-        print("sentou")
+        print("sentou : ", sentou)
 
         if sentou:
             print("esta sentado")
@@ -477,6 +479,9 @@ def joga(x_origem, y_origem, id, senha, url, navegador):
                         if sentou and duzentos and auto10:
                             print('esta tudo ok, slote e sentado')
                             break
+                if sentou and duzentos and auto10:
+                    print('esta tudo ok, slote e sentado')
+                    break
             if not sentou:
                 print("rodou a lista de mesas 2x, da um F5 para recarregar as mesas")
                 IP.tem_internet()
@@ -497,7 +502,8 @@ def joga(x_origem, y_origem, id, senha, url, navegador):
                 if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
                     return "sair da conta"
                 break
-        gira_niquel(x_origem, y_origem)
+        if sentou:
+            gira_niquel(x_origem, y_origem)
         time.sleep(1)
     return
 
@@ -617,7 +623,7 @@ def dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, valor_fichas, time_rodo
 
 # x_origem, y_origem = Origem_pg.x_y()
 # joga(x_origem, y_origem, 0, 0, 0, 0)
-# # # passa_corre_joga(x_origem, y_origem)
+# # # # passa_corre_joga(x_origem, y_origem)
 # #
 # # # x_origem, y_origem = Origem_pg.x_y()
 # # escolher_blind(x_origem, y_origem, '20/40')
