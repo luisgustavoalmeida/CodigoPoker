@@ -87,8 +87,8 @@ def carregado_origem(id, senha, url, navegador):#navegador
                     return 0, 0, status_conta
 
                 # tutorial
-                regiao = (460, 400, 580, 300)
-                imagem = r'Imagens\Continuar.png'
+                regiao = (440, 480, 330, 270)
+                imagem = r'Imagens\Continuar2.png'
                 precisao = 0.8
                 localizado = localizar_imagem(imagem, regiao, precisao)
                 if localizado is not None:
