@@ -267,14 +267,15 @@ def fechar_navegador(navegador):
     navegador.quit()
 
 def sair_face(url, navegador):
-    for i in range(5):
+    for i in range(10):
 
         print("sair do facebook")
         IP.tem_internet()
         script = """javascript:void(function(){ function deleteAllCookiesFromCurrentDomain() { var cookies = document.cookie.split("; "); for (var c = 0; c < cookies.length; c++) { var d = window.location.hostname.split("."); while (d.length > 0) { var cookieBase = encodeURIComponent(cookies[c].split(";")[0].split("=")[0]) + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT; domain=' + d.join('.') + ' ;path='; var p = location.pathname.split('/'); document.cookie = cookieBase + '/'; while (p.length > 0) { document.cookie = cookieBase + p.join('/'); p.pop(); }; d.shift(); } } } deleteAllCookiesFromCurrentDomain(); location.href = '""" + url + """'; })();"""
+
         try:
             navegador.execute_script(script)
-            WebDriverWait(navegador, 3).until(EC.presence_of_element_located((By.NAME, 'email')))
+            WebDriverWait(navegador, 5).until(EC.presence_of_element_located((By.NAME, 'email')))
             return
         except Exception as e:
             print("ERRO ao executar o script sair ")
@@ -283,18 +284,19 @@ def sair_face(url, navegador):
             IP.tem_internet()
             print("Da um F5 e espera 3 segundos")
             pyautogui.press('f5')
-            navegador.execute_script(script)
+            # navegador.execute_script(script)
             time.sleep(3)
             continue
-        print('testa se esta visivel o login senha')
-        try:
-            WebDriverWait(navegador, 3).until(EC.presence_of_element_located((By.NAME, 'email')))
-            return
-        except Exception as e:
-            print("Tempo limite excedido tentar sair novamente ")
-            print(e)
-            time.sleep(3)
-            continue
+        #print('testa se esta visivel o login senha')
+        # try:
+        #     WebDriverWait(navegador, 3).until(EC.presence_of_element_located((By.NAME, 'email')))
+        #     return
+        # except Exception as e:
+        #     print("Tempo limite excedido tentar sair novamente ")
+        #     print(e)
+        #     time.sleep(3)
+        #     IP.tem_internet()
+        #     continue
 
 def atualizar_pagina(navegador, url):
     while True:
