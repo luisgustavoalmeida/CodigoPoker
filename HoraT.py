@@ -13,6 +13,7 @@ janela_tarefa = 900  # janela de 15 minutos para ir para as roletas quando esta 
 
 faixa_tempo = 120
 guias = ["R1", "R2", "R3", "R4", "R5"]
+
 def mudar_guia(id, guia):
     hora_atual = datetime.datetime.now().time()
     # print(hora_atual)
@@ -29,14 +30,14 @@ def mudar_guia(id, guia):
 
     if (guia == "R1") or (guia == "R2") or (guia == "R3") or (guia == "R4") or (guia == "R5"):
         if id == "": # se a cabou o R vai para tarefa
-            if tempo_tarefa > 0: # se tem algim tempo destinado as tarefas
+            if tempo_tarefa > 0:  # se tem algim tempo destinado as tarefas
                 print('Fim do R, vai para as tarefas')
                 # T1
                 guia_atual = "T1"
                 print('vai para a guia', guia_atual)
                 return guia_atual
             elif tempo_tarefa <= 0:
-                #print('hora teste 3')
+                # print('hora teste 3')
                 IP.ip_troca_agora()
                 while True:
                     hora_atual = datetime.datetime.now().time()
@@ -55,7 +56,7 @@ def mudar_guia(id, guia):
 
                                 print("gia atual:", guia_atual)
                                 if (i * tempo_total) <= tempo_atual <= ((i + 1) * tempo_total - tempo_tarefa):
-                                    print('vai para a guia',guia_atual)
+                                    print('vai para a guia', guia_atual)
                                     return guia_atual
 
         else:

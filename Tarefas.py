@@ -73,9 +73,9 @@ dicionario_tarefas_fazer_sabado = {#caça-níquel da mesa
                             'Jogar o caca-niquel da mesa 150 vezes': 30,
                             'Jogar o caca-niquel da mesa 70 vezes': 20,
                             'Jogar o caca-niquel da mesa 10 vezes': 10,
-                            #'Ganhar 100.000 fichas no caca niquel da mesa': 30,
-                            #'Ganhar 30.000 fichas no caca niquel da mesa': 20,
-                            #'Ganhar 10.000 fichas no caca niquel da mesa': 10,
+                            'Ganhar 100.000 fichas no caca niquel da mesa': 30,
+                            'Ganhar 30.000 fichas no caca niquel da mesa': 20,
+                            'Ganhar 10.000 fichas no caca niquel da mesa': 10,
                             # Casino Genius
                             'Jogar no Casino Genius Pro 100 vezes': 30,
                             'Jogar no Casino Genius Pro 50 vezes': 20,

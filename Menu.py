@@ -308,10 +308,9 @@ while True:
                             or 'Jogar o caca-niquel da mesa 70 vezes' in lista_tarefas_fazer
                             or 'Jogar o caca-niquel da mesa 10 vezes' in lista_tarefas_fazer):
 
-                        print('jogar mesa')
-                        time.sleep(1)
-                        print("\n\n Faz as tarefas... \n\n")
-                        Mesa.joga(x_origem, y_origem, id, senha, url, navegador)
+                        print("\n\n Jogar o caca-niquel da mesa vezes \n\n")
+
+                        Mesa.joga(x_origem, y_origem, id, senha, url, navegador, 200)
                         time.sleep(1)
 
                         (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
@@ -326,9 +325,9 @@ while True:
                             or 'Jogar 100 vezes nas Cartas Premiadas' in lista_tarefas_fazer
                             or 'Jogar 50 vezes nas Cartas Premiadas' in lista_tarefas_fazer
                             or 'Jogar 10 vezes nas Cartas Premiadas' in lista_tarefas_fazer):
-                        print('jogar cartas premidas vezes')
+                        print('Jogar vezes nas Cartas Premiadas')
 
-                        print("\n\n Faz Cartas premiadas vezes... \n\n")
+                        print("\n\n Jogar vezes nas Cartas Premiadas \n\n")
                         Cartas.cartas_premidas_joga_vezes(x_origem, y_origem, id, senha, url, navegador)
 
                         (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
@@ -343,9 +342,9 @@ while True:
                             or 'Ganhar 100.000 fichas nas Cartas Premiadas' in lista_tarefas_fazer
                             or 'Ganhar 30.000 fichas nas Cartas Premiadas' in lista_tarefas_fazer
                             or 'Ganhar 4.000 fichas nas Cartas Premiadas' in lista_tarefas_fazer):
-                        print('jogar cartas preimiadas valor')
+                        print('Ganhar fichas nas Cartas Premiadas')
 
-                        print("\n\n Faz Cartas premiadas valor... \n\n")
+                        print("\n\n Ganhar fichas nas Cartas Premiadas \n\n")
                         Cartas.cartas_premidas_joga_valor(x_origem, y_origem, id, senha, url, navegador, lista_tarefas_fazer, valor_fichas)
 
                         (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
@@ -362,7 +361,7 @@ while True:
                             or 'Jogar no Casino Genius Pro 10 vezes' in lista_tarefas_fazer):
                         print('Jogar Casino genius vezes')
 
-                        print("\n\n Faz as Genius vezes... \n\n")
+                        print("\n\n Jogar no Casino Genius Pro vezes \n\n")
                         Genius.genius_joga_vezes(x_origem, y_origem, id, senha, url, navegador)
 
                         (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
@@ -379,7 +378,7 @@ while True:
                             or 'Ganhar 4.000 fichas no Casino Genius Pro' in lista_tarefas_fazer):
                         print('Jogar Casino genius valor')
 
-                        print("\n\n Faz Genius valor... \n\n")
+                        print("\n\n Ganhar fichas no Casino Genius Pro \n\n")
                         Genius.genius_joga_valor(x_origem, y_origem, id, senha, url, navegador, lista_tarefas_fazer)
 
                         (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
@@ -395,7 +394,7 @@ while True:
                             or 'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 70 vezes' in lista_tarefas_fazer\
                             or 'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 10 vezes' in lista_tarefas_fazer:
 
-                        print('Jogar caça niquel poker slote')
+                        print("\n\n Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot vezes \n\n")
 
                         (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
                          lista_tarefas_fazer, pontos_disponiveis) \
@@ -410,13 +409,32 @@ while True:
                             or 'Ganhar 30.000 fichas no caca niquel slot poker' in lista_tarefas_fazer\
                             or 'Ganhar 10.000 fichas no caca niquel slot poker' in lista_tarefas_fazer:
 
-                        print('Ganhar caça niquel poker slote')
+                        print("\n\n Ganhar fichas no caca niquel slot poker \n\n")
 
                         (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
                          lista_tarefas_fazer, pontos_disponiveis) \
                             = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha,
                                                                      url, navegador, dia_da_semana)
                     print("--------------parte 7---------------")
+                    if parar_tarefas:
+                        break
+
+                    if ('fichas no caca niquel da mesa' in lista_tarefas_fazer
+                            or 'Ganhar 100.000 fichas no caca niquel da mesa' in lista_tarefas_fazer
+                            or 'Ganhar 30.000 fichas no caca niquel da mesa' in lista_tarefas_fazer
+                            or 'Ganhar 10.000 fichas no caca niquel da mesa' in lista_tarefas_fazer):
+                        print('Ganhar fichas no caca niquel da mesa')
+                        time.sleep(1)
+                        print("\n\n Ganhar fichas no caca niquel da mesa \n\n")
+
+                        Mesa.joga(x_origem, y_origem, id, senha, url, navegador, 2000)
+                        time.sleep(1)
+
+                        (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
+                         lista_tarefas_fazer, pontos_disponiveis) \
+                            = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha,
+                                                                     url, navegador, dia_da_semana)
+                    print("--------------parte 8---------------")
                     if parar_tarefas:
                         break
 

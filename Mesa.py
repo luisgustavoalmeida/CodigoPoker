@@ -243,8 +243,9 @@ def escolher_blind(x_origem, y_origem, blind):
 
 
 
-def ajuste_valor_niquel(x_origem, y_origem):
-    duzentos, auto10 = False, False
+def ajuste_valor_niquel(x_origem, y_origem, ajusta_aposta):
+    print("ajuste_valor_niquel :", ajusta_aposta)
+    aposta, auto10 = False, False
     # Define a região da tela onde a imagem será buscada
 
 
@@ -252,21 +253,29 @@ def ajuste_valor_niquel(x_origem, y_origem):
         posicao_200 = None
         Limpa.aviso_canto_lobby(x_origem, y_origem)
         # Procura a imagem na região definida com 99,5% de tolerância, em escala de cinza e retorna a posição
-        #posicao_200 = pyautogui.locateOnScreen(valor_200, region=regiao_busca_200, confidence=0.99, grayscale=True)  # limite maximo de precisao é 0.997
-        imagem = r'Imagens\Niquel\niquel200.png'
-        regiao = (77 + x_origem, 652 + y_origem, 49, 15)  # (x, y, largura, altura)
+        # posicao_200 = pyautogui.locateOnScreen(valor_200, region=regiao_busca_200, confidence=0.99, grayscale=True)  # limite maximo de precisao é 0.997
+
+        if ajusta_aposta == 2000: # se deve jogar apostando 2000
+            imagem = r'Imagens\Niquel\niquel2000.png'
+            escolhe_aposta = 614  # coodenada do 2000
+
+        else: # se deve jogar apostando 200
+            imagem = r'Imagens\Niquel\niquel200.png'
+            escolhe_aposta = 636  # coodenada do 200
+
+        regiao = (77 + x_origem, 651 + y_origem, 50, 16)  # (x, y, largura, altura)
         precisao = 0.9
         posicao_200 = localizar_imagem(imagem, regiao, precisao)
         if posicao_200 is not None:# Verifica se a imagem foi encontrada
-            print("foi encontado 200")
-            duzentos = True
+            print("foi encontado o valor de: ", ajusta_aposta)
+            aposta = True
             break
 
         elif posicao_200 is None:  # Verifica se a imagem foi encontrada
-            print("NÂO foi encontado 200")
-            pyautogui.click(x_origem + 161, y_origem + 658)
+            print("NÂO foi encontado o valor de: ", ajusta_aposta)
+            pyautogui.click(x_origem + 161, y_origem + 658)  # clica na setinha para abrir a lista de valores a serem apostados
             time.sleep(0.3)
-            pyautogui.click(x_origem + 161, y_origem + 636)
+            pyautogui.click(x_origem + 161, y_origem + escolhe_aposta)  # clica no valor de 200
             time.sleep(0.3)
 
     for i in range(20):
@@ -293,7 +302,7 @@ def ajuste_valor_niquel(x_origem, y_origem):
             time.sleep(0.3)
             pyautogui.click(x_origem + 641, y_origem + 278)#clica para fechar a mensagem vc so pode jogar depois de estar sentado
 
-    return duzentos, auto10
+    return aposta, auto10
 
 
 def sala_minima_niquel(x_origem, y_origem, num_mesa):
@@ -416,11 +425,17 @@ def passa_corre_joga(x_origem, y_origem): # para se fazer tarefas
 
     return jogou_uma_vez
 
-def joga(x_origem, y_origem, id, senha, url, navegador):
+def joga(x_origem, y_origem, id, senha, url, navegador, ajusta_aposta):
 
-    tarefas_fazer = ('Jogar o caca-niquel da mesa 150 vezes',
-                     'Jogar o caca-niquel da mesa 70 vezes',
-                     'Jogar o caca-niquel da mesa 10 vezes')
+    if ajusta_aposta == 200:
+        tarefas_fazer = ('Jogar o caca-niquel da mesa 150 vezes',
+                         'Jogar o caca-niquel da mesa 70 vezes',
+                         'Jogar o caca-niquel da mesa 10 vezes')
+
+    elif ajusta_aposta == 2000:
+        tarefas_fazer = ('Ganhar 100.000 fichas no caca niquel da mesa',
+                         'Ganhar 30.000 fichas no caca niquel da mesa',
+                         'Ganhar 10.000 fichas no caca niquel da mesa')
 
     continua_jogando = True
     meta_atigida = False
@@ -472,14 +487,14 @@ def joga(x_origem, y_origem, id, senha, url, navegador):
                     # blind_certo = escolher_blind(x_origem, y_origem, '20/40')
                     blind_certo = sala_minima_niquel(x_origem, y_origem, num_mesa)
                     if blind_certo:
-                        duzentos, auto10 = ajuste_valor_niquel(x_origem, y_origem)
+                        aposta, auto10 = ajuste_valor_niquel(x_origem, y_origem, ajusta_aposta)
 
                         sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo)
 
-                        if sentou and duzentos and auto10:
+                        if sentou and aposta and auto10:
                             print('esta tudo ok, slote e sentado')
                             break
-                if sentou and duzentos and auto10:
+                if sentou and aposta and auto10:
                     print('esta tudo ok, slote e sentado')
                     break
             if not sentou:
@@ -531,6 +546,7 @@ def joga_uma_vez(x_origem, y_origem):
             if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=10):  # testa se apareceu as mensagens verdes na parte de baixo
                 continua_jogando = False
                 print('apareceu a mensagem pode sair')
+
         else:
             # if pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 604), (255, 255, 255), tolerance=5):
             #     jogou_uma_vez = True
@@ -554,6 +570,7 @@ def joga_uma_vez(x_origem, y_origem):
             print("esta sentado")
             if passa_corre_joga(x_origem, y_origem):
                 jogou_uma_vez = True
+
         else:
             if jogou_uma_vez:
                 if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
@@ -571,7 +588,7 @@ def joga_uma_vez(x_origem, y_origem):
                     #blind_certo = escolher_blind(x_origem, y_origem, '20/40')
                     blind_certo = sala_minima_niquel(x_origem, y_origem, num_mesa)
                     if blind_certo:
-                        #duzentos, auto10 = ajuste_valor_niquel(x_origem, y_origem)
+
                         sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo)
                         if sentou:
                             time_entrou = time.perf_counter()
@@ -579,6 +596,7 @@ def joga_uma_vez(x_origem, y_origem):
                             break
                 if sentou:
                     break
+
             if not sentou:
                 print("rodou a lista de mesas 2x, da um F5 para recarregar as mesas")
                 IP.tem_internet()
