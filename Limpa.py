@@ -214,9 +214,9 @@ def limpa_pequeno(x_origem, y_origem):
                 print("sair da conta")
                 return "sair da conta"
 
-    elif (pyautogui.pixelMatchesColor(215, 1000, (36, 37, 38), tolerance=5)  # mensagem do canto inferior esquedo " Você esta offiline no momento."
+    elif (pyautogui.pixelMatchesColor(215, 1000, (36, 37, 38), tolerance=1)  # mensagem do canto inferior esquedo " Você esta offiline no momento."
           or pyautogui.pixelMatchesColor(215, 1000, (32, 33, 36), tolerance=1)  # fundo cinza com o dinoçauro
-          or pyautogui.pixelMatchesColor(715, 650, (255, 255, 255), tolerance=2)): # retangulo branco no meio da tela quando esta sem internete
+          or pyautogui.pixelMatchesColor(715, 650, (255, 255, 255), tolerance=1)): # retangulo branco no meio da tela quando esta sem internete
         print("Falha na pagina e a tela esta branca, da um F5")
         IP.tem_internet()
         pyautogui.press('f5')
