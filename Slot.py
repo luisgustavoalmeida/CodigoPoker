@@ -135,9 +135,9 @@ def solot_joga_vezes(x_origem, y_origem, id, senha, url, navegador, joga_vezes):
                          'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 70 vezes',
                          'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 10 vezes')
     else:
-        tarefas_fazer = ('Ganhar 100.000 fichas no caca niquel slot poker',
-                         'Ganhar 30.000 fichas no caca niquel slot poker',
-                         'Ganhar 10.000 fichas no caca niquel slot poker')
+        tarefas_fazer = ('Ganhar 100.000 fichas no caca niquel Slot Poker',
+                         'Ganhar 30.000 fichas no caca niquel Slot Poker',
+                         'Ganhar 10.000 fichas no caca niquel Slot Poker')
 
     continua_jogando = True
 

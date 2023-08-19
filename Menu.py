@@ -277,8 +277,14 @@ while True:
             #######################Tarefas
             elif guia == "T1":
 
+                pontos_disponiveis = 200
+                pontuacao_tarefas = 0
+                meta_atingida = False
+                conta_upad = True
+                valor_fichas = 0
                 parar_tarefas = False
                 lista_tarefas_fazer = []
+
                 for i in range(2):
                     print('\n TAREFAS \n')
 
@@ -295,9 +301,10 @@ while True:
 
                     if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
                         break
-                    (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,lista_tarefas_fazer,
+
+                    (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas, lista_tarefas_fazer,
                      pontos_disponiveis) = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url,
-                                                                                 navegador, dia_da_semana)
+                                                                                  navegador, dia_da_semana)
                     print("--------------parte 1---------------")
                     if parar_tarefas:
                         break
@@ -389,12 +396,14 @@ while True:
                     if parar_tarefas:
                         break
 
-                    if 'Apostar 20 fichas ou mais em 9 linhas do caca' in lista_tarefas_fazer\
-                            or 'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 150 vezes' in lista_tarefas_fazer\
-                            or 'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 70 vezes' in lista_tarefas_fazer\
-                            or 'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 10 vezes' in lista_tarefas_fazer:
+                    if ('Apostar 20 fichas ou mais em 9 linhas do caca' in lista_tarefas_fazer
+                            or 'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 150 vezes' in lista_tarefas_fazer
+                            or 'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 70 vezes' in lista_tarefas_fazer
+                            or 'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 10 vezes' in lista_tarefas_fazer):
 
                         print("\n\n Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot vezes \n\n")
+
+                        Slot.solot_joga_vezes(x_origem, y_origem, id, senha, url, navegador, True)
 
                         (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
                          lista_tarefas_fazer, pontos_disponiveis) \
@@ -404,12 +413,14 @@ while True:
                     if parar_tarefas:
                         break
 
-                    if 'fichas no caca niquel slot poker' in lista_tarefas_fazer\
-                            or 'Ganhar 100.000 fichas no caca niquel slot poker' in lista_tarefas_fazer\
-                            or 'Ganhar 30.000 fichas no caca niquel slot poker' in lista_tarefas_fazer\
-                            or 'Ganhar 10.000 fichas no caca niquel slot poker' in lista_tarefas_fazer:
+                    if ('fichas no caca niquel slot poker' in lista_tarefas_fazer
+                            or 'Ganhar 100.000 fichas no caca niquel Slot Poker' in lista_tarefas_fazer
+                            or 'Ganhar 30.000 fichas no caca niquel Slot Poker' in lista_tarefas_fazer
+                            or 'Ganhar 10.000 fichas no caca niquel Slot Poker' in lista_tarefas_fazer):
 
                         print("\n\n Ganhar fichas no caca niquel slot poker \n\n")
+
+                        Slot.solot_joga_vezes(x_origem, y_origem, id, senha, url, navegador, False)
 
                         (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
                          lista_tarefas_fazer, pontos_disponiveis) \
@@ -423,12 +434,10 @@ while True:
                             or 'Ganhar 100.000 fichas no caca niquel da mesa' in lista_tarefas_fazer
                             or 'Ganhar 30.000 fichas no caca niquel da mesa' in lista_tarefas_fazer
                             or 'Ganhar 10.000 fichas no caca niquel da mesa' in lista_tarefas_fazer):
-                        print('Ganhar fichas no caca niquel da mesa')
-                        time.sleep(1)
+
                         print("\n\n Ganhar fichas no caca niquel da mesa \n\n")
 
                         Mesa.joga(x_origem, y_origem, id, senha, url, navegador, 2000)
-                        time.sleep(1)
 
                         (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
                          lista_tarefas_fazer, pontos_disponiveis) \
@@ -437,29 +446,32 @@ while True:
                     print("--------------parte 8---------------")
                     if parar_tarefas:
                         break
+                (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas, lista_tarefas_fazer,
+                 pontos_disponiveis) = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url,
+                                                                              navegador, dia_da_semana)
+                hora_que_rodou = datetime.datetime.now().strftime('%H:%M:%S')
 
-                if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
-                    print('ja esta logado sai')
-                else:
-                    Aneis.recolhe_aneis(x_origem, y_origem)
-
-                    if HoraT.fim_tempo_tarefa():
-                        hora_fim_tarefa = True
-                    else:
-                        hora_fim_tarefa = False
-                        valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem)
-                        hora_que_rodou = datetime.datetime.now().strftime('%H:%M:%S')
-                        conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)  # retorna se a conta ta upada ou nao
-                        if conta_upada:
-                            meta_atingida, pontuacao_tarefas = Tarefas.meta_tarefas(x_origem, y_origem)
-                            pontuacao_tarefas = OCR_tela.pontuacao_tarefas(x_origem, y_origem)
-                        #valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
+                # if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
+                #     print('ja esta logado sai')
+                # else:
+                #     Aneis.recolhe_aneis(x_origem, y_origem)
+                #
+                #     if HoraT.fim_tempo_tarefa():
+                #         hora_fim_tarefa = True
+                #     else:
+                #         hora_fim_tarefa = False
+                #         valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem)
+                #         hora_que_rodou = datetime.datetime.now().strftime('%H:%M:%S')
+                #         conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)  # retorna se a conta ta upada ou nao
+                #         if conta_upada:
+                #             meta_atingida, pontuacao_tarefas = Tarefas.meta_tarefas(x_origem, y_origem)
+                #             pontuacao_tarefas = OCR_tela.pontuacao_tarefas(x_origem, y_origem)
+                #         #valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
                 roda = False
                 break
 
         ip, com_internet = IP.meu_ip()  # obtem meu endereço de IP
         valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
-
         Seleniun.sair_face(url, navegador)
 
         print('-----------------espera terminar tarefa independente----------------')

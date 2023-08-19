@@ -41,9 +41,9 @@ tarefas_fazerF = (#caça-níquel da mesa
                 'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 150 vezes',
                 'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 70 vezes',
                 'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 10 vezes',
-                'Ganhar 100.000 fichas no caca niquel slot poker',
-                'Ganhar 30.000 fichas no caca niquel slot poker',
-                'Ganhar 10.000 fichas no caca niquel slot poker')
+                'Ganhar 100.000 fichas no caca niquel Slot Poker',
+                'Ganhar 30.000 fichas no caca niquel Slot Poker',
+                'Ganhar 10.000 fichas no caca niquel Slot Poker')
 
 dicionario_tarefas_fazer = {#caça-níquel da mesa
                             'Jogar o caca-niquel da mesa 150 vezes': 30,
@@ -285,7 +285,6 @@ def testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador
     print("Meta atigida :", meta_atingida)
     print("Conta upada: ", conta_upada)
     print('__________________________________________________________________')
-
 
     if HoraT.fim_tempo_tarefa():
         Limpa.limpa_total(x_origem, y_origem)
