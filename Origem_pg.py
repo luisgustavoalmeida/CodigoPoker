@@ -108,7 +108,7 @@ def carregado_origem(id, senha, url, navegador):#navegador
                     status_conta = 'Atualizar'
                     return 0, 0, status_conta
 
-                regiao = (627, 625, 440, 250)
+                regiao = (340, 800, 385, 105)
                 imagem = r'Imagens\CarosJogadores.png'
                 precisao = 0.995
                 localizado = localizar_imagem(imagem, regiao, precisao)
