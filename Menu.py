@@ -332,7 +332,6 @@ while True:
                             or 'Jogar 100 vezes nas Cartas Premiadas' in lista_tarefas_fazer
                             or 'Jogar 50 vezes nas Cartas Premiadas' in lista_tarefas_fazer
                             or 'Jogar 10 vezes nas Cartas Premiadas' in lista_tarefas_fazer):
-                        print('Jogar vezes nas Cartas Premiadas')
 
                         print("\n\n Jogar vezes nas Cartas Premiadas \n\n")
                         Cartas.cartas_premidas_joga_vezes(x_origem, y_origem, id, senha, url, navegador)
@@ -349,7 +348,6 @@ while True:
                             or 'Ganhar 100.000 fichas nas Cartas Premiadas' in lista_tarefas_fazer
                             or 'Ganhar 30.000 fichas nas Cartas Premiadas' in lista_tarefas_fazer
                             or 'Ganhar 4.000 fichas nas Cartas Premiadas' in lista_tarefas_fazer):
-                        print('Ganhar fichas nas Cartas Premiadas')
 
                         print("\n\n Ganhar fichas nas Cartas Premiadas \n\n")
                         Cartas.cartas_premidas_joga_valor(x_origem, y_origem, id, senha, url, navegador, lista_tarefas_fazer, valor_fichas)
@@ -366,7 +364,6 @@ while True:
                             or 'Jogar no Casino Genius Pro 100 vezes' in lista_tarefas_fazer
                             or 'Jogar no Casino Genius Pro 50 vezes' in lista_tarefas_fazer
                             or 'Jogar no Casino Genius Pro 10 vezes' in lista_tarefas_fazer):
-                        print('Jogar Casino genius vezes')
 
                         print("\n\n Jogar no Casino Genius Pro vezes \n\n")
                         Genius.genius_joga_vezes(x_origem, y_origem, id, senha, url, navegador)
@@ -383,7 +380,6 @@ while True:
                             or 'Ganhar 100.000 fichas no Casino Genius Pro' in lista_tarefas_fazer
                             or 'Ganhar 30.000 fichas no Casino Genius Pro' in lista_tarefas_fazer
                             or 'Ganhar 4.000 fichas no Casino Genius Pro' in lista_tarefas_fazer):
-                        print('Jogar Casino genius valor')
 
                         print("\n\n Ganhar fichas no Casino Genius Pro \n\n")
                         Genius.genius_joga_valor(x_origem, y_origem, id, senha, url, navegador, lista_tarefas_fazer)
