@@ -303,7 +303,7 @@ while True:
                         break
 
                     (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas, lista_tarefas_fazer,
-                     pontos_disponiveis) = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url,
+                     pontos_disponiveis, hora_fim_tarefa) = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url,
                                                                                   navegador, dia_da_semana)
                     print("--------------parte 1---------------")
                     if parar_tarefas:
@@ -321,7 +321,7 @@ while True:
                         time.sleep(1)
 
                         (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
-                         lista_tarefas_fazer, pontos_disponiveis) \
+                         lista_tarefas_fazer, pontos_disponiveis, hora_fim_tarefa) \
                             = Tarefas.testa_continuar_fazendo_tarefa(x_origem,y_origem, id, senha,
                                                                      url, navegador, dia_da_semana)
                     print("--------------parte 2---------------")
@@ -338,7 +338,7 @@ while True:
                         Cartas.cartas_premidas_joga_vezes(x_origem, y_origem, id, senha, url, navegador)
 
                         (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
-                         lista_tarefas_fazer, pontos_disponiveis) \
+                         lista_tarefas_fazer, pontos_disponiveis, hora_fim_tarefa) \
                             = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha,
                                                                      url, navegador, dia_da_semana)
                     print("--------------parte 3---------------")
@@ -355,7 +355,7 @@ while True:
                         Cartas.cartas_premidas_joga_valor(x_origem, y_origem, id, senha, url, navegador, lista_tarefas_fazer, valor_fichas)
 
                         (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
-                         lista_tarefas_fazer, pontos_disponiveis) \
+                         lista_tarefas_fazer, pontos_disponiveis, hora_fim_tarefa) \
                             = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha,
                                                                      url, navegador, dia_da_semana)
 
@@ -372,7 +372,7 @@ while True:
                         Genius.genius_joga_vezes(x_origem, y_origem, id, senha, url, navegador)
 
                         (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
-                         lista_tarefas_fazer, pontos_disponiveis) \
+                         lista_tarefas_fazer, pontos_disponiveis, hora_fim_tarefa) \
                             = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha,
                                                                      url, navegador, dia_da_semana)
                     print("--------------parte 4---------------")
@@ -389,7 +389,7 @@ while True:
                         Genius.genius_joga_valor(x_origem, y_origem, id, senha, url, navegador, lista_tarefas_fazer)
 
                         (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
-                         lista_tarefas_fazer, pontos_disponiveis) \
+                         lista_tarefas_fazer, pontos_disponiveis, hora_fim_tarefa) \
                             = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha,
                                                                      url, navegador, dia_da_semana)
                     print("--------------parte 5---------------")
@@ -406,7 +406,7 @@ while True:
                         Slot.solot_joga_vezes(x_origem, y_origem, id, senha, url, navegador, True)
 
                         (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
-                         lista_tarefas_fazer, pontos_disponiveis) \
+                         lista_tarefas_fazer, pontos_disponiveis, hora_fim_tarefa) \
                             = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha,
                                                                      url, navegador, dia_da_semana)
                     print("--------------parte 6---------------")
@@ -423,7 +423,7 @@ while True:
                         Slot.solot_joga_vezes(x_origem, y_origem, id, senha, url, navegador, False)
 
                         (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
-                         lista_tarefas_fazer, pontos_disponiveis) \
+                         lista_tarefas_fazer, pontos_disponiveis, hora_fim_tarefa) \
                             = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha,
                                                                      url, navegador, dia_da_semana)
                     print("--------------parte 7---------------")
@@ -447,8 +447,9 @@ while True:
                     if parar_tarefas:
                         break
                 (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas, lista_tarefas_fazer,
-                 pontos_disponiveis) = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url,
-                                                                              navegador, dia_da_semana)
+                 pontos_disponiveis, hora_fim_tarefa) = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem,
+                                                                                               id, senha, url,
+                                                                                               navegador, dia_da_semana)
                 hora_que_rodou = datetime.datetime.now().strftime('%H:%M:%S')
 
                 # if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":

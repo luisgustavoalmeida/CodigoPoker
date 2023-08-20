@@ -262,19 +262,29 @@ def tem_tarefa_para_recolher(x_origem, y_origem, id, senha, url, navegador):
 
 def testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador, dia_da_semana):
     parar_tarefas = False
+    hora_fim_tarefa = False
+    lista_tarefas_fazer = []
+    pontuacao_tarefas = 0
+    pontos_disponiveis = 0
+    meta_atingida = False
+    valor_fichas = 0
+    conta_upada = False
 
     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
         parar_tarefas = True
+        return (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas, lista_tarefas_fazer,
+                pontos_disponiveis, hora_fim_tarefa)
         
     valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem)
     Aneis.recolhe_aneis(x_origem, y_origem)
-    Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)  # retorna se a conta ta upada ou nao
-    recolher_tarefa(x_origem, y_origem)  # recolhe se tiver alguma tarefa batida
-    Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)  # retorna se a conta ta upada ou nao
-    OCR_tela.tarefas_diaris_trocar(x_origem, y_origem)
-    conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
-    meta_atingida, pontuacao_tarefas = meta_tarefas(x_origem, y_origem)
-    lista_tarefas_fazer, pontos_disponiveis = comparar_listas(x_origem, y_origem, dia_da_semana)
+    conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)  # retorna se a conta ta upada ou nao
+    if conta_upada:
+        recolher_tarefa(x_origem, y_origem)  # recolhe se tiver alguma tarefa batida
+        Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)  # retorna se a conta ta upada ou nao
+        OCR_tela.tarefas_diaris_trocar(x_origem, y_origem)
+        Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
+        meta_atingida, pontuacao_tarefas = meta_tarefas(x_origem, y_origem)
+        lista_tarefas_fazer, pontos_disponiveis = comparar_listas(x_origem, y_origem, dia_da_semana)
     
     print('__________________________________________________________________')
     print("Valor fichas :", valor_fichas)
@@ -289,6 +299,7 @@ def testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador
     if HoraT.fim_tempo_tarefa():
         Limpa.limpa_total(x_origem, y_origem)
         print('fim do horario destinado a tarefas')
+        hora_fim_tarefa = True
         parar_tarefas = True
     elif conta_upada is False:
         print('Conta não esta upada')
@@ -319,7 +330,8 @@ def testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador
             parar_tarefas = True
 
 
-    return parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas, lista_tarefas_fazer, pontos_disponiveis
+    return (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas, lista_tarefas_fazer,
+            pontos_disponiveis, hora_fim_tarefa)
 
 #
 # #
