@@ -413,7 +413,8 @@ def reservar_linha(guia, endereco):
         linha = endereco[1:]
         #time.sleep(0.3)
         #values, id, senha, contagem_ip = lote_valor(guia, linha)
-        time.sleep(2)
+
+        time.sleep(3)
         values, id, senha, contagem_ip = lote_valor(guia, linha)
         try:
             values = int(values)
@@ -646,13 +647,22 @@ def escrever_IP_banido():
 
     global cred
     global service
+
     ip, com_internet = IP.meu_ip()
     data_hora_atual = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
     # nome_computador = socket.gethostname()
     # nome_usuario = os.getlogin()
     print('\n\n ip banido \n')
     print(ip)
     print('\n\n')
+
+    print("espera 2 minutoas para nao ter concorrencia por recurso do googles")
+    time.sleep(120)
+    print('continua')
+
+    cred = credencial()
+    service = build('sheets', 'v4', credentials=cred)
 
     while True:
         try:
