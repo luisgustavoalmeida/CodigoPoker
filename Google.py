@@ -166,9 +166,9 @@ def primeira_celula_vazia3(guia):
             except ValueError:
                 i = len(values)
                 return f"D{i+1}"
-        except:
+        except Exception as error:
             print(f"Ocorreu um erro ao obter o valor da célula:")
-            print("Erro primeira_celula_vazia. Tentando novamente em 5 segundos...")
+            print(f"Erro: {str(error)}")
             time.sleep(5)
             IP.tem_internet()
             cred = credencial()
@@ -229,7 +229,7 @@ def primeira_celula_vazia(guia):
                     linha_vazia_anterior += intervalo_de_busca
 
         except Exception as e:
-            print(f"Ocorreu um erro ao obter o valor da célula:", e)
+            print(f"primeira_celula_vazia Ocorreu um erro ao obter o valor da célula:", e)
             print("Erro primeira_celula_vazia. Tentando novamente em 5 segundos...")
             #time.sleep(5)
             IP.tem_internet()
@@ -330,9 +330,9 @@ def escrever_celula(valor, guia, endereco):
             break
             #print('{0} células atualizadas.'.format(result.get('updatedCells')))
         #except (socket.gaierror, TransportError, ServerNotFoundError) as error:
-        except:
-            print(f"Ocorreu um erro ao obter o valor da célula:")
-            print("Erro escrever_celula. Tentando novamente em 5 segundos...")
+        except Exception as error:
+            print(f"escrever_celula Ocorreu um erro ao obter o valor da célula:")
+            print(f"Erro: {str(error)}")
             #time.sleep(5)
             IP.tem_internet()
             cred = credencial()
@@ -359,9 +359,9 @@ def escrever_valores(valores, guia, endereco):
             break
             #print('{0} células atualizadas.'.format(result.get('updatedCells')))
         # except (socket.gaierror, TransportError, ServerNotFoundError) as error:
-        except:
-            print(f"Ocorreu um erro ao obter o valor da célula:")
-            print("Erro escrever_valores. Tentando novamente em 5 segundos...")
+        except Exception as error:
+            print(f"escrever_valores Ocorreu um erro ao obter o valor da célula:")
+            print(f"Erro: {str(error)}")
             #time.sleep(5)
             IP.tem_internet()
             cred = credencial()
@@ -389,9 +389,9 @@ def escrever_valores_lote(valores, guia, linha):
             ).execute()
             break
 
-        except:
-            print(f"Ocorreu um erro ao escrever os valores:")
-            print("Erro escrever_valores_lote. Tentando novamente em 3 segundos...")
+        except Exception as error:
+            print(f" escrever_valores_lote Ocorreu um erro ao obter o valor da célula:")
+            print(f"Erro: {str(error)}")
             #time.sleep(5)
             IP.tem_internet()
             cred = credencial()
@@ -516,9 +516,9 @@ def lote_valor(guia, linha):
                 #print(cont_IP)
                 return valor, id, senha, cont_IP
 
-        except:
-            print(f"Ocorreu um erro ao obter os valores:")
-            print("Erro função lote_valor...")
+        except Exception as error:
+            print(f"lote_valor Ocorreu um erro ao obter o valor da célula:")
+            print(f"Erro: {str(error)}")
             time.sleep(5)
             IP.tem_internet()
             cred = credencial()
@@ -541,10 +541,9 @@ def pega_valor(guia, endereco):
             return values[0][0]
 
         # except (socket.gaierror, TransportError, ServerNotFoundError) as error:
-        except:
-            print(f"Ocorreu um erro ao obter o valor da célula:")
-            print("Erro pega_valor. Tentando novamente em 5 segundos...")
-            time.sleep(5)
+        except Exception as error:
+            print(f"pega_valor Ocorreu um erro ao obter o valor da célula:")
+            print(f"Erro: {str(error)}")
             IP.tem_internet()
             #return None
             cred = credencial()
@@ -573,7 +572,7 @@ def celula_esta_vazia(guia, endereco):
             return False
 
     except Exception as e:
-        print(f"Ocorreu um erro celula esta vasia:", e)
+        print(f"celula_esta_vazia Ocorreu um erro celula esta vasia:", e)
         return False
 
 
@@ -608,8 +607,9 @@ def zera_cont_IP(endereco):
                 print('{0} células atualizadas.'.format(result.get('updatedCells')))
                 return
         # except (socket.gaierror, TransportError, ServerNotFoundError) as error:
-        except:
-            print(f"Ocorreu um erro ao obter o valor da célula:")
+        except Exception as error:
+            print(f"zera_cont_IP Ocorreu um erro ao obter o valor da célula:")
+            print(f"Erro: {str(error)}")
             #time.sleep(5)
             IP.tem_internet()
             cred = credencial()
@@ -634,8 +634,9 @@ def pega_ID_senha(guia, endereco):
                 senha = values[0][1]
                 return id, senha, linha
         # except (socket.gaierror, TransportError, ServerNotFoundError) as error:
-        except:
-            print(f"Ocorreu um erro ao obter o valor da célula:")
+        except Exception as error:
+            print(f"pega_ID_senha Ocorreu um erro ao obter o valor da célula:")
+            print(f"Erro: {str(error)}")
             print("Erro pega_ID_senha. Tentando novamente em 5 segundos...")
             time.sleep(5)
             IP.tem_internet()
@@ -693,7 +694,7 @@ def escrever_IP_banido():
             print('{0} células atualizadas.'.format(result.get('updatedCells')))
             break
         except Exception as error:
-            print("Ocorreu um erro ao escrever na célula:")
+            print("escrever_IP_banido Ocorreu um erro ao escrever na célula:")
             print(f"Erro: {str(error)}")
             print("Tentando novamente em 5 segundos...")
             time.sleep(5)
