@@ -135,15 +135,15 @@ def carregado_origem(id, senha, url, navegador):#navegador
             IP.f5_quando_internete_ocila(id, senha, url, navegador)
             entrou_corretamente, stataus = Seleniun.teste_logado(id, senha, url, navegador)
             if (pyautogui.pixelMatchesColor(215, 1000, (36, 37, 38), tolerance=5)  # mensagem do canto inferior esquedo " Você esta offiline no momento."
-                  or pyautogui.pixelMatchesColor(735, 650, (32, 33, 36), tolerance=5)  # fundo cinza com o dinoçauro
-                  or pyautogui.pixelMatchesColor(735, 650, (255, 255, 255), tolerance=2)  # retangulo branco no meio da tela quando esta sem internete
-                  or pyautogui.pixelMatchesColor(735, 650, (221, 221, 221), tolerance=7)):  # tela cinza clara com cara ctiste
+                  or pyautogui.pixelMatchesColor(745, 650, (32, 33, 36), tolerance=5)  # fundo cinza com o dinoçauro
+                  or pyautogui.pixelMatchesColor(745, 650, (255, 255, 255), tolerance=2)  # retangulo branco no meio da tela quando esta sem internete
+                  or pyautogui.pixelMatchesColor(745, 650, (221, 221, 221), tolerance=7)):  # tela cinza clara com cara ctiste
                 print("aguarda 5 segundos e faz um novo teste se a pagina nao carregou")
                 time.sleep(5)
                 if (pyautogui.pixelMatchesColor(215, 1000, (36, 37, 38), tolerance=5)  # mensagem do canto inferior esquedo " Você esta offiline no momento."
-                        or pyautogui.pixelMatchesColor(735, 650, (32, 33, 36), tolerance=5)  # fundo cinza com o dinoçauro
-                        or pyautogui.pixelMatchesColor(735, 650, (255, 255, 255), tolerance=2)  # retangulo branco no meio da tela quando esta sem internete
-                        or pyautogui.pixelMatchesColor(735, 650, (221, 221, 221), tolerance=7)):  # tela cinza clara com cara ctiste
+                        or pyautogui.pixelMatchesColor(745, 650, (32, 33, 36), tolerance=5)  # fundo cinza com o dinoçauro
+                        or pyautogui.pixelMatchesColor(745, 650, (255, 255, 255), tolerance=2)  # retangulo branco no meio da tela quando esta sem internete
+                        or pyautogui.pixelMatchesColor(745, 650, (221, 221, 221), tolerance=7)):  # tela cinza clara com cara ctiste
                     print("Falha na pagina e a tela esta branca, da um F5")
                     IP.tem_internet()
                     pyautogui.press('f5')
@@ -173,7 +173,7 @@ def x_y(): # apenas para testes
     # regiao_busca = (0, 115, 380, 230)  # (x, y, largura, altura)
     #
     # # Define o nome do arquivo da imagem a ser buscada
-    # origem = r'Imagens\Origem.png'
+    origem = r'Imagens\Origem.png'
     # # x_origem = None
     # # y_origem = None
     while True:

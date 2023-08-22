@@ -214,16 +214,16 @@ def limpa_pequeno(x_origem, y_origem):
                 print("sair da conta")
                 return "sair da conta"
 
-    if not(teste_limpo(x_origem, y_origem)):  # se ta limpo nem entra
+    #if not(teste_limpo(x_origem, y_origem)):  # se ta limpo nem entra
 
-        if (pyautogui.pixelMatchesColor(215, 1000, (36, 37, 38), tolerance=5)  # mensagem do canto inferior esquedo " Você esta offiline no momento."
-              or pyautogui.pixelMatchesColor(735, 650, (32, 33, 36), tolerance=5)  # fundo cinza com o dinoçauro
-              or pyautogui.pixelMatchesColor((x_origem + 700), 650, (255, 255, 255), tolerance=2) # retangulo branco no meio da tela quando esta sem internete
-              or pyautogui.pixelMatchesColor((x_origem + 700), 650, (221, 221, 221), tolerance=7)): # tela cinza clara com cara ctiste
-            print("Falha na pagina e a tela esta branca, da um F5")
-            IP.tem_internet()
-            pyautogui.press('f5')
-            time.sleep(15)
+    if (pyautogui.pixelMatchesColor(215, 1000, (36, 37, 38), tolerance=5)  # mensagem do canto inferior esquedo " Você esta offiline no momento."
+          or pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 370), (32, 33, 36), tolerance=5)  # fundo cinza com o dinoçauro
+          or pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 370), (255, 255, 255), tolerance=2) # retangulo branco no meio da tela quando esta sem internete
+          or pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 370), (221, 221, 221), tolerance=7)): # tela cinza clara com cara ctiste
+        print("Falha na pagina e a tela esta branca, da um F5")
+        IP.tem_internet()
+        pyautogui.press('f5')
+        time.sleep(15)
 
 def limpa_tarefas(x_origem, y_origem): # fecha todas as tarefas que sao feitas
     print('limpa_tarefas')
