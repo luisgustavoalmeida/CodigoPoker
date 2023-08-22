@@ -117,7 +117,6 @@ def OCR_regiao (regiao, config, inveter_cor, fator_ampliacao,contraste):
     except Exception as e:
         print("Erro ao executar OCR: ", e)
         return None
-
 def valor_fichas(x_origem, y_origem):
     print('Lendo o valor das fichas ...')
     # Define a região de interesse
