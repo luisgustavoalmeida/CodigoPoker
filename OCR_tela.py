@@ -126,7 +126,9 @@ def valor_fichas(x_origem, y_origem):
     contraste = 1.7
     #config = '--psm 10 --oem 3 -c tessedit_char_whitelist=0123456789.'
 
-    regiao_ficha = (x_origem + 69, y_origem + 7, x_origem + 135, y_origem + 26) # Ficha
+    #regiao_ficha = (x_origem + 69, y_origem + 7, x_origem + 135, y_origem + 26)  # Ficha
+
+    regiao_ficha = (x_origem + 42, y_origem + 7, x_origem + 107, y_origem + 26) # Ficha
     # Executa o OCR na região de interesse
 
     config = '--psm 6 --oem 3 -c tessedit_char_whitelist=0123456789'
