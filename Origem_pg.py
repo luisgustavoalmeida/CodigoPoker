@@ -16,7 +16,7 @@ origemB = r'Imagens\OrigemB.png' # imagem do computador da AMD
 origem2 = r'Imagens\OrigemAvisoDoSistema.png'
 
 # Define a região da tela onde a imagem será buscada
-regiao_busca = (0, 115, 380, 230)  # (x, y, largura, altura)
+regiao_busca = (0, 230, 200, 140)  # (x, y, largura, altura)
 
 def localizar_imagem(imagem, regiao, precisao):
     try:
@@ -46,13 +46,19 @@ def carregado_origem(id, senha, url, navegador):#navegador
 
             # Procura a imagem na região definida com 99,5% de tolerância, em escala de cinza e retorna a posição
             #posicao = pyautogui.locateOnScreen(origem, region=regiao_busca, confidence=0.997, grayscale=True) #limite maximo de precisao é 0.997
-            #precisao = 0.997
-            precisao = 0.935
+            precisao = 0.997
+            #precisao = 0.935
             posicao = localizar_imagem(origem, regiao_busca, precisao)
             if posicao is not None:# Verifica se a imagem foi encontrada
                 x_origem, y_origem = posicao.left, posicao.top
                 x_origem = int(x_origem)
                 y_origem = int(y_origem)
+                print("x_origem: ", x_origem)
+                print("y_origem: ", y_origem)
+
+                # x_origem = 42
+                # y_origem = 272
+
                 if status_conta != 'Tutorial':
                     status_conta = 'Carregada'
                 return x_origem, y_origem, status_conta
@@ -173,7 +179,7 @@ def x_y(): # apenas para testes
     # regiao_busca = (0, 115, 380, 230)  # (x, y, largura, altura)
     #
     # # Define o nome do arquivo da imagem a ser buscada
-    origem = r'Imagens\Origem.png'
+    #origem = r'Imagens\Origem.png'
     # # x_origem = None
     # # y_origem = None
     while True:
