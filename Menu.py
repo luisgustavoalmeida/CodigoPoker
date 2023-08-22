@@ -30,7 +30,7 @@ global aviso_sistema_global
 nome_usuario = os.getlogin()
 # Obter o nome do computador
 nome_computador = socket.gethostname()
-LIMITE_IP = 6
+LIMITE_IP = 5
 # if nome_usuario == "PokerIP":  # teste se o usuario do computador é o que troca IP se nao for fica esperando esta livre
 #     LIMITE_IP = 5
 # elif (nome_usuario == "lgagu") and (nome_computador == "PC-I7-9700KF"):
@@ -138,8 +138,8 @@ while True:
 
         while roda:
 
-            #if cont_IP >= LIMITE_IP or cont_IP < 0:  # se a contagem de ip ta fora da faixa vai para a função
-            IP.ip(LIMITE_IP)  # testa se o numero de contas esta dentro do limite antes de trocar ip
+            if cont_IP >= LIMITE_IP or cont_IP < 0:  # se a contagem de ip ta fora da faixa vai para a função
+                IP.ip(LIMITE_IP)  # testa se o numero de contas esta dentro do limite antes de trocar ip
 
             entrou_corretamente, stataus_facebook = Seleniun.fazer_login(id, senha, url, navegador)
 
@@ -448,22 +448,7 @@ while True:
                                                                                                navegador, dia_da_semana)
                 hora_que_rodou = datetime.datetime.now().strftime('%H:%M:%S')
 
-                # if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
-                #     print('ja esta logado sai')
-                # else:
-                #     Aneis.recolhe_aneis(x_origem, y_origem)
-                #
-                #     if HoraT.fim_tempo_tarefa():
-                #         hora_fim_tarefa = True
-                #     else:
-                #         hora_fim_tarefa = False
-                #         valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem)
-                #         hora_que_rodou = datetime.datetime.now().strftime('%H:%M:%S')
-                #         conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)  # retorna se a conta ta upada ou nao
-                #         if conta_upada:
-                #             meta_atingida, pontuacao_tarefas = Tarefas.meta_tarefas(x_origem, y_origem)
-                #             pontuacao_tarefas = OCR_tela.pontuacao_tarefas(x_origem, y_origem)
-                #         #valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
+
                 roda = False
                 break
 
