@@ -26,7 +26,7 @@ from googleapiclient.errors import HttpError
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets'] # permite que a aplicação tenha acesso de leitura e escrita a planilhas do Google Sheets.
 
 # ID da planilha
-# planilha_id = '1cEeMrBRVLnw7qtjiA63dK5q_HNvmJaCC5kNudzDjLgM'
+planilha_id = '1cEeMrBRVLnw7qtjiA63dK5q_HNvmJaCC5kNudzDjLgM'
 
 
 # Obter o nome do computador
@@ -42,11 +42,11 @@ nome_completo = socket.gethostname() + "_" + os.getlogin()
 # crendencial 2 : luis.gustavo@engenharia.ufjf.br senha: LGlg32379089@#
 #cria um dicionario para separar as credenciais, ou seja uma credencial APi para cada computador
 
-if (nome_computador == "PC-I5-8600K" or nome_computador == "PC-I5-9400A" or nome_computador == "PC-I5-9400B"
-        or nome_computador == "PC-I5-9400C"):
-    planilha_id = '1cEeMrBRVLnw7qtjiA63dK5q_HNvmJaCC5kNudzDjLgM'
-else:
-    planilha_id = '1AKaDbSnqJroq_CucIkvhKHsxRzOkQE6mcDALc8q8Q2A'
+# if (nome_computador == "PC-I5-8600K" or nome_computador == "PC-I5-9400A" or nome_computador == "PC-I5-9400B"
+#         or nome_computador == "PC-I5-9400C"):
+#     planilha_id = '1cEeMrBRVLnw7qtjiA63dK5q_HNvmJaCC5kNudzDjLgM'
+# else:
+#     planilha_id = '1AKaDbSnqJroq_CucIkvhKHsxRzOkQE6mcDALc8q8Q2A'
 
 
 dicionari_token_credencial_n = {'PC-I5-8600K_PokerIP':  ("token1.json", "credentials0.json", 1),

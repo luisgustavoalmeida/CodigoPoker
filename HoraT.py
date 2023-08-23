@@ -9,9 +9,9 @@ minutos_roleta = 00 # defina o tempo disponivel para a roleta em minutos
 tempo_total = 18000 # 5 horas em segudos
 
 tempo_tarefa = tempo_total - (hora_roleta * 3600) - (minutos_roleta * 60) # tempo tarefa em segundos # tempo total menos tempo não usado nas roletas
-janela_tarefa = 900  # janela de 15 minutos para ir para as roletas quando esta no tarefas
+#janela_tarefa = 900  # janela de 15 minutos para ir para as roletas quando esta no tarefas
 
-faixa_tempo = 120
+faixa_tempo = 900
 guias = ["R1", "R2", "R3", "R4", "R5"]
 
 def mudar_guia(id, guia):
