@@ -314,6 +314,11 @@ def limpa_promocao(x_origem, y_origem):
         pyautogui.click(909 + x_origem, 84 + y_origem, button='left')
         print("amigos on line e opiçoes")
 
+    # o novo banco esta aberto"
+    if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 155), (120, 62, 25), tolerance=10):
+        pyautogui.click(909 + x_origem, 84 + y_origem, button='left')
+        print("o novo banco esta aberto")
+
     # Fique milionario jogando
     if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 109), (122, 75, 30), tolerance=10):
         pyautogui.click(812 + x_origem, 240 + y_origem)
