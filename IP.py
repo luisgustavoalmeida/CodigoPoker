@@ -30,7 +30,7 @@ dicionari_PC_IP = {'PC-I5-8600K':   ("F3",  "modem"),
                    'PC-I5-13400B':  ("F21", "modem"),
                    'PC-I7-9700KF':  ("F24", "vero"),
                    'PC-I7-11850H':  ("F27", "vero"),
-                   'PC-i3-8145U':   ("F28", "modem")}
+                   'PC-i3-8145U':   ("F30", "modem")}
 
 # Obter o nome de usuário
 nome_usuario = os.getlogin()
