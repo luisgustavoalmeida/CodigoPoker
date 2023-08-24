@@ -30,7 +30,7 @@ global aviso_sistema_global
 nome_usuario = os.getlogin()
 # Obter o nome do computador
 nome_computador = socket.gethostname()
-LIMITE_IP = 5
+LIMITE_IP = 6
 # if nome_usuario == "PokerIP":  # teste se o usuario do computador é o que troca IP se nao for fica esperando esta livre
 #     LIMITE_IP = 5
 # elif (nome_usuario == "lgagu") and (nome_computador == "PC-I7-9700KF"):
@@ -138,8 +138,8 @@ while True:
 
         while roda:
 
-            if cont_IP >= LIMITE_IP or cont_IP < 0:  # se a contagem de ip ta fora da faixa vai para a função
-                IP.ip(LIMITE_IP)  # testa se o numero de contas esta dentro do limite antes de trocar ip
+            #if cont_IP >= LIMITE_IP or cont_IP < 0:  # se a contagem de ip ta fora da faixa vai para a função
+            IP.ip(LIMITE_IP)  # testa se o numero de contas esta dentro do limite antes de trocar ip
 
             entrou_corretamente, stataus_facebook = Seleniun.fazer_login(id, senha, url, navegador)
 

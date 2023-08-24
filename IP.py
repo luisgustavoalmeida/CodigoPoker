@@ -16,7 +16,7 @@ import Seleniun
 import pygetwindow as gw
 import subprocess
 
-LIMITE_IP = 5
+LIMITE_IP = 6
 
 # chave nome do computador : tupla( valor 1 celula , valor 2 tipo de conexão)
 # "F3" de 3 em 3       #"modem" ou "vero"

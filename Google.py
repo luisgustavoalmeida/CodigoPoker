@@ -243,80 +243,6 @@ def primeira_celula_vazia(guia):
             service = build('sheets', 'v4', credentials=cred)
 
 
-# def primeira_celula_vazia0(guia):
-#     global linha_vazia_anterior  # Indica que vamos utilizar a variável global
-#     global intervalo_de_busca
-#     global guia_antiga
-#     print('primeira celula vazia')
-#     global cred
-#     global service
-#     if guia_antiga != guia:
-#         guia_antiga = guia
-#         linha_vazia_anterior = 2
-#
-#         # Chame a API Sheets
-#     sheet = service.spreadsheets()
-#
-#     while True:
-#         print('linha vazia: ', linha_vazia_anterior)
-#         try:
-#             result = sheet.values().get(
-#                 spreadsheetId=planilha_id,
-#                 range=f"{guia}!D{linha_vazia_anterior}:D{linha_vazia_anterior + intervalo_de_busca}",
-#                 majorDimension="COLUMNS",
-#                 valueRenderOption="UNFORMATTED_VALUE"
-#             ).execute()
-#             values = result.get('values', [[]])[0]
-#             print(values)
-#
-#             # Montar uma lista com os 50 valores do intervalo
-#             try:
-#                 i = values.index("")
-#                 print(i)
-#
-#                 if nome_usuario == "lgagu":
-#                     i += 1
-#                 elif nome_usuario == "Poker":
-#                     i += 2
-#
-#                 linha_vazia_anterior += i  # Atualiza a variável global com a próxima linha vazia
-#                 print('linha encontrada: ', linha_vazia_anterior)
-#                 endereco = f"D{linha_vazia_anterior}"
-#                 print(endereco)
-#                 celula_vazia = celula_esta_vazia(guia, endereco)
-#                 if celula_vazia:
-#                     return f"D{linha_vazia_anterior}"
-#
-#             except ValueError:
-#                 i = len(values)
-#                 if i < intervalo_de_busca + 1:
-#
-#                     if nome_usuario == "lgagu":
-#                         i += 1
-#                     elif nome_usuario == "Poker":
-#                         i += 2
-#
-#                     linha_vazia_anterior += i  # Atualiza a variável global com a próxima linha vazia
-#                     print('linha encontrada: ', linha_vazia_anterior)
-#                     endereco = f"D{linha_vazia_anterior}"
-#                     print(endereco)
-#                     celula_vazia = celula_esta_vazia(guia, endereco)
-#                     if celula_vazia:
-#                         return f"D{linha_vazia_anterior}"
-#
-#                 else:
-#                     linha_vazia_anterior += intervalo_de_busca
-#
-#         except Exception as e:
-#             print(f"Ocorreu um erro ao obter o valor da célula:", e)
-#             print("Erro primeira_celula_vazia. Tentando novamente em 5 segundos...")
-#             time.sleep(5)
-#             IP.tem_internet()
-#             cred = credencial()
-#             service = build('sheets', 'v4', credentials=cred)
-
-
-
 def escrever_celula(valor, guia, endereco):
     print("escrever_celula")
     global cred
@@ -439,50 +365,6 @@ def reservar_linha(guia, endereco):
     else:
         print('A chave não existe no dicionário')
 
-# def reservar_linha(guia, endereco):
-#     print("reservar_linha")
-#     global linha_vazia_anterior
-#
-#     values = None
-#     id = ""
-#     senha = ""
-#     linha = ""
-#     contagem_ip = ""
-#     #print(valor)
-#     if valor_pc is not None:
-#
-#         escrever_celula(valor_pc, guia, endereco)
-#         linha = endereco[1:]
-#         #time.sleep(0.3)
-#         #values, id, senha, contagem_ip = lote_valor(guia, linha)
-#
-#         values = pega_valor(guia, endereco)
-#         try:
-#             values = int(values)
-#             if valor_pc != values: # testa se no meio do tempo putro computador ja pegou o id
-#                 print("Pego por outro computador", values)
-#                 linha_vazia_anterior += 40
-#                 return False, id, senha, linha, contagem_ip
-#             time.sleep(1)
-#             values, id, senha, contagem_ip = lote_valor(guia, linha)
-#             try:
-#                 values = int(values)
-#                 if valor_pc == values:
-#                     print("Não teve concorrencia pela celula")
-#                     return True, id, senha, linha, contagem_ip  # Retorna o valor testado, id, senha e linha
-#                 else:
-#                     print("Pego por outro computador")
-#                     linha_vazia_anterior += 40
-#                     return False, id, senha, linha, contagem_ip
-#                 #print("values :",values)
-#             except:
-#                 linha_vazia_anterior += 40
-#                 return False, id, senha, linha, contagem_ip
-#         except:
-#             linha_vazia_anterior += 40
-#             return False, id, senha, linha, contagem_ip
-#     else:
-#         print('A chave não existe no dicionário')
 
 def lote_valor(guia, linha):
 
@@ -555,6 +437,58 @@ def pega_valor(guia, endereco):
             cred = credencial()
             service = build('sheets', 'v4', credentials=cred)
 
+
+def pega_valores_em_lote(guia, enderecos):
+    '''
+    # Para um único endereço
+    valor = pega_valores_em_lote("Planilha1", "A1")
+    print("Valor obtido:", valor)
+
+    # Para uma lista de endereços
+    enderecos = ["A1", "B1", "C1"]
+    valores = pega_valores_em_lote("Planilha1", enderecos)
+    print("Valores obtidos:", valores)'''
+
+    print('pega_valores_em_lote')
+    global cred
+    global service
+
+    if isinstance(enderecos, str):
+        enderecos = [enderecos]  # Se for um único endereço, coloca em uma lista
+
+    regioes = [f"{guia}!{endereco}" for endereco in enderecos]
+
+    while True:
+        try:
+            # Faz a requisição para obter os valores das células em lote
+            result = service.spreadsheets().values().batchGet(
+                spreadsheetId=planilha_id,
+                ranges=regioes).execute()
+
+            # Extrai os valores das células e retorna como uma lista de valores
+            valores_retornados = []
+            for value_range in result.get('valueRanges', []):
+                valores_range = value_range.get('values', [])
+                if valores_range:
+                    valores_retornados.append(valores_range[0][0])
+                else:
+                    valores_retornados.append(None)
+
+            print("Valores obtidos em lote:", valores_retornados)
+
+            if len(valores_retornados) == 1:
+                return valores_retornados[0]  # Retorna o único valor quando a lista tem um item
+            else:
+                return valores_retornados  # Retorna a lista completa quando tem mais de um item
+
+        except Exception as error:
+            print(f"pega_valores_em_lote Ocorreu um erro ao obter os valores das células:")
+            print(f"Erro: {str(error)}")
+            IP.tem_internet()
+            cred = credencial()
+            service = build('sheets', 'v4', credentials=cred)
+
+
 def celula_esta_vazia(guia, endereco):
     print('celula_esta_vazia')
     global cred
@@ -583,7 +517,6 @@ def celula_esta_vazia(guia, endereco):
 
 
 def zera_cont_IP(endereco):
-
     global cred
     global service
 
@@ -648,7 +581,6 @@ def pega_ID_senha(guia, endereco):
             IP.tem_internet()
             cred = credencial()
             service = build('sheets', 'v4', credentials=cred)
-
 
 def escrever_IP_banido():
 
@@ -774,7 +706,7 @@ def apagar_numerodo_pc(valores, guia, linha):
     escrever_valores(valores, guia, endereco)
 
 
-#credencial()
+credencial()
 
 
 # guia = "R1"
@@ -792,3 +724,8 @@ def apagar_numerodo_pc(valores, guia, linha):
 
 #credenciais('R4')
 #testa_valor("R4", 'D2')
+
+# guia = "IP"
+# endereco = "F1"
+# pega_valores_em_lote(guia, endereco)
+# pega_valor(guia, endereco)
