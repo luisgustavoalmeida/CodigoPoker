@@ -73,15 +73,19 @@ dicionari_token_credencial_n = {'PC-I5-8600K_PokerIP':  ("token1.json", "credent
                                 'PC-I5-13400A_lgagu':   ("token17.json", "credentials0.json", 17),
                                 'PC-I5-13400A_Poker':   ("token18.json", "credentials0.json", 18),
 
-                                'PC-i3-8145U_PokerIP':  ("token19.json", "credentials5.json", 19),
+                                'PC-I5-13400B_PokerIP': ("token19.json", "credentials1.json", 19),
+                                'PC-I5-13400B_lgagu':   ("token20.json", "credentials1.json", 20),
+                                'PC-I5-13400B_Poker':   ("token21.json", "credentials1.json", 21),
 
                                 'PC-I7-9700KF_PokerIP': ("token22.json", "credentials5.json", 22),
                                 'PC-I7-9700KF_lgagu':   ("token23.json", "credentials5.json", 23),
                                 'PC-I7-9700KF_Poker':   ("token24.json", "credentials5.json", 24),
 
                                 'PC-I7-11850H_PokerIP': ("token25.json", "credentials5.json", 25),
-                                'PC-I7-11850H_lgagu': ("token26.json", "credentials5.json", 26),
-                                'PC-I7-11850H_Poker': ("token27.json", "credentials5.json", 27)
+                                'PC-I7-11850H_lgagu':   ("token26.json", "credentials5.json", 26),
+                                'PC-I7-11850H_Poker':   ("token27.json", "credentials5.json", 27),
+
+                                'PC-i3-8145U_PokerIP':  ("token19.json", "credentials5.json", 28)
                                 }
 
 
@@ -100,9 +104,10 @@ dicionari_PC_IP = {'PC-I5-8600K': "IP!F3",
                    'PC-I5-9400C': "IP!F12",
                    'PC-R5-7600A': "IP!F15",
                    'PC-I5-13400A': "IP!F18",
-                   'PC-i3-8145U': "IP!F21",
+                   'PC-I5-13400B': "IP!F21",
                    'PC-I7-9700KF': "IP!F24",
-                   'PC-I7-11850H': "IP!F27"}
+                   'PC-I7-11850H': "IP!F27",
+                   'PC-i3-8145U': "IP!F30"}
 
 
 
