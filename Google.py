@@ -706,7 +706,7 @@ def apagar_numerodo_pc(valores, guia, linha):
     escrever_valores(valores, guia, endereco)
 
 
-credencial()
+#credencial()
 
 
 # guia = "R1"
