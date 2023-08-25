@@ -285,7 +285,7 @@ while True:
                 parar_tarefas = False
                 lista_tarefas_fazer = []
 
-                for i in range(2):
+                for i in range(3):
                     print('\n TAREFAS \n')
 
                     if HoraT.fim_tempo_tarefa():

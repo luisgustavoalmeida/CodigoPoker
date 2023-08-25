@@ -107,7 +107,7 @@ def OCR_regiao (regiao, config, inveter_cor, fator_ampliacao,contraste):
             # Remove os espaços em branco no início e no final do texto
             texto = texto.strip()  # remove os espaços em branco (espaços, tabulações e quebras de linha) no início e no final da string
             # print("___________________\n")
-            #print("OCR_tela. Texto encontrado pelo OCR: \n", texto)
+            # print("OCR_tela. Texto encontrado pelo OCR: \n", texto)
             # print("\n___________________")
             return texto
         else:

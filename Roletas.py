@@ -43,7 +43,8 @@ def roletas(x_origem, y_origem, id, senha, url, navegador):
                     print("espera abrir a roleta 2")
                     pyautogui.doubleClick(x_origem + 683, y_origem + 14)  # clica no icone roleta, ja roda sozinho
 
-                    if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 107), (38, 24, 77), tolerance=10):
+                    if (pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 107), (39, 22, 74), tolerance=10)
+                            or pyautogui.pixelMatchesColor((x_origem + 290), (y_origem + 107), (39, 22, 74), tolerance=10)):
                         pyautogui.doubleClick(x_origem + 486, y_origem + 335)  # clica no meio da roleta para rodar, mas a R2 roda sozinho
                         pyautogui.doubleClick(x_origem + 683, y_origem + 14)  # clica no icone roleta, ja roda sozinho
                         print("clicou na roleta 2")
@@ -124,8 +125,8 @@ def roletas(x_origem, y_origem, id, senha, url, navegador):
 
                     pyautogui.click(490 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
 
-                    if pyautogui.pixelMatchesColor((x_origem + 495), (y_origem + 315), (227,120,14), tolerance=20): #testa de roleta 1 ta aberta
-                        pyautogui.doubleClick(x_origem + 492, y_origem + 383) # clica no meio da roleta para rodar
+                    if pyautogui.pixelMatchesColor((x_origem + 495), (y_origem + 315), (227, 120, 14), tolerance=20):  # testa de roleta 1 ta aberta
+                        pyautogui.doubleClick(x_origem + 492, y_origem + 383)  # clica no meio da roleta para rodar
                         print("roleta 1 aberta")
                         time.sleep(0.3)
                         pyautogui.doubleClick(x_origem + 492, y_origem + 383)  # clica no meio da roleta para rodar

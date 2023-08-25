@@ -329,7 +329,6 @@ def testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador
                 pontuacao_tarefas + pontos_disponiveis)
             parar_tarefas = True
 
-
     return (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas, lista_tarefas_fazer,
             pontos_disponiveis, hora_fim_tarefa)
 
