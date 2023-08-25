@@ -214,6 +214,10 @@ def limpa_pequeno(x_origem, y_origem):
                 print("sair da conta")
                 return "sair da conta"
 
+    elif pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 155), (120, 62, 25), tolerance=10):
+        pyautogui.click(495 + x_origem, 400 + y_origem, button='left')
+        print("o novo banco esta aberto")
+
     #if not(teste_limpo(x_origem, y_origem)):  # se ta limpo nem entra
 
     if (pyautogui.pixelMatchesColor(215, 1000, (36, 37, 38), tolerance=5)  # mensagem do canto inferior esquedo " Você esta offiline no momento."
