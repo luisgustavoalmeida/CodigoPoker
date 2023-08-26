@@ -249,6 +249,7 @@ while True:
                         print('tempo que ja clicou no rodou: ', tempo_total)
                         if tempo_total >= 12:
                             print('ja pode sair do r1')
+                            pyautogui.click(882 + x_origem, 171 + y_origem)
                             break
 
                         time.sleep(0.3)

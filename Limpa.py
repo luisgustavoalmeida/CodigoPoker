@@ -364,10 +364,10 @@ def limpa_promocao(x_origem, y_origem):
         print("VS pegar a carta")
 
     # Roleta 1
-
-    if (pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 146), (36, 24, 74), tolerance=19)
-            or pyautogui.pixelMatchesColor((x_origem + 345), (y_origem + 146), (36, 24, 74), tolerance=19)):
-        pyautogui.click(882 + x_origem, 171 + y_origem, button='left')
+    if (pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 146), (36, 24, 74), tolerance=20)
+            or pyautogui.pixelMatchesColor((x_origem + 345), (y_origem + 146), (36, 24, 74), tolerance=20)
+            or pyautogui.pixelMatchesColor((x_origem + 495), (y_origem + 315), (227, 120, 14), tolerance=20)):
+        pyautogui.click(882 + x_origem, 171 + y_origem)
         print("limpa Roleta1")
 
     # Laranja
