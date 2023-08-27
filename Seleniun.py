@@ -121,11 +121,6 @@ def fazer_login(id, senha, url, navegador):
         url_atual = navegador.current_url
         if "/login/" in url_atual:
 
-            print("tem login no url")
-            elemento_nao_e_voce = WebDriverWait(navegador, 1).until(
-                EC.element_to_be_clickable((By.CSS_SELECTOR, 'div[aria-label="Não é você?"]')))
-            elemento_nao_e_voce.click()
-
             try:
                 email_field = WebDriverWait(navegador, 10).until(EC.presence_of_element_located((By.NAME, 'email')))
                 email_field.clear()
@@ -139,9 +134,7 @@ def fazer_login(id, senha, url, navegador):
                 for i in range(20):
                     time.sleep(1)
                     url_atual = navegador.current_url
-
-                    print(url_atual)
-
+                    #print(url_atual)
                     if "/login/" not in url_atual:
                         if "/pokerbrasil?" in url_atual:
                             #https://apps.facebook.com/pokerbrasil?vtype&amfmethod=appLinkFanPageAward&SignedParams=JrLALkSch1wuQxrULK6SWLAcpjTOb9Pmi5QvavvikU0.eyJhY3QiOiJmcCIsImZwX2FpZCI6IjU5ODUifQ&fbclid=IwAR252AFFL560939epg6Ki4tzNtLvgQJiZISVIZXFPjjBpBp5TNLBNX6TFXk
@@ -307,8 +300,6 @@ def atualizar_pagina(navegador, url):
             print(e)
             time.sleep(10)
             continue
-
-
 
 #navegador = cria_nevegador()
 # #

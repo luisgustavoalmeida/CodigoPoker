@@ -113,10 +113,11 @@ def tem_internet():
     while com_internete:
         print('testa a internete')
         cont_erro2 += 1
-        site_aleatorio = random.choice(sites)
+        #site_aleatorio = random.choice(sites)
         #print(site_aleatorio)
         try:
-            response = requests.get(site_aleatorio, timeout=10)
+            #response = requests.get(site_aleatorio, timeout=10)
+            response = requests.get('http://www.google.com', timeout=5)
             if response.status_code == 200 or response.status_code == 429:
                 print("Conexão com a internet ativa.")
                 cont_erro = 0
