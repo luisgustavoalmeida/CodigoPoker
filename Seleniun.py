@@ -122,9 +122,12 @@ def fazer_login(id, senha, url, navegador):
         if "/login/" in url_atual:
 
             print("tem login no url")
+            elemento_nao_e_voce = WebDriverWait(navegador, 1).until(
+                EC.element_to_be_clickable((By.CSS_SELECTOR, 'div[aria-label="Não é você?"]')))
+            elemento_nao_e_voce.click()
 
             try:
-                email_field = WebDriverWait(navegador, 20).until(EC.presence_of_element_located((By.NAME, 'email')))
+                email_field = WebDriverWait(navegador, 10).until(EC.presence_of_element_located((By.NAME, 'email')))
                 email_field.clear()
                 email_field.send_keys(id)
                 password_field = navegador.find_element(By.NAME, 'pass')
@@ -136,7 +139,8 @@ def fazer_login(id, senha, url, navegador):
                 for i in range(20):
                     time.sleep(1)
                     url_atual = navegador.current_url
-                    #print(url_atual)
+
+                    print(url_atual)
 
                     if "/login/" not in url_atual:
                         if "/pokerbrasil?" in url_atual:
@@ -259,22 +263,11 @@ def fazer_login(id, senha, url, navegador):
                 return entrou, status
 
             except Exception as e:
-                try:
-                    elemento_nao_e_voce = WebDriverWait(navegador, 3).until(
-                        EC.element_to_be_clickable((By.CSS_SELECTOR, 'div[aria-label="Não é você?"]')))
-                    elemento_nao_e_voce.click()
-                    time.sleep(3)
-                except:
-                    continue
 
                 print("Tempo limite excedido ao procurar o elemento faz_login.")
                 print(e)
                 sair_face(url, navegador)
                 continue
-
-        elemento_nao_e_voce = WebDriverWait(navegador, 3).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, 'div[aria-label="Não é você?"]')))
-        elemento_nao_e_voce.click()
 
         abrir_navegador(url, navegador)
 
