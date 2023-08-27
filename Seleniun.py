@@ -256,6 +256,14 @@ def fazer_login(id, senha, url, navegador):
                 return entrou, status
 
             except Exception as e:
+                try:
+                    elemento_nao_e_voce = WebDriverWait(navegador, 3).until(
+                        EC.element_to_be_clickable((By.CSS_SELECTOR, 'div[aria-label="Não é você?"]')))
+                    elemento_nao_e_voce.click()
+                    time.sleep(3)
+                except:
+                    continue
+
                 print("Tempo limite excedido ao procurar o elemento faz_login.")
                 print(e)
                 sair_face(url, navegador)
@@ -287,16 +295,6 @@ def sair_face(url, navegador):
             # navegador.execute_script(script)
             time.sleep(3)
             continue
-        #print('testa se esta visivel o login senha')
-        # try:
-        #     WebDriverWait(navegador, 3).until(EC.presence_of_element_located((By.NAME, 'email')))
-        #     return
-        # except Exception as e:
-        #     print("Tempo limite excedido tentar sair novamente ")
-        #     print(e)
-        #     time.sleep(3)
-        #     IP.tem_internet()
-        #     continue
 
 def atualizar_pagina(navegador, url):
     while True:
