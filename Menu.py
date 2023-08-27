@@ -441,12 +441,12 @@ while True:
                     print("--------------parte 8---------------")
                     if parar_tarefas:
                         break
-                (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas, lista_tarefas_fazer,
-                 pontos_disponiveis, hora_fim_tarefa) = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem,
-                                                                                               id, senha, url,
-                                                                                               navegador, dia_da_semana)
-                hora_que_rodou = datetime.datetime.now().strftime('%H:%M:%S')
+                (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
+                 lista_tarefas_fazer, pontos_disponiveis, hora_fim_tarefa) \
+                    = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha,
+                                                             url, navegador, dia_da_semana)
 
+                hora_que_rodou = datetime.datetime.now().strftime('%H:%M:%S')
 
                 roda = False
                 break

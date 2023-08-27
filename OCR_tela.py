@@ -255,10 +255,14 @@ def tarefas_diaris_posicao1(x_origem, y_origem):
     return lista
 def tarefas_diaris_posicao2(x_origem, y_origem):
     lista = []
-    if pyautogui.pixelMatchesColor((x_origem + 707), (y_origem + 280), (87, 0, 176), tolerance=5):  # testa se tem barra de rolagem na lista de tarefas
+    if pyautogui.pixelMatchesColor((x_origem + 707), (y_origem + 280), (87, 0, 176), tolerance=3):  # testa se tem barra de rolagem na lista de tarefas
         # print('tem barra para rolar\n')
-        pyautogui.doubleClick(708 + x_origem, 419 + y_origem)  # rola para ver se a tarefa esta na segunda parte
-        time.sleep(0.2)
+        for i in range(50):
+            pyautogui.doubleClick(708 + x_origem, 419 + y_origem)  # rola para ver se a tarefa esta na segunda parte
+            if pyautogui.pixelMatchesColor((x_origem + 707), (y_origem + 410), (87, 0, 176), tolerance=3):  # testa se tem barra de rolagem na lista de tarefas
+                break
+            time.sleep(0.1)
+
 
         # Define a região de interesse
         config = '--psm 6 --oem 1'
@@ -330,11 +334,15 @@ def tarefas_diaris(x_origem, y_origem):
         if texto is not None:
             lista = remover_termos(texto)
             #print('teste se tem que rolar\n')
-            if pyautogui.pixelMatchesColor((x_origem + 707), (y_origem + 280), (87, 0, 176), tolerance=5): # testa se tem barra de rolagem na lista de tarefas
+            if pyautogui.pixelMatchesColor((x_origem + 707), (y_origem + 280), (87, 0, 176), tolerance=3): # testa se tem barra de rolagem na lista de tarefas
                 #print('tem barra para rolar\n')
-                for j in range(1):
+                for i in range(50):
                     pyautogui.doubleClick(708 + x_origem, 419 + y_origem)  # rola para ver se a tarefa esta na segunda parte
-                    time.sleep(0.2)
+                    if pyautogui.pixelMatchesColor((x_origem + 707), (y_origem + 410), (87, 0, 176), tolerance=3):  # testa se tem barra de rolagem na lista de tarefas
+                        break
+                    time.sleep(0.1)
+
+                for j in range(1):
                     #print('tem coisa na lista 1')
                     #print("chama o ocr a 2 vez\n")
                     texto = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste)

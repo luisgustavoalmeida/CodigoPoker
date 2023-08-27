@@ -22,8 +22,8 @@
 #
 #
 #
-# x = (x_origem + 685)
-# y = (y_origem + 360)
+# x = (x_origem + 707)
+# y = (y_origem + 410)
 #
 #
 #
@@ -34,9 +34,11 @@
 #     cor = pyautogui.pixel(x, y)
 #     print(f"A cor RGB do pixel em ({x}, {y}) é {cor}")
 #
+#     pyautogui.doubleClick(708 + x_origem, 419 + y_origem)  # rola para ver se a tarefa esta na segunda parte
+#
 #     if pyautogui.pixelMatchesColor(x, y, (22, 21, 23), tolerance=tolerancia):
 #         print('tem a cor, tolerancia :', tolerancia)
 #
 #
 #     time.sleep(0.2)
-
+#
