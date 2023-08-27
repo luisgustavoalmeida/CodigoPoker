@@ -121,6 +121,14 @@ def fazer_login(id, senha, url, navegador):
         url_atual = navegador.current_url
         if "/login/" in url_atual:
             try:
+                elemento_nao_e_voce = WebDriverWait(navegador, 3).until(
+                    EC.element_to_be_clickable((By.CSS_SELECTOR, 'div[aria-label="Não é você?"]')))
+                elemento_nao_e_voce.click()
+                time.sleep(3)
+            except:
+                continue
+
+            try:
                 email_field = WebDriverWait(navegador, 20).until(EC.presence_of_element_located((By.NAME, 'email')))
                 email_field.clear()
                 email_field.send_keys(id)
