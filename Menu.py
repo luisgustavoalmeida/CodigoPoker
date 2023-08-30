@@ -289,18 +289,11 @@ while True:
                 for i in range(3):
                     print('\n TAREFAS \n')
 
-                    if HoraT.fim_tempo_tarefa():
-                        break
                     if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
-                        break
-                    if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-                        break
-
-                    if Limpa.limpa_total(x_origem, y_origem):
                         parar_tarefas = True
                         break
-
-                    if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
+                    if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
+                        parar_tarefas = True
                         break
 
                     (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas, lista_tarefas_fazer,

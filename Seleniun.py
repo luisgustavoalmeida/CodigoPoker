@@ -134,7 +134,7 @@ def fazer_login(id, senha, url, navegador):
                 for i in range(20):
                     time.sleep(1)
                     url_atual = navegador.current_url
-                    #print(url_atual)
+                    #  print(url_atual)
                     if "/login/" not in url_atual:
                         if "/pokerbrasil?" in url_atual:
                             #https://apps.facebook.com/pokerbrasil?vtype&amfmethod=appLinkFanPageAward&SignedParams=JrLALkSch1wuQxrULK6SWLAcpjTOb9Pmi5QvavvikU0.eyJhY3QiOiJmcCIsImZwX2FpZCI6IjU5ODUifQ&fbclid=IwAR252AFFL560939epg6Ki4tzNtLvgQJiZISVIZXFPjjBpBp5TNLBNX6TFXk
@@ -207,6 +207,12 @@ def fazer_login(id, senha, url, navegador):
                                     return entrou, status
                                 except NoSuchElementException:
                                     continue
+
+                            elemento_voltar_para_o_facebook = WebDriverWait(navegador, 5).until(
+                                EC.element_to_be_clickable(
+                                    (By.CSS_SELECTOR, 'div[aria-label="Voltar para o Facebook"]')))
+                            elemento_voltar_para_o_facebook.click()
+
                             #https://www.facebook.com/privacy/consent/lgpd_migrated/?source=lgpd_blocking_flow
                             elemento_comecar = WebDriverWait(navegador, 5).until(
                                 EC.element_to_be_clickable((By.CSS_SELECTOR, 'div[aria-label="Começar"]')))
@@ -224,22 +230,35 @@ def fazer_login(id, senha, url, navegador):
                                 EC.element_to_be_clickable((By.CSS_SELECTOR, 'div[aria-label="Continuar"]')))
                             elemento_continuar.click()
 
+
+                            elemento_voltar_para_o_facebook = WebDriverWait(navegador, 5).until(
+                                EC.element_to_be_clickable((By.CSS_SELECTOR, 'div[aria-label="Voltar para o Facebook"]')))
+                            elemento_voltar_para_o_facebook.click()
+
+                            elemento_mostrar_anuncios = WebDriverWait(navegador, 5).until(
+                                EC.element_to_be_clickable((By.CSS_SELECTOR, 'div[aria-label="Usar essa atividade"]')))
+                            elemento_mostrar_anuncios.click()
+
                             elemento_fechar = WebDriverWait(navegador, 5).until(
                                 EC.element_to_be_clickable((By.CSS_SELECTOR, 'div[aria-label="Fechar"]')))
                             elemento_fechar.click()
                             time.sleep(3)
+
                             navegador.get(url)
                             time.sleep(5)
 
-                    elif "/device-based/regular/login/?" in url_atual:
+                    elif ("/login/?privacy" in url_atual) or ("/device-based/regular/login/?" in url_atual):
                         print("senha incorreta")
+                        print('manda sair')
+                        sair_face(url, navegador)
+
                         entrou = False
-                        status = "senha incorreta"
+                        status = "Senha incorreta"
                         return entrou, status
 
                     else:
                         lista_face = ['Você não pode usar este recurso no momento', 'Limitamos a frequência',
-                                      'senha inserida está incorreta', 'Esqueceu a conta?','Tentar outra forma']
+                                      'senha inserida está incorreta', 'Esqueceu a conta?', 'Tentar outra forma']
                         for item in lista_face:  # percorre os textos que tem quando tem conta caida para o face
                             try:
                                 elemento = navegador.find_element(By.XPATH, f"//span[contains(text(), '{item}')]")
@@ -252,7 +271,7 @@ def fazer_login(id, senha, url, navegador):
                 #else:
                 print("Não carregou o poker")
                 entrou = False
-                status = "não ok, outro"
+                status = "Não ok, outro"
                 return entrou, status
 
             except Exception as e:
@@ -281,13 +300,29 @@ def sair_face(url, navegador):
         except Exception as e:
             print("ERRO ao executar o script sair ")
             print(e)
-            time.sleep(3)
+            #time.sleep(3)
             IP.tem_internet()
             print("Da um F5 e espera 3 segundos")
             pyautogui.press('f5')
             # navegador.execute_script(script)
             time.sleep(3)
-            continue
+            #continue
+            print("testa se tem nao é vc")
+            try:
+                print('procura elemento')
+                # Esperar até que o elemento "Não é você?" seja clicável
+                # elemento_nao_e_voce = WebDriverWait(navegador, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'div[aria-label="Não é você?"]')))
+                elemento_nao_e_voce = WebDriverWait(navegador, 5).until(EC.element_to_be_clickable((By.ID, 'not_me_link')))
+
+                # Clicar no elemento
+                print('Clicar no elemento')
+                elemento_nao_e_voce.click()
+                print('espera 5s')
+                #time.sleep(5)
+
+            except NoSuchElementException:
+                print("Elemento não encontrado na página.")
+
 
 def atualizar_pagina(navegador, url):
     while True:

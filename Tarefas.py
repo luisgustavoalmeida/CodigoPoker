@@ -298,34 +298,34 @@ def testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador
 
     if HoraT.fim_tempo_tarefa():
         Limpa.limpa_total(x_origem, y_origem)
-        print('fim do horario destinado a tarefas')
+        print('Fim do horario destinado a tarefas')
         hora_fim_tarefa = True
         parar_tarefas = True
     elif conta_upada is False:
         print('Conta não esta upada')
         parar_tarefas = True        
     elif Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
-        print('ja esta lofado')
+        print('Ja esta logado')
         parar_tarefas = True
     elif valor_fichas < 40000:  # se a conta tem menos de 110K vai para a proxima
-        print('quantidade de fichas insuficiente para jogar')
+        print('Quantidade de fichas insuficiente para jogar')
         parar_tarefas = True
     elif (len(lista_tarefas_fazer) <= 0):
-        print("lista de trarefas vazia")
+        print("Lista de trarefas vazia")
         parar_tarefas = True
     elif meta_atingida:
-        print("meta do dia atigida")
+        print("Meta do dia atigida")
         parar_tarefas = True
     elif dia_da_semana == 5:  # testa se é sabado ultimo dia das tarefas
-        print('ultimo dia das tarefas')
+        print('Ultimo dia das tarefas, continua somente se for possivel atigir 150 ou 200 pontos')
         if ((pontuacao_tarefas + pontos_disponiveis) < 150) and (pontuacao_tarefas < 150):
             print(
-                '\n\nA soma dos pontos disponiveis e os pontos feitos não atigem 200, o máximo que pode atingir é:',
+                '\n\nA soma dos pontos disponiveis e os pontos feitos não atigem 150, o máximo que pode atingir é: ',
                 pontuacao_tarefas + pontos_disponiveis)
             parar_tarefas = True
         if ((pontuacao_tarefas + pontos_disponiveis) < 200) and (pontuacao_tarefas >= 150):
             print(
-                '\n\nA soma dos pontos disponiveis e os pontos feitos não atigem 200, o máximo que pode atingir é:',
+                '\n\nA soma dos pontos disponiveis e os pontos feitos não atigem 200, o máximo que pode atingir é: ',
                 pontuacao_tarefas + pontos_disponiveis)
             parar_tarefas = True
 

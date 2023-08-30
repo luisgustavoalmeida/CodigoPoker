@@ -11,7 +11,7 @@ tempo_total = 18000 # 5 horas em segudos
 tempo_tarefa = tempo_total - (hora_roleta * 3600) - (minutos_roleta * 60) # tempo tarefa em segundos # tempo total menos tempo não usado nas roletas
 #janela_tarefa = 900  # janela de 15 minutos para ir para as roletas quando esta no tarefas
 
-faixa_tempo = 900
+faixa_tempo = 300
 guias = ["R1", "R2", "R3", "R4", "R5"]
 
 def mudar_guia(id, guia):
@@ -117,17 +117,17 @@ def mudar_guia(id, guia):
 
 def fim_tempo_tarefa():
     hora_atual = datetime.datetime.now().time()
-    tempo_atual = (hora_atual.hour * 3600) + (hora_atual.minute * 60) + hora_atual.second
-    if tempo_atual > 86280:
+    tempo_atual = (hora_atual.hour * 3600) + (hora_atual.minute * 60) + hora_atual.second  # hora atual em segundos
+    if tempo_atual > 86280:  # proximo das 24H
         print('interrompe a tarefa e vai pra o R1, proximo das 0h')
         return True
-
-    for i in range(0, 5):
-        inicio_faixa = tempo_total * i
-        fim_faixa = inicio_faixa + faixa_tempo
-        if inicio_faixa <= tempo_atual <= fim_faixa:
-            print('interrompe a tarefa e vai pra o R')
-            return True
+    else:
+        for i in range(0, 5):
+            inicio_faixa = tempo_total * i  # tempo_total igual a 5h  0, 5, 10, 15, 20,
+            fim_faixa = inicio_faixa + faixa_tempo
+            if inicio_faixa < tempo_atual <= fim_faixa:
+                print('interrompe a tarefa e vai para o R')
+                return True
     return False
 
 # guia = "R1"
