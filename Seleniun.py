@@ -308,8 +308,8 @@ def sair_face(url, navegador):
             time.sleep(3)
             #continue
             print("testa se tem nao é vc")
+
             try:
-                print('procura elemento')
                 # Esperar até que o elemento "Não é você?" seja clicável
                 # elemento_nao_e_voce = WebDriverWait(navegador, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'div[aria-label="Não é você?"]')))
                 elemento_nao_e_voce = WebDriverWait(navegador, 5).until(EC.element_to_be_clickable((By.ID, 'not_me_link')))
@@ -317,11 +317,11 @@ def sair_face(url, navegador):
                 # Clicar no elemento
                 print('Clicar no elemento')
                 elemento_nao_e_voce.click()
-                print('espera 5s')
-                #time.sleep(5)
+                print('espera 2s')
+                time.sleep(2)
 
-            except NoSuchElementException:
-                print("Elemento não encontrado na página.")
+            except Exception as e:
+                print("Elemento não encontrado na página.", e)
 
 
 def atualizar_pagina(navegador, url):
