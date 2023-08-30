@@ -17,3 +17,7 @@ instalados corretamente. Em seguida, execute o seguinte comando para instalar as
 listadas no arquivo requirements.txt:
 
 pip install -r requirements.txt
+
+para atualizar
+
+python.exe -m pip install --upgrade pip

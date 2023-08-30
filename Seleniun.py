@@ -195,6 +195,7 @@ def fazer_login(id, senha, url, navegador):
                             return entrou, status
 
                         elif "/privacy/" in url_atual:
+                            #  https://www.facebook.com/privacy/consent/lgpd_migrated/?source=lgpd_blocking_flow
                             print("A conta termos de privacidade")
                             time.sleep(5)
                             lista_face = ['bloqueado temporariamente', 'concorde', 'temporariamente']
@@ -208,42 +209,24 @@ def fazer_login(id, senha, url, navegador):
                                 except NoSuchElementException:
                                     continue
 
-                            elemento_voltar_para_o_facebook = WebDriverWait(navegador, 5).until(
-                                EC.element_to_be_clickable(
-                                    (By.CSS_SELECTOR, 'div[aria-label="Voltar para o Facebook"]')))
-                            elemento_voltar_para_o_facebook.click()
+                            elementos_para_clicar = ["Começar", "Gerenciar configurações", "Salvar", "Continuar",
+                                                     "Voltar para o Facebook", "Usar essa atividade",
+                                                     "Usar essa atividade", "Fechar"]
 
-                            #https://www.facebook.com/privacy/consent/lgpd_migrated/?source=lgpd_blocking_flow
-                            elemento_comecar = WebDriverWait(navegador, 5).until(
-                                EC.element_to_be_clickable((By.CSS_SELECTOR, 'div[aria-label="Começar"]')))
-                            elemento_comecar.click()
+                            for i in range(2):
+                                for elemento in elementos_para_clicar:
+                                    elemento_seletor = f'div[aria-label="{elemento}"]'
+                                    print("procura: ", elemento)
+                                    try:
+                                        elemento_clicavel = WebDriverWait(navegador, 3).until(
+                                            EC.element_to_be_clickable((By.CSS_SELECTOR, elemento_seletor)))
+                                        elemento_clicavel.click()
+                                    except Exception as e:  # Corrigido o erro aqui, "as e" ao invés de "e Exception:"
+                                        print("Elememto para clicar não encontrado: ", elemento)
+                                        print(e)
+                                        continue
 
-                            elemento_gerenciar = WebDriverWait(navegador, 5).until(EC.element_to_be_clickable(
-                                (By.CSS_SELECTOR, 'div[aria-label="Gerenciar configurações"]')))
-                            elemento_gerenciar.click()
-
-                            elemento_salvar = WebDriverWait(navegador, 5).until(
-                                EC.element_to_be_clickable((By.CSS_SELECTOR, 'div[aria-label="Salvar"]')))
-                            elemento_salvar.click()
-
-                            elemento_continuar = WebDriverWait(navegador, 5).until(
-                                EC.element_to_be_clickable((By.CSS_SELECTOR, 'div[aria-label="Continuar"]')))
-                            elemento_continuar.click()
-
-
-                            elemento_voltar_para_o_facebook = WebDriverWait(navegador, 5).until(
-                                EC.element_to_be_clickable((By.CSS_SELECTOR, 'div[aria-label="Voltar para o Facebook"]')))
-                            elemento_voltar_para_o_facebook.click()
-
-                            elemento_mostrar_anuncios = WebDriverWait(navegador, 5).until(
-                                EC.element_to_be_clickable((By.CSS_SELECTOR, 'div[aria-label="Usar essa atividade"]')))
-                            elemento_mostrar_anuncios.click()
-
-                            elemento_fechar = WebDriverWait(navegador, 5).until(
-                                EC.element_to_be_clickable((By.CSS_SELECTOR, 'div[aria-label="Fechar"]')))
-                            elemento_fechar.click()
                             time.sleep(3)
-
                             navegador.get(url)
                             time.sleep(5)
 
