@@ -463,14 +463,15 @@ def joga(x_origem, y_origem, id, senha, url, navegador, ajusta_aposta):
                 Tarefas.recolher_tarefa(x_origem, y_origem)
                 print('procura se aidna tem tarefa')
 
-                #continua_jogando, tarefa = Tarefas.comparar_imagens_tarefa(tarefas_fazer, x_origem, y_origem)  # retona se tem cartas vezes ou nao
                 continua_jogando, tarefa = Tarefas.comparar_listas_fazendo_tarefa(tarefas_fazer, x_origem, y_origem)
-                #continua_jogando = True
+
                 meta_atigida, pontos = Tarefas.meta_tarefas(x_origem, y_origem)
 
                 if Limpa.limpa_total_fazendo_tarefa(x_origem, y_origem) == "sair da conta":
                     return "sair da conta"
+
                 if HoraT.fim_tempo_tarefa():
+                    continua_jogando = False
                     return
                 IP.testa_trocar_IP() # ve se tem que trocar ip
 
@@ -508,6 +509,9 @@ def joga(x_origem, y_origem, id, senha, url, navegador, ajusta_aposta):
         meta, pontos = Tarefas.tem_tarefa_para_recolher(x_origem, y_origem, id, senha, url, navegador)
         if meta:
             meta_atigida = True
+
+        if HoraT.fim_tempo_tarefa():
+            continua_jogando = False
 
         if (not continua_jogando) or meta_atigida:
             Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)

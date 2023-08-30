@@ -137,7 +137,6 @@ while True:
         hora_fim_tarefa = False
 
         while roda:
-
             #if cont_IP >= LIMITE_IP or cont_IP < 0:  # se a contagem de ip ta fora da faixa vai para a função
             IP.ip(LIMITE_IP)  # testa se o numero de contas esta dentro do limite antes de trocar ip
 
@@ -297,8 +296,10 @@ while True:
                         break
 
                     (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas, lista_tarefas_fazer,
-                     pontos_disponiveis, hora_fim_tarefa) = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url,
-                                                                                  navegador, dia_da_semana)
+                     pontos_disponiveis, hora_fim_tarefa) \
+                        = (Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador,
+                                                                  dia_da_semana))
+
                     print("--------------parte 1---------------")
                     if parar_tarefas:
                         break
@@ -344,7 +345,8 @@ while True:
                             or 'Ganhar 4.000 fichas nas Cartas Premiadas' in lista_tarefas_fazer):
 
                         print("\n\n Ganhar fichas nas Cartas Premiadas \n\n")
-                        Cartas.cartas_premidas_joga_valor(x_origem, y_origem, id, senha, url, navegador, lista_tarefas_fazer, valor_fichas)
+                        Cartas.cartas_premidas_joga_valor(x_origem, y_origem, id, senha, url, navegador,
+                                                          lista_tarefas_fazer, valor_fichas)
 
                         (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
                          lista_tarefas_fazer, pontos_disponiveis, hora_fim_tarefa) \
@@ -366,6 +368,7 @@ while True:
                          lista_tarefas_fazer, pontos_disponiveis, hora_fim_tarefa) \
                             = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha,
                                                                      url, navegador, dia_da_semana)
+
                     print("--------------parte 4---------------")
                     if parar_tarefas:
                         break
@@ -382,6 +385,7 @@ while True:
                          lista_tarefas_fazer, pontos_disponiveis, hora_fim_tarefa) \
                             = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha,
                                                                      url, navegador, dia_da_semana)
+
                     print("--------------parte 5---------------")
                     if parar_tarefas:
                         break
@@ -399,6 +403,7 @@ while True:
                          lista_tarefas_fazer, pontos_disponiveis, hora_fim_tarefa) \
                             = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha,
                                                                      url, navegador, dia_da_semana)
+
                     print("--------------parte 6---------------")
                     if parar_tarefas:
                         break
@@ -416,6 +421,7 @@ while True:
                          lista_tarefas_fazer, pontos_disponiveis, hora_fim_tarefa) \
                             = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha,
                                                                      url, navegador, dia_da_semana)
+
                     print("--------------parte 7---------------")
                     if parar_tarefas:
                         break
@@ -430,10 +436,14 @@ while True:
                         Mesa.joga(x_origem, y_origem, id, senha, url, navegador, 2000)
 
                         (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
-                         lista_tarefas_fazer, pontos_disponiveis) = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador, dia_da_semana)
+                         lista_tarefas_fazer, pontos_disponiveis) \
+                            = (Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador,
+                                                                      dia_da_semana))
+
                     print("--------------parte 8---------------")
                     if parar_tarefas:
                         break
+
                 (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
                  lista_tarefas_fazer, pontos_disponiveis, hora_fim_tarefa) \
                     = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha,

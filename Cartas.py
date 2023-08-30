@@ -144,17 +144,6 @@ def cartas_premidas_joga_valor(x_origem, y_origem, id, senha, url, navegador, li
     if continua_jogando is False:
         return
 
-    # for i in range(2):
-    #     # lipa tudo antes de começar vai para o lobby
-    #     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-    #         return "sair da conta"
-    #     Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
-    #     continua_jogando, tarefa = Tarefas.comparar_listas_fazendo_tarefa(tarefas_fazer, x_origem, y_origem)
-    #     print("tarefa que tem: \n",tarefa)
-    #     Limpa.fecha_tarefa(x_origem, y_origem)  # fecha a lista de tarefas diarias
-    #     if continua_jogando:
-    #         break
-
     abre_cartas_premidas(x_origem, y_origem)
     cont_jogadas_troca_ip = 0
 

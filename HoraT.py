@@ -116,22 +116,23 @@ def mudar_guia(id, guia):
         return guia_atual
 
 def fim_tempo_tarefa():
-    print("Testa se esta na hora de parar o tarefas")
+    #print("Testa se esta na hora de parar o tarefas")
     hora_atual = datetime.datetime.now().time()
+    #print("hora_atual: ", hora_atual )
     tempo_atual = (hora_atual.hour * 3600) + (hora_atual.minute * 60) + hora_atual.second  # hora atual em segundos
+    #print("tempo_atual: ", tempo_atual)
     if tempo_atual > 86280:  # proximo das 24H
         print('interrompe a tarefa e vai pra o R1, proximo das 0h')
         return True
     else:
         for i in range(0, 5):
             inicio_faixa = tempo_total * i  # 5H * i tempo_total igual a 5h  0, 5, 10, 15, 20,
+            #print("inicio_faixa :", inicio_faixa)
             fim_faixa = inicio_faixa + faixa_tempo
+            #print("fim_faixa :", fim_faixa)
             if inicio_faixa < tempo_atual <= fim_faixa:
                 print('Interrompe a tarefa e vai para o R')
                 return True
-            else:
-                print('Continuar fazendo tarefas')
-                return False
     return False
 
 # guia = "R1"
@@ -140,5 +141,6 @@ def fim_tempo_tarefa():
 # guia = mudar_guia(id, guia)
 # print(guia)
 
-# fim_tempo_tarefa()
+#fim_tempo_tarefa()
+
 

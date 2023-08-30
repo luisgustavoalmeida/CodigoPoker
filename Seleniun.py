@@ -209,6 +209,7 @@ def fazer_login(id, senha, url, navegador):
                                 except NoSuchElementException:
                                     continue
 
+                            # lista de elemento clicaveis
                             elementos_para_clicar = ["Começar", "Gerenciar configurações", "Salvar", "Continuar",
                                                      "Voltar para o Facebook", "Usar essa atividade",
                                                      "Usar essa atividade", "Fechar"]
