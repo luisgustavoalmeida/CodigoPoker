@@ -3,13 +3,15 @@ import time
 import IP
 import pyautogui
 
-hora_roleta = 3 # defina o tempo disponivel para a roleta em horas
-minutos_roleta = 59  # defina o tempo disponivel para a roleta em minutos
+hora_roleta = 4  # defina o tempo disponivel para a roleta em horas
+minutos_roleta = 0  # defina o tempo disponivel para a roleta em minutos
+
+tempo_roletas = (hora_roleta * 3600) + (minutos_roleta * 60)  # 4h
 
 tempo_total = 18000 # 5 horas em segudos
 
-tempo_tarefa = tempo_total - (hora_roleta * 3600) - (minutos_roleta * 60) # tempo tarefa em segundos # tempo total menos tempo não usado nas roletas
-#janela_tarefa = 900  # janela de 15 minutos para ir para as roletas quando esta no tarefas
+tempo_tarefa = tempo_total - tempo_roletas  # tempo tarefa em segundos # tempo total menos tempo não usado nas roletas
+# janela_tarefa = 900  # janela de 15 minutos para ir para as roletas quando esta no tarefas
 
 faixa_tempo = 600
 guias = ["R1", "R2", "R3", "R4", "R5"]
@@ -116,7 +118,7 @@ def mudar_guia(id, guia):
         return guia_atual
 
 def fim_tempo_tarefa():
-    #print("Testa se esta na hora de parar o tarefas")
+    print("Testa se esta na hora de parar o tarefas")
     hora_atual = datetime.datetime.now().time()
     #print("hora_atual: ", hora_atual )
     tempo_atual = (hora_atual.hour * 3600) + (hora_atual.minute * 60) + hora_atual.second  # hora atual em segundos
@@ -124,16 +126,31 @@ def fim_tempo_tarefa():
     if tempo_atual > 86280:  # proximo das 24H
         print('interrompe a tarefa e vai pra o R1, proximo das 0h')
         return True
-    else:
-        for i in range(0, 5):
-            inicio_faixa = tempo_total * i  # 5H * i tempo_total igual a 5h  0, 5, 10, 15, 20,
-            #print("inicio_faixa :", inicio_faixa)
-            fim_faixa = inicio_faixa + faixa_tempo
-            #print("fim_faixa :", fim_faixa)
-            if (inicio_faixa < tempo_atual) and (tempo_atual < fim_faixa):
-                print('Interrompe a tarefa e vai para o R')
-                return True
+
+    for i in range(1, 5):
+        #print(i)
+        hora_comecar_tarefas = (tempo_total * i) - tempo_tarefa  # 4 9 14 19
+        hora_terminar_tarefas = hora_comecar_tarefas + tempo_tarefa
+        # print("hora_comecar_tarefas", hora_comecar_tarefas)
+        # print("hora_terminar_tarefas", hora_terminar_tarefas)
+
+        if (hora_comecar_tarefas <= tempo_atual) and (tempo_atual <= hora_terminar_tarefas):
+            print("Continua fazendo tarefas")
+            return False
+
+    for i in range(0, 5): # do 0 ate o 4
+        #print(i)
+        inicio_faixa = tempo_total * i  # 5H * i tempo_total igual a 5h  0, 5, 10, 15, 20,
+        #print("inicio_faixa :", inicio_faixa)
+        fim_faixa = inicio_faixa + faixa_tempo
+        #print("fim_faixa :", fim_faixa)
+        if (inicio_faixa < tempo_atual) and (tempo_atual < fim_faixa):
+            print('Interrompe a tarefa e vai para o R')
+            return True
+
     return False
+
+
 
 # guia = "R1"
 # id = ""
@@ -141,6 +158,6 @@ def fim_tempo_tarefa():
 # guia = mudar_guia(id, guia)
 # print(guia)
 
-#fim_tempo_tarefa()
+fim_tempo_tarefa()
 
 
