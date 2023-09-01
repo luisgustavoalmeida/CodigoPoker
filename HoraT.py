@@ -130,7 +130,7 @@ def fim_tempo_tarefa():
             #print("inicio_faixa :", inicio_faixa)
             fim_faixa = inicio_faixa + faixa_tempo
             #print("fim_faixa :", fim_faixa)
-            if inicio_faixa < tempo_atual <= fim_faixa:
+            if (inicio_faixa < tempo_atual) and (tempo_atual < fim_faixa):
                 print('Interrompe a tarefa e vai para o R')
                 return True
     return False

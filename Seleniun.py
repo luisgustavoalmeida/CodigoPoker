@@ -2,13 +2,22 @@ import os
 import socket
 import time
 import IP
+import Google
+import datetime
+
 from selenium import webdriver
+
 import selenium.common.exceptions as sel_exceptions
 import undetected_chromedriver as uc
 from selenium.common.exceptions import TimeoutException
+
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
+
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
@@ -320,7 +329,100 @@ def atualizar_pagina(navegador, url):
             time.sleep(10)
             continue
 
-#navegador = cria_nevegador()
+# def busca_link(navegador):
+#     print('cria o navegador')
+#     #navegador = cria_nevegador()
+#
+#     id = "Luis.gustavo.almeida88"
+#     senha = "020996Pa"
+#     url = "https://pt-br.facebook.com/"
+#
+#     navegador.get(url)
+#
+#
+#     print('faz login')
+#     email_field = WebDriverWait(navegador, 10).until(EC.presence_of_element_located((By.NAME, 'email')))
+#     email_field.clear()
+#     email_field.send_keys(id)
+#     password_field = navegador.find_element(By.NAME, 'pass')
+#     password_field.clear()
+#     password_field.send_keys(senha)
+#     # fazer login clicando no botão de login
+#     login_button = navegador.find_element(By.NAME, 'login')
+#     login_button.click()
+#
+#     print('fez login')
+#     time.sleep(5)
+#
+#     # Abrir a página do Facebook da qual você deseja obter a última postagem
+#     pagina_do_facebook = "https://www.facebook.com/people/Poker-Brasil/100064546038812/"
+#     navegador.get(pagina_do_facebook)
+#
+#     time.sleep(5)
+#
+#     # Localizar todos os elementos de imagem
+#     elementos_imagem = navegador.find_elements(By.TAG_NAME, 'img')
+#
+#     # Procurar o primeiro link que começa com o padrão especificado
+#     link_encontrado = None
+#     for elemento in elementos_imagem:
+#         src = elemento.get_attribute('src')
+#         if src and src.startswith("https://external.fjdf2-2.fna.fbcdn.net/emg1"):
+#             link_encontrado = src
+#             break
+#
+#     if link_encontrado:
+#         print("Primeiro link encontrado:", link_encontrado)
+#
+#         # Localizar o elemento de imagem correspondente à URL encontrada
+#         imagem_correspondente = None
+#         for elemento in elementos_imagem:
+#             if elemento.get_attribute('src') == link_encontrado:
+#                 imagem_correspondente = elemento
+#                 break
+#
+#         if imagem_correspondente:
+#             # Clicar na imagem correspondente
+#             imagem_correspondente.click()
+#             print("Clicou na imagem correspondente")
+#             time.sleep(5)# Alterne o foco para a nova guia (segunda guia)
+#             navegador.switch_to.window(navegador.window_handles[1])
+#             time.sleep(5)
+#             # Esperar até que a página seja carregada
+#             #WebDriverWait(navegador, 15).until(EC.url_changes(navegador.current_url))
+#             # Pegar o link da barra de endereço do navegador
+#             link_da_barra_de_endereco = navegador.current_url
+#
+#             # Feche a segunda guia
+#             navegador.close()
+#
+#             # Volte para a primeira guia, se necessário
+#             navegador.switch_to.window(navegador.window_handles[0])
+#
+#             print(link_da_barra_de_endereco)
+#             print('escreve o link')
+#             Google.escrever_celula(link_da_barra_de_endereco, 'Dados', 'F1')
+#
+#             # Obtenha a data e hora atual
+#             data_hora_atual = str(datetime.datetime.now())
+#             print('escreve a data da atialização: ', data_hora_atual)
+#             Google.escrever_celula(data_hora_atual, 'Dados', 'F2')
+#
+#             time.sleep(100)
+#             return
+#
+#
+#         else:
+#             print("Imagem correspondente não encontrada")
+#     else:
+#         print("Nenhum link encontrado com o padrão especificado")
+#     return
+#
+#
+#
+# navegador = cria_nevegador()
+#
+# busca_link(navegador)
 # #
 #abrir_navegador(url, navegador)
 # usuario = 'lga.gustavo.a@gmail.com'

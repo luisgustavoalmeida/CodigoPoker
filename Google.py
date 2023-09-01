@@ -5,11 +5,11 @@ from __future__ import print_function
 
 import os
 import os.path
-import pickle
+#import pickle
 import socket
 #import httplib2
-from httplib2 import ServerNotFoundError
-from google.auth.exceptions import TransportError
+#from httplib2 import ServerNotFoundError
+#from google.auth.exceptions import TransportError
 import re
 import time
 import datetime
@@ -19,7 +19,7 @@ from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
+#from googleapiclient.errors import HttpError
 
 
 # Define o escopo, desta forma tem permição total a plania e ao google drive
