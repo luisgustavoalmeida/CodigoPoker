@@ -127,46 +127,47 @@ def valor_fichas(x_origem, y_origem):
 
     #regiao_ficha = (x_origem + 69, y_origem + 7, x_origem + 135, y_origem + 26)  # Ficha
 
-    regiao_ficha = (x_origem + 42, y_origem + 7, x_origem + 107, y_origem + 26) # Ficha
+    regiao_ficha = (x_origem + 43, y_origem + 9, x_origem + 107, y_origem + 23)  # Ficha
     # Executa o OCR na região de interesse
 
-    config = '--psm 6 --oem 3 -c tessedit_char_whitelist=0123456789'
-    lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste)
-    #print(lido)
+    for i in range(3):
+        config = '--psm 6 --oem 3 -c tessedit_char_whitelist=0123456789'
+        lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste)
+        #print(lido)
 
-    if lido != None:
-        lido = re.sub(r"\D+", "", lido) # remove caracteres nao numericos
-        lido = lido.replace(" ", "").replace(".", "")
+        if lido is not None:
+            lido = re.sub(r"\D+", "", lido)  # remove caracteres nao numericos
+            lido = lido.replace(" ", "").replace(".", "")
 
-        try:
-            lido = int(lido)
-            if 500 < lido < 15000000:
-                print("valor das fichas: ",lido)
-                return lido
-        except ValueError:
-            # Lidar com a conversão falhada para um número inteiro
-            print("Erro ao converter para inteiro")
+            try:
+                lido = int(lido)
+                if 500 < lido < 15000000:
+                    print("valor das fichas: ", lido)
+                    return lido
+            except ValueError:
+                # Lidar com a conversão falhada para um número inteiro
+                print("Erro ao converter para inteiro")
 
-    config = '--psm 6 -c tessedit_char_whitelist=0123456789.'
-    lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste)
-    # print(lido)
+        config = '--psm 6 -c tessedit_char_whitelist=0123456789.'
+        lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste)
+        # print(lido)
 
-    if lido != None:
-        lido = re.sub(r"\D+", "", lido)  # remove caracteres nao numericos
-        lido = lido.replace(" ", "").replace(".", "")
+        if lido is not None:
+            lido = re.sub(r"\D+", "", lido)  # remove caracteres nao numericos
+            lido = lido.replace(" ", "").replace(".", "")
 
-        try:
-            lido = int(lido)
-            if 500 < lido < 15000000:
-                print("valor das fichas: ", lido)
-                return lido
-        except ValueError:
-            # Lidar com a conversão falhada para um número inteiro
-            print("Erro ao converter para inteiro")
-            return 0
-    else:
-        print('valor fichas nao encontrado')
-        return 0
+            try:
+                lido = int(lido)
+                if 500 < lido < 15000000:
+                    print("valor das fichas: ", lido)
+                    return lido
+            except ValueError:
+                # Lidar com a conversão falhada para um número inteiro
+                print("Erro ao converter para inteiro")
+
+        time.sleep(5)
+    return 0
+
 
 def tempo_roleta(x_origem, y_origem):
     inveter_cor = True

@@ -3,21 +3,21 @@ import time
 import IP
 import pyautogui
 
-hora_roleta = 3  # defina o tempo disponivel para a roleta em horas
-minutos_roleta = 59  # defina o tempo disponivel para a roleta em minutos
+hora_roleta = 4  # defina o tempo disponivel para a roleta em horas
+minutos_roleta = 00  # defina o tempo disponivel para a roleta em minutos
 
 tempo_roletas = (hora_roleta * 3600) + (minutos_roleta * 60)  # 4h
 
-tempo_total = 18000 # 5 horas em segudos
+tempo_total = 18000  # 5 horas em segudos
 
 tempo_tarefa = tempo_total - tempo_roletas  # tempo tarefa em segundos # tempo total menos tempo não usado nas roletas
-# janela_tarefa = 900  # janela de 15 minutos para ir para as roletas quando esta no tarefas
 
-print("tempo_tarefa :", tempo_tarefa)
-print('tempo_roletas :', tempo_roletas)
-print('tempo_total :', tempo_total)
+faixa_tempo = 300  # janela de tempo para sair das contas no tarefas
 
-faixa_tempo = 300
+# print("tempo_tarefa :", tempo_tarefa)
+# print('tempo_roletas :', tempo_roletas)
+# print('tempo_total :', tempo_total)
+
 guias = ["R1", "R2", "R3", "R4", "R5"]
 
 def mudar_guia(id, guia):
@@ -25,9 +25,6 @@ def mudar_guia(id, guia):
     # print(hora_atual)
     tempo_atual = (hora_atual.hour * 3600) + (hora_atual.minute * 60) + hora_atual.second
 
-    # print("tempo_tarefa", tempo_tarefa)
-    # print('guia: ', guia)
-    # print('id: ', id)
     while tempo_atual > 86100: # se maior que 23:55:00
         print('espera virar 0h')
         time.sleep(15)
@@ -52,14 +49,11 @@ def mudar_guia(id, guia):
                     time.sleep(30)
 
                     for j in range(0, 5):
-
                         inicio_faixa = tempo_total * j
                         fim_faixa = inicio_faixa + faixa_tempo
-
                         if inicio_faixa <= tempo_atual <= fim_faixa:
                             print("tempo atigido, inicia novo R")
                             for i, guia_atual in enumerate(guias):
-
                                 print("gia atual:", guia_atual)
                                 if (i * tempo_total) <= tempo_atual <= ((i + 1) * tempo_total - tempo_tarefa):
                                     print('vai para a guia', guia_atual)
@@ -85,6 +79,7 @@ def mudar_guia(id, guia):
                 tempo_atual = (hora_atual.hour * 3600) + (hora_atual.minute * 60) + hora_atual.second
                 print('Fim da lista, espera pelo horario para iniciar novo R. \n Hora: ', hora_atual)
                 time.sleep(30)
+
                 for j in range(0, 5):
                     inicio_faixa = tempo_total * j
                     fim_faixa = inicio_faixa + faixa_tempo
@@ -156,11 +151,11 @@ def fim_tempo_tarefa():
 
 
 
-# guia = "R1"
-# id = ""
-# #
+# guia = "T1"
+# id = "32136546"
+# # #
 # guia = mudar_guia(id, guia)
-# print(guia)
+# print("vai para a gua: ", guia)
 
 #fim_tempo_tarefa()
 

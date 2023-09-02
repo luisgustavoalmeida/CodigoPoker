@@ -488,9 +488,9 @@ while True:
             print("Conta não entou, o Statos é: ", status_poker)
             id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
 
-        elif entrou_corretamente is True:  # se nao entrou no face
+        elif entrou_corretamente:  # se nao entrou no face
 
-            if hora_fim_tarefa is True:
+            if hora_fim_tarefa:
                 valores = [""]
                 #  apaga os valore quando da a hoara de sair do tarefas
                 Google.apagar_numerodo_pc(valores, guia, linha)  # apaga o nume do pc
