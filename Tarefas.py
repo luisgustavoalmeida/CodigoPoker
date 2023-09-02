@@ -277,6 +277,7 @@ def testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador
         
     valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem)
     Aneis.recolhe_aneis(x_origem, y_origem)
+    Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)  # retorna se a conta ta upada ou nao
     conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)  # retorna se a conta ta upada ou nao
     if conta_upada:
         recolher_tarefa(x_origem, y_origem)  # recolhe se tiver alguma tarefa batida
@@ -318,6 +319,9 @@ def testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador
         parar_tarefas = True
     elif dia_da_semana == 5:  # testa se é sabado ultimo dia das tarefas
         print('Ultimo dia das tarefas, continua somente se for possivel atigir 150 ou 200 pontos')
+        print('pontuacao_tarefas + pontos_disponiveis :', pontuacao_tarefas + pontos_disponiveis)
+
+
         if ((pontuacao_tarefas + pontos_disponiveis) < 150) and (pontuacao_tarefas < 150):
             print(
                 '\n\nA soma dos pontos disponiveis e os pontos feitos não atigem 150, o máximo que pode atingir é: ',
