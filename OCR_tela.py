@@ -202,15 +202,16 @@ def pontuacao_tarefas(x_origem, y_origem):
     inveter_cor = True
     fator_ampliacao = 2
     contraste = 1.4
-    config = '--psm 6 --oem 1 -c tessedit_char_whitelist=0123456789/'  #
-    regiao = (x_origem + 777, y_origem + 516, x_origem + 829, y_origem + 536)
+
+    regiao = (x_origem + 778, y_origem + 516, x_origem + 830, y_origem + 535)
+    config = '--psm 6 --oem 1 -c tessedit_char_whitelist=0123456789/'
 
     for i in range(2):
         pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
         time.sleep(0.3)
 
         pontuacao = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste) #pontuação
-        print('pontiuação 1: ', pontuacao)
+        print('pontiuação: ', pontuacao)
 
         if pontuacao is not None:
             if "/200" in pontuacao:
@@ -221,6 +222,31 @@ def pontuacao_tarefas(x_origem, y_origem):
                     pontuacao = int(pontuacao)
                     if pontuacao in valores:
                         #print("pontuacao: ", pontuacao)
+                        print("pontuacao: ", pontuacao)
+                        return pontuacao
+                except:
+                    continue
+        pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
+        time.sleep(2)
+
+    config = '--psm 6 -c tessedit_char_whitelist=0123456789.'
+
+    for i in range(2):
+        pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
+        time.sleep(0.3)
+
+        pontuacao = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste)  # pontuação
+        print('pontiuação: ', pontuacao)
+
+        if pontuacao is not None:
+            if "/200" in pontuacao:
+                pontuacao = pontuacao.split("/")[0]
+                pontuacao = re.sub(r"\D", "", pontuacao)  # pega apenas os numero
+                pontuacao = pontuacao.replace(" ", "")
+                try:
+                    pontuacao = int(pontuacao)
+                    if pontuacao in valores:
+                        # print("pontuacao: ", pontuacao)
                         print("pontuacao: ", pontuacao)
                         return pontuacao
                 except:
