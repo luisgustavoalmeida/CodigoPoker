@@ -601,8 +601,8 @@ def escrever_IP_banido():
     print(ip)
     print('\n\n')
 
-    print("espera 2 minutoas para nao ter concorrencia por recurso do googles")
-    time.sleep(120)
+    print("espera 30 para nao ter concorrencia por recurso do googles")
+    time.sleep(30)
     print('continua')
 
     cred = credencial()

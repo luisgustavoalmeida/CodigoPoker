@@ -132,7 +132,7 @@ def carregado_origem(id, senha, url, navegador):#navegador
                     IP.ip_troca_agora()
                     print('origem da um f5 e espera 15 segundos ')
                     pyautogui.press('f5')
-                    time.sleep(15)
+                    time.sleep(25)
                     continue
 
 
