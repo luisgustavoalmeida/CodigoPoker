@@ -119,7 +119,7 @@ def mudar_guia(id, guia):
 def fim_tempo_tarefa():
     print("Testa se esta na hora de parar o tarefas")
     hora_atual = datetime.datetime.now().time()
-    print("hora_atual: ", hora_atual )
+    print("hora_atual: ", hora_atual)
     tempo_atual = (hora_atual.hour * 3600) + (hora_atual.minute * 60) + hora_atual.second  # hora atual em segundos
     print("tempo_atual: ", tempo_atual)
     if tempo_atual > 86280:  # proximo das 24H
