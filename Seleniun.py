@@ -50,8 +50,8 @@ options.add_argument(f"--user-data-dir={pasta_cookies}")
 #options.add_argument("--user-data-dir=/path/to/empty/folder") # Especifica um diretório vazio para a coleta de cookies. Isso permite que você utilize cookies pré-existentes ou salve os cookies gerados durante a execução do script.
 options.add_argument("--disable-autofill")  # desabilitará o recurso de preenchimento automático de formulários do navegador.
 options.add_argument("--disable-geolocation")  # desativar a funcionalidade de localização do navegador durante a execução do script Selenium
-options.add_argument("--window-size=1440,1045")# Definir o tamanho da janela # largura altura
-options.add_argument("--window-position=0,0")# Mover a janela para a posição (0,0) da tela
+options.add_argument("--window-size=1380,1050")# Definir o tamanho da janela # largura altura options.add_argument("--window-size=1440,1045")
+options.add_argument("--window-position=-8,-5")# Mover a janela para a posição (0,0) da tela
 options.add_argument("--mute-audio") # desativar o áudio
 #options.add_argument("--disable-gpu") # Desabilita o uso da GPU pelo navegador.
 #options.add_argument("--disable-translate") # Desabilita a tradução automática de páginas pelo navegador

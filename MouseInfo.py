@@ -1,2 +1,2 @@
-import mouseinfo
-mouseinfo.MouseInfoWindow()
+# import mouseinfo
+# mouseinfo.MouseInfoWindow()
