@@ -637,20 +637,20 @@ def aviso_sistema(x_origem, y_origem):
 # #
 # # # #         #aviso_do_sistema()
 #
-x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
-# # tarefas_diaris_trocar(x_origem, y_origem)
-# tarefas_diaris(x_origem, y_origem)
-# # # # # # # # # # print(y_origem)
-# # # # # # # # # # # valor_apostar(x_origem, y_origem)
+# x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
+# # # tarefas_diaris_trocar(x_origem, y_origem)
+# # tarefas_diaris(x_origem, y_origem)
+# # # # # # # # # # # print(y_origem)
+# # # # # # # # # # # # valor_apostar(x_origem, y_origem)
+# # # # # # # # # # #
+# # # # # # # # # # # # # valor = blind_sala(x_origem, y_origem)
+# # # # # # # # # # # # # print(valor)
+# # lista_tarefas_disponivel = tarefas_diaris(x_origem, y_origem)
+# # print(lista_tarefas_disponivel)
+# # # # # # # # # # #
+# # # # # tempo_roleta(x_origem, y_origem)
 # # # # # # # # # #
-# # # # # # # # # # # # valor = blind_sala(x_origem, y_origem)
-# # # # # # # # # # # # print(valor)
-# lista_tarefas_disponivel = tarefas_diaris(x_origem, y_origem)
-# print(lista_tarefas_disponivel)
-# # # # # # # # # #
-# # # # tempo_roleta(x_origem, y_origem)
-# # # # # # # # #
-lido = valor_fichas(x_origem, y_origem)
+# lido = valor_fichas(x_origem, y_origem)
 # print(lido)
 # # # # # # # # #
 #pontuacao_tarefas(x_origem, y_origem)
