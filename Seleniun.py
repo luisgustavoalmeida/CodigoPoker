@@ -329,7 +329,117 @@ def atualizar_pagina(navegador, url):
             time.sleep(10)
             continue
 
-# def busca_link(navegador):
+def busca_link(navegador):
+    print('busca_link')
+
+    if (nome_usuario == "PokerIP") and (nome_computador == "PC-I5-8600K"):
+        id = "stefaniaalmeida.jf"
+        senha = "$TE20091991te"
+
+    elif (nome_usuario == "lgagu") and (nome_computador == "PC-I7-9700KF"):
+        id = "Luis.gustavo.almeida88"
+        senha = "020996Pa"
+
+    elif (nome_usuario == "PokerIP") and (nome_computador == "PC-i3-8145U"):
+        id = "carolina.fedoci"
+        senha = "Lg1405lG"
+
+    url = "https://pt-br.facebook.com/"
+
+    navegador.get(url)
+
+    time.sleep(3)
+
+    if se_esta_lagado(navegador) is True:
+        sair_face(url, navegador)
+
+
+    print('faz login')
+    email_field = WebDriverWait(navegador, 10).until(EC.presence_of_element_located((By.NAME, 'email')))
+    email_field.clear()
+    email_field.send_keys(id)
+    password_field = navegador.find_element(By.NAME, 'pass')
+    password_field.clear()
+    password_field.send_keys(senha)
+    # fazer login clicando no botão de login
+    login_button = navegador.find_element(By.NAME, 'login')
+    login_button.click()
+
+    print('fez login')
+    time.sleep(3)
+
+    # Abrir a página do Facebook da qual você deseja obter a última postagem
+    pagina_do_facebook = "https://www.facebook.com/people/Poker-Brasil/100064546038812/"
+    navegador.get(pagina_do_facebook)
+
+    time.sleep(5)
+
+    # Localizar todos os elementos de imagem
+    elementos_imagem = navegador.find_elements(By.TAG_NAME, 'img')
+
+    # Procurar o primeiro link que começa com o padrão especificado
+    link_encontrado = None
+    for elemento in elementos_imagem:
+        src = elemento.get_attribute('src')
+        if src and src.startswith("https://external.fjdf2-2.fna.fbcdn.net/emg1"):
+            link_encontrado = src
+            break
+
+    if link_encontrado:
+        print("Primeiro link encontrado:", link_encontrado)
+
+        # Localizar o elemento de imagem correspondente à URL encontrada
+        imagem_correspondente = None
+        for elemento in elementos_imagem:
+            if elemento.get_attribute('src') == link_encontrado:
+                imagem_correspondente = elemento
+                break
+
+        if imagem_correspondente:
+            # Clicar na imagem correspondente
+            imagem_correspondente.click()
+            print("Clicou na imagem correspondente")
+            time.sleep(3)
+            # Alterne o foco para a nova guia (segunda guia)
+            navegador.switch_to.window(navegador.window_handles[1])
+            time.sleep(5)
+            # Pegar o link da barra de endereço do navegador
+            link_da_barra_de_endereco = navegador.current_url
+            # Feche a segunda guia
+            navegador.close()
+            # Volte para a primeira guia, se necessário
+            navegador.switch_to.window(navegador.window_handles[0])
+            # Verificar se a URL começa com o padrão desejado
+            padrao_desejado = "https://apps.facebook.com/pokerbrasil?vtype=&amfmethod=appLinkFanPageAward&SignedParams="
+            if link_da_barra_de_endereco.startswith(padrao_desejado):
+                print("A URL começa com o padrão desejado.")
+                print(link_da_barra_de_endereco)
+                print('escreve o link')
+                Google.escrever_celula(link_da_barra_de_endereco, 'Dados', 'F1')
+
+                # Obtenha a data e hora atual
+                data_hora_atual = str(datetime.datetime.now())
+                print('escreve a data da atialização: ', data_hora_atual)
+                Google.escrever_celula(data_hora_atual, 'Dados', 'F2')
+                time.sleep(5)
+                return
+            else:
+                Google.escrever_celula("erro ao buscar o link fanpag, link fanpag fora do padrão", 'Dados', 'F2')
+                print("A URL não começa com o padrão desejado.")
+            return
+        else:
+            Google.escrever_celula("erro ao buscar o link fanpage, imagem nao encontrada", 'Dados', 'F2')
+            print("Imagem correspondente não encontrada")
+            return
+    else:
+        Google.escrever_celula("erro ao buscar o link fanpage, linque externo não encontrado", 'Dados', 'F2')
+        print("Nenhum link encontrado com o padrão especificado")
+        return
+
+
+#
+# def busca_link2(navegador):
+#
 #     print('cria o navegador')
 #     #navegador = cria_nevegador()
 #
@@ -338,6 +448,11 @@ def atualizar_pagina(navegador, url):
 #     url = "https://pt-br.facebook.com/"
 #
 #     navegador.get(url)
+#
+#     time.sleep(3)
+#
+#     if se_esta_lagado(navegador) is True:
+#         sair_face(url, navegador)
 #
 #
 #     print('faz login')
@@ -352,7 +467,7 @@ def atualizar_pagina(navegador, url):
 #     login_button.click()
 #
 #     print('fez login')
-#     time.sleep(5)
+#     time.sleep(3)
 #
 #     # Abrir a página do Facebook da qual você deseja obter a última postagem
 #     pagina_do_facebook = "https://www.facebook.com/people/Poker-Brasil/100064546038812/"
@@ -360,45 +475,24 @@ def atualizar_pagina(navegador, url):
 #
 #     time.sleep(5)
 #
-#     # Localizar todos os elementos de imagem
-#     elementos_imagem = navegador.find_elements(By.TAG_NAME, 'img')
-#
-#     # Procurar o primeiro link que começa com o padrão especificado
-#     link_encontrado = None
-#     for elemento in elementos_imagem:
-#         src = elemento.get_attribute('src')
-#         if src and src.startswith("https://external.fjdf2-2.fna.fbcdn.net/emg1"):
-#             link_encontrado = src
-#             break
+#     # Use XPath para encontrar o primeiro link que começa com o padrão especificado
+#     xpath = "//a[starts-with(@href, 'https://br-texas.rallyacespoker.com/applink/')]"
+#     elemento_link = WebDriverWait(navegador, 10).until(EC.presence_of_element_located((By.XPATH, xpath)))
+#     link_encontrado = elemento_link.get_attribute('href')
 #
 #     if link_encontrado:
 #         print("Primeiro link encontrado:", link_encontrado)
+#         time.sleep(1)
+#         # Por exemplo, clique no link:
+#         navegador.get(link_encontrado)
+#         time.sleep(3)
+#         # Pegar o link da barra de endereço do navegador
+#         link_da_barra_de_endereco = navegador.current_url
 #
-#         # Localizar o elemento de imagem correspondente à URL encontrada
-#         imagem_correspondente = None
-#         for elemento in elementos_imagem:
-#             if elemento.get_attribute('src') == link_encontrado:
-#                 imagem_correspondente = elemento
-#                 break
-#
-#         if imagem_correspondente:
-#             # Clicar na imagem correspondente
-#             imagem_correspondente.click()
-#             print("Clicou na imagem correspondente")
-#             time.sleep(5)# Alterne o foco para a nova guia (segunda guia)
-#             navegador.switch_to.window(navegador.window_handles[1])
-#             time.sleep(5)
-#             # Esperar até que a página seja carregada
-#             #WebDriverWait(navegador, 15).until(EC.url_changes(navegador.current_url))
-#             # Pegar o link da barra de endereço do navegador
-#             link_da_barra_de_endereco = navegador.current_url
-#
-#             # Feche a segunda guia
-#             navegador.close()
-#
-#             # Volte para a primeira guia, se necessário
-#             navegador.switch_to.window(navegador.window_handles[0])
-#
+#         # Verificar se a URL começa com o padrão desejado
+#         padrao_desejado = "https://apps.facebook.com/pokerbrasil?vtype=&amfmethod=appLinkFanPageAward&SignedParams="
+#         if link_da_barra_de_endereco.startswith(padrao_desejado):
+#             print("A URL começa com o padrão desejado.")
 #             print(link_da_barra_de_endereco)
 #             print('escreve o link')
 #             Google.escrever_celula(link_da_barra_de_endereco, 'Dados', 'F1')
@@ -407,22 +501,25 @@ def atualizar_pagina(navegador, url):
 #             data_hora_atual = str(datetime.datetime.now())
 #             print('escreve a data da atialização: ', data_hora_atual)
 #             Google.escrever_celula(data_hora_atual, 'Dados', 'F2')
-#
-#             time.sleep(100)
+#             time.sleep(5)
 #             return
-#
-#
 #         else:
-#             print("Imagem correspondente não encontrada")
+#             Google.escrever_celula("erro ao buscar o link fanpag, link fanpag fora do padrão", 'Dados', 'F2')
+#             print("A URL não começa com o padrão desejado.")
+#         return
+#
 #     else:
+#         Google.escrever_celula("erro ao buscar o link fanpage, linque externo não encontrado", 'Dados', 'F2')
 #         print("Nenhum link encontrado com o padrão especificado")
-#     return
-#
-#
-#
+#         return
+
+
+
+
 # navegador = cria_nevegador()
 #
-# busca_link(navegador)
+# busca_link2(navegador)
+
 # #
 #abrir_navegador(url, navegador)
 # usuario = 'lga.gustavo.a@gmail.com'
