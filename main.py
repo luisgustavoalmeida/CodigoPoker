@@ -506,10 +506,14 @@ while True:
 
         guia_recebida = HoraT.mudar_guia(id, guia)
         if guia != guia_recebida:
+
             if (nome_usuario == "PokerIP") and (nome_computador == "PC-I5-8600K"):
                 Seleniun.busca_link(navegador)
-            if (nome_usuario == "lgagu") and (nome_computador == "PC-I7-9700KF"):
+            elif (nome_usuario == "lgagu") and (nome_computador == "PC-I7-9700KF"):
                 Seleniun.busca_link(navegador)
+            elif (nome_usuario == "PokerIP") and (nome_computador == "PC-i3-8145U"):
+                Seleniun.busca_link(navegador)
+
             dia_da_semana = datetime.datetime.now().weekday()  # busca o dia da semana 0 segunda 1 terça ... 6 domeingo
             url = str(Google.pega_valor('Dados', 'F1'))
             guia = guia_recebida
