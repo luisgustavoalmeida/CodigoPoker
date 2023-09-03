@@ -3,8 +3,8 @@ import time
 import IP
 import pyautogui
 
-hora_roleta = 2  # defina o tempo disponivel para a roleta em horas
-minutos_roleta = 45  # defina o tempo disponivel para a roleta em minutos
+hora_roleta = 3  # defina o tempo disponivel para a roleta em horas
+minutos_roleta = 59  # defina o tempo disponivel para a roleta em minutos
 
 tempo_roletas = (hora_roleta * 3600) + (minutos_roleta * 60)  # 4h
 
@@ -119,7 +119,7 @@ def mudar_guia(id, guia):
 def fim_tempo_tarefa():
     print("Testa se esta na hora de parar o tarefas")
     hora_atual = datetime.datetime.now().time()
-    print("hora_atual: ", hora_atual)
+    #print("hora_atual: ", hora_atual)
     tempo_atual = (hora_atual.hour * 3600) + (hora_atual.minute * 60) + hora_atual.second  # hora atual em segundos
     print("tempo_atual: ", tempo_atual)
     if tempo_atual > 86280:  # proximo das 24H
