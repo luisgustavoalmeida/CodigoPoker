@@ -636,7 +636,7 @@ def aviso_sistema(x_origem, y_origem):
 # #
 # # # #         #aviso_do_sistema()
 #
-x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
+# x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
 # # # tarefas_diaris_trocar(x_origem, y_origem)
 # # tarefas_diaris(x_origem, y_origem)
 # # # # # # # # # # # print(y_origem)
@@ -649,8 +649,8 @@ x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
 # # # # # # # # # # #
 # # # # # tempo_roleta(x_origem, y_origem)
 # # # # # # # # # #
-lido = valor_fichas(x_origem, y_origem)
-print(lido)
+# lido = valor_fichas(x_origem, y_origem)
+# print(lido)
 # # # # # # # # #
 #pontuacao_tarefas(x_origem, y_origem)
 # # # # # #
