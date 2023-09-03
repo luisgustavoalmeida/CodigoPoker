@@ -127,18 +127,18 @@ def valor_fichas(x_origem, y_origem):
 
     #regiao_ficha = (x_origem + 69, y_origem + 7, x_origem + 135, y_origem + 26)  # Ficha
 
-    regiao_ficha = (x_origem + 43, y_origem + 9, x_origem + 107, y_origem + 23)  # Ficha
+    regiao_ficha = (x_origem + 39, y_origem + 7, x_origem + 107, y_origem + 27)  # Ficha
     # Executa o OCR na região de interesse
 
     for i in range(3):
-        config = '--psm 6 --oem 3 -c tessedit_char_whitelist=0123456789'
+        config = '--psm 6 --oem 3 -c tessedit_char_whitelist=0123456789.'
         lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste)
-        #print(lido)
+        print(lido)
 
         if lido is not None:
             lido = re.sub(r"\D+", "", lido)  # remove caracteres nao numericos
             lido = lido.replace(" ", "").replace(".", "")
-
+            print(lido)
             try:
                 lido = int(lido)
                 if 500 < lido < 15000000:
@@ -150,12 +150,12 @@ def valor_fichas(x_origem, y_origem):
 
         config = '--psm 6 -c tessedit_char_whitelist=0123456789.'
         lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste)
-        # print(lido)
+        print(lido)
 
         if lido is not None:
             lido = re.sub(r"\D+", "", lido)  # remove caracteres nao numericos
             lido = lido.replace(" ", "").replace(".", "")
-
+            print(lido)
             try:
                 lido = int(lido)
                 if 500 < lido < 15000000:
@@ -637,7 +637,7 @@ def aviso_sistema(x_origem, y_origem):
 # #
 # # # #         #aviso_do_sistema()
 #
-# x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
+x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
 # # tarefas_diaris_trocar(x_origem, y_origem)
 # tarefas_diaris(x_origem, y_origem)
 # # # # # # # # # # print(y_origem)
@@ -650,7 +650,7 @@ def aviso_sistema(x_origem, y_origem):
 # # # # # # # # # #
 # # # # tempo_roleta(x_origem, y_origem)
 # # # # # # # # #
-# lido = valor_fichas(x_origem, y_origem)
+lido = valor_fichas(x_origem, y_origem)
 # print(lido)
 # # # # # # # # #
 #pontuacao_tarefas(x_origem, y_origem)
