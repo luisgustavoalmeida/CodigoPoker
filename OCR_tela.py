@@ -127,18 +127,18 @@ def valor_fichas(x_origem, y_origem):
 
     #regiao_ficha = (x_origem + 69, y_origem + 7, x_origem + 135, y_origem + 26)  # Ficha
 
-    regiao_ficha = (x_origem + 39, y_origem + 7, x_origem + 107, y_origem + 27)  # Ficha
+    regiao_ficha = (x_origem + 37, y_origem + 5, x_origem + 107, y_origem + 27)  # Ficha
     # Executa o OCR na região de interesse
 
     for i in range(3):
         config = '--psm 6 --oem 3 -c tessedit_char_whitelist=0123456789.'
         lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste)
-        print(lido)
+        #print(lido)
 
         if lido is not None:
             lido = re.sub(r"\D+", "", lido)  # remove caracteres nao numericos
             lido = lido.replace(" ", "").replace(".", "")
-            print(lido)
+            #print(lido)
             try:
                 lido = int(lido)
                 if 500 < lido < 15000000:
@@ -150,12 +150,12 @@ def valor_fichas(x_origem, y_origem):
 
         config = '--psm 6 -c tessedit_char_whitelist=0123456789.'
         lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste)
-        print(lido)
+        #print(lido)
 
         if lido is not None:
             lido = re.sub(r"\D+", "", lido)  # remove caracteres nao numericos
             lido = lido.replace(" ", "").replace(".", "")
-            print(lido)
+            #print(lido)
             try:
                 lido = int(lido)
                 if 500 < lido < 15000000:
