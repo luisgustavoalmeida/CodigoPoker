@@ -87,9 +87,9 @@ def OCR_regiao (regiao, config, inveter_cor, fator_ampliacao,contraste):
         if contraste != 1:  # Fator de aumento de contraste (pode ser ajustado conforme necessário)
             imagem_recortada = cv2.convertScaleAbs(imagem_recortada, alpha=contraste , beta=0)
 
-        # cv2.imshow("Imagem", imagem_recortada)
-        # cv2.waitKey(0)
-        # cv2.destroyAllWindows()
+        cv2.imshow("Imagem", imagem_recortada)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
         # passa o OCR na imagem recortada
         pytesseract.pytesseract.tesseract_cmd = caminho_tesseract
@@ -122,7 +122,7 @@ def valor_fichas(x_origem, y_origem):
     # Define a região de interesse
     inveter_cor = True
     fator_ampliacao = 2
-    contraste = 1.7
+    contraste = 1.5
     #config = '--psm 10 --oem 3 -c tessedit_char_whitelist=0123456789.'
 
     #regiao_ficha = (x_origem + 69, y_origem + 7, x_origem + 135, y_origem + 26)  # Ficha
@@ -637,7 +637,7 @@ def aviso_sistema(x_origem, y_origem):
 # #
 # # # #         #aviso_do_sistema()
 #
-# x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
+x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
 # # # tarefas_diaris_trocar(x_origem, y_origem)
 # # tarefas_diaris(x_origem, y_origem)
 # # # # # # # # # # # print(y_origem)
@@ -650,8 +650,8 @@ def aviso_sistema(x_origem, y_origem):
 # # # # # # # # # # #
 # # # # # tempo_roleta(x_origem, y_origem)
 # # # # # # # # # #
-# lido = valor_fichas(x_origem, y_origem)
-# print(lido)
+lido = valor_fichas(x_origem, y_origem)
+print(lido)
 # # # # # # # # #
 #pontuacao_tarefas(x_origem, y_origem)
 # # # # # #
