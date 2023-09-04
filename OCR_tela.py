@@ -85,7 +85,7 @@ def OCR_regiao (regiao, config, inveter_cor, fator_ampliacao,contraste):
             imagem_recortada = cv2.bitwise_not(imagem_recortada)
 
         if contraste != 1:  # Fator de aumento de contraste (pode ser ajustado conforme necessário)
-            imagem_recortada = cv2.convertScaleAbs(imagem_recortada, alpha=contraste , beta=0)
+            imagem_recortada = cv2.convertScaleAbs(imagem_recortada, alpha=contraste, beta=0)
 
         # cv2.imshow("Imagem", imagem_recortada)
         # cv2.waitKey(0)
@@ -121,18 +121,18 @@ def valor_fichas(x_origem, y_origem):
     print('Lendo o valor das fichas ...')
     # Define a região de interesse
     inveter_cor = True
-    fator_ampliacao = 2
+    fator_ampliacao = 1
     contraste = 1.5
     #config = '--psm 10 --oem 3 -c tessedit_char_whitelist=0123456789.'
     #regiao_ficha = (x_origem + 69, y_origem + 7, x_origem + 135, y_origem + 26)  # Ficha
 
-    regiao_ficha = (x_origem + 37, y_origem + 5, x_origem + 107, y_origem + 27)  # Ficha
+    regiao_ficha = (x_origem + 40, y_origem + 7, x_origem + 107, y_origem + 27)  # Ficha
     # Executa o OCR na região de interesse
 
     for i in range(3):
         config = '--psm 6 --oem 3 -c tessedit_char_whitelist= 0123456789.'
         lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste)
-        # print(lido)
+        print(lido)
 
         if lido is not None:
             lido = re.sub(r"\D+", "", lido)  # remove caracteres nao numericos
@@ -149,7 +149,7 @@ def valor_fichas(x_origem, y_origem):
 
         config = '--psm 6 -c tessedit_char_whitelist= 0123456789.'
         lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste)
-        # rint(lido)
+        print(lido)
 
         if lido is not None:
             lido = re.sub(r"\D+", "", lido)  # remove caracteres nao numericos
@@ -199,8 +199,8 @@ def pontuacao_tarefas(x_origem, y_origem):
     pontuacao = 0
 
     inveter_cor = True
-    fator_ampliacao = 2
-    contraste = 1.4
+    fator_ampliacao = 1
+    contraste = 1.5
 
     regiao = (x_origem + 778, y_origem + 516, x_origem + 830, y_origem + 535)
     config = '--psm 6 --oem 1 -c tessedit_char_whitelist=0123456789/'
@@ -636,7 +636,7 @@ def aviso_sistema(x_origem, y_origem):
 # #
 # # # #         #aviso_do_sistema()
 #
-# x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
+x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
 # # # tarefas_diaris_trocar(x_origem, y_origem)
 # # tarefas_diaris(x_origem, y_origem)
 # # # # # # # # # # # print(y_origem)
@@ -650,9 +650,9 @@ def aviso_sistema(x_origem, y_origem):
 # # # # # tempo_roleta(x_origem, y_origem)
 # # # # # # # # # #
 # lido = valor_fichas(x_origem, y_origem)
-# print(lido)
+#print(lido)
 # # # # # # # # #
-#pontuacao_tarefas(x_origem, y_origem)
+pontuacao_tarefas(x_origem, y_origem)
 # # # # # #
 # # # # # # #def rola_tarefa_0():
 # # # # # # #pyautogui.click(708 + x_origem, 426 + y_origem, button='left')

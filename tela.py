@@ -20,11 +20,13 @@
 # # Defina a borda do letreiro
 # primeiro_letreiro.config(bd=1, relief="solid")
 #
+#
+#
 # # Crie 6 colunas com 20 botões cada coluna no primeiro arranjo
 # primeiro_colunas = []
-# for i in range(6):
+# for i in range(10):
 #   coluna = tk.Frame(primeiro_arranjo)
-#   for j in range(20):
+#   for j in range(15):
 #     botao = tk.Button(coluna, text="Botão %d" % (i * 20 + j))
 #     botao.config(command=lambda button=botao: button_name(button.cget("text")))
 #     botao.pack()
@@ -45,9 +47,9 @@
 #
 # # Crie 6 colunas com 20 botões cada coluna no segundo arranjo
 # segundo_colunas = []
-# for i in range(6):
+# for i in range(10):
 #   coluna = tk.Frame(segundo_arranjo)
-#   for j in range(120, 140):
+#   for j in range(200, 215):
 #     botao = tk.Button(coluna, text="Botão %d" % (i * 20 + j))
 #     botao.config(command=lambda button=botao: button_name(button.cget("text")))
 #     botao.pack()
@@ -68,9 +70,9 @@
 #
 # # Crie 6 colunas com 20 botões cada coluna no terceiro arranjo
 # terceiro_colunas = []
-# for i in range(6):
+# for i in range(10):
 #   coluna = tk.Frame(terceiro_arranjo)
-#   for j in range(141, 161):
+#   for j in range(15):
 #     botao = tk.Button(coluna, text="Botão %d" % (i * 20 + j))
 #     # Defina a ação do botão
 #     botao.config(command=lambda button=botao: button_name(button.cget("text")))
@@ -88,5 +90,5 @@
 #
 # # Exiba a janela
 # janela.mainloop()
-#
-#
+# #
+# #

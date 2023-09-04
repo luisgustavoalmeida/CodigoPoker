@@ -460,7 +460,7 @@ def limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador): #abre o ta
                 #testa se tarefa diariaria esta aberta e limpa
                 if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 133), (48, 0, 96), tolerance=20):
                     print("Tarefas diarias pausa")
-                    time.sleep(0.5)
+                    time.sleep(1.5)
                     if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 133), (48, 0, 96), tolerance=20):
                         print("Tarefas diarias limpo...")
                         return True

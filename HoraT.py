@@ -12,7 +12,7 @@ tempo_total = 18000  # 5 horas em segudos
 
 tempo_tarefa = tempo_total - tempo_roletas  # tempo tarefa em segundos # tempo total menos tempo não usado nas roletas
 
-faixa_tempo = 300  # janela de tempo para sair das contas no tarefas
+faixa_tempo = 600  # janela de tempo para sair das contas no tarefas
 
 # print("tempo_tarefa :", tempo_tarefa)
 # print('tempo_roletas :', tempo_roletas)
@@ -130,8 +130,8 @@ def fim_tempo_tarefa():
         print(i)
         hora_comecar_tarefas = (tempo_total * i) - tempo_tarefa  # 4 9 14 19
         hora_terminar_tarefas = hora_comecar_tarefas + tempo_tarefa
-        print("hora_comecar_tarefas", hora_comecar_tarefas)
-        print("hora_terminar_tarefas", hora_terminar_tarefas)
+        # print("hora_comecar_tarefas", hora_comecar_tarefas)
+        # print("hora_terminar_tarefas", hora_terminar_tarefas)
 
         if (hora_comecar_tarefas <= tempo_atual) and (tempo_atual <= hora_terminar_tarefas):
             print("Continua fazendo tarefas")
@@ -147,6 +147,7 @@ def fim_tempo_tarefa():
             print('Interrompe a tarefa e vai para o R')
             return True
 
+    print("outro, Continua fazendo tarefas")
     return False
 
 

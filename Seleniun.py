@@ -517,8 +517,8 @@ def busca_link(navegador):
 
 
 # navegador = cria_nevegador()
-#
-# busca_link2(navegador)
+# #
+# busca_link(navegador)
 
 # #
 #abrir_navegador(url, navegador)
