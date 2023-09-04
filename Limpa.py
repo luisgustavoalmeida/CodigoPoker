@@ -371,13 +371,14 @@ def limpa_promocao(x_origem, y_origem):
         print("limpa Roleta1")
 
     # Laranja
-    if (pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 165), (224, 9, 5), tolerance=20)) or \
-            (pyautogui.pixelMatchesColor((x_origem + 240), (y_origem + 167), (228, 22, 5), tolerance=20)):
+    if ((pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 165), (224, 9, 5), tolerance=20)) or
+            (pyautogui.pixelMatchesColor((x_origem + 240), (y_origem + 167), (228, 22, 5), tolerance=20))):
         pyautogui.click(771 + x_origem, 156 + y_origem, button='left')
         print("promoçao laranja")
 
     # raliacesses
-    if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 167), (255, 204, 125), tolerance=19):  # aneis
+    if ((pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 167), (255, 204, 125), tolerance=19)) or
+            (pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 167), (74, 40, 12), tolerance=19))):  # aneis
         pyautogui.click(811 + x_origem, 168 + y_origem, button='left')
         print("aneis")
 
