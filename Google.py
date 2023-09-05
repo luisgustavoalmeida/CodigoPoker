@@ -671,6 +671,7 @@ def lista_ip_banidos():
             # Remove valores duplicados usando um conjunto (set) e, em seguida, converte de volta para uma lista
             valores_unicos = list(set(enderecos_ip))
             print(valores_unicos)
+            print('a lista de IP banido tem: ', len(valores_unicos))
             return valores_unicos
 
         except Exception as error:
