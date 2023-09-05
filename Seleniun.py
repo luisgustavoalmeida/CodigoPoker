@@ -6,6 +6,7 @@ import Google
 import datetime
 
 from selenium import webdriver
+from bs4 import BeautifulSoup
 
 import selenium.common.exceptions as sel_exceptions
 import undetected_chromedriver as uc
@@ -437,88 +438,9 @@ def busca_link(navegador):
         return
 
 
-#
-# def busca_link2(navegador):
-#
-#     print('cria o navegador')
-#     #navegador = cria_nevegador()
-#
-#     id = "Luis.gustavo.almeida88"
-#     senha = "020996Pa"
-#     url = "https://pt-br.facebook.com/"
-#
-#     navegador.get(url)
-#
-#     time.sleep(3)
-#
-#     if se_esta_lagado(navegador) is True:
-#         sair_face(url, navegador)
-#
-#
-#     print('faz login')
-#     email_field = WebDriverWait(navegador, 10).until(EC.presence_of_element_located((By.NAME, 'email')))
-#     email_field.clear()
-#     email_field.send_keys(id)
-#     password_field = navegador.find_element(By.NAME, 'pass')
-#     password_field.clear()
-#     password_field.send_keys(senha)
-#     # fazer login clicando no botão de login
-#     login_button = navegador.find_element(By.NAME, 'login')
-#     login_button.click()
-#
-#     print('fez login')
-#     time.sleep(3)
-#
-#     # Abrir a página do Facebook da qual você deseja obter a última postagem
-#     pagina_do_facebook = "https://www.facebook.com/people/Poker-Brasil/100064546038812/"
-#     navegador.get(pagina_do_facebook)
-#
-#     time.sleep(5)
-#
-#     # Use XPath para encontrar o primeiro link que começa com o padrão especificado
-#     xpath = "//a[starts-with(@href, 'https://br-texas.rallyacespoker.com/applink/')]"
-#     elemento_link = WebDriverWait(navegador, 10).until(EC.presence_of_element_located((By.XPATH, xpath)))
-#     link_encontrado = elemento_link.get_attribute('href')
-#
-#     if link_encontrado:
-#         print("Primeiro link encontrado:", link_encontrado)
-#         time.sleep(1)
-#         # Por exemplo, clique no link:
-#         navegador.get(link_encontrado)
-#         time.sleep(3)
-#         # Pegar o link da barra de endereço do navegador
-#         link_da_barra_de_endereco = navegador.current_url
-#
-#         # Verificar se a URL começa com o padrão desejado
-#         padrao_desejado = "https://apps.facebook.com/pokerbrasil?vtype=&amfmethod=appLinkFanPageAward&SignedParams="
-#         if link_da_barra_de_endereco.startswith(padrao_desejado):
-#             print("A URL começa com o padrão desejado.")
-#             print(link_da_barra_de_endereco)
-#             print('escreve o link')
-#             Google.escrever_celula(link_da_barra_de_endereco, 'Dados', 'F1')
-#
-#             # Obtenha a data e hora atual
-#             data_hora_atual = str(datetime.datetime.now())
-#             print('escreve a data da atialização: ', data_hora_atual)
-#             Google.escrever_celula(data_hora_atual, 'Dados', 'F2')
-#             time.sleep(5)
-#             return
-#         else:
-#             Google.escrever_celula("erro ao buscar o link fanpag, link fanpag fora do padrão", 'Dados', 'F2')
-#             print("A URL não começa com o padrão desejado.")
-#         return
-#
-#     else:
-#         Google.escrever_celula("erro ao buscar o link fanpage, linque externo não encontrado", 'Dados', 'F2')
-#         print("Nenhum link encontrado com o padrão especificado")
-#         return
-
-
-
-
 # navegador = cria_nevegador()
-# #
-# busca_link(navegador)
+# # #
+# busca_link2(navegador)
 
 # #
 #abrir_navegador(url, navegador)
