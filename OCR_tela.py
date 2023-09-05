@@ -121,7 +121,7 @@ def valor_fichas(x_origem, y_origem):
     print('Lendo o valor das fichas ...')
     # Define a região de interesse
     inveter_cor = True
-    fator_ampliacao = 1
+    fator_ampliacao = 2
     contraste = 1.5
     #config = '--psm 10 --oem 3 -c tessedit_char_whitelist=0123456789.'
     #regiao_ficha = (x_origem + 69, y_origem + 7, x_origem + 135, y_origem + 26)  # Ficha

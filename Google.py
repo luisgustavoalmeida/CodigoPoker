@@ -645,6 +645,40 @@ def escrever_IP_banido():
             cred = credencial()
             service = build('sheets', 'v4', credentials=cred)
 
+def lista_ip_banidos():
+    global cred
+    global service
+    guia = 'Ban'
+    coluna = 'A'
+    # Construa o intervalo da coluna desejada (por exemplo, "Ban!A:A" para a coluna A da guia "Ban")
+    intervalo = f"{guia}!{coluna}2:{coluna}"
+    while True:
+        try:
+            # Faz a requisição para obter os valores da coluna
+            result = service.spreadsheets().values().get(
+                spreadsheetId=planilha_id,
+                range=intervalo).execute()
+
+            # Extrai os valores da coluna
+            valores_coluna = result.get('values', [])
+
+            if not valores_coluna:
+                return []  # Retorna uma lista vazia se a coluna estiver vazia
+
+            # Converte a lista de tuplas em uma lista simples de endereços IP
+            enderecos_ip = [item[0] for item in valores_coluna]
+
+            # Remove valores duplicados usando um conjunto (set) e, em seguida, converte de volta para uma lista
+            valores_unicos = list(set(enderecos_ip))
+            print(valores_unicos)
+            return valores_unicos
+
+        except Exception as error:
+            print(f"lista_ip_banidos: Ocorreu um erro ao obter os valores da coluna:")
+            print(f"Erro: {str(error)}")
+            IP.tem_internet()
+            cred = credencial()
+            service = build('sheets', 'v4', credentials=cred)
 
 def credenciais(guia):
     print("credenciais")
