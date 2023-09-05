@@ -90,7 +90,8 @@ def f5_quando_internete_ocila(id, senha, url, navegador):
                 if not conectado:
                     try:
                         print("------------------F5-----------------")
-                        pyautogui.press('f5')
+                        #pyautogui.press('f5')
+                        navegador.get(url)
                         time.sleep(15)
                     except Exception as e:
                         print('erro autogui: ', e)

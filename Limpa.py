@@ -478,7 +478,8 @@ def limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador): #abre o ta
                 #da um F5
                 IP.tem_internet()
                 print("limpa tarefa Da um F5")
-                pyautogui.press('f5')
+                # pyautogui.press('f5')
+                navegador.get(url)
                 # Seleniun.atualizar_pagina(navegador, url)
                 time.sleep(15)
                 entrou_corretamente, stataus = Seleniun.teste_logado(id, senha, url, navegador)
