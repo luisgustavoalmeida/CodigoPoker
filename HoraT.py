@@ -160,6 +160,6 @@ def fim_tempo_tarefa():
 # guia = mudar_guia(id, guia)
 # print("vai para a gua: ", guia)
 
-fim_tempo_tarefa()
+# fim_tempo_tarefa()
 
 
