@@ -128,24 +128,26 @@ def fim_tempo_tarefa():
 
     for i in range(1, 5):
         print(i)
-        hora_comecar_tarefas = (tempo_total * i) - tempo_tarefa  # 4 9 14 19
-        hora_terminar_tarefas = hora_comecar_tarefas + tempo_tarefa
-        # print("hora_comecar_tarefas", hora_comecar_tarefas)
-        # print("hora_terminar_tarefas", hora_terminar_tarefas)
+        # hora_comecar_tarefas = ((tempo_total * i) - tempo_tarefa)  # 4 9 14 19
+        # hora_terminar_tarefas = (((tempo_total * i) - tempo_tarefa) + tempo_tarefa)
+        # # print("hora_comecar_tarefas", hora_comecar_tarefas)
+        # # print("hora_terminar_tarefas", hora_terminar_tarefas)
 
-        if (hora_comecar_tarefas <= tempo_atual) and (tempo_atual <= hora_terminar_tarefas):
+        if ((tempo_total * i) - tempo_tarefa) <= tempo_atual <= (((tempo_total * i) - tempo_tarefa) + tempo_tarefa):
             print("Continua fazendo tarefas")
             return False
 
-    for i in range(0, 5): # do 0 ate o 4
-        print(i)
-        inicio_faixa = tempo_total * i  # 5H * i tempo_total igual a 5h  0, 5, 10, 15, 20,
-        print("inicio_faixa :", inicio_faixa)
-        fim_faixa = inicio_faixa + faixa_tempo
-        print("fim_faixa :", fim_faixa)
-        if (inicio_faixa < tempo_atual) and (tempo_atual < fim_faixa):
-            print('Interrompe a tarefa e vai para o R')
-            return True
+    if tempo_atual > tempo_total:
+        # se maior que 5H
+        for i in range(0, 5):  # do 0 ate o 4
+            # print(i)
+            # inicio_faixa = (tempo_total * i)  # 5H * i tempo_total igual a 5h  0, 5, 10, 15, 20,
+            # print("inicio_faixa :", inicio_faixa)
+            # fim_faixa = ((tempo_total * i) + faixa_tempo)
+            # print("fim_faixa :", fim_faixa)
+            if (tempo_total * i) < tempo_atual < ((tempo_total * i) + faixa_tempo):
+                print('Interrompe a tarefa e vai para o R')
+                return True
 
     print("outro, Continua fazendo tarefas")
     return False
@@ -158,6 +160,6 @@ def fim_tempo_tarefa():
 # guia = mudar_guia(id, guia)
 # print("vai para a gua: ", guia)
 
-#fim_tempo_tarefa()
+fim_tempo_tarefa()
 
 
