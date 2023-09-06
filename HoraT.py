@@ -127,7 +127,7 @@ def fim_tempo_tarefa():
         return True
 
     for i in range(1, 5):
-        print(i)
+        #print(i)
         # hora_comecar_tarefas = ((tempo_total * i) - tempo_tarefa)  # 4 9 14 19
         # hora_terminar_tarefas = (((tempo_total * i) - tempo_tarefa) + tempo_tarefa)
         # # print("hora_comecar_tarefas", hora_comecar_tarefas)
