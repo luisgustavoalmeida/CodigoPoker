@@ -589,8 +589,6 @@ def pega_ID_senha(guia, endereco):
 
 def escrever_IP_banido():
 
-
-
     ip, com_internet = IP.meu_ip()
 
     # nome_computador = socket.gethostname()
@@ -649,7 +647,7 @@ def escrever_IP_banido():
             print("escrever_IP_banido Ocorreu um erro ao escrever na célula:")
             print(f"Erro: {str(error)}")
             print("Tentando novamente em 5 segundos...")
-            time.sleep(5)
+            # time.sleep(5)
             IP.tem_internet()
             cred = credencial()
             service = build('sheets', 'v4', credentials=cred)
