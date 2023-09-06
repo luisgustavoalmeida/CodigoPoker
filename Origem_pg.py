@@ -143,16 +143,16 @@ def carregado_origem(id, senha, url, navegador):#navegador
             entrou_corretamente, stataus = Seleniun.teste_logado(id, senha, url, navegador)
             try:
                 if (pyautogui.pixelMatchesColor(215, 1000, (36, 37, 38), tolerance=5)  # mensagem do canto inferior esquedo " Você esta offiline no momento."
-                        or pyautogui.pixelMatchesColor(745, 650, (32, 33, 36), tolerance=5)  # fundo cinza com o dinoçauro
-                        or pyautogui.pixelMatchesColor(745, 650, (255, 255, 255), tolerance=2)  # retangulo branco no meio da tela quando esta sem internete
-                        or pyautogui.pixelMatchesColor(745, 650, (221, 221, 221), tolerance=7)):  # tela cinza clara com cara ctiste
+                        or pyautogui.pixelMatchesColor(700, 650, (32, 33, 36), tolerance=5)  # fundo cinza com o dinoçauro
+                        or pyautogui.pixelMatchesColor(700, 650, (255, 255, 255), tolerance=2)  # retangulo branco no meio da tela quando esta sem internete
+                        or pyautogui.pixelMatchesColor(700, 650, (221, 221, 221), tolerance=7)):  # tela cinza clara com cara ctiste
                     print("aguarda 5 segundos e faz um novo teste se a pagina nao carregou")
                     time.sleep(5)
                     try:
                         if (pyautogui.pixelMatchesColor(215, 1000, (36, 37, 38), tolerance=5)  # mensagem do canto inferior esquedo " Você esta offiline no momento."
-                                or pyautogui.pixelMatchesColor(745, 650, (32, 33, 36), tolerance=5)  # fundo cinza com o dinoçauro
-                                or pyautogui.pixelMatchesColor(745, 650, (255, 255, 255), tolerance=2)  # retangulo branco no meio da tela quando esta sem internete
-                                or pyautogui.pixelMatchesColor(745, 650, (221, 221, 221), tolerance=7)):  # tela cinza clara com cara ctiste
+                                or pyautogui.pixelMatchesColor(700, 650, (32, 33, 36), tolerance=5)  # fundo cinza com o dinoçauro
+                                or pyautogui.pixelMatchesColor(700, 650, (255, 255, 255), tolerance=2)  # retangulo branco no meio da tela quando esta sem internete
+                                or pyautogui.pixelMatchesColor(700, 650, (221, 221, 221), tolerance=7)):  # tela cinza clara com cara ctiste
                             print("Falha na pagina e a tela esta branca, da um F5")
                             IP.tem_internet()
                             navegador.get(url)

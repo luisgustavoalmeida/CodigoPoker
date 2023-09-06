@@ -59,6 +59,7 @@ sites = [
 ]
 
 lista_negra_ip = []
+cont_lista_negra = 0
 def usuario_IP_nao():
     #nome_usuario = os.getlogin()
     if nome_usuario != "PokerIP":
@@ -598,8 +599,15 @@ def obter_nomes_conexoes():
 def testa_lista_negra_ip():
 
     global lista_negra_ip
+    global cont_lista_negra
+
+    cont_lista_negra += 1
 
     if not lista_negra_ip:
+        lista_negra_ip = Google.lista_ip_banidos()
+
+    if cont_lista_negra >= 30:
+        cont_lista_negra = 0
         lista_negra_ip = Google.lista_ip_banidos()
 
     print('testa lista negra')
