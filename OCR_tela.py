@@ -122,7 +122,7 @@ def valor_fichas(x_origem, y_origem):
     # Define a região de interesse
     inveter_cor = True
     fator_ampliacao = 2
-    contraste = 1.5
+    contraste = 1.3
     #config = '--psm 10 --oem 3 -c tessedit_char_whitelist=0123456789.'
     #regiao_ficha = (x_origem + 69, y_origem + 7, x_origem + 135, y_origem + 26)  # Ficha
 
@@ -133,6 +133,18 @@ def valor_fichas(x_origem, y_origem):
         config = '--psm 6 --oem 3 -c tessedit_char_whitelist= 0123456789.'
         lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste)
         print(lido)
+        # Divide a string nos pontos
+        partes = lido.split(".")
+
+        # Verifica e completa a parte inteira com zeros à esquerda
+        partes[0] = partes[0].zfill(1)
+
+        # Completa a parte decimal com zeros à direita para ter pelo menos 3 dígitos
+        for i in range(1, len(partes)):
+            partes[i] = partes[i].rjust(3, '0')
+
+        # Reconstroi a string formatada sem usar um ponto como separador
+        lido = "".join(partes)
 
         if lido is not None:
             lido = re.sub(r"\D+", "", lido)  # remove caracteres nao numericos
@@ -150,6 +162,18 @@ def valor_fichas(x_origem, y_origem):
         config = '--psm 6 -c tessedit_char_whitelist= 0123456789.'
         lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste)
         print(lido)
+        # Divide a string nos pontos
+        partes = lido.split(".")
+
+        # Verifica e completa a parte inteira com zeros à esquerda
+        partes[0] = partes[0].zfill(1)
+
+        # Completa a parte decimal com zeros à direita para ter pelo menos 3 dígitos
+        for i in range(1, len(partes)):
+            partes[i] = partes[i].rjust(3, '0')
+
+        # Reconstroi a string formatada sem usar um ponto como separador
+        lido = "".join(partes)
 
         if lido is not None:
             lido = re.sub(r"\D+", "", lido)  # remove caracteres nao numericos
@@ -636,7 +660,7 @@ def aviso_sistema(x_origem, y_origem):
 # #
 # # # #         #aviso_do_sistema()
 #
-# x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
+#x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
 # # # tarefas_diaris_trocar(x_origem, y_origem)
 # # tarefas_diaris(x_origem, y_origem)
 # # # # # # # # # # # print(y_origem)
@@ -649,7 +673,7 @@ def aviso_sistema(x_origem, y_origem):
 # # # # # # # # # # #
 # # # # # tempo_roleta(x_origem, y_origem)
 # # # # # # # # # #
-# lido = valor_fichas(x_origem, y_origem)
+#lido = valor_fichas(x_origem, y_origem)
 #print(lido)
 # # # # # # # # #
 # pontuacao_tarefas(x_origem, y_origem)
