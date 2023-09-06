@@ -589,11 +589,9 @@ def pega_ID_senha(guia, endereco):
 
 def escrever_IP_banido():
 
-    global cred
-    global service
+
 
     ip, com_internet = IP.meu_ip()
-    data_hora_atual = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
     # nome_computador = socket.gethostname()
     # nome_usuario = os.getlogin()
@@ -605,8 +603,19 @@ def escrever_IP_banido():
     time.sleep(30)
     print('continua')
 
-    cred = credencial()
-    service = build('sheets', 'v4', credentials=cred)
+    if (nome_usuario == "PokerIP") or ((nome_usuario == "lgagu") and (nome_computador == "PC-I7-9700KF")):  # teste se o usuario do computador é o que troca IP se nao for fica esperando esta livre
+        print('computador principarl vai marcar o IP banido')
+    else:
+        print('Não é um computador prncipal, apenas espera liberar um novo ip')
+        return
+
+    global cred
+    global service
+
+    # cred = credencial()
+    # service = build('sheets', 'v4', credentials=cred)
+
+    data_hora_atual = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
     while True:
         try:
@@ -635,7 +644,7 @@ def escrever_IP_banido():
 
             # Exibe a quantidade de células atualizadas
             print('{0} células atualizadas.'.format(result.get('updatedCells')))
-            break
+            return
         except Exception as error:
             print("escrever_IP_banido Ocorreu um erro ao escrever na célula:")
             print(f"Erro: {str(error)}")

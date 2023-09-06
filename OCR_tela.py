@@ -122,7 +122,7 @@ def valor_fichas(x_origem, y_origem):
     # Define a região de interesse
     inveter_cor = True
     fator_ampliacao = 2
-    contraste = 1.3
+    contraste = 1.8
     #config = '--psm 10 --oem 3 -c tessedit_char_whitelist=0123456789.'
     #regiao_ficha = (x_origem + 69, y_origem + 7, x_origem + 135, y_origem + 26)  # Ficha
 
@@ -130,7 +130,9 @@ def valor_fichas(x_origem, y_origem):
     # Executa o OCR na região de interesse
 
     for i in range(3):
-        config = '--psm 6 --oem 3 -c tessedit_char_whitelist= 0123456789.'
+        #config = '--psm 6 --oem 1'
+        #config = '--psm 6 --oem 3 -c tessedit_char_whitelist=0123456789. '
+        config = '--psm 3 --oem 0 -c tessedit_char_whitelist=0123456789. '
         lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste)
         print(lido)
         # Divide a string nos pontos
@@ -159,7 +161,7 @@ def valor_fichas(x_origem, y_origem):
                 # Lidar com a conversão falhada para um número inteiro
                 print("Erro ao converter para inteiro")
 
-        config = '--psm 6 -c tessedit_char_whitelist= 0123456789.'
+        config = '--psm 6 -c tessedit_char_whitelist=0123456789. '
         lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste)
         print(lido)
         # Divide a string nos pontos
@@ -218,10 +220,9 @@ def tempo_roleta(x_origem, y_origem):
     # print("tepo: ", tempo)
     return tempo
 
+valores = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200]
 def pontuacao_tarefas(x_origem, y_origem):
-    valores = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200]
     pontuacao = 0
-
     inveter_cor = True
     fator_ampliacao = 1
     contraste = 1.5
@@ -252,7 +253,7 @@ def pontuacao_tarefas(x_origem, y_origem):
         pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
         time.sleep(2)
 
-    config = '--psm 6 -c tessedit_char_whitelist=0123456789.'
+    config = '--psm 6 -c tessedit_char_whitelist=0123456789/'
 
     for i in range(2):
         pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
@@ -408,14 +409,7 @@ def tarefas_diaris(x_origem, y_origem):
     #print(lista)
     return lista
 
-def tarefas_diaris_trocar(x_origem, y_origem):
-    for i in range(2):
-        pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
-        if not pyautogui.pixelMatchesColor((x_origem + 174), (y_origem + 278), (247, 230, 255), tolerance=5):  # testa se tem barra de rolagem na lista de tarefas
-            print('ja foi trocada a tarefa')
-            return
-
-        para_trocar = ['Participe de um GIRE & GANHE/campeonato de eliminacao 1 vezes',
+para_trocar = ['Participe de um GIRE & GANHE/campeonato de eliminacao 1 vezes',
                        'Participe de um GIRE & GANHE/campeonato de eliminacao 2 vezes',
                        'Participe de um GIRE & GANHE/campeonato de eliminacao 3 vezes',
                        'Ganhar um premio em um GIRE & GANHE/torneio de eliminacao',
@@ -458,6 +452,13 @@ def tarefas_diaris_trocar(x_origem, y_origem):
                        'Tirar Flush ou qualquer mao superior 2 vezes em mesas com blinds maiores que 100',
                        'Tirar Sequencia 2 vezes em mesas com blinds maiores que 100',
                        'Tirar Trinca 2 vezes em mesas com blinds maiores que 100']
+
+def tarefas_diaris_trocar(x_origem, y_origem):
+    for i in range(2):
+        pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
+        if not pyautogui.pixelMatchesColor((x_origem + 174), (y_origem + 278), (247, 230, 255), tolerance=5):  # testa se tem barra de rolagem na lista de tarefas
+            print('ja foi trocada a tarefa')
+            return
 
         # Define a região de interesse
         config = '--psm 6 --oem 1'
@@ -660,7 +661,7 @@ def aviso_sistema(x_origem, y_origem):
 # #
 # # # #         #aviso_do_sistema()
 #
-#x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
+# x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
 # # # tarefas_diaris_trocar(x_origem, y_origem)
 # # tarefas_diaris(x_origem, y_origem)
 # # # # # # # # # # # print(y_origem)
@@ -673,7 +674,7 @@ def aviso_sistema(x_origem, y_origem):
 # # # # # # # # # # #
 # # # # # tempo_roleta(x_origem, y_origem)
 # # # # # # # # # #
-#lido = valor_fichas(x_origem, y_origem)
+# lido = valor_fichas(x_origem, y_origem)
 #print(lido)
 # # # # # # # # #
 # pontuacao_tarefas(x_origem, y_origem)
