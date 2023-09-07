@@ -105,7 +105,7 @@ def se_esta_lagado(navegador):
         return False
 
 
-def pega_url(navegador):
+def pega_url(navegador, url):
     while True:
         try:
             url_atual = navegador.current_url
@@ -113,10 +113,14 @@ def pega_url(navegador):
         except Exception as e:
             print("Erro ao obter o URL do navegador, erro: ", e)
             IP.tem_internet()
+            print(" da um F5 par aatualizar")
+            #pyautogui.press('f5')
+            navegador.get(url)
+            time.sleep(15)
 
 
 def teste_logado(id, senha, url, navegador):
-    url_atual = pega_url(navegador)
+    url_atual = pega_url(navegador, url)
     if "/pokerbrasil?" in url_atual: # se nao esta logado
         #print("teste_logado ok")
         entrou = True
@@ -138,7 +142,7 @@ def fazer_login(id, senha, url, navegador):
         print("faz login")
         IP.tem_internet()
         print('continua login')
-        url_atual = pega_url(navegador)
+        url_atual = pega_url(navegador, url)
 
         if "/login/" in url_atual:
 
@@ -154,7 +158,7 @@ def fazer_login(id, senha, url, navegador):
                 login_button.click()
                 for i in range(20):
                     time.sleep(1)
-                    url_atual = pega_url(navegador)
+                    url_atual = pega_url(navegador, url)
                     #  print(url_atual)
                     if "/login/" not in url_atual:
                         if "/pokerbrasil?" in url_atual:
@@ -310,7 +314,8 @@ def sair_face(url, navegador):
             #time.sleep(3)
             IP.tem_internet()
             print("Da um F5 e espera 3 segundos")
-            pyautogui.press('f5')
+            #pyautogui.press('f5')
+            navegador.get(url)
             # navegador.execute_script(script)
             time.sleep(3)
             #continue
@@ -419,7 +424,7 @@ def busca_link(navegador):
             navegador.switch_to.window(navegador.window_handles[1])
             time.sleep(5)
             # Pegar o link da barra de endereço do navegador
-            link_da_barra_de_endereco = pega_url(navegador)
+            link_da_barra_de_endereco = pega_url(navegador, url)
             # Feche a segunda guia
             navegador.close()
             # Volte para a primeira guia, se necessário
