@@ -143,7 +143,7 @@ def valor_fichas(x_origem, y_origem):
     print('Lendo o valor das fichas ...')
     # Define a região de interesse
     inveter_cor = True
-    fator_ampliacao = 1
+    fator_ampliacao = 2
     contraste_pre = 1.3
     contraste_pos = 1.6
     contraste = 1.8
