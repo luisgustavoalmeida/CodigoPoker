@@ -80,37 +80,37 @@ def OCR_regiao (regiao, config, inveter_cor, fator_ampliacao, contraste_pre, con
         # converte a imagem para escala de cinza
         imagem_recortada = cv2.cvtColor(numpy.asarray(imagem_recortada), cv2.COLOR_BGR2GRAY)
 
-        print("iamgem em preto e branco")
-
-        cv2.imshow("Imagem", imagem_recortada)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+        # print("iamgem em preto e branco")
+        #
+        # cv2.imshow("Imagem", imagem_recortada)
+        # cv2.waitKey(0)
+        # cv2.destroyAllWindows()
 
         if contraste_pre != 1:  # Fator de aumento de contraste (pode ser ajustado conforme necessário)
             imagem_recortada = cv2.convertScaleAbs(imagem_recortada, alpha=contraste_pre, beta=0)
 
-        print("iamgem em preto e branco pre contraste")
-        cv2.imshow("Imagem", imagem_recortada)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+        # print("iamgem em preto e branco pre contraste")
+        # cv2.imshow("Imagem", imagem_recortada)
+        # cv2.waitKey(0)
+        # cv2.destroyAllWindows()
 
         # inverte as cores da imagem
         if inveter_cor:
             imagem_recortada = cv2.bitwise_not(imagem_recortada)
 
-        print("iamgem cor invertida")
-
-        cv2.imshow("Imagem", imagem_recortada)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+        # print("iamgem cor invertida")
+        #
+        # cv2.imshow("Imagem", imagem_recortada)
+        # cv2.waitKey(0)
+        # cv2.destroyAllWindows()
 
         if contraste_pos != 1:  # Fator de aumento de contraste (pode ser ajustado conforme necessário)
             imagem_recortada = cv2.convertScaleAbs(imagem_recortada, alpha=contraste_pos, beta=0)
 
-        print("iamgem cor invertida pos contraste")
-        cv2.imshow("Imagem", imagem_recortada)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+        # print("iamgem cor invertida pos contraste")
+        # cv2.imshow("Imagem", imagem_recortada)
+        # cv2.waitKey(0)
+        # cv2.destroyAllWindows()
 
 
         # passa o OCR na imagem recortada
@@ -163,7 +163,7 @@ def valor_fichas(x_origem, y_origem):
                 lido = int(lido)
                 if 500 < lido < 15000000:
                     print("valor das fichas: ", lido)
-                    #return lido
+                    return lido
             except ValueError:
                 # Lidar com a conversão falhada para um número inteiro
                 print("Erro ao converter para inteiro")
@@ -182,7 +182,7 @@ def valor_fichas(x_origem, y_origem):
                 lido = int(lido)
                 if 500 < lido < 15000000:
                     print("valor das fichas: ", lido)
-                    # return lido
+                    return lido
             except ValueError:
                 # Lidar com a conversão falhada para um número inteiro
                 print("Erro ao converter para inteiro")
@@ -202,7 +202,7 @@ def valor_fichas(x_origem, y_origem):
                 lido = int(lido)
                 if 500 < lido < 15000000:
                     print("valor das fichas: ", lido)
-                    #return lido
+                    return lido
             except ValueError:
                 # Lidar com a conversão falhada para um número inteiro
                 print("Erro ao converter para inteiro")
