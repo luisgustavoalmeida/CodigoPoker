@@ -135,18 +135,18 @@ def valor_fichas(x_origem, y_origem):
         config = '--psm 3 --oem 0 -c tessedit_char_whitelist=0123456789. '
         lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste)
         print(lido)
-        # Divide a string nos pontos
-        partes = lido.split(".")
-
-        # Verifica e completa a parte inteira com zeros à esquerda
-        partes[0] = partes[0].zfill(1)
-
-        # Completa a parte decimal com zeros à direita para ter pelo menos 3 dígitos
-        for i in range(1, len(partes)):
-            partes[i] = partes[i].rjust(3, '0')
-
-        # Reconstroi a string formatada sem usar um ponto como separador
-        lido = "".join(partes)
+        # # Divide a string nos pontos
+        # partes = lido.split(".")
+        #
+        # # Verifica e completa a parte inteira com zeros à esquerda
+        # partes[0] = partes[0].zfill(1)
+        #
+        # # Completa a parte decimal com zeros à direita para ter pelo menos 3 dígitos
+        # for i in range(1, len(partes)):
+        #     partes[i] = partes[i].rjust(3, '0')
+        #
+        # # Reconstroi a string formatada sem usar um ponto como separador
+        # lido = "".join(partes)
 
         if lido is not None:
             lido = re.sub(r"\D+", "", lido)  # remove caracteres nao numericos
@@ -164,18 +164,18 @@ def valor_fichas(x_origem, y_origem):
         config = '--psm 6 -c tessedit_char_whitelist=0123456789. '
         lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste)
         print(lido)
-        # Divide a string nos pontos
-        partes = lido.split(".")
-
-        # Verifica e completa a parte inteira com zeros à esquerda
-        partes[0] = partes[0].zfill(1)
-
-        # Completa a parte decimal com zeros à direita para ter pelo menos 3 dígitos
-        for i in range(1, len(partes)):
-            partes[i] = partes[i].rjust(3, '0')
-
-        # Reconstroi a string formatada sem usar um ponto como separador
-        lido = "".join(partes)
+        # # Divide a string nos pontos
+        # partes = lido.split(".")
+        #
+        # # Verifica e completa a parte inteira com zeros à esquerda
+        # partes[0] = partes[0].zfill(1)
+        #
+        # # Completa a parte decimal com zeros à direita para ter pelo menos 3 dígitos
+        # for i in range(1, len(partes)):
+        #     partes[i] = partes[i].rjust(3, '0')
+        #
+        # # Reconstroi a string formatada sem usar um ponto como separador
+        # lido = "".join(partes)
 
         if lido is not None:
             lido = re.sub(r"\D+", "", lido)  # remove caracteres nao numericos
