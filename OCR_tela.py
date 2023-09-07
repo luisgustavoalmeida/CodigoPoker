@@ -123,16 +123,10 @@ def valor_fichas(x_origem, y_origem):
     inveter_cor = True
     fator_ampliacao = 2
     contraste = 1.8
-    #config = '--psm 10 --oem 3 -c tessedit_char_whitelist=0123456789.'
-    #regiao_ficha = (x_origem + 69, y_origem + 7, x_origem + 135, y_origem + 26)  # Ficha
-
     regiao_ficha = (x_origem + 40, y_origem + 7, x_origem + 107, y_origem + 27)  # Ficha
-    # Executa o OCR na região de interesse
+    config = '--psm 3 --oem 0 -c tessedit_char_whitelist=0123456789. '
 
     for i in range(3):
-        #config = '--psm 6 --oem 1'
-        #config = '--psm 6 --oem 3 -c tessedit_char_whitelist=0123456789. '
-        config = '--psm 3 --oem 0 -c tessedit_char_whitelist=0123456789. '
         lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste)
         print(lido)
         # # Divide a string nos pontos
@@ -147,7 +141,6 @@ def valor_fichas(x_origem, y_origem):
         #
         # # Reconstroi a string formatada sem usar um ponto como separador
         # lido = "".join(partes)
-
         if lido is not None:
             lido = re.sub(r"\D+", "", lido)  # remove caracteres nao numericos
             lido = lido.replace(" ", "").replace(".", "")
@@ -161,7 +154,9 @@ def valor_fichas(x_origem, y_origem):
                 # Lidar com a conversão falhada para um número inteiro
                 print("Erro ao converter para inteiro")
 
-        config = '--psm 6 -c tessedit_char_whitelist=0123456789. '
+    config = '--psm 6 -c tessedit_char_whitelist=0123456789. '
+
+    for i in range(3):
         lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste)
         print(lido)
         # # Divide a string nos pontos
@@ -176,7 +171,6 @@ def valor_fichas(x_origem, y_origem):
         #
         # # Reconstroi a string formatada sem usar um ponto como separador
         # lido = "".join(partes)
-
         if lido is not None:
             lido = re.sub(r"\D+", "", lido)  # remove caracteres nao numericos
             lido = lido.replace(" ", "").replace(".", "")
@@ -224,13 +218,13 @@ valores = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160
 def pontuacao_tarefas(x_origem, y_origem):
     pontuacao = 0
     inveter_cor = True
-    fator_ampliacao = 1
-    contraste = 1.5
+    fator_ampliacao = 2
+    contraste = 1.8
 
     regiao = (x_origem + 778, y_origem + 516, x_origem + 830, y_origem + 535)
-    config = '--psm 6 --oem 1 -c tessedit_char_whitelist=0123456789/'
 
-    for i in range(2):
+    config = '--psm 6 --oem 1 -c tessedit_char_whitelist=0123456789/'
+    for i in range(3):
         pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
         time.sleep(0.3)
 
@@ -245,7 +239,6 @@ def pontuacao_tarefas(x_origem, y_origem):
                 try:
                     pontuacao = int(pontuacao)
                     if pontuacao in valores:
-                        #print("pontuacao: ", pontuacao)
                         print("pontuacao: ", pontuacao)
                         return pontuacao
                 except:
@@ -254,14 +247,11 @@ def pontuacao_tarefas(x_origem, y_origem):
         time.sleep(2)
 
     config = '--psm 6 -c tessedit_char_whitelist=0123456789/'
-
-    for i in range(2):
+    for i in range(3):
         pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
         time.sleep(0.3)
-
         pontuacao = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste)  # pontuação
         print('pontiuação: ', pontuacao)
-
         if pontuacao is not None:
             if "/200" in pontuacao:
                 pontuacao = pontuacao.split("/")[0]
@@ -270,7 +260,6 @@ def pontuacao_tarefas(x_origem, y_origem):
                 try:
                     pontuacao = int(pontuacao)
                     if pontuacao in valores:
-                        # print("pontuacao: ", pontuacao)
                         print("pontuacao: ", pontuacao)
                         return pontuacao
                 except:
