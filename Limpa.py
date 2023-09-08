@@ -337,9 +337,16 @@ def limpa_promocao(x_origem, y_origem):
         print("o novo banco esta aberto")
 
     # Fique milionario jogando
-    if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 109), (122, 75, 30), tolerance=10):
+    if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 109), (11, 6, 40), tolerance=10):
         pyautogui.click(812 + x_origem, 240 + y_origem)
         print("Fique milionario jogando")
+
+    # Valete ou mais
+    if pyautogui.pixelMatchesColor((x_origem + 400), (y_origem + 70), (12, 6, 42), tolerance=20):
+        pyautogui.mouseDown(895 + x_origem, 82 + y_origem) # aperta e segura
+        time.sleep(0.4)
+        pyautogui.mouseUp(895 + x_origem, 82 + y_origem)  # aperta e segura
+        print("Valete ou mais")
 
     #Vip
     if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 100), (46, 29, 21), tolerance=5):
@@ -710,13 +717,14 @@ def limpa_abre_tarefa2(x_origem, y_origem): #abre o tarefas
         time.sleep(1)
     return False
 
-
+#
 # x_origem, y_origem = Origem_pg.x_y()
-# #limpa_total(x_origem, y_origem)
-# faz_tutorial(x_origem,y_origem)
-# # # # #iniciantes(x_origem, y_origem)
-# # # # # # # # # aviso_canto_lobby(x_origem, y_origem)
-# # limpa_total(x_origem, y_origem)
-# limpa_abre_tarefa2(x_origem, y_origem)
+# # #limpa_total(x_origem, y_origem)
+# # faz_tutorial(x_origem,y_origem)
+# # # # # #iniciantes(x_origem, y_origem)
+# # # # # # # # # # aviso_canto_lobby(x_origem, y_origem)
+# # # limpa_total(x_origem, y_origem)
+# # limpa_abre_tarefa2(x_origem, y_origem)
+# limpa_promocao(x_origem, y_origem)
 
 
