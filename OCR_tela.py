@@ -169,7 +169,7 @@ def valor_fichas(x_origem, y_origem):
             lido = int(lido)
             if 500 < lido < 15000000:
                 print("valor das fichas: ", lido)
-                #return lido
+                return lido
         except ValueError:
             # Lidar com a conversão falhada para um número inteiro
             print("Erro ao converter para inteiro")
@@ -187,7 +187,7 @@ def valor_fichas(x_origem, y_origem):
             lido = int(lido)
             if 500 < lido < 15000000:
                 print("valor das fichas: ", lido)
-                #return lido
+                return lido
         except ValueError:
             # Lidar com a conversão falhada para um número inteiro
             print("Erro ao converter para inteiro")
@@ -206,7 +206,7 @@ def valor_fichas(x_origem, y_origem):
             lido = int(lido)
             if 500 < lido < 15000000:
                 print("valor das fichas: ", lido)
-                #return lido
+                return lido
         except ValueError:
             # Lidar com a conversão falhada para um número inteiro
             print("Erro ao converter para inteiro")
