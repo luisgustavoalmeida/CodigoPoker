@@ -110,23 +110,24 @@ def se_esta_lagado(navegador):
 
 def pega_url(navegador, url):
     while True:
+        IP.tem_internet()
         try:
             url_atual = navegador.current_url
             return url_atual
         except Exception as e:
             print("Erro ao obter o URL do navegador, erro: ", e)
             IP.tem_internet()
-            print(" clica no atualizar a pagina atualizar")
-            #pyautogui.press('f5')
-            #navegador.get(url)
-            pyautogui.click(85, 60 )
+            print(" clica no atualizar a pagina, atualizar")
+            # pyautogui.press('f5')
+            # navegador.get(url)
+            pyautogui.click(85, 60)
             time.sleep(15)
 
 
 def teste_logado(id, senha, url, navegador):
     url_atual = pega_url(navegador, url)
     if "/pokerbrasil?" in url_atual: # se nao esta logado
-        #print("teste_logado ok")
+        # print("teste_logado ok")
         entrou = True
         status = 'Carregada'
         return entrou, status
@@ -166,14 +167,14 @@ def fazer_login(id, senha, url, navegador):
                     #  print(url_atual)
                     if "/login/" not in url_atual:
                         if "/pokerbrasil?" in url_atual:
-                            #https://apps.facebook.com/pokerbrasil?vtype&amfmethod=appLinkFanPageAward&SignedParams=JrLALkSch1wuQxrULK6SWLAcpjTOb9Pmi5QvavvikU0.eyJhY3QiOiJmcCIsImZwX2FpZCI6IjU5ODUifQ&fbclid=IwAR252AFFL560939epg6Ki4tzNtLvgQJiZISVIZXFPjjBpBp5TNLBNX6TFXk
+                            # https://apps.facebook.com/pokerbrasil?vtype&amfmethod=appLinkFanPageAward&SignedParams=JrLALkSch1wuQxrULK6SWLAcpjTOb9Pmi5QvavvikU0.eyJhY3QiOiJmcCIsImZwX2FpZCI6IjU5ODUifQ&fbclid=IwAR252AFFL560939epg6Ki4tzNtLvgQJiZISVIZXFPjjBpBp5TNLBNX6TFXk
                             print("A conta está certa.")
                             entrou = True
                             status = 'Carregada'
                             return entrou, status
 
                         elif "/checkpoint/" in url_atual:
-                            #https://www.facebook.com/checkpoint/1501092823525282/?next=https%3A%2F%2Fwww.facebook.com%2F%3Fsk%3Dwelcome
+                            # https://www.facebook.com/checkpoint/1501092823525282/?next=https%3A%2F%2Fwww.facebook.com%2F%3Fsk%3Dwelcome
                             entrou = False
                             status = "Anomalia Fecebook"
                             print("A conta está suspensa.")
@@ -189,7 +190,8 @@ def fazer_login(id, senha, url, navegador):
                                                  'Suspendemos a tua conta',
                                                  'Desabilitamos sua conta']
 
-                            for item in lista_face_caidas: # percorre os textos que tem quando tem conta caida para o face
+                            for item in lista_face_caidas:
+                                # percorre os textos que tem quando tem conta caida para o face
                                 try:
                                     elemento = navegador.find_element(By.XPATH, f"//span[contains(text(), '{item}')]")
                                     print(item)
@@ -201,7 +203,7 @@ def fazer_login(id, senha, url, navegador):
                             return entrou, status
 
                         elif "/user_cookie_choice/" in url_atual:
-                            #https://www.facebook.com/privacy/consent/user_cookie_choice/?source=pft_user_cookie_choice
+                            # https://www.facebook.com/privacy/consent/user_cookie_choice/?source=pft_user_cookie_choice
                             print('responder cookies')
 
                             elemento_recusar = navegador.find_element(By.XPATH, f"//span[contains(text(), 'Recusar cookies opcionais')]")
@@ -217,7 +219,7 @@ def fazer_login(id, senha, url, navegador):
                                 return entrou, status
 
                         elif "/privacy/consent/pipa/" in url_atual:
-                            #https://www.facebook.com/privacy/consent/pipa/?params%5Bpft_surface%5D=facebook_comet&params%5Bis_new_user_blocking_flow%5D=true&params%5Bpft_session_key%5D=afa5f865-6574-4376-9cb2-3349c7a3aed0&source=pipa_blocking_flow
+                            # https://www.facebook.com/privacy/consent/pipa/?params%5Bpft_surface%5D=facebook_comet&params%5Bis_new_user_blocking_flow%5D=true&params%5Bpft_session_key%5D=afa5f865-6574-4376-9cb2-3349c7a3aed0&source=pipa_blocking_flow
                             print("Concorde com os itens")
                             entrou = False
                             status = "Concorde com os itens"
@@ -281,7 +283,7 @@ def fazer_login(id, senha, url, navegador):
                                 return entrou, status
                             except NoSuchElementException:
                                 continue
-                #else:
+
                 print("Não carregou o poker")
                 entrou = False
                 status = "Não ok, outro"
@@ -309,23 +311,27 @@ def sair_face(url, navegador):
         script = """javascript:void(function(){ function deleteAllCookiesFromCurrentDomain() { var cookies = document.cookie.split("; "); for (var c = 0; c < cookies.length; c++) { var d = window.location.hostname.split("."); while (d.length > 0) { var cookieBase = encodeURIComponent(cookies[c].split(";")[0].split("=")[0]) + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT; domain=' + d.join('.') + ' ;path='; var p = location.pathname.split('/'); document.cookie = cookieBase + '/'; while (p.length > 0) { document.cookie = cookieBase + p.join('/'); p.pop(); }; d.shift(); } } } deleteAllCookiesFromCurrentDomain(); location.href = '""" + url + """'; })();"""
 
         try:
+
             navegador.execute_script(script)
             WebDriverWait(navegador, 5).until(EC.presence_of_element_located((By.NAME, 'email')))
             return
+
         except Exception as e:
+
             print("ERRO ao executar o script sair ")
             print(e)
-            #time.sleep(3)
+            # time.sleep(3)
             IP.tem_internet()
             print("Da um F5 e espera 3 segundos")
-            #pyautogui.press('f5')
+            # pyautogui.press('f5')
             navegador.get(url)
             # navegador.execute_script(script)
             time.sleep(3)
-            #continue
+            # continue
             print("testa se tem nao é vc")
 
             try:
+
                 # Esperar até que o elemento "Não é você?" seja clicável
                 # elemento_nao_e_voce = WebDriverWait(navegador, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'div[aria-label="Não é você?"]')))
                 elemento_nao_e_voce = WebDriverWait(navegador, 5).until(EC.element_to_be_clickable((By.ID, 'not_me_link')))
@@ -337,6 +343,7 @@ def sair_face(url, navegador):
                 time.sleep(2)
 
             except Exception as e:
+
                 print("Elemento não encontrado na página.", e)
 
 
@@ -376,7 +383,6 @@ def busca_link(navegador):
 
     if se_esta_lagado(navegador) is True:
         sair_face(url, navegador)
-
 
     print('faz login')
     email_field = WebDriverWait(navegador, 10).until(EC.presence_of_element_located((By.NAME, 'email')))
@@ -460,22 +466,9 @@ def busca_link(navegador):
         print("Nenhum link encontrado com o padrão especificado")
         return
 
-
-# navegador = cria_nevegador()
-# # #
-# busca_link2(navegador)
-
-# #
-#abrir_navegador(url, navegador)
-# usuario = 'lga.gustavo.a@gmail.com'
-# senha = '020996Pa'
-# fazer_login(usuario, senha, url, navegador)
-#time.sleep(10000)
-# navegador.quit()
-
 ######################################################################################################################
-## para abrir o navegador e deixar abero. Descomentar as duas linhas abaixo
-#navegador = cria_nevegador()
-#time.sleep(10000)
+# # para abrir o navegador e deixar abero. Descomentar as duas linhas abaixo
+# navegador = cria_nevegador()
+# time.sleep(10000)
 
 

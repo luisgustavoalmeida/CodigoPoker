@@ -62,7 +62,7 @@ if not os.path.isfile(caminho_tesseract):
     raise Exception("Caminho do executável do Tesseract inválido")
 
 
-def OCR_regiao (regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos):
+def OCR_regiao (regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza):
 
     try:
         # captura a imagem da tela
@@ -72,14 +72,17 @@ def OCR_regiao (regiao, config, inveter_cor, fator_ampliacao, contraste_pre, con
         imagem_recortada = imagem.crop(regiao)
 
         if fator_ampliacao != 1:
-            imagem_recortada = imagem_recortada.resize((imagem_recortada.width * fator_ampliacao, imagem_recortada.height * fator_ampliacao))
+            imagem_recortada = imagem_recortada.resize((imagem_recortada.width * fator_ampliacao,
+                                                        imagem_recortada.height * fator_ampliacao))
 
         # exive a imagem
         #imagem_recortada.show()
 
         # converte a imagem para escala de cinza
-        imagem_recortada = cv2.cvtColor(numpy.asarray(imagem_recortada), cv2.COLOR_BGR2GRAY)
-        #imagem_recortada = numpy.asarray(imagem_recortada)
+        if esca_ciza:
+            imagem_recortada = cv2.cvtColor(numpy.asarray(imagem_recortada), cv2.COLOR_BGR2GRAY)
+        else:
+            imagem_recortada = numpy.asarray(imagem_recortada)
 
         # print("iamgem em preto e branco")
         #
@@ -143,6 +146,7 @@ def valor_fichas(x_origem, y_origem):
     print('Lendo o valor das fichas ...')
     # Define a região de interesse
     inveter_cor = True
+    esca_ciza = True
     fator_ampliacao = 6
     contraste_pre = 1.4
     contraste_pos = 1.5
@@ -152,7 +156,7 @@ def valor_fichas(x_origem, y_origem):
     config = '--psm 7 --oem 1 -c tessedit_char_whitelist=0123456789.'
 
     for i in range(2):
-        lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos)
+        lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
         print(lido)
 
         if lido is not None:
@@ -171,7 +175,7 @@ def valor_fichas(x_origem, y_origem):
     config = '--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789.'
 
     for i in range(2):
-        lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos)
+        lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
         print(lido)
 
         if lido is not None:
@@ -191,7 +195,7 @@ def valor_fichas(x_origem, y_origem):
     config = '--psm 3 --oem 0 -c tessedit_char_whitelist=0123456789.'
 
     for i in range(2):
-        lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos)
+        lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
         print(lido)
 
         if lido is not None:
@@ -213,13 +217,14 @@ def valor_fichas(x_origem, y_origem):
 
 def tempo_roleta(x_origem, y_origem):
     inveter_cor = True
+    esca_ciza = True
     fator_ampliacao = 1
     contraste_pre = 1
     contraste_pos = 1
     config = '--psm 7 --oem 3 -c tessedit_char_whitelist=0123456789:'
     regiao =(x_origem + 662, y_origem + 44, x_origem + 711,y_origem + 56)
     for i in range(4):
-        tempo = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos)  # posição onde fica o tempo para a proxima roleta
+        tempo = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)  # posição onde fica o tempo para a proxima roleta
         #print(tempo)
         if tempo is not None:
             tempo = re.sub(r"\D+", "", tempo)  # remove caracteres nao numericos
@@ -242,6 +247,7 @@ valores = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160
 def pontuacao_tarefas(x_origem, y_origem):
     pontuacao = 0
     inveter_cor = True
+    esca_ciza = True
     fator_ampliacao = 2
     contraste_pre = 1
     contraste_pos = 1.8
@@ -253,7 +259,7 @@ def pontuacao_tarefas(x_origem, y_origem):
         pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
         time.sleep(0.3)
 
-        pontuacao = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos) #pontuação
+        pontuacao = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza) #pontuação
         print('pontiuação: ', pontuacao)
 
         if pontuacao is not None:
@@ -275,7 +281,7 @@ def pontuacao_tarefas(x_origem, y_origem):
     for i in range(3):
         pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
         time.sleep(0.3)
-        pontuacao = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos)  # pontuação
+        pontuacao = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)  # pontuação
         print('pontiuação: ', pontuacao)
         if pontuacao is not None:
             if "/200" in pontuacao:
@@ -302,6 +308,7 @@ def tarefas_diaris_posicao1(x_origem, y_origem):
     # Define a região de interesse
     config = '--psm 6 --oem 1'
     inveter_cor = True
+    esca_ciza = True
     fator_ampliacao = 1
     contraste_pre = 1
     contraste_pos = 1
@@ -313,7 +320,7 @@ def tarefas_diaris_posicao1(x_origem, y_origem):
         time.sleep(0.2)
         # Executa o OCR na região de interesse
         #print("chama o ocr a 1 vez \n")
-        texto = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos)
+        texto = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
         if texto is not None:
             lista = remover_termos(texto)
             #print(lista)
@@ -333,6 +340,7 @@ def tarefas_diaris_posicao2(x_origem, y_origem):
         # Define a região de interesse
         config = '--psm 6 --oem 1'
         inveter_cor = True
+        esca_ciza = True
         fator_ampliacao = 1
         contraste_pre = 1
         contraste_pos = 1
@@ -341,7 +349,7 @@ def tarefas_diaris_posicao2(x_origem, y_origem):
         for i in range(1):
             # Executa o OCR na região de interesse
             #print("chama o ocr a 1 vez \n")
-            texto = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos)
+            texto = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
             if texto is not None:
                 lista = remover_termos(texto)
                 #print(lista)
@@ -386,6 +394,7 @@ def tarefas_diaris(x_origem, y_origem):
     # Define a região de interesse
     config = '--psm 6 --oem 1'
     inveter_cor = True
+    esca_ciza = True
     fator_ampliacao = 1
     contraste_pre = 1
     contraste_pos = 1
@@ -397,7 +406,7 @@ def tarefas_diaris(x_origem, y_origem):
         time.sleep(0.2)
         # Executa o OCR na região de interesse
         #print("chama o ocr a 1 vez \n")
-        texto = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos)
+        texto = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
         if texto is not None:
             lista = remover_termos(texto)
             #print('teste se tem que rolar\n')
@@ -412,7 +421,7 @@ def tarefas_diaris(x_origem, y_origem):
                 for j in range(1):
                     #print('tem coisa na lista 1')
                     #print("chama o ocr a 2 vez\n")
-                    texto = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos)
+                    texto = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
                     if texto is not None:
                         lista2 = remover_termos(texto)
                         if lista2:# testa se esta vazia
@@ -479,6 +488,7 @@ def tarefas_diaris_trocar(x_origem, y_origem):
         # Define a região de interesse
         config = '--psm 6 --oem 1'
         inveter_cor = True
+        esca_ciza = True
         fator_ampliacao = 1
         contraste_pre = 1
         contraste_pos = 1
@@ -501,7 +511,7 @@ def tarefas_diaris_trocar(x_origem, y_origem):
                 pyautogui.doubleClick(708 + x_origem, 418 + y_origem)  # rola para ver se a tarefa esta na segunda parte
                 time.sleep(0.2)
 
-            texto = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos)
+            texto = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
             if texto is not None:
                 # Mapear caracteres especiais
                 texto = texto.replace('ç', 'c').replace('í', 'i').replace('ê', 'e').replace('-', ' ').replace('ã', 'a')
@@ -577,12 +587,13 @@ def remover_termos(texto):
 
 def blind_sala(x_origem, y_origem):
     inveter_cor = True
+    esca_ciza = True
     fator_ampliacao = 1
     contraste_pre = 1
     contraste_pos = 1
     config = '--psm 7 --oem 3 -c tessedit_char_whitelist=0123456789KM' #
     regiao = (x_origem + 52, y_origem + 99, x_origem + 125, y_origem + 115)
-    pontuacao = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos) #pontuação
+    pontuacao = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza) #pontuação
     if pontuacao is not None:
         pontuacao = pontuacao.replace(" ", "")
         pontuacao = pontuacao.replace("/", "")
@@ -600,12 +611,13 @@ def blind_sala(x_origem, y_origem):
 
 def valor_apostar(x_origem, y_origem):
     inveter_cor = False
+    esca_ciza = True
     fator_ampliacao = 1
     contraste_pre = 1
     contraste_pos = 1
     config = '--psm 7 --oem 3 -c tessedit_char_whitelist=0123456789' #
     regiao = (x_origem + 420, y_origem + 644, x_origem + 474, y_origem + 658)
-    valor = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos) #pontuação
+    valor = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza) #pontuação
     if valor is not None:
         print("pontuacao: ", valor)
         valor = int(valor)
@@ -624,12 +636,13 @@ def aviso_do_sistema():
     x_origem, y_origem = Origem_pg.x_y_aviso_sistema() # tenta encontar a origem quando tem aviso do sistema
     if x_origem is not None: # se tem aviso do sistema
         inveter_cor = False
+        esca_ciza = True
         fator_ampliacao = 1
         contraste_pre = 1
         contraste_pos = 1
         config = '--psm 3'
         regiao = (x_origem + 321, y_origem + 268, x_origem + 658, y_origem + 433)
-        valor = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos)
+        valor = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
         if valor is not None:
             if 'Aviso do sistema' in valor:
                 print('foi encontrado um: Aviso do sistema')
@@ -648,6 +661,7 @@ def aviso_sistema(x_origem, y_origem):
     resposta = "ok"
     if pyautogui.pixelMatchesColor((x_origem + 491), (y_origem + 417), (25, 117, 186), tolerance=19):
         inveter_cor = False
+        esca_ciza = True
         fator_ampliacao = 1
         contraste_pre = 1
         contraste_pos = 1
