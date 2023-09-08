@@ -76,22 +76,25 @@ def OCR_regiao (regiao, config, inveter_cor, fator_ampliacao, contraste_pre, con
                                                         imagem_recortada.height * fator_ampliacao))
 
         # exive a imagem
-        #imagem_recortada.show()
+        # imagem_recortada.show()
+
+        imagem_recortada = numpy.asarray(imagem_recortada)
+
+        if contraste_pre != 1:  # Fator de aumento de contraste (pode ser ajustado conforme necessário)
+            imagem_recortada = cv2.convertScaleAbs(imagem_recortada, alpha=contraste_pre, beta=0)
 
         # converte a imagem para escala de cinza
         if esca_ciza:
-            imagem_recortada = cv2.cvtColor(numpy.asarray(imagem_recortada), cv2.COLOR_BGR2GRAY)
-        else:
-            imagem_recortada = numpy.asarray(imagem_recortada)
+            imagem_recortada = cv2.cvtColor(imagem_recortada, cv2.COLOR_BGR2GRAY)
 
-        # print("iamgem em preto e branco")
+
+        # # print("iamgem em preto e branco")
         #
         # cv2.imshow("Imagem", imagem_recortada)
         # cv2.waitKey(0)
         # cv2.destroyAllWindows()
 
-        if contraste_pre != 1:  # Fator de aumento de contraste (pode ser ajustado conforme necessário)
-            imagem_recortada = cv2.convertScaleAbs(imagem_recortada, alpha=contraste_pre, beta=0)
+
 
         # print("iamgem em preto e branco pre contraste")
         # cv2.imshow("Imagem", imagem_recortada)
@@ -147,71 +150,66 @@ def valor_fichas(x_origem, y_origem):
     # Define a região de interesse
     inveter_cor = True
     esca_ciza = True
-    fator_ampliacao = 6
-    contraste_pre = 1.4
-    contraste_pos = 1.5
+    fator_ampliacao = 4
+    contraste_pre = 1.37
+    contraste_pos = 1.6
 
-    regiao_ficha = (x_origem + 45, y_origem + 9, x_origem + 105, y_origem + 23)  # Ficha
+    regiao_ficha = (x_origem + 43, y_origem + 9, x_origem + 105, y_origem + 23)  # Ficha
     #config = '--psm 3 --oem 0 -c tessedit_char_whitelist=0123456789.'
     config = '--psm 7 --oem 1 -c tessedit_char_whitelist=0123456789.'
 
-    for i in range(2):
-        lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
-        print(lido)
+    lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
+    print(lido)
 
-        if lido is not None:
-            lido = re.sub(r"\D+", "", lido)  # remove caracteres nao numericos
-            lido = lido.replace(" ", "").replace(".", "")
-            #print(lido)
-            try:
-                lido = int(lido)
-                if 500 < lido < 15000000:
-                    print("valor das fichas: ", lido)
-                    return lido
-            except ValueError:
-                # Lidar com a conversão falhada para um número inteiro
-                print("Erro ao converter para inteiro")
+    if lido is not None:
+        lido = re.sub(r"\D+", "", lido)  # remove caracteres nao numericos
+        lido = lido.replace(" ", "").replace(".", "")
+        #print(lido)
+        try:
+            lido = int(lido)
+            if 500 < lido < 15000000:
+                print("valor das fichas: ", lido)
+                #return lido
+        except ValueError:
+            # Lidar com a conversão falhada para um número inteiro
+            print("Erro ao converter para inteiro")
 
     config = '--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789.'
 
-    for i in range(2):
-        lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
-        print(lido)
+    lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
+    print(lido)
 
-        if lido is not None:
-            lido = re.sub(r"\D+", "", lido)  # remove caracteres nao numericos
-            lido = lido.replace(" ", "").replace(".", "")
-            # print(lido)
-            try:
-                lido = int(lido)
-                if 500 < lido < 15000000:
-                    print("valor das fichas: ", lido)
-                    return lido
-            except ValueError:
-                # Lidar com a conversão falhada para um número inteiro
-                print("Erro ao converter para inteiro")
+    if lido is not None:
+        lido = re.sub(r"\D+", "", lido)  # remove caracteres nao numericos
+        lido = lido.replace(" ", "").replace(".", "")
+        # print(lido)
+        try:
+            lido = int(lido)
+            if 500 < lido < 15000000:
+                print("valor das fichas: ", lido)
+                #return lido
+        except ValueError:
+            # Lidar com a conversão falhada para um número inteiro
+            print("Erro ao converter para inteiro")
 
     #config = '--psm 6 -c tessedit_char_whitelist=0123456789.'
     config = '--psm 3 --oem 0 -c tessedit_char_whitelist=0123456789.'
 
-    for i in range(2):
-        lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
-        print(lido)
+    lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
+    print(lido)
 
-        if lido is not None:
-            lido = re.sub(r"\D+", "", lido)  # remove caracteres nao numericos
-            lido = lido.replace(" ", "").replace(".", "")
-            # print(lido)
-            try:
-                lido = int(lido)
-                if 500 < lido < 15000000:
-                    print("valor das fichas: ", lido)
-                    return lido
-            except ValueError:
-                # Lidar com a conversão falhada para um número inteiro
-                print("Erro ao converter para inteiro")
-
-        time.sleep(5)
+    if lido is not None:
+        lido = re.sub(r"\D+", "", lido)  # remove caracteres nao numericos
+        lido = lido.replace(" ", "").replace(".", "")
+        # print(lido)
+        try:
+            lido = int(lido)
+            if 500 < lido < 15000000:
+                print("valor das fichas: ", lido)
+                #return lido
+        except ValueError:
+            # Lidar com a conversão falhada para um número inteiro
+            print("Erro ao converter para inteiro")
     return 0
 
 
@@ -696,7 +694,7 @@ def aviso_sistema(x_origem, y_origem):
 # #
 # # # #         #aviso_do_sistema()
 #
-#x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
+# x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
 # # # # tarefas_diaris_trocar(x_origem, y_origem)
 # # # tarefas_diaris(x_origem, y_origem)
 # # # # # # # # # # # # print(y_origem)
@@ -709,7 +707,7 @@ def aviso_sistema(x_origem, y_origem):
 # # # # # # # # # # # #
 # # # # # # tempo_roleta(x_origem, y_origem)
 # # # # # # # # # # #
-#lido = valor_fichas(x_origem, y_origem)
+# lido = valor_fichas(x_origem, y_origem)
 # print(lido)
 # # # # # # # # #
 # pontuacao_tarefas(x_origem, y_origem)
