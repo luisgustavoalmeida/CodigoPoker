@@ -72,14 +72,17 @@ options.add_experimental_option("detach", True) # para manter o navegador aberto
 
 
 def cria_nevegador():
-    while True:
-        try:
-            navegador = webdriver.Chrome(service=servico, options=options)  # Inicializar o driver do navegador
-            return navegador
-        except Exception as e:
-            print("Ocorreu um erro ao criar o navegador:")
-            print(e)
-            time.sleep(5)
+    print('Criando o navegador')
+    navegador = webdriver.Chrome(service=servico, options=options)  # Inicializar o driver do navegador
+    return navegador
+    # while True:
+    #     try:
+    #         navegador = webdriver.Chrome(service=servico, options=options)  # Inicializar o driver do navegador
+    #         return navegador
+    #     except Exception as e:
+    #         print("Ocorreu um erro ao criar o navegador:")
+    #         print(e)
+    #         time.sleep(5)
 
 
 def abrir_navegador(url, navegador):
@@ -113,9 +116,10 @@ def pega_url(navegador, url):
         except Exception as e:
             print("Erro ao obter o URL do navegador, erro: ", e)
             IP.tem_internet()
-            print(" da um F5 par aatualizar")
+            print(" clica no atualizar a pagina atualizar")
             #pyautogui.press('f5')
-            navegador.get(url)
+            #navegador.get(url)
+            pyautogui.click(85, 60 )
             time.sleep(15)
 
 
