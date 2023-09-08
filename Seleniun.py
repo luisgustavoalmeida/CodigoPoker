@@ -74,6 +74,8 @@ options.add_experimental_option("detach", True) # para manter o navegador aberto
 def cria_nevegador():
     print('Criando o navegador')
     navegador = webdriver.Chrome(service=servico, options=options)  # Inicializar o driver do navegador
+    # Redefina o tempo limite para 10 segundos para a segunda parte do código
+    navegador.set_page_load_timeout(10)
     return navegador
     # while True:
     #     try:
