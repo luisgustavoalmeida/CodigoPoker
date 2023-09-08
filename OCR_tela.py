@@ -79,6 +79,7 @@ def OCR_regiao (regiao, config, inveter_cor, fator_ampliacao, contraste_pre, con
 
         # converte a imagem para escala de cinza
         imagem_recortada = cv2.cvtColor(numpy.asarray(imagem_recortada), cv2.COLOR_BGR2GRAY)
+        #imagem_recortada = numpy.asarray(imagem_recortada)
 
         # print("iamgem em preto e branco")
         #
@@ -112,7 +113,6 @@ def OCR_regiao (regiao, config, inveter_cor, fator_ampliacao, contraste_pre, con
         # cv2.waitKey(0)
         # cv2.destroyAllWindows()
 
-
         # passa o OCR na imagem recortada
         pytesseract.pytesseract.tesseract_cmd = caminho_tesseract
         texto = pytesseract.image_to_string(imagem_recortada, config=config, lang="por")
@@ -143,10 +143,10 @@ def valor_fichas(x_origem, y_origem):
     print('Lendo o valor das fichas ...')
     # Define a região de interesse
     inveter_cor = True
-    fator_ampliacao = 3
-    contraste_pre = 1.3
-    contraste_pos = 1.6
-    contraste = 1.8
+    fator_ampliacao = 6
+    contraste_pre = 1.4
+    contraste_pos = 1.5
+
     regiao_ficha = (x_origem + 45, y_origem + 9, x_origem + 105, y_origem + 23)  # Ficha
     #config = '--psm 3 --oem 0 -c tessedit_char_whitelist=0123456789.'
     config = '--psm 6 -c tessedit_char_whitelist=0123456789.'
