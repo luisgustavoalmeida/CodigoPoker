@@ -158,8 +158,8 @@ def valor_fichas(x_origem, y_origem):
     #contraste_pos = 1.7
 
     regiao_ficha = (x_origem + 43, y_origem + 9, x_origem + 105, y_origem + 23)  # Ficha
-    #config = '--psm 6 --oem 3 -c tessedit_char_whitelist=0123456789'
-    config = '--psm 7 --oem 1 -c tessedit_char_whitelist=0123456789.'
+    config = '--psm 6 --oem 3 -c tessedit_char_whitelist=0123456789'
+    #config = '--psm 7 --oem 1 -c tessedit_char_whitelist=0123456789.'
 
     lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
     print(lido)
