@@ -668,7 +668,7 @@ def aviso_sistema(x_origem, y_origem):
         contraste_pos = 1
         config = '--psm 3'
         regiao = (x_origem + 321, y_origem + 268, x_origem + 658, y_origem + 433)
-        valor = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos)
+        valor = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
         if valor is not None:
             if 'Aviso do sistema' in valor:
                 print('foi encontrado um: Aviso do sistema')
