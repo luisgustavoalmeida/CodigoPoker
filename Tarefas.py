@@ -203,21 +203,20 @@ def recolher_tarefa(x_origem, y_origem):
     posicao_recolher_tarefa_y = (542, 463, 384, 305)
     clique_recolher = []
 
-    if pyautogui.pixelMatchesColor((x_origem + 670), (y_origem + 305), (59, 181, 21), tolerance=35):  # testa se tem que recolher "verde" apartir da primeira linha
+    if pyautogui.pixelMatchesColor((x_origem + 670), (y_origem + 305), (59, 181, 21), tolerance=40):  # testa se tem que recolher "verde" apartir da primeira linha
         print("Tem missão para recolher")
         for recolher_y in posicao_recolher_tarefa_y:
             #print(recolher_y)
-            if pyautogui.pixelMatchesColor((x_origem + 670), (y_origem + recolher_y), (59, 182, 21), tolerance=35):  # testa se tem que recolher "verde"
+            if pyautogui.pixelMatchesColor((x_origem + 670), (y_origem + recolher_y), (59, 182, 21), tolerance=40):  # testa se tem que recolher "verde"
                 clique_recolher.append(recolher_y)  # adiciona as coordenada de y que deve ser clicadas
 
-
-    elif pyautogui.pixelMatchesColor((x_origem + 590), (y_origem + 280), (171, 13, 143), tolerance=35):  # testa se tem que recolher tendo missão extra
+    elif pyautogui.pixelMatchesColor((x_origem + 590), (y_origem + 280), (171, 13, 143), tolerance=40):  # testa se tem que recolher tendo missão extra
         print('missão extra')
-        if pyautogui.pixelMatchesColor((x_origem + 670), (y_origem + 384), (59, 182, 21), tolerance=35):  # testa se tem que recolher "verde" apartir da segunda linha
+        if pyautogui.pixelMatchesColor((x_origem + 670), (y_origem + 384), (59, 182, 21), tolerance=40):  # testa se tem que recolher "verde" apartir da segunda linha
             print("Tem missão para recolher")
             for recolher_y in posicao_recolher_tarefa_y:
                 #print(recolher_y)
-                if pyautogui.pixelMatchesColor((x_origem + 670), (y_origem + recolher_y), (59, 182, 21), tolerance=35):#testa se tem que recolher "verde"
+                if pyautogui.pixelMatchesColor((x_origem + 670), (y_origem + recolher_y), (59, 182, 21), tolerance=40):#testa se tem que recolher "verde"
                     clique_recolher.append(recolher_y) # adiciona as coordenada de y que deve ser clicadas
 
     if clique_recolher:
