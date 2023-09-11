@@ -522,8 +522,6 @@ while True:
                 Seleniun.busca_link(navegador)
             elif (nome_usuario == "lgagu") and (nome_computador == "PC-I7-9700KF"):
                 Seleniun.busca_link(navegador)
-            elif (nome_usuario == "PokerIP") and (nome_computador == "PC-i3-8145U"):
-                Seleniun.busca_link(navegador)
 
             dia_da_semana = datetime.datetime.now().weekday()  # busca o dia da semana 0 segunda 1 terça ... 6 domeingo
             url = str(Google.pega_valor('Dados', 'F1'))
