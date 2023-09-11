@@ -11,7 +11,7 @@ import datetime
 import Limpa
 import Aneis
 import HoraT
-import Origem_pg
+# import Origem_pg
 # from fuzzywuzzy import fuzz #pip install fuzzywuzzy
 # import Levenshtein #pip install python-Levenshtein
 
