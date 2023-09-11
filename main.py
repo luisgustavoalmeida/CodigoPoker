@@ -291,7 +291,7 @@ while True:
                     parar_tarefas = True
                     break
 
-                for j in range(3):
+                for j in range(2):
                     print('procura tarefa, tentativa:', j)
                     for i in range(3):
                         print('\n TAREFAS \n')

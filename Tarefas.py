@@ -219,7 +219,7 @@ def recolher_tarefa(x_origem, y_origem):
                 if pyautogui.pixelMatchesColor((x_origem + 670), (y_origem + recolher_y), (59, 182, 21), tolerance=40):#testa se tem que recolher "verde"
                     clique_recolher.append(recolher_y) # adiciona as coordenada de y que deve ser clicadas
 
-    if clique_recolher:
+    if len(clique_recolher) > 0:
         for recolhe in clique_recolher:
             pyautogui.doubleClick(x_origem + 670, y_origem + recolhe)  # clica no recolher
         time.sleep(1)

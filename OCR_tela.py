@@ -87,29 +87,9 @@ def OCR_regiao (regiao, config, inveter_cor, fator_ampliacao, contraste_pre, con
         if esca_ciza:
             imagem_recortada = cv2.cvtColor(imagem_recortada, cv2.COLOR_BGR2GRAY)
 
-
-        # # print("iamgem em preto e branco")
-        #
-        # cv2.imshow("Imagem", imagem_recortada)
-        # cv2.waitKey(0)
-        # cv2.destroyAllWindows()
-
-
-
-        # print("iamgem em preto e branco pre contraste")
-        # cv2.imshow("Imagem", imagem_recortada)
-        # cv2.waitKey(0)
-        # cv2.destroyAllWindows()
-
         # inverte as cores da imagem
         if inveter_cor:
             imagem_recortada = cv2.bitwise_not(imagem_recortada)
-
-        # print("iamgem cor invertida")
-        #
-        # cv2.imshow("Imagem", imagem_recortada)
-        # cv2.waitKey(0)
-        # cv2.destroyAllWindows()
 
         if contraste_pos != 1:  # Fator de aumento de contraste (pode ser ajustado conforme necessário)
             imagem_recortada = cv2.convertScaleAbs(imagem_recortada, alpha=contraste_pos, beta=0)
@@ -155,7 +135,7 @@ def valor_fichas(x_origem, y_origem):
     #contraste_pos = 1.6
 
     fator_ampliacao = 2
-    contraste_pre = 1
+    contraste_pre = 1.1
     contraste_pos = 1.7
 
     regiao_ficha = (x_origem + 43, y_origem + 9, x_origem + 105, y_origem + 23)  # Ficha
@@ -250,14 +230,15 @@ def pontuacao_tarefas(x_origem, y_origem):
     pontuacao = 0
     inveter_cor = True
     esca_ciza = True
-    fator_ampliacao = 2
+    fator_ampliacao = 4
     contraste_pre = 1
-    contraste_pos = 1.8
+    contraste_pos = 1.4
 
     regiao = (x_origem + 778, y_origem + 516, x_origem + 830, y_origem + 535)
+    # config = '--psm 6 --oem 1 -c tessedit_char_whitelist=0123456789/'
 
     config = '--psm 6 --oem 1 -c tessedit_char_whitelist=0123456789/'
-    for i in range(3):
+    for i in range(2):
         pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
         time.sleep(0.3)
 
@@ -280,7 +261,7 @@ def pontuacao_tarefas(x_origem, y_origem):
         time.sleep(2)
 
     config = '--psm 6 -c tessedit_char_whitelist=0123456789/'
-    for i in range(3):
+    for i in range(2):
         pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
         time.sleep(0.3)
         pontuacao = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)  # pontuação
@@ -698,7 +679,9 @@ def aviso_sistema(x_origem, y_origem):
 # #
 # # # #         #aviso_do_sistema()
 #
-x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
+# x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
+# pontuacao_tarefas(x_origem, y_origem)
+# lido = valor_fichas(x_origem, y_origem)
 # # # # tarefas_diaris_trocar(x_origem, y_origem)
 # # # tarefas_diaris(x_origem, y_origem)
 # # # # # # # # # # # # print(y_origem)
@@ -711,7 +694,7 @@ x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
 # # # # # # # # # # # #
 # # # # # # tempo_roleta(x_origem, y_origem)
 # # # # # # # # # # #
-lido = valor_fichas(x_origem, y_origem)
+#lido = valor_fichas(x_origem, y_origem)
 # print(lido)
 # # # # # # # # #
 # pontuacao_tarefas(x_origem, y_origem)
