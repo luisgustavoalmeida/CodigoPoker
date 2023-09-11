@@ -94,10 +94,10 @@ def OCR_regiao (regiao, config, inveter_cor, fator_ampliacao, contraste_pre, con
         if contraste_pos != 1:  # Fator de aumento de contraste (pode ser ajustado conforme necessário)
             imagem_recortada = cv2.convertScaleAbs(imagem_recortada, alpha=contraste_pos, beta=0)
 
-        print("iamgem cor invertida pos contraste")
-        cv2.imshow("Imagem", imagem_recortada)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+        # print("iamgem cor invertida pos contraste")
+        # cv2.imshow("Imagem", imagem_recortada)
+        # cv2.waitKey(0)
+        # cv2.destroyAllWindows()
 
         # passa o OCR na imagem recortada
         pytesseract.pytesseract.tesseract_cmd = caminho_tesseract
