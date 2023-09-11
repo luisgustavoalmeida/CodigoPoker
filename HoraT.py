@@ -129,6 +129,9 @@ def fim_tempo_tarefa():
     if tempo_atual > 86280:  # proximo das 24H
         print('Interrompe a tarefa e vai pra o R1, proximo das 0h')
         return True
+    elif 0 < tempo_atual < tempo_total:  # se menor que 5H
+        print("Continua fazendo tarefas, tempo menor que 5H")
+        return False
 
     for i in range(1, 5):
         #print(i)
