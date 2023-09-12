@@ -134,7 +134,7 @@ def valor_fichas(x_origem, y_origem):
     #contraste_pre = 1.37
     #contraste_pos = 1.6
 
-    fator_ampliacao = 7
+    fator_ampliacao = 5
     contraste_pre = 1.1
     contraste_pos = 1.7
 
