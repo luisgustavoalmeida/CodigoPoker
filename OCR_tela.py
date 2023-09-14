@@ -134,9 +134,9 @@ def valor_fichas(x_origem, y_origem):
     #contraste_pre = 1.37
     #contraste_pos = 1.6
 
-    fator_ampliacao = 5
-    contraste_pre = 1.24
-    contraste_pos = 2.2
+    fator_ampliacao = 4
+    contraste_pre = 1.23
+    contraste_pos = 2.5
 
     regiao_ficha = (x_origem + 43, y_origem + 9, x_origem + 105, y_origem + 23)  # Ficha
     config = '--psm 6 --oem 3 -c tessedit_char_whitelist=0123456789'
@@ -680,7 +680,7 @@ def aviso_sistema(x_origem, y_origem):
 # # # #         #aviso_do_sistema()
 #
 # x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
-# # # pontuacao_tarefas(x_origem, y_origem)
+# # # # pontuacao_tarefas(x_origem, y_origem)
 # lido = valor_fichas(x_origem, y_origem)
 # # # # tarefas_diaris_trocar(x_origem, y_origem)
 # # # tarefas_diaris(x_origem, y_origem)
