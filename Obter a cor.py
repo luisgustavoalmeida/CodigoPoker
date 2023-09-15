@@ -22,8 +22,8 @@
 #
 #
 #
-# x = (x_origem + 400)
-# y = (y_origem + 70)
+# x = (x_origem + 545)
+# y = (y_origem + 105)
 #
 #
 #
