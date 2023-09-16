@@ -51,7 +51,10 @@ dicionari_pc = {'PC-I5-8600K_PokerIP':  'PC01',
 
                 'PC-I7-9700KF_PokerIP': 'PC20',
                 'PC-I7-9700KF_lgagu':   'PC21',
-                'PC-I7-9700KF_Poker':   'PC22'}
+                'PC-I7-9700KF_Poker':   'PC22',
+
+                'Thiago-PC_Thiago': 'PC23'
+                }
 
 
 # Inicializa o Firebase
@@ -67,7 +70,7 @@ caminho_resposta = "Resposta/" + nome_pc
 print(caminho_resposta)
 
 # Referência para o nó do Firebase que você deseja observar
-ref = firebase.database().child(f"Coletivo") # colocar o caminho de onde vem os comandos
+ref = firebase.database().child(f"Comandos")  # colocar o caminho de onde vem os comandos
 
 
 # Função de callback para manipular os dados quando houver uma atualização
