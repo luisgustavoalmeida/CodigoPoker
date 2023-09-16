@@ -1,6 +1,7 @@
 
 import pyrebase
 
+# Configuração do Firebase
 config = {
   "apiKey": "AIzaSyDDzQMVxpKKqBZrDlhA9E4sInXB5toVRT8",
   "authDomain": "pokerdados-6884e.firebaseapp.com",
@@ -17,6 +18,7 @@ firebase = pyrebase.initialize_app(config)
 # Obtém uma referência para o banco de dados
 db = firebase.database()
 
+# Define listas de arranjos de computadores
 arranjo1_pc = ('Comandos1/PC01',
                'Comandos1/PC04',
                'Comandos1/PC07',
@@ -62,9 +64,9 @@ def enviar_comando_coletivo(arranjo, comando):
     for caminho in arranjo:
         # Define a chave do dicionário como o caminho e o valor como o comando
         atualizacoes[caminho] = comando
-    db.update(atualizacoes)
+    db.update(atualizacoes) # responsável por atualizar os dados no banco de dados Firebase
 
-enviar_comando_coletivo(['Comandos3/PC03'],"teerfszxdfv")
+# enviar_comando_coletivo(['Comandos3/PC03'],"teerfszxdfv")
 
 
 

@@ -69,10 +69,58 @@ print(nome_pc)
 caminho_resposta = "Resposta/" + nome_pc
 print(caminho_resposta)
 
+
+
+# Define listas de arranjos de computadores
+arranjo1_pc = ('Comandos1/PC01',
+               'Comandos1/PC04',
+               'Comandos1/PC07',
+               'Comandos1/PC10',
+               'Comandos1/PC13',
+               'Comandos1/PC16',
+               'Comandos1/PC19',
+               'Comandos1/PC22',
+               'Comandos1/PC25'
+               )
+
+arranjo2_pc = ('Comandos2/PC02',
+               'Comandos2/PC05',
+               'Comandos2/PC08',
+               'Comandos2/PC11',
+               'Comandos2/PC14',
+               'Comandos2/PC17',
+               'Comandos2/PC20',
+               'Comandos2/PC23',
+               'Comandos2/PC26'
+               )
+
+arranjo3_pc = ('Comandos3/PC03',
+               'Comandos3/PC06',
+               'Comandos3/PC09',
+               'Comandos3/PC12',
+               'Comandos3/PC15',
+               'Comandos3/PC18',
+               'Comandos3/PC21',
+               'Comandos3/PC24',
+               'Comandos3/PC27'
+               )
+
+
+def enviar_comando_coletivo(arranjo, comando):
+
+    """Envie nesta fonção dois parametros que pode ser a tiplae dos arranjos dos conputadores "arranjo3_pc" ou
+    uma lista do com um unico item "['Comandos3/PC03']" que contenha o caminho e nome do computado a ser atualizado.
+    o segundo paremetro a ser recebido deve ser o comando que deve ser executado pelo arranjo de computadores ou pelo
+    computador individual ex: "senta", "passa" ..."""
+
+    atualizacoes = {}
+    for caminho in arranjo:
+        # Define a chave do dicionário como o caminho e o valor como o comando
+        atualizacoes[caminho] = comando
+    db.update(atualizacoes) # responsável por atualizar os dados no banco de dados Firebase
+
 # Referência para o nó do Firebase que você deseja observar
-ref = firebase.database().child(f"Comandos")  # colocar o caminho de onde vem os comandos
-
-
+ref = firebase.database().child(f"Resposta1")  # colocar o caminho de onde vem os comandos
 # Função de callback para manipular os dados quando houver uma atualização
 def on_update(event):
     try:
@@ -83,7 +131,7 @@ def on_update(event):
         caminho_atualizado = event['path']
         print(caminho_atualizado)
         print(dado_atualizado)
-        alterar_dado_novo(dado_atualizado)
+        #alterar_dado_novo(dado_atualizado)
 
     except Exception as e:
         print("Erro ao processar atualização:", e)
@@ -93,32 +141,32 @@ def on_update(event):
 ref.stream(on_update)
 
 # Função para realizar escrita no Firebase
-def escrever_dado(dado):
-    try:
-        db.child(caminho_resposta).set(dado)
-        print(f"Dado '{dado}' escrito com sucesso no nó '{caminho_resposta}'.")
-    except Exception as e:
-        print("Erro ao escrever dado no Firebase:", e)
-
-# Função para realizar leitura do Firebase
-def ler_dado(no):
-    try:
-        dado = db.child(no).get().val()
-        if dado:
-            print(f"Dado lido do nó '{no}': {dado}")
-        else:
-            print(f"Nó '{no}' não possui nenhum dado.")
-    except Exception as e:
-        print("Erro ao ler dado do Firebase:", e)
-
-
-def obter_dado():
-    global dado_global
-    return dado_global
-
-def alterar_dado_novo(valor):
-    global dado_global
-    dado_global = valor
+# def escrever_dado(dado):
+#     try:
+#         db.child(caminho_resposta).set(dado)
+#         print(f"Dado '{dado}' escrito com sucesso no nó '{caminho_resposta}'.")
+#     except Exception as e:
+#         print("Erro ao escrever dado no Firebase:", e)
+#
+# # Função para realizar leitura do Firebase
+# def ler_dado(no):
+#     try:
+#         dado = db.child(no).get().val()
+#         if dado:
+#             print(f"Dado lido do nó '{no}': {dado}")
+#         else:
+#             print(f"Nó '{no}' não possui nenhum dado.")
+#     except Exception as e:
+#         print("Erro ao ler dado do Firebase:", e)
+#
+#
+# def obter_dado():
+#     global dado_global
+#     return dado_global
+#
+# def alterar_dado_novo(valor):
+#     global dado_global
+#     dado_global = valor
 
 
 # Mantenha o programa em execução para continuar recebendo as atualizações

@@ -2,12 +2,69 @@
 import tkinter as tk
 from tkinter import scrolledtext
 
+import Firebese
+
 # Função que será chamada quando um botão for pressionado
 def button_name(text):
     print(text)
-    add_info_to_history(text, info_text_widgets[2])
-    add_info_to_history(text, info_text_widgets[1])
-    add_info_to_history(text, info_text_widgets[0])
+
+    # Divide a string em três partes com base no hífen
+    partes = text.split("-")
+
+    # Verifica se há três partes após a divisão
+    if len(partes) == 3:
+        # Atribui cada parte a uma variável
+        item1, item2, item3 = partes
+
+        # Imprime os três itens separados
+        # print("Item 1:", item1)
+        # print("Item 2:", item2)
+        # print("Item 3:", item3)
+
+        # Verifica o valor de item1 (primeira parte da string)
+        if item1 == "A":
+            if item2 == "0":
+                # Se item1 é "A" e item2 é "0", é um comando coletivo no arranjo 1
+                print("comando coletivo no arranjo 1")
+                Firebese.enviar_comando_coletivo(Firebese.arranjo1_pc, item3)
+            else:
+                # Se item1 é "A" e item2 não é "0", é um comando individual no arranjo 1
+                print("comando individual no arranjo 1")
+                item2_str = str(item2).zfill(2)
+                comando_individual = [f'Comandos1/PC{item2_str}']
+                Firebese.enviar_comando_coletivo(comando_individual, item3)
+
+        elif item1 == "B":
+            if item2 == "0":
+                # Se item1 é "B" e item2 é "0", é um comando coletivo no arranjo 2
+                print("comando coletivo no arranjo 2")
+                Firebese.enviar_comando_coletivo(Firebese.arranjo2_pc, item3)
+            else:
+                # Se item1 é "B" e item2 não é "0", é um comando individual no arranjo 2
+                print("comando individual no arranjo 2")
+                item2_str = str(item2).zfill(2)
+                comando_individual = [f'Comandos2/PC{item2_str}']
+                Firebese.enviar_comando_coletivo(comando_individual, item3)
+
+        elif item1 == "C":
+            if item2 == "0":
+                # Se item1 é "C" e item2 é "0", é um comando coletivo no arranjo 3
+                print("comando coletivo no arranjo 3")
+                Firebese.enviar_comando_coletivo(Firebese.arranjo3_pc, item3)
+            else:
+                # Se item1 é "C" e item2 não é "0", é um comando individual no arranjo 3
+                print("comando individual no arranjo 3")
+                item2_str = str(item2).zfill(2)
+                comando_individual = [f'Comandos3/PC{item2_str}']
+                Firebese.enviar_comando_coletivo(comando_individual, item3)
+
+        else:
+            # Se item1 não for "A", "B" ou "C", o arranjo de computadores não está definido
+            print("Arranjo de computadores não definido")
+    else:
+        # Se não houver três partes após a divisão, o texto de entrada não possui o formato esperado
+        print("Texto de entrada não possui o formato esperado.")
+
 
 # Função para criar um botão
 def create_button(parent, text):
@@ -50,6 +107,7 @@ janela.geometry("1920x1020")
 
 # Defina o número de colunas e linhas
 numero_colunas = 10
+
 numero_linhas = 15
 
 # Crie as áreas de informações
@@ -59,21 +117,27 @@ info_text_widgets = []
 # Letras para identificar cada arranjo
 arranjo_letters = ["A", "B", "C"]
 
+
 # Loop para criar os arranjos
 for i in range(3):
-    arranjo = tk.Frame(janela)
-    info_text_widget = create_info_area(arranjo)
-    info_text_widgets.append(info_text_widget)
+    arranjo = tk.Frame(janela)  # Cria um novo arranjo (frame)
+    info_text_widget = create_info_area(arranjo)  # Cria uma área de informações dentro do arranjo
+    info_text_widgets.append(info_text_widget)  # Adiciona a área de informações à lista
 
     # Loop para criar as colunas e botões dentro de cada arranjo
     for j in range(numero_colunas):
-        coluna = tk.Frame(arranjo)
-        for k in range(numero_linhas):
-            button_text = f"{arranjo_letters[i]}-{j}-{k}"
-            create_button(coluna, button_text)
-        coluna.pack(side="left", fill="both", expand=True)
+        if 1 <= j <= 9:
+            # Aplica a regra de mapeamento para os valores de j
+            j = (j - 1) * 3 + 1 + i
 
-    arranjo.pack(side="left", fill="both", expand=True)
+        coluna = tk.Frame(arranjo)  # Cria uma nova coluna dentro do arranjo
+        for k in range(numero_linhas):
+            button_text = f"{arranjo_letters[i]}-{j}-{k}"  # Cria o texto do botão
+            create_button(coluna, button_text)  # Cria um botão dentro da coluna
+        coluna.pack(side="left", fill="both", expand=True)  # Empacota a coluna
+
+    arranjo.pack(side="left", fill="both", expand=True)  # Empacota o arranjo
+
 
 # Exiba a janela
 
