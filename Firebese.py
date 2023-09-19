@@ -3,6 +3,7 @@ import time
 import socket
 import os
 import pyrebase
+import random
 
 config = {
   "apiKey": "AIzaSyDDzQMVxpKKqBZrDlhA9E4sInXB5toVRT8",
@@ -195,6 +196,33 @@ def atualizar_dados_globais():
 
 # Chame a função para atualizar os dados globais com os dados do Firebase
 atualizar_dados_globais()
+
+caminho = "Resposta1/PC01"
+
+
+def escrever_informacoes_aleatorias():
+
+    # Gere uma informação aleatória (por exemplo, um número aleatório)
+    informacao_aleatoria = random.randint(1, 100)
+    try:
+        # Escreva a informação aleatória no banco de dados Firebase
+        db.child(caminho).set(informacao_aleatoria)
+        print(f"Informação aleatória {informacao_aleatoria} escrita com sucesso em {caminho}")
+    except Exception as e:
+        print(f"Ocorreu um erro ao escrever a informação: {str(e)}")
+
+def loop_infinito():
+    global global_variables
+    while True:
+        print(global_variables)
+        escrever_informacoes_aleatorias()
+
+
+
+
+
+
+loop_infinito()
 
 
 # Mantenha o programa em execução para continuar recebendo as atualizações
