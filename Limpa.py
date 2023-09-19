@@ -262,22 +262,22 @@ def limpa_tarefas(x_origem, y_origem): # fecha todas as tarefas que sao feitas
     elif pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (27, 92, 155),  tolerance=19) \
             or pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (19, 64, 109),  tolerance=19) :  # testa se esta dentro da mesa
 
-        pyautogui.click(925 + x_origem, 78 + y_origem)#setinha
+        pyautogui.click(947 + x_origem, 78 + y_origem)#setinha
         time.sleep(0.3)
         pyautogui.click(925 + x_origem, 204 + y_origem)#Levantar
         time.sleep(0.2)
-        pyautogui.click(925 + x_origem, 78 + y_origem)#setinha
+        pyautogui.click(947 + x_origem, 78 + y_origem)#setinha
         time.sleep(0.2)
         pyautogui.click(925 + x_origem, 111 + y_origem)#Lobby
         if pyautogui.pixelMatchesColor((x_origem + 455), (y_origem + 417), (25, 116, 184), tolerance=19):  # aviso do sistema "tem certesa de que quer sair da mesa?"
             pyautogui.click(641 + x_origem, 278 + y_origem)  # clica no x do aviso do sistema "tem certesa de que quer sair da mesa?"
             print("aviso do sistema")
             time.sleep(0.3)
-            pyautogui.click(925 + x_origem, 78 + y_origem)  # setinha
+            pyautogui.click(947 + x_origem, 78 + y_origem)  # setinha
             time.sleep(0.3)
             pyautogui.click(925 + x_origem, 204 + y_origem)  # Levantar
             time.sleep(0.2)
-            pyautogui.click(925 + x_origem, 78 + y_origem)  # setinha
+            pyautogui.click(947 + x_origem, 78 + y_origem)  # setinha
             time.sleep(0.2)
             pyautogui.click(925 + x_origem, 111 + y_origem)  # Lobby
 
