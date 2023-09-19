@@ -1,8 +1,13 @@
 # Importe as bibliotecas necessárias
 import tkinter as tk
 from tkinter import scrolledtext
-
 import Firebese
+from Firebese import global_variables, teve_atualizacao
+
+dicionario_comandos = {0: 'Senta', 1: 'Levanta', 2: 'Passa', 3: 'Corre', 4: 'Cartas', 5: 'Genius', 6: 'Mesa',
+                       7: 'Joga', 8: 'Corre', 9: 'Loby', 10: 'Sair', 11: 'limpa', 12: 'Aposta tudo',
+                       13: 'Slote classico', 14: "Entra"}
+
 
 # Função que será chamada quando um botão for pressionado
 def button_name(text):
@@ -15,52 +20,54 @@ def button_name(text):
     if len(partes) == 3:
         # Atribui cada parte a uma variável
         item1, item2, item3 = partes
+        # Verifica se item3 é um número válido
+        if item3.isdigit():
+            item3 = int(item3)
+            # Verifique se o item3 existe no dicionário de comandos
+            if item3 in dicionario_comandos:
+                comando = dicionario_comandos[item3]
+                # Verifica o valor de item1 (primeira parte da string)
+                if item1 == "A":
+                    if item2 == "0":
+                        # Se item1 é "A" e item2 é "0", é um comando coletivo no arranjo 1
+                        print("comando coletivo no arranjo 1")
+                        Firebese.enviar_comando_coletivo(Firebese.arranjo1_pc, comando)
+                    else:
+                        # Se item1 é "A" e item2 não é "0", é um comando individual no arranjo 1
+                        print("comando individual no arranjo 1")
+                        item2_str = str(item2).zfill(2)
+                        comando_individual = [f'Comandos1/PC{item2_str}']
+                        Firebese.enviar_comando_coletivo(comando_individual, comando)
 
-        # Imprime os três itens separados
-        # print("Item 1:", item1)
-        # print("Item 2:", item2)
-        # print("Item 3:", item3)
+                elif item1 == "B":
+                    if item2 == "0":
+                        # Se item1 é "B" e item2 é "0", é um comando coletivo no arranjo 2
+                        print("comando coletivo no arranjo 2")
+                        Firebese.enviar_comando_coletivo(Firebese.arranjo2_pc, comando)
+                    else:
+                        # Se item1 é "B" e item2 não é "0", é um comando individual no arranjo 2
+                        print("comando individual no arranjo 2")
+                        item2_str = str(item2).zfill(2)
+                        comando_individual = [f'Comandos2/PC{item2_str}']
+                        Firebese.enviar_comando_coletivo(comando_individual, comando)
 
-        # Verifica o valor de item1 (primeira parte da string)
-        if item1 == "A":
-            if item2 == "0":
-                # Se item1 é "A" e item2 é "0", é um comando coletivo no arranjo 1
-                print("comando coletivo no arranjo 1")
-                Firebese.enviar_comando_coletivo(Firebese.arranjo1_pc, item3)
-            else:
-                # Se item1 é "A" e item2 não é "0", é um comando individual no arranjo 1
-                print("comando individual no arranjo 1")
-                item2_str = str(item2).zfill(2)
-                comando_individual = [f'Comandos1/PC{item2_str}']
-                Firebese.enviar_comando_coletivo(comando_individual, item3)
+                elif item1 == "C":
+                    if item2 == "0":
+                        # Se item1 é "C" e item2 é "0", é um comando coletivo no arranjo 3
+                        print("comando coletivo no arranjo 3")
+                        Firebese.enviar_comando_coletivo(Firebese.arranjo3_pc, comando)
+                    else:
+                        # Se item1 é "C" e item2 não é "0", é um comando individual no arranjo 3
+                        print("comando individual no arranjo 3")
+                        item2_str = str(item2).zfill(2)
+                        comando_individual = [f'Comandos3/PC{item2_str}']
+                        Firebese.enviar_comando_coletivo(comando_individual, comando)
 
-        elif item1 == "B":
-            if item2 == "0":
-                # Se item1 é "B" e item2 é "0", é um comando coletivo no arranjo 2
-                print("comando coletivo no arranjo 2")
-                Firebese.enviar_comando_coletivo(Firebese.arranjo2_pc, item3)
-            else:
-                # Se item1 é "B" e item2 não é "0", é um comando individual no arranjo 2
-                print("comando individual no arranjo 2")
-                item2_str = str(item2).zfill(2)
-                comando_individual = [f'Comandos2/PC{item2_str}']
-                Firebese.enviar_comando_coletivo(comando_individual, item3)
-
-        elif item1 == "C":
-            if item2 == "0":
-                # Se item1 é "C" e item2 é "0", é um comando coletivo no arranjo 3
-                print("comando coletivo no arranjo 3")
-                Firebese.enviar_comando_coletivo(Firebese.arranjo3_pc, item3)
-            else:
-                # Se item1 é "C" e item2 não é "0", é um comando individual no arranjo 3
-                print("comando individual no arranjo 3")
-                item2_str = str(item2).zfill(2)
-                comando_individual = [f'Comandos3/PC{item2_str}']
-                Firebese.enviar_comando_coletivo(comando_individual, item3)
-
+                else:
+                    # Se item1 não for "A", "B" ou "C", o arranjo de computadores não está definido
+                    print("Arranjo de computadores não definido")
         else:
-            # Se item1 não for "A", "B" ou "C", o arranjo de computadores não está definido
-            print("Arranjo de computadores não definido")
+            print("item3 não é um número válido.")
     else:
         # Se não houver três partes após a divisão, o texto de entrada não possui o formato esperado
         print("Texto de entrada não possui o formato esperado.")
@@ -69,7 +76,8 @@ def button_name(text):
 # Função para criar um botão
 def create_button(parent, text):
     # Crie um botão com o texto especificado
-    botao = tk.Button(parent, text=text)
+    custom_font = ("Helvetica", 8, "bold")  # tipo de fonte, tamnho e negrito
+    botao = tk.Button(parent, text=text, font=custom_font, width=1, height=1)
     # Associe a função button_name ao botão, passando o texto como argumento
     botao.config(command=lambda t=text: button_name(t))
     # Empacote o botão no widget pai (parent)
@@ -80,9 +88,13 @@ def create_button(parent, text):
 def create_info_area(parent):
     # Crie uma barra de rolagem vertical
     scrollbar = tk.Scrollbar(parent, orient="vertical")
+    # Crie uma fonte personalizada com o tamanho desejado
+    custom_font = ("Helvetica", 11, "bold")  # tipo de fonte, tamnho e negrito
     # Crie uma área de texto com rolagem, configurando a barra de rolagem
-    info_text = scrolledtext.ScrolledText(parent, wrap=tk.WORD, yscrollcommand=scrollbar.set)
+    info_text = scrolledtext.ScrolledText(parent, wrap=tk.WORD, yscrollcommand=scrollbar.set, font=custom_font)
     scrollbar.config(command=info_text.yview)
+    # Configure a largura máxima (por exemplo, 400 pixels)
+    info_text.config(width=65)
     # Empacote a área de texto e a barra de rolagem
     info_text.pack(side="top", fill="both", expand=True)
     scrollbar.pack(side="right", fill="y")
@@ -97,17 +109,15 @@ def add_info_to_history(info_text, text_widget):
     # Insira a nova informação no topo da área de texto
     text_widget.insert("1.0", info_text + "\n" + current_text)
 
+
 # Crie uma janela do Tkinter
 janela = tk.Tk()
 
-# Defina a posição da janela para 0x0
-janela.geometry("+0+0")
-# Defina o tamanho da janela para 1000 x 500
-janela.geometry("1920x1020")
+# Maximize a janela (Windows)
+janela.state('zoomed')
 
 # Defina o número de colunas e linhas
 numero_colunas = 10
-
 numero_linhas = 15
 
 # Crie as áreas de informações
@@ -116,7 +126,6 @@ info_text_widgets = []
 
 # Letras para identificar cada arranjo
 arranjo_letters = ["A", "B", "C"]
-
 
 # Loop para criar os arranjos
 for i in range(3):
@@ -138,13 +147,72 @@ for i in range(3):
 
     arranjo.pack(side="left", fill="both", expand=True)  # Empacota o arranjo
 
-
 # Exiba a janela
 
 # Use a função add_info_to_history para adicionar informações ao histórico de uma área de informações específica
 add_info_to_history("Informação 1 do Arranjo 1", info_text_widgets[0])
 add_info_to_history("Informação 1 do Arranjo 2", info_text_widgets[1])
 add_info_to_history("Informação 1 do Arranjo 3", info_text_widgets[2])
+
+
+# # Função para atualizar as áreas de texto com base no dicionário global
+# def update_text_widgets_inicio():
+#
+#     # if Firebese.teve_atualizacao:
+#     for i, (group, pc_data) in enumerate(global_variables.items()):
+#         # Crie uma string para exibir os valores do grupo
+#         text = f'{group}:\n'
+#         for pc, value in pc_data.items():
+#             text += f'{pc}: {value}\n'
+#
+#         # Atualize o texto na área de texto correspondente em info_text_widgets
+#         #info_text_widgets[i].delete('1.0', tk.END)  # Limpe o texto existente
+#         info_text_widgets[i].insert(tk.END, text)  # Insira o novo texto
+#         info_text_widgets[i].yview_moveto(1.0)# Role a barra de rolagem vertical para a posição "end"
+# #             Firebese.teve_atualizacao = False
+# #     # Agende a próxima chamada desta função após 5 segundos (ou ajuste o intervalo desejado)
+# #     janela.after(3000, update_text_widgets)
+# #
+# #
+# # # Agende a primeira chamada da função após 5 segundos
+# # janela.after(500, update_text_widgets)
+# update_text_widgets_inicio()
+
+
+
+# Crie um dicionário para armazenar os valores anteriores dos grupos
+valores_anteriores = {group: dict(pc_data) for group, pc_data in global_variables.items()}
+
+
+def update_text_widgets():
+    #global valores_anteriores
+
+    if Firebese.teve_atualizacao:
+        print('tem atualizações')
+        for i, (group, pc_data) in enumerate(global_variables.items()):
+
+            # Verifique se os valores atuais são diferentes dos valores anteriores
+            if pc_data != valores_anteriores[group]:
+                # Se houver diferença, crie uma string para exibir os valores do grupo
+                text = f'{group}:\n'
+                for pc, value in pc_data.items():
+                    text += f'{pc}: {value}\n'
+
+                # Atualize o texto na área de texto correspondente em info_text_widgets
+                # info_text_widgets[i].delete('1.0', tk.END)  # Limpe o texto existente
+                info_text_widgets[i].insert(tk.END, text)  # Insira o novo texto
+                info_text_widgets[i].yview_moveto(1.0)  # Role a barra de rolagem vertical para a posição "end"
+
+                # Atualize os valores anteriores para refletir os valores atuais
+                valores_anteriores[group] = dict(pc_data)
+        Firebese.teve_atualizacao = False
+
+    # Agende a próxima chamada desta função após 5 segundos (ou ajuste o intervalo desejado)
+    janela.after(3000, update_text_widgets)
+
+janela.after(500, update_text_widgets)
+
+
 
 # Inicie o loop principal da interface gráfica
 janela.mainloop()

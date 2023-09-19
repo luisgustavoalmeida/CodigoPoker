@@ -14,7 +14,18 @@ config = {
   "appId": "1:240019464920:web:a746cddaf41f43642aadad"
 }
 
-global dado_global
+# Dicionário global para armazenar as variáveis com seus respectivos valores
+global_variables = {
+    'group1': {'PC01': None, 'PC04': None, 'PC07': None, 'PC10': None, 'PC13': None, 'PC16': None, 'PC19': None, 'PC22': None, 'PC25': None},
+    'group2': {'PC02': None, 'PC05': None, 'PC08': None, 'PC11': None, 'PC14': None, 'PC17': None, 'PC20': None, 'PC23': None, 'PC26': None},
+    'group3': {'PC03': None, 'PC06': None, 'PC09': None, 'PC12': None, 'PC15': None, 'PC18': None, 'PC21': None, 'PC24': None, 'PC27': None},
+}
+orderem_chave = {
+    'group1': ['PC01', 'PC04', 'PC07', 'PC10', 'PC13', 'PC16', 'PC19', 'PC22', 'PC25'],
+    'group2': ['PC02', 'PC05', 'PC08', 'PC11', 'PC14', 'PC17', 'PC20', 'PC23', 'PC26'],
+    'group3': ['PC03', 'PC06', 'PC09', 'PC12', 'PC15', 'PC18', 'PC21', 'PC24', 'PC27'],
+}
+teve_atualizacao = False
 
 # Obter o nome do computador
 nome_computador = socket.gethostname()
@@ -66,7 +77,7 @@ db = firebase.database()
 nome_pc = str(dicionari_pc[nome_completo])
 print(nome_pc)
 
-caminho_resposta = "Resposta/" + nome_pc
+caminho_resposta = "Resposta1"
 print(caminho_resposta)
 
 
@@ -131,42 +142,59 @@ def on_update(event):
         caminho_atualizado = event['path']
         print(caminho_atualizado)
         print(dado_atualizado)
-        #alterar_dado_novo(dado_atualizado)
+        alterar_dado_global(caminho_atualizado, dado_atualizado)
 
     except Exception as e:
         print("Erro ao processar atualização:", e)
 
 # Registrar o observador usando o método "stream"
 # A função "on" irá chamar a função "on_update" sempre que ocorrer uma edição no nó referenciado
+#def liga_callback():
 ref.stream(on_update)
 
-# Função para realizar escrita no Firebase
-# def escrever_dado(dado):
-#     try:
-#         db.child(caminho_resposta).set(dado)
-#         print(f"Dado '{dado}' escrito com sucesso no nó '{caminho_resposta}'.")
-#     except Exception as e:
-#         print("Erro ao escrever dado no Firebase:", e)
-#
-# # Função para realizar leitura do Firebase
-# def ler_dado(no):
-#     try:
-#         dado = db.child(no).get().val()
-#         if dado:
-#             print(f"Dado lido do nó '{no}': {dado}")
-#         else:
-#             print(f"Nó '{no}' não possui nenhum dado.")
-#     except Exception as e:
-#         print("Erro ao ler dado do Firebase:", e)
-#
-#
-# def obter_dado():
-#     global dado_global
-#     return dado_global
-#
-# def alterar_dado_novo(valor):
-#     global dado_global
-#     dado_global = valor
+def alterar_dado_global(nome_variavel, valor):
+    global global_variables
+    global teve_atualizacao
+    grupo = None
+    nome_variavel = nome_variavel.replace('/', '')
+
+
+    # Verifique em qual grupo colocar a variável com base no nome_variavel
+    if nome_variavel in orderem_chave['group1']:
+        grupo = global_variables['group1']
+    elif nome_variavel in orderem_chave['group2']:
+        grupo = global_variables['group2']
+    elif nome_variavel in orderem_chave['group3']:
+        grupo = global_variables['group3']
+
+    if grupo is not None:
+        grupo[nome_variavel] = valor
+        teve_atualizacao = True
+        #print(global_variables)
+    else:
+        print(f"A variável '{nome_variavel}' não corresponde a nenhum grupo existente.")
+
+
+
+# Função para atualizar as informações do dicionário global com os dados do Firebase
+def atualizar_dados_globais():
+    try:
+        # Use db.child() para acessar o nó desejado no Firebase
+        dados_firebase = db.child(caminho_resposta).get()
+
+        if dados_firebase.each() is not None:
+            for dado in dados_firebase.each():
+                chave = dado.key()  # Obtém a chave (nome da variável)
+                valor = dado.val()  # Obtém o valor associado à chave
+                alterar_dado_global(chave, valor)
+
+    except Exception as e:
+        print("Erro ao buscar dados do Firebase:", e)
+
+    #print(f"Atualizado: {chave} -> {valor}")
+
+# Chame a função para atualizar os dados globais com os dados do Firebase
+atualizar_dados_globais()
 
 
 # Mantenha o programa em execução para continuar recebendo as atualizações
