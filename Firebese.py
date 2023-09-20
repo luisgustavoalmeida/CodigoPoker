@@ -3,7 +3,8 @@ import time
 import socket
 import os
 import pyrebase
-import random
+from Google import dicionari_token_credencial_n # importa o dicionario com os nomes dos computadores e o numero referete a cada um
+
 
 config = {
   "apiKey": "AIzaSyDDzQMVxpKKqBZrDlhA9E4sInXB5toVRT8",
@@ -35,38 +36,17 @@ nome_usuario = os.getlogin()
 # nome do computador e do usuario
 nome_completo = socket.gethostname() + "_" + os.getlogin()
 
-dicionari_pc = {'PC-I5-8600K_PokerIP':  'PC01',
-                'PC-I5-8600K_lgagu':    'PC02',
-                'PC-I5-8600K_Poker':    'PC03',
 
-                'PC-I5-9400A_PokerIP':  'PC04',
-                'PC-I5-9400A_lgagu':    'PC05',
-                'PC-I5-9400A_Poker':    'PC06',
+# Criar um novo dicionário com os valores formatados
+dicionari_pc = {}
+# formata um novo dicionario para ter o nome do computador usuario e o numero referente
+for chave, (_, _, valor) in dicionari_token_credencial_n.items():
+    # Formate o valor para ter dois dígitos
+    valor_formatado = f"{valor:02d}"
+    dicionari_pc[chave] = valor_formatado
 
-                'PC-I5-9400B_PokerIP':  'PC07',
-                'PC-I5-9400B_lgagu':    'PC08',
-                'PC-I5-9400B_Poker':    'PC09',
-
-                'PC-I5-9400C_PokerIP':  'PC10',
-                'PC-I5-9400C_lgagu':    'PC11',
-                'PC-I5-9400C_Poker':    'PC12',
-
-                'PC-R5-7600A_PokerIP':  'PC13',
-                'PC-R5-7600A_lgagu':    'PC14',
-                'PC-R5-7600A_Poker':    'PC15',
-
-                'PC-I7-11850H_PokerIP': 'PC16',
-                'PC-I7-11850H_lgagu':   'PC17',
-                'PC-I7-11850H_Poker':   'PC18',
-
-                'PC-i3-8145U_PokerIP':  'PC19',
-
-                'PC-I7-9700KF_PokerIP': 'PC20',
-                'PC-I7-9700KF_lgagu':   'PC21',
-                'PC-I7-9700KF_Poker':   'PC22',
-
-                'Thiago-PC_Thiago': 'PC23'
-                }
+# Agora dicionari_pc contém as chaves originais e os valores formatados
+print(dicionari_pc)
 
 
 # Inicializa o Firebase
@@ -197,32 +177,27 @@ def atualizar_dados_globais():
 # Chame a função para atualizar os dados globais com os dados do Firebase
 atualizar_dados_globais()
 
-caminho = "Resposta1/PC01"
+# caminho = "Resposta1/PC01"
+#
+# def escrever_informacoes_aleatorias():
+#
+#     # Gere uma informação aleatória (por exemplo, um número aleatório)
+#     informacao_aleatoria = random.randint(1, 100)
+#     try:
+#         # Escreva a informação aleatória no banco de dados Firebase
+#         db.child(caminho).set(informacao_aleatoria)
+#         print(f"Informação aleatória {informacao_aleatoria} escrita com sucesso em {caminho}")
+#     except Exception as e:
+#         print(f"Ocorreu um erro ao escrever a informação: {str(e)}")
+
+# def loop_infinito():
+#     global global_variables
+#     while True:
+#         print(global_variables)
+#         escrever_informacoes_aleatorias()
 
 
-def escrever_informacoes_aleatorias():
-
-    # Gere uma informação aleatória (por exemplo, um número aleatório)
-    informacao_aleatoria = random.randint(1, 100)
-    try:
-        # Escreva a informação aleatória no banco de dados Firebase
-        db.child(caminho).set(informacao_aleatoria)
-        print(f"Informação aleatória {informacao_aleatoria} escrita com sucesso em {caminho}")
-    except Exception as e:
-        print(f"Ocorreu um erro ao escrever a informação: {str(e)}")
-
-def loop_infinito():
-    global global_variables
-    while True:
-        print(global_variables)
-        escrever_informacoes_aleatorias()
-
-
-
-
-
-
-loop_infinito()
+#loop_infinito()
 
 
 # Mantenha o programa em execução para continuar recebendo as atualizações
