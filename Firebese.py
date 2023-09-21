@@ -3,8 +3,9 @@ import time
 import socket
 import os
 import pyrebase
-from Google import dicionari_token_credencial_n # importa o dicionario com os nomes dos computadores e o numero referete a cada um
-
+import re
+# importa o dicionário com os nomes dos computadores e o námero referete a cada um
+from Google import dicionari_token_credencial_n
 
 config = {
   "apiKey": "AIzaSyDDzQMVxpKKqBZrDlhA9E4sInXB5toVRT8",
@@ -29,25 +30,66 @@ orderem_chave = {
 }
 teve_atualizacao = False
 
-# Obter o nome do computador
+def cria_caminho_resposta_fb():
+    """Função destinada a manipular o dicionário com os nomes dos computadores
+    e criar um caminho para apontar na função callback """
+
+    # Obtenha o nome completo do computador e do usuário
+    nome_completo = socket.gethostname() + "_" + os.getlogin()
+
+    # Crie um dicionário com os valores formatados
+    dicionari_pc = {}
+    for chave, (_, _, valor) in dicionari_token_credencial_n.items():
+        # Formate o valor para ter dois dígitos e adicione "PC" antes
+        valor_formatado = f"PC{valor:02d}"
+        dicionari_pc[chave] = valor_formatado
+
+    # Verifique se o nome completo existe no dicionário
+    if nome_completo in dicionari_pc:
+        conteudo = dicionari_pc[nome_completo]
+        print(f"Conteúdo para {nome_completo}: {conteudo}")
+
+        # Verifique em qual grupo o conteúdo está
+        for grupo, membros in global_variables.items():
+            if conteudo in membros:
+                # Use uma expressão regular para extrair o número após 'group'
+                numero_grupo = re.search(r'group(\d+)', grupo).group(1)
+                # Use re.sub para substituir "group" por "Comandos"
+                grupo_modificado = re.sub(r'group', r'Comandos', grupo)
+                print(f"{conteudo} está no grupo {grupo_modificado} ({numero_grupo})")
+                caminho_resposta = f'{grupo_modificado}/{conteudo}'
+                print(caminho_resposta)
+                return caminho_resposta
+        else:
+            print(f"{conteudo} não está em nenhum dos grupos")
+    else:
+        print(f"{nome_completo} não encontrado no dicionário")
+
+#  lista com os computadores que vao dar comando nos escravos, colocar nesta lista para funcionar como metre
+lista_PC_meste = ('PC-I7-9700KF', 'PC-i3-8145U')
+
 nome_computador = socket.gethostname()
-# Obter o nome de usuário
-nome_usuario = os.getlogin()
-# nome do computador e do usuario
-nome_completo = socket.gethostname() + "_" + os.getlogin()
+
+if nome_computador in lista_PC_meste:
+    print(f"O nome do computador ({nome_computador}) está na lista de PCs mestres.")
+    caminho_resposta = f"Resposta1"
+else:
+    print(f"O nome do computador ({nome_computador}) não está na lista de PCs mestres.")
+    caminho_resposta = cria_caminho_resposta_fb()
 
 
-# Criar um novo dicionário com os valores formatados
-dicionari_pc = {}
-# formata um novo dicionario para ter o nome do computador usuario e o numero referente
-for chave, (_, _, valor) in dicionari_token_credencial_n.items():
-    # Formate o valor para ter dois dígitos
-    valor_formatado = f"{valor:02d}"
-    dicionari_pc[chave] = valor_formatado
+# Define listas de arranjos de computadores cada arranjo será uma mesa diferente
+arranjo1_pc = ('Comandos1/PC01', 'Comandos1/PC04', 'Comandos1/PC07',
+               'Comandos1/PC10', 'Comandos1/PC13', 'Comandos1/PC16',
+               'Comandos1/PC19', 'Comandos1/PC22', 'Comandos1/PC25')
 
-# Agora dicionari_pc contém as chaves originais e os valores formatados
-print(dicionari_pc)
+arranjo2_pc = ('Comandos2/PC02', 'Comandos2/PC05', 'Comandos2/PC08',
+               'Comandos2/PC11', 'Comandos2/PC14', 'Comandos2/PC17',
+               'Comandos2/PC20', 'Comandos2/PC23', 'Comandos2/PC26')
 
+arranjo3_pc = ('Comandos3/PC03', 'Comandos3/PC06', 'Comandos3/PC09',
+               'Comandos3/PC12', 'Comandos3/PC15', 'Comandos3/PC18',
+               'Comandos3/PC21', 'Comandos3/PC24', 'Comandos3/PC27')
 
 # Inicializa o Firebase
 firebase = pyrebase.initialize_app(config)
@@ -55,54 +97,11 @@ firebase = pyrebase.initialize_app(config)
 # Obtém uma referência para o banco de dados
 db = firebase.database()
 
-nome_pc = str(dicionari_pc[nome_completo])
-print(nome_pc)
-
-caminho_resposta = "Resposta1"
-print(caminho_resposta)
-
-
-
-# Define listas de arranjos de computadores
-arranjo1_pc = ('Comandos1/PC01',
-               'Comandos1/PC04',
-               'Comandos1/PC07',
-               'Comandos1/PC10',
-               'Comandos1/PC13',
-               'Comandos1/PC16',
-               'Comandos1/PC19',
-               'Comandos1/PC22',
-               'Comandos1/PC25'
-               )
-
-arranjo2_pc = ('Comandos2/PC02',
-               'Comandos2/PC05',
-               'Comandos2/PC08',
-               'Comandos2/PC11',
-               'Comandos2/PC14',
-               'Comandos2/PC17',
-               'Comandos2/PC20',
-               'Comandos2/PC23',
-               'Comandos2/PC26'
-               )
-
-arranjo3_pc = ('Comandos3/PC03',
-               'Comandos3/PC06',
-               'Comandos3/PC09',
-               'Comandos3/PC12',
-               'Comandos3/PC15',
-               'Comandos3/PC18',
-               'Comandos3/PC21',
-               'Comandos3/PC24',
-               'Comandos3/PC27'
-               )
-
-
 def enviar_comando_coletivo(arranjo, comando):
 
     """Envie nesta fonção dois parametros que pode ser a tiplae dos arranjos dos conputadores "arranjo3_pc" ou
-    uma lista do com um unico item "['Comandos3/PC03']" que contenha o caminho e nome do computado a ser atualizado.
-    o segundo paremetro a ser recebido deve ser o comando que deve ser executado pelo arranjo de computadores ou pelo
+    uma lista do com um unico itêm "['Comandos3/PC03']" que contenha o caminho e nome do computado a ser atualizado.
+    O segundo paremetro a ser recebido deve ser o comando que deve ser executado pelo arranjo de computadores ou pelo
     computador individual ex: "senta", "passa" ..."""
 
     atualizacoes = {}
@@ -112,7 +111,7 @@ def enviar_comando_coletivo(arranjo, comando):
     db.update(atualizacoes) # responsável por atualizar os dados no banco de dados Firebase
 
 # Referência para o nó do Firebase que você deseja observar
-ref = firebase.database().child(f"Resposta1")  # colocar o caminho de onde vem os comandos
+ref = firebase.database().child(caminho_resposta)  # colocar o caminho de onde vem os comandos
 # Função de callback para manipular os dados quando houver uma atualização
 def on_update(event):
     try:
@@ -130,7 +129,6 @@ def on_update(event):
 
 # Registrar o observador usando o método "stream"
 # A função "on" irá chamar a função "on_update" sempre que ocorrer uma edição no nó referenciado
-#def liga_callback():
 ref.stream(on_update)
 
 def alterar_dado_global(nome_variavel, valor):
@@ -155,8 +153,6 @@ def alterar_dado_global(nome_variavel, valor):
     else:
         print(f"A variável '{nome_variavel}' não corresponde a nenhum grupo existente.")
 
-
-
 # Função para atualizar as informações do dicionário global com os dados do Firebase
 def atualizar_dados_globais():
     try:
@@ -172,7 +168,7 @@ def atualizar_dados_globais():
     except Exception as e:
         print("Erro ao buscar dados do Firebase:", e)
 
-    #print(f"Atualizado: {chave} -> {valor}")
+    # print(f"Atualizado: {chave} -> {valor}")
 
 # Chame a função para atualizar os dados globais com os dados do Firebase
 atualizar_dados_globais()

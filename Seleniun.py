@@ -190,7 +190,9 @@ def fazer_login(id, senha, url, navegador):
                                                  'Sua conta foi desativada',
                                                  'Sua conta foi suspensa',
                                                  'Suspendemos a tua conta',
-                                                 'Desabilitamos sua conta']
+                                                 'Desabilitamos sua conta',
+                                                 'você apresentou um recurso',
+                                                 'Confirme seu número de celular']
 
                             for item in lista_face_caidas:
                                 # percorre os textos que tem quando tem conta caida para o face
@@ -452,7 +454,10 @@ def busca_link(navegador):
                 # Obtenha a data e hora atual
                 data_hora_atual = str(datetime.datetime.now())
                 print('escreve a data da atialização: ', data_hora_atual)
-                Google.escrever_celula(data_hora_atual, 'Dados', 'F2')
+                if (nome_usuario == "PokerIP") and (nome_computador == "PC-I5-8600K"):
+                    Google.escrever_celula(data_hora_atual, 'Dados', 'F2')
+                elif (nome_usuario == "lgagu") and (nome_computador == "PC-I7-9700KF"):
+                    Google.escrever_celula(data_hora_atual, 'Dados', 'F3')
                 time.sleep(5)
                 return
             else:
