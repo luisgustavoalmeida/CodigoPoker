@@ -81,9 +81,9 @@ dicionari_token_credencial_n = {'PC-I5-8600K_PokerIP':  ("token1.json", "credent
                                 'PC-I7-9700KF_lgagu':   ("token23.json", "credentials5.json", 23),
                                 'PC-I7-9700KF_Poker':   ("token24.json", "credentials5.json", 24),
 
-                                'PC-I5-13400C_PokerIP': ("token25.json", "credentials3.json", 25),
-                                'PC-I5-13400C_lgagu':   ("token26.json", "credentials3.json", 26),
-                                'PC-I5-13400C_Poker':   ("token27.json", "credentials3.json", 27),
+                                'PC-I5-13400D_PokerIP': ("token25.json", "credentials3.json", 25),
+                                'PC-I5-13400D_lgagu':   ("token26.json", "credentials3.json", 26),
+                                'PC-I5-13400D_Poker':   ("token27.json", "credentials3.json", 27),
 
                                 'PC-i3-8145U_PokerIP':  ("token28.json", "credentials5.json", 28),
 
@@ -101,7 +101,7 @@ dicionari_PC_IP = {'PC-I5-8600K': "IP!F3",
                    'PC-I5-13400A': "IP!F18",
                    'PC-I5-13400B': "IP!F21",
                    'PC-I7-9700KF': "IP!F24",
-                   'PC-I5-13400C': "IP!F27",
+                   'PC-I5-13400D': "IP!F27",
                    'PC-i3-8145U': "IP!F30",
                    'PC-I7-11850H': "IP!F33"}
 
