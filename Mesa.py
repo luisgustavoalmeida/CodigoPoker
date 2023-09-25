@@ -615,30 +615,28 @@ def joga_uma_vez(x_origem, y_origem):
 
 
 def dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, valor_fichas, time_rodou, roleta):
-    if dia_da_semana == 6 or dia_da_semana == 5:  # testa se é sabado ou domingo
-        if pyautogui.pixelMatchesColor((x_origem + 750), (y_origem + 38), (245, 218, 96), tolerance=10) \
-                or pyautogui.pixelMatchesColor((x_origem + 802), (y_origem + 38), (245, 218, 96), tolerance=10) \
-                or (100000 < valor_fichas < 400000):
-            print('conta para jogar mesa')
-            if roleta == 'roleta_2':
-                for i in range(20):
-                    time_sair = time.perf_counter()
-                    tempo_total = time_sair - time_rodou
-                    print('tempo que ja clicou no rodou', tempo_total)
-                    if tempo_total > 18:
-                        print('ja pode sair do r2')
-                        break
-                    time.sleep(1)
-                    pyautogui.doubleClick(x_origem + 683, y_origem + 14)  # clica no icone roleta, ja roda sozinho
+    #if dia_da_semana == 6 or dia_da_semana == 5:  # testa se é sabado ou domingo
+        #if pyautogui.pixelMatchesColor((x_origem + 750), (y_origem + 38), (245, 218, 96), tolerance=10) or pyautogui.pixelMatchesColor((x_origem + 802), (y_origem + 38), (245, 218, 96), tolerance=10) or (100000 < valor_fichas < 400000):
+    print('conta para jogar mesa')
+    if roleta == 'roleta_2':
+        for i in range(20):
+            time_sair = time.perf_counter()
+            tempo_total = time_sair - time_rodou
+            print('tempo que ja clicou no rodou', tempo_total)
+            if tempo_total > 18:
+                print('ja pode sair do r2')
+                break
+            time.sleep(1)
+            pyautogui.doubleClick(x_origem + 683, y_origem + 14)  # clica no icone roleta, ja roda sozinho
 
-            Limpa.limpa_total(x_origem, y_origem)
+    Limpa.limpa_total(x_origem, y_origem)
 
-            print('conta nao esta upada abre os iniciantes')
+    print('conta nao esta upada abre os iniciantes')
 
-            joga_uma_vez(x_origem, y_origem)
-            time.sleep(2)
-            Limpa.iniciantes(x_origem, y_origem)
-            Limpa.limpa_total(x_origem, y_origem)
+    joga_uma_vez(x_origem, y_origem)
+    time.sleep(2)
+    Limpa.iniciantes(x_origem, y_origem)
+    Limpa.limpa_total(x_origem, y_origem)
     return
 
 
