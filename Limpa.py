@@ -394,6 +394,11 @@ def limpa_promocao(x_origem, y_origem):
         pyautogui.click(882 + x_origem, 171 + y_origem)
         print("limpa Roleta1")
 
+    # Roleta depois da roleta e Mega giro
+    if pyautogui.pixelMatchesColor((x_origem + 472), (y_origem + 120), (218, 106, 4), tolerance=20):
+        pyautogui.click(884 + x_origem, 136 + y_origem)
+        print("Roleta depois da roleta e Mega giro")
+
     # Laranja
     if ((pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 165), (224, 9, 5), tolerance=20)) or
             (pyautogui.pixelMatchesColor((x_origem + 240), (y_origem + 167), (228, 22, 5), tolerance=20))):
