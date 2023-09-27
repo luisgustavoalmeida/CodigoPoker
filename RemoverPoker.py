@@ -266,10 +266,10 @@ while True:
                             print('ja pode sair do r2')
                             break
                         time.sleep(0.3)
-                        # pyautogui.doubleClick(x_origem + 683, y_origem + 14)  # clica no icone roleta, ja roda sozinho
-                    # Mesa.dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, valor_fichas, time_rodou, roleta)
+                        #pyautogui.doubleClick(x_origem + 683, y_origem + 14)  # clica no icone roleta, ja roda sozinho
+                    Mesa.dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, valor_fichas, time_rodou, roleta)
 
-                # valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
+                #valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
                 roda = False
                 break
 
