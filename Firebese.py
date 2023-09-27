@@ -5,7 +5,7 @@ import os
 import pyrebase
 import re
 # importa o dicionário com os nomes dos computadores e o námero referete a cada um
-from Google import dicionari_token_credencial_n
+from Parâmetros import dicionari_token_credencial_n
 
 config = {
   "apiKey": "AIzaSyDDzQMVxpKKqBZrDlhA9E4sInXB5toVRT8",
