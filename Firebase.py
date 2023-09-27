@@ -31,6 +31,7 @@ orderem_chave = {
 teve_atualizacao = False
 comando_escravo = None
 
+
 def cria_caminho_resposta_fb():
     """Função destinada a manipular o dicionário com os nomes dos computadores
     e criar um caminho para apontar na função callback """
@@ -141,7 +142,7 @@ def alterar_dado_global(nome_variavel, valor):
 
     print('nome_variavel:', nome_variavel)
 
-    if nome_variavel == None:
+    if "PC" in nome_variavel:
         # Verifique em qual grupo colocar a variável com base no nome_variavel
         if nome_variavel in orderem_chave['group1']:
             grupo = global_variables['group1']
@@ -158,8 +159,10 @@ def alterar_dado_global(nome_variavel, valor):
             print(f"A variável '{nome_variavel}' não corresponde a nenhum grupo existente.")
     else:
         print("é um comando para uma escravo")
+
         comando_escravo = valor
-        print("comando: ", valor)
+
+        print("comando: ", comando_escravo)
 
 # Função para atualizar as informações do dicionário global com os dados do Firebase
 def atualizar_dados_globais():

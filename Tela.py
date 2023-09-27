@@ -1,8 +1,8 @@
 # Importe as bibliotecas necessárias
 import tkinter as tk
 from tkinter import scrolledtext
-import Firebese
-from Firebese import global_variables, teve_atualizacao
+import Firebase
+from Firebase import global_variables, teve_atualizacao
 
 dicionario_comandos = {0: 'Senta', 1: 'Levanta', 2: 'Passa', 3: 'Corre', 4: 'Cartas', 5: 'Genius', 6: 'Mesa',
                        7: 'Joga', 8: 'Corre', 9: 'Loby', 10: 'Sair', 11: 'limpa', 12: 'Aposta tudo',
@@ -31,37 +31,37 @@ def button_name(text):
                     if item2 == "0":
                         # Se item1 é "A" e item2 é "0", é um comando coletivo no arranjo 1
                         print("comando coletivo no arranjo 1")
-                        Firebese.enviar_comando_coletivo(Firebese.arranjo1_pc, comando)
+                        Firebase.enviar_comando_coletivo(Firebase.arranjo1_pc, comando)
                     else:
                         # Se item1 é "A" e item2 não é "0", é um comando individual no arranjo 1
                         print("comando individual no arranjo 1")
                         item2_str = str(item2).zfill(2)
                         comando_individual = [f'Comandos1/PC{item2_str}']
-                        Firebese.enviar_comando_coletivo(comando_individual, comando)
+                        Firebase.enviar_comando_coletivo(comando_individual, comando)
 
                 elif item1 == "B":
                     if item2 == "0":
                         # Se item1 é "B" e item2 é "0", é um comando coletivo no arranjo 2
                         print("comando coletivo no arranjo 2")
-                        Firebese.enviar_comando_coletivo(Firebese.arranjo2_pc, comando)
+                        Firebase.enviar_comando_coletivo(Firebase.arranjo2_pc, comando)
                     else:
                         # Se item1 é "B" e item2 não é "0", é um comando individual no arranjo 2
                         print("comando individual no arranjo 2")
                         item2_str = str(item2).zfill(2)
                         comando_individual = [f'Comandos2/PC{item2_str}']
-                        Firebese.enviar_comando_coletivo(comando_individual, comando)
+                        Firebase.enviar_comando_coletivo(comando_individual, comando)
 
                 elif item1 == "C":
                     if item2 == "0":
                         # Se item1 é "C" e item2 é "0", é um comando coletivo no arranjo 3
                         print("comando coletivo no arranjo 3")
-                        Firebese.enviar_comando_coletivo(Firebese.arranjo3_pc, comando)
+                        Firebase.enviar_comando_coletivo(Firebase.arranjo3_pc, comando)
                     else:
                         # Se item1 é "C" e item2 não é "0", é um comando individual no arranjo 3
                         print("comando individual no arranjo 3")
                         item2_str = str(item2).zfill(2)
                         comando_individual = [f'Comandos3/PC{item2_str}']
-                        Firebese.enviar_comando_coletivo(comando_individual, comando)
+                        Firebase.enviar_comando_coletivo(comando_individual, comando)
 
                 else:
                     # Se item1 não for "A", "B" ou "C", o arranjo de computadores não está definido
@@ -158,7 +158,7 @@ add_info_to_history("Informação 1 do Arranjo 3", info_text_widgets[2])
 # # Função para atualizar as áreas de texto com base no dicionário global
 # def update_text_widgets_inicio():
 #
-#     # if Firebese.teve_atualizacao:
+#     # if Firebase.teve_atualizacao:
 #     for i, (group, pc_data) in enumerate(global_variables.items()):
 #         # Crie uma string para exibir os valores do grupo
 #         text = f'{group}:\n'
@@ -169,7 +169,7 @@ add_info_to_history("Informação 1 do Arranjo 3", info_text_widgets[2])
 #         #info_text_widgets[i].delete('1.0', tk.END)  # Limpe o texto existente
 #         info_text_widgets[i].insert(tk.END, text)  # Insira o novo texto
 #         info_text_widgets[i].yview_moveto(1.0)# Role a barra de rolagem vertical para a posição "end"
-# #             Firebese.teve_atualizacao = False
+# #             Firebase.teve_atualizacao = False
 # #     # Agende a próxima chamada desta função após 5 segundos (ou ajuste o intervalo desejado)
 # #     janela.after(3000, update_text_widgets)
 # #
@@ -187,7 +187,7 @@ valores_anteriores = {group: dict(pc_data) for group, pc_data in global_variable
 def update_text_widgets():
     #global valores_anteriores
 
-    if Firebese.teve_atualizacao:
+    if Firebase.teve_atualizacao:
         print('tem atualizações')
         for i, (group, pc_data) in enumerate(global_variables.items()):
 
@@ -205,7 +205,7 @@ def update_text_widgets():
 
                 # Atualize os valores anteriores para refletir os valores atuais
                 valores_anteriores[group] = dict(pc_data)
-        Firebese.teve_atualizacao = False
+        Firebase.teve_atualizacao = False
 
     # Agende a próxima chamada desta função após 5 segundos (ou ajuste o intervalo desejado)
     janela.after(3000, update_text_widgets)
