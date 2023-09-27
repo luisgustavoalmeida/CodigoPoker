@@ -29,6 +29,7 @@ orderem_chave = {
     'group3': ['PC03', 'PC06', 'PC09', 'PC12', 'PC15', 'PC18', 'PC21', 'PC24', 'PC27'],
 }
 teve_atualizacao = False
+comando_escravo = None
 
 def cria_caminho_resposta_fb():
     """Função destinada a manipular o dicionário com os nomes dos computadores
@@ -66,7 +67,7 @@ def cria_caminho_resposta_fb():
         print(f"{nome_completo} não encontrado no dicionário")
 
 #  lista com os computadores que vao dar comando nos escravos, colocar nesta lista para funcionar como metre
-lista_PC_meste = ('PC-I7-9700KF', 'PC-i3-8145U')
+lista_PC_meste = ('xPC-I7-9700KF','PC-i3-8145U','Thiago-PC')
 
 nome_computador = socket.gethostname()
 
@@ -134,24 +135,31 @@ ref.stream(on_update)
 def alterar_dado_global(nome_variavel, valor):
     global global_variables
     global teve_atualizacao
+    global comando_escravo
     grupo = None
     nome_variavel = nome_variavel.replace('/', '')
 
+    print('nome_variavel:', nome_variavel)
 
-    # Verifique em qual grupo colocar a variável com base no nome_variavel
-    if nome_variavel in orderem_chave['group1']:
-        grupo = global_variables['group1']
-    elif nome_variavel in orderem_chave['group2']:
-        grupo = global_variables['group2']
-    elif nome_variavel in orderem_chave['group3']:
-        grupo = global_variables['group3']
+    if nome_variavel == None:
+        # Verifique em qual grupo colocar a variável com base no nome_variavel
+        if nome_variavel in orderem_chave['group1']:
+            grupo = global_variables['group1']
+        elif nome_variavel in orderem_chave['group2']:
+            grupo = global_variables['group2']
+        elif nome_variavel in orderem_chave['group3']:
+            grupo = global_variables['group3']
 
-    if grupo is not None:
-        grupo[nome_variavel] = valor
-        teve_atualizacao = True
-        #print(global_variables)
+        if grupo is not None:
+            grupo[nome_variavel] = valor
+            teve_atualizacao = True
+            #print(global_variables)
+        else:
+            print(f"A variável '{nome_variavel}' não corresponde a nenhum grupo existente.")
     else:
-        print(f"A variável '{nome_variavel}' não corresponde a nenhum grupo existente.")
+        print("é um comando para uma escravo")
+        comando_escravo = valor
+        print("comando: ", valor)
 
 # Função para atualizar as informações do dicionário global com os dados do Firebase
 def atualizar_dados_globais():
