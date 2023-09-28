@@ -168,7 +168,7 @@ def fazer_login(id, senha, url, navegador):
                     url_atual = pega_url(navegador, url)
                     #  print(url_atual)
                     if "/login/" not in url_atual:
-                        if "/pokerbrasil?" in url_atual:
+                        if ("/pokerbrasil?" in url_atual) or ("/rallyacespoker" in url_atual):
                             # https://apps.facebook.com/pokerbrasil?vtype&amfmethod=appLinkFanPageAward&SignedParams=JrLALkSch1wuQxrULK6SWLAcpjTOb9Pmi5QvavvikU0.eyJhY3QiOiJmcCIsImZwX2FpZCI6IjU5ODUifQ&fbclid=IwAR252AFFL560939epg6Ki4tzNtLvgQJiZISVIZXFPjjBpBp5TNLBNX6TFXk
                             print("A conta está certa.")
                             entrou = True
