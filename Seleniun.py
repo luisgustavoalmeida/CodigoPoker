@@ -128,13 +128,13 @@ def pega_url(navegador, url):
 
 def teste_logado(id, senha, url, navegador):
     url_atual = pega_url(navegador, url)
-    if "/pokerbrasil?" in url_atual: # se nao esta logado
+    if ("/pokerbrasil?" in url_atual) or ("/rallyacespoker" in url_atual):
         # print("teste_logado ok")
         entrou = True
         status = 'Carregada'
         return entrou, status
 
-    elif "/pokerbrasil?" not in url_atual:  # se nao esta logado
+    elif ("/pokerbrasil?" not in url_atual) or ("/rallyacespoker" in url_atual):  # se nao esta logado
         print("teste_logado deslogado")
         IP.tem_internet()
         entrou, status = fazer_login(id, senha, url, navegador)
