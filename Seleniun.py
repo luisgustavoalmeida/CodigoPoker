@@ -177,34 +177,58 @@ def fazer_login(id, senha, url, navegador):
 
                         elif "/checkpoint/" in url_atual:
                             # https://www.facebook.com/checkpoint/1501092823525282/?next=https%3A%2F%2Fwww.facebook.com%2F%3Fsk%3Dwelcome
-                            entrou = False
-                            status = "Anomalia Fecebook"
-                            print("A conta está suspensa.")
-                            time.sleep(6)
-                            lista_face_caidas = ['você recorreu da decisão',
-                                                 'confirmar que é você',
-                                                 'confirmar que és tu',
-                                                 'Insira o número de celular',
-                                                 'Insere o número de telemóvel',
-                                                 'Carregue uma foto sua',
-                                                 'Sua conta foi desativada',
-                                                 'Sua conta foi suspensa',
-                                                 'Suspendemos a tua conta',
-                                                 'Desabilitamos sua conta',
-                                                 'você apresentou um recurso',
-                                                 'Confirme seu número de celular']
 
-                            for item in lista_face_caidas:
-                                # percorre os textos que tem quando tem conta caida para o face
-                                try:
-                                    elemento = navegador.find_element(By.XPATH, f"//span[contains(text(), '{item}')]")
-                                    print(item)
-                                    status = item
-                                    return entrou, status
-                                except NoSuchElementException:
-                                    continue
-                            # se nao for algum item da lista retorna uma mensagem generica
-                            return entrou, status
+                            elementos_para_clicar = ["Começar", "Avançar", "Avançar", "Avançar", "Voltar para o Facebook"]
+                            elemento = False
+                            for i in range(2):
+                                for elemento in elementos_para_clicar:
+                                    elemento_seletor = f'div[aria-label="{elemento}"]'
+                                    print("procura: ", elemento)
+                                    try:
+                                        elemento_clicavel = WebDriverWait(navegador, 3).until(
+                                            EC.element_to_be_clickable((By.CSS_SELECTOR, elemento_seletor)))
+                                        elemento_clicavel.click()
+                                        print("Clicou em: ", elemento)
+                                        time.sleep(5)
+                                        elemento = True
+                                    except Exception as e:  # Corrigido o erro aqui, "as e" ao invés de "e Exception:"
+                                        print("Elememto para clicar não encontrado: ", elemento)
+                                        print(e)
+                                        continue
+                            if elemento:
+                                time.sleep(3)
+                                navegador.get(url)
+                                time.sleep(5)
+
+                            else:
+                                entrou = False
+                                status = "Anomalia Fecebook"
+                                print("A conta está suspensa.")
+                                time.sleep(6)
+                                lista_face_caidas = ['você recorreu da decisão',
+                                                     'confirmar que é você',
+                                                     'confirmar que és tu',
+                                                     'Insira o número de celular',
+                                                     'Insere o número de telemóvel',
+                                                     'Carregue uma foto sua',
+                                                     'Sua conta foi desativada',
+                                                     'Sua conta foi suspensa',
+                                                     'Suspendemos a tua conta',
+                                                     'Desabilitamos sua conta',
+                                                     'você apresentou um recurso',
+                                                     'Confirme seu número de celular']
+
+                                for item in lista_face_caidas:
+                                    # percorre os textos que tem quando tem conta caida para o face
+                                    try:
+                                        elemento = navegador.find_element(By.XPATH, f"//span[contains(text(), '{item}')]")
+                                        print(item)
+                                        status = item
+                                        return entrou, status
+                                    except NoSuchElementException:
+                                        continue
+                                # se nao for algum item da lista retorna uma mensagem generica
+                                return entrou, status
 
                         elif "/user_cookie_choice/" in url_atual:
                             # https://www.facebook.com/privacy/consent/user_cookie_choice/?source=pft_user_cookie_choice
