@@ -368,8 +368,8 @@ def busca_link(navegador):
     print('busca_link')
 
     if (nome_usuario == "PokerIP") and (nome_computador == "PC-I5-8600K"):
-        id = "stefaniaalmeida.jf"
-        senha = "$TE20091991te"
+        id = "carolina.fedoci"
+        senha = "Lg1405lG"
 
     elif (nome_usuario == "lgagu") and (nome_computador == "PC-I7-9700KF"):
         id = "Luis.gustavo.almeida88"
