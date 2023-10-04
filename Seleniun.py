@@ -179,7 +179,7 @@ def fazer_login(id, senha, url, navegador):
                             # https://www.facebook.com/checkpoint/1501092823525282/?next=https%3A%2F%2Fwww.facebook.com%2F%3Fsk%3Dwelcome
 
                             elementos_para_clicar = ["Começar", "Avançar", "Avançar", "Avançar", "Voltar para o Facebook"]
-                            elemento = False
+                            encontrou = False
                             for i in range(2):
                                 for elemento in elementos_para_clicar:
                                     elemento_seletor = f'div[aria-label="{elemento}"]'
@@ -190,12 +190,12 @@ def fazer_login(id, senha, url, navegador):
                                         elemento_clicavel.click()
                                         print("Clicou em: ", elemento)
                                         time.sleep(5)
-                                        elemento = True
+                                        encontrou = True
                                     except Exception as e:  # Corrigido o erro aqui, "as e" ao invés de "e Exception:"
                                         print("Elememto para clicar não encontrado: ", elemento)
                                         print(e)
                                         continue
-                            if elemento:
+                            if encontrou:
                                 time.sleep(3)
                                 navegador.get(url)
                                 time.sleep(5)
