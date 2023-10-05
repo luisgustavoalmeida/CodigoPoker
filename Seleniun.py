@@ -194,7 +194,8 @@ def fazer_login(id, senha, url, navegador):
                                                  'Suspendemos a tua conta',
                                                  'Desabilitamos sua conta',
                                                  'você apresentou um recurso',
-                                                 'Confirme seu número de celular']
+                                                 'Confirme seu número de celular',
+                                                 'precisamos confirmar que esta conta pertence a você']
 
                             for item in lista_face_caidas:
                                 # percorre os textos que tem quando tem conta caida para o face
