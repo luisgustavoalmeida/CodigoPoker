@@ -28,6 +28,12 @@ def cofre_abrir(x_origem, y_origem):
                 cofre_fechado = False
                 return True
 
+            if pyautogui.pixelMatchesColor((x_origem + 286), (y_origem + 186), (255, 248, 246), tolerance=5):  # testa se tem que criar o cofre
+                print('Cofre ainda naofoicriado')
+                cofre_criar(x_origem, y_origem)
+
+
+
 def cofre_depositar(x_origem, y_origem):
     if cofre_abrir(x_origem, y_origem):
         pyautogui.doubleClick(x_origem + 330, y_origem + 140)  # clica para abrir a tela de depositar
@@ -74,5 +80,43 @@ def cofre_sacar(x_origem, y_origem):
         print('Cofre não foi aberto')
         return False
 
+def cofre_criar(x_origem, y_origem):
 
+    # pyautogui.doubleClick(x_origem + 214, y_origem + 25)  # clica no no icone do cofre para abrir a janela
+    # time.sleep(0.5)
+    pyautogui.click(x_origem + 490, y_origem + 480)  # clica no botao confirmar para criaro cofre
+    time.sleep(0.5)
+    if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 150), (106, 30, 230), tolerance=5):  # testa se aoareceu o cadastrar
+        time.sleep(0.5)
+        pyautogui.click(x_origem + 490, y_origem + 240)  # clica no campo para digitar a senha
+        time.sleep(0.5)
+        pyautogui.typewrite("020996Pa")  # coloca a senha no canpo destinado
+        time.sleep(0.5)
+        pyautogui.click(x_origem + 490, y_origem + 307)  # clica no campo para Repita a senha
+        time.sleep(0.5)
+        pyautogui.typewrite("020996Pa")  # coloca a senha no canpo destinado
+        time.sleep(0.5)
+        pyautogui.click(x_origem + 490, y_origem + 417)  # clica no campo resposta
+        time.sleep(0.5)
+        pyautogui.typewrite("Ale")  # coloca a senha no canpo destinado
+        time.sleep(0.5)
+        pyautogui.click(x_origem + 340, y_origem + 500)  # clica fora da caixa de digitar
+        time.sleep(0.5)
+        if (pyautogui.pixelMatchesColor((x_origem + 634), (y_origem + 243), (0, 153, 0), tolerance=5)
+                and pyautogui.pixelMatchesColor((x_origem + 634), (y_origem + 312), (0, 153, 0), tolerance=5)
+                and pyautogui.pixelMatchesColor((x_origem + 776), (y_origem + 420), (0, 153, 0), tolerance=5)):  # testa se tem os 3 V's verdes
+            pyautogui.click(x_origem + 490, y_origem + 500)  # clica no botao conformar para criaro cofre
+            time.sleep(1)
+            if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 170), (111, 79, 51), tolerance=10):  # testa se esta visivel o cofre
+                print("Cofre criado com sucesso")
+                return True
+            else:
+                print("Falha ao criar")
+                pyautogui.click(x_origem + 816, y_origem + 142)  # clica no x para fechar o cofre
+                time.sleep(1)
+                return False
+
+
+#cofre_abrir(x_origem, y_origem)
 #cofre_sacar(x_origem, y_origem)
+#cofre_depositar(x_origem, y_origem)
