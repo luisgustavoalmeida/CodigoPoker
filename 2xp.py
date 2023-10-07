@@ -22,7 +22,7 @@ def pega_2xp(x_origem, y_origem):
                         print("Tem 2xp")
                         pyautogui.mouseDown(x_origem + 720, y_origem + 280)  # clica na guia do 2xp
                         time.sleep(1)
-                        pyautogui.mouseDown(x_origem + 720, y_origem + 280)  # clica na guia do 2xp
+                        pyautogui.mouseUp(x_origem + 720, y_origem + 280)  # clica na guia do 2xp
                         time.sleep(1)
                         if pyautogui.pixelMatchesColor((x_origem + 690), (y_origem + posi), (156, 184, 207), tolerance=10):  # testa se tem o cartão de 2XP USADO
                             print("2XP ja foi acionado")
