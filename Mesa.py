@@ -61,7 +61,7 @@ def clica_seta_sentar(x_origem, y_origem):
             return True
     return False
 
-def sentar_mesa(x_origem, y_origem, senta_com_maximo, blind=2040):
+def sentar_mesa(x_origem, y_origem, senta_com_maximo, blind='2040'):
     print('sentar_mesa')
     sentou = False
     # testa se esta aparecendo o botao azul "Jogar agora"
