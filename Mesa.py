@@ -61,7 +61,7 @@ def clica_seta_sentar(x_origem, y_origem):
             return True
     return False
 
-def sentar_mesa(x_origem, y_origem, senta_com_maximo):
+def sentar_mesa(x_origem, y_origem, senta_com_maximo, blind=2040):
     print('sentar_mesa')
     sentou = False
     # testa se esta aparecendo o botao azul "Jogar agora"
@@ -71,7 +71,10 @@ def sentar_mesa(x_origem, y_origem, senta_com_maximo):
         print("esta dentro da mesa")
 
         blind_sala = OCR_tela.blind_sala(x_origem, y_origem)
-        if "2040" == blind_sala:
+        blind = blind.replace("/", "")
+        print("blind_sala :", blind_sala )
+        print("blind :", blind)
+        if blind == blind_sala:
             print("sentar mesa Esta na sala certa")
         else:
             print("sentar mesa Esta na sala errada")
@@ -219,6 +222,43 @@ def escolher_blind(x_origem, y_origem, blind):
     time.sleep(0.2)
     pyautogui.doubleClick(200 + x_origem, posicao_lista + y_origem, button='left')  # clica no valor dentro da lista
     time.sleep(0.2)
+
+
+    # Testa se esta mrcado apenas as salas de 9 lugares
+    for i in range(30):
+        if pyautogui.pixelMatchesColor((x_origem + 139), (y_origem + 492), (201, 201, 201), tolerance=1):
+            print('Sala de 9 lugares marcada')
+            break
+        else:
+            pyautogui.click(x_origem + 139, y_origem + 492)  # Marca sala de nove
+            time.sleep(0.2)
+            print("Marca sala de 9 lugares")
+    for i in range(30):
+        if pyautogui.pixelMatchesColor((x_origem + 186), (y_origem + 492), (201, 201, 201), tolerance=1):
+            pyautogui.click(x_origem + 186, y_origem + 492)  # desmarca sala de 5
+            time.sleep(0.2)
+            print("Desmarca sala de 5 lugares")
+        else:
+            print('Sala de 5 lugares desmarcada')
+            break
+    for i in range(30):
+        if pyautogui.pixelMatchesColor((x_origem + 233), (y_origem + 492), (201, 201, 201), tolerance=1):
+            pyautogui.click(x_origem + 233, y_origem + 492)  # desmarca sala de 5
+            time.sleep(0.2)
+            print("Desmarca sala de 3 lugares")
+        else:
+            print('Sala de 3 lugares desmarcada')
+            break
+    for i in range(30):
+        if pyautogui.pixelMatchesColor((x_origem + 280), (y_origem + 492), (201, 201, 201), tolerance=1):
+            pyautogui.click(x_origem + 280, y_origem + 492)  # desmarca sala de 5
+            time.sleep(0.2)
+            print("Desmarca sala de 2 lugares")
+        else:
+            print('Sala de 2 lugares desmarcada')
+            break
+
+
     pyautogui.click(71 + x_origem, 619 + y_origem, button='left')  # clica para fechar o blind
 
     pyautogui.doubleClick(405 + x_origem, 233 + y_origem)  # clica para fechar o blind
@@ -644,14 +684,14 @@ def dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, valor_fichas, time_rodo
 
 
 # x_origem, y_origem = Origem_pg.x_y()
-# joga(x_origem, y_origem, 0, 0, 0, 0)
-# # # # passa_corre_joga(x_origem, y_origem)
-# #
-# # # x_origem, y_origem = Origem_pg.x_y()
-# # escolher_blind(x_origem, y_origem, '20/40')
-# # print(x_origem, y_origem )
-# # senta_com_maximo = False
-# # sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo)
+# # joga(x_origem, y_origem, 0, 0, 0, 0)
+# # # # # passa_corre_joga(x_origem, y_origem)
+# # #
+# # # # x_origem, y_origem = Origem_pg.x_y()
+# escolher_blind(x_origem, y_origem, '200/400')
+# # # print(x_origem, y_origem )
+# senta_com_maximo = False
+# sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, '200/400')
 # # print(sentou)
 #
 # #ajuste_valor_niquel(x_origem, y_origem)

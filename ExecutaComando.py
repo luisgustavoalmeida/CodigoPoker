@@ -23,8 +23,12 @@ import pyautogui
 import datetime
 import os
 import socket
-
 import threading
+
+
+import Firebase
+
+
 
 from Variaveis_Globais import aviso_sistema_global, alterar_global_aviso_sistema
 
@@ -101,7 +105,7 @@ Seleniun.abrir_navegador(url, navegador)
 while True:
     alterar_global_aviso_sistema(False)
 
-    guia = HoraT.mudar_guia(id, guia)
+    guia = 'Up'
 
     url = str(Google.pega_valor('Dados', 'F1'))
 
@@ -117,7 +121,6 @@ while True:
     else:
         id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
 
-    dia_da_semana = int(datetime.datetime.now().weekday()) # busca o dia da semana 0 segunda 1 terça ... 6 domeingo
 
     #login
     while True:
@@ -203,7 +206,8 @@ while True:
                 break
 
             #######################Tarefas
-            if guia == "T1":
+            if guia == "Up":
+                Firebase.escreve_resposta_escravo('Entrou')
 
                 pontos_disponiveis = 200
                 pontuacao_tarefas = 0
@@ -220,167 +224,25 @@ while True:
                     parar_tarefas = True
                     break
 
-                for j in range(2):
-                    print('procura tarefa, tentativa:', j)
-                    for i in range(3):
-                        print('\n TAREFAS \n')
+                # codigo deve ser escrito aqui dentro ...
+                Firebase.escreve_resposta_escravo('Aguardando comando')
+
+                while True:
+                    comando = Firebase.comando_escravo
+                    print(comando)
+                    time.sleep(2)
+                    if comando == "Sair":
+                        break
+                    elif comando == "Mesa":
+                        Mesa.escolher_blind(x_origem, y_origem, '200/400')
+                        Firebase.confirmacao_escravo('200/400')
+                        print("teste")
+                    elif comando == "Senta":
+                        Mesa.sentar_mesa()
+
+                Firebase.confirmacao_escravo('Aguardando')
 
 
-                        (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas, lista_tarefas_fazer,
-                         pontos_disponiveis, hora_fim_tarefa) \
-                            = (Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador,
-                                                                      dia_da_semana))
-                        time.sleep(2)
-
-                        if parar_tarefas:
-                            print('Fim das tarefas')
-                            time.sleep(2)
-                            break
-
-                        print("--------------parte 1---------------")
-
-                        if ('Jogar o caca-niquel da mesa' in lista_tarefas_fazer
-                                or 'Jogar o caca-niquel da mesa 150 vezes' in lista_tarefas_fazer
-                                or 'Jogar o caca-niquel da mesa 70 vezes' in lista_tarefas_fazer
-                                or 'Jogar o caca-niquel da mesa 10 vezes' in lista_tarefas_fazer):
-
-                            print("\n\n Jogar o caca-niquel da mesa vezes \n\n")
-
-                            Mesa.joga(x_origem, y_origem, id, senha, url, navegador, 200)
-                            time.sleep(1)
-
-                            (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
-                             lista_tarefas_fazer, pontos_disponiveis, hora_fim_tarefa) \
-                                = Tarefas.testa_continuar_fazendo_tarefa(x_origem,y_origem, id, senha,
-                                                                         url, navegador, dia_da_semana)
-                        print("--------------parte 2---------------")
-                        if parar_tarefas:
-                            break
-
-                        if ('vezes nas Cartas Premiadas' in lista_tarefas_fazer
-                                or 'Jogar 100 vezes nas Cartas Premiadas' in lista_tarefas_fazer
-                                or 'Jogar 50 vezes nas Cartas Premiadas' in lista_tarefas_fazer
-                                or 'Jogar 10 vezes nas Cartas Premiadas' in lista_tarefas_fazer):
-
-                            print("\n\n Jogar vezes nas Cartas Premiadas \n\n")
-                            Cartas.cartas_premidas_joga_vezes(x_origem, y_origem, id, senha, url, navegador)
-
-                            (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
-                             lista_tarefas_fazer, pontos_disponiveis, hora_fim_tarefa) \
-                                = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha,
-                                                                         url, navegador, dia_da_semana)
-                        print("--------------parte 3---------------")
-                        if parar_tarefas:
-                            break
-
-                        if ('fichas nas Cartas Premiadas' in lista_tarefas_fazer
-                                or 'Ganhar 100.000 fichas nas Cartas Premiadas' in lista_tarefas_fazer
-                                or 'Ganhar 30.000 fichas nas Cartas Premiadas' in lista_tarefas_fazer
-                                or 'Ganhar 4.000 fichas nas Cartas Premiadas' in lista_tarefas_fazer):
-
-                            print("\n\n Ganhar fichas nas Cartas Premiadas \n\n")
-                            Cartas.cartas_premidas_joga_valor(x_origem, y_origem, id, senha, url, navegador,
-                                                              lista_tarefas_fazer, valor_fichas)
-
-                            (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
-                             lista_tarefas_fazer, pontos_disponiveis, hora_fim_tarefa) \
-                                = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha,
-                                                                         url, navegador, dia_da_semana)
-
-                        if parar_tarefas:
-                            break
-
-                        if ('Jogar no Casino Genius Pro' in lista_tarefas_fazer
-                                or 'Jogar no Casino Genius Pro 100 vezes' in lista_tarefas_fazer
-                                or 'Jogar no Casino Genius Pro 50 vezes' in lista_tarefas_fazer
-                                or 'Jogar no Casino Genius Pro 10 vezes' in lista_tarefas_fazer):
-
-                            print("\n\n Jogar no Casino Genius Pro vezes \n\n")
-                            Genius.genius_joga_vezes(x_origem, y_origem, id, senha, url, navegador)
-
-                            (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
-                             lista_tarefas_fazer, pontos_disponiveis, hora_fim_tarefa) \
-                                = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha,
-                                                                         url, navegador, dia_da_semana)
-
-                        print("--------------parte 4---------------")
-                        if parar_tarefas:
-                            break
-
-                        if ('fichas no Casino Genius Pro' in lista_tarefas_fazer
-                                or 'Ganhar 100.000 fichas no Casino Genius Pro' in lista_tarefas_fazer
-                                or 'Ganhar 30.000 fichas no Casino Genius Pro' in lista_tarefas_fazer
-                                or 'Ganhar 4.000 fichas no Casino Genius Pro' in lista_tarefas_fazer):
-
-                            print("\n\n Ganhar fichas no Casino Genius Pro \n\n")
-                            Genius.genius_joga_valor(x_origem, y_origem, id, senha, url, navegador, lista_tarefas_fazer)
-
-                            (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
-                             lista_tarefas_fazer, pontos_disponiveis, hora_fim_tarefa) \
-                                = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha,
-                                                                         url, navegador, dia_da_semana)
-
-                        print("--------------parte 5---------------")
-                        if parar_tarefas:
-                            break
-
-                        if ('Apostar 20 fichas ou mais em 9 linhas do caca' in lista_tarefas_fazer
-                                or 'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 150 vezes' in lista_tarefas_fazer
-                                or 'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 70 vezes' in lista_tarefas_fazer
-                                or 'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 10 vezes' in lista_tarefas_fazer):
-
-                            print("\n\n Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot vezes \n\n")
-
-                            Slot.solot_joga_vezes(x_origem, y_origem, id, senha, url, navegador, True)
-
-                            (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
-                             lista_tarefas_fazer, pontos_disponiveis, hora_fim_tarefa) \
-                                = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha,
-                                                                         url, navegador, dia_da_semana)
-
-                        print("--------------parte 6---------------")
-                        if parar_tarefas:
-                            break
-
-                        if ('fichas no caca niquel slot poker' in lista_tarefas_fazer
-                                or 'Ganhar 100.000 fichas no caca niquel Slot Poker' in lista_tarefas_fazer
-                                or 'Ganhar 30.000 fichas no caca niquel Slot Poker' in lista_tarefas_fazer
-                                or 'Ganhar 10.000 fichas no caca niquel Slot Poker' in lista_tarefas_fazer):
-
-                            print("\n\n Ganhar fichas no caca niquel slot poker \n\n")
-
-                            Slot.solot_joga_vezes(x_origem, y_origem, id, senha, url, navegador, False)
-
-                            (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
-                             lista_tarefas_fazer, pontos_disponiveis, hora_fim_tarefa) \
-                                = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha,
-                                                                         url, navegador, dia_da_semana)
-
-                        print("--------------parte 7---------------")
-                        if parar_tarefas:
-                            break
-
-                        if ('fichas no caca niquel da mesa' in lista_tarefas_fazer
-                                or 'Ganhar 100.000 fichas no caca niquel da mesa' in lista_tarefas_fazer
-                                or 'Ganhar 30.000 fichas no caca niquel da mesa' in lista_tarefas_fazer
-                                or 'Ganhar 10.000 fichas no caca niquel da mesa' in lista_tarefas_fazer):
-
-                            print("\n\n Ganhar fichas no caca niquel da mesa \n\n")
-
-                            Mesa.joga(x_origem, y_origem, id, senha, url, navegador, 2000)
-
-                            (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
-                             lista_tarefas_fazer, pontos_disponiveis, hora_fim_tarefa) \
-                                = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha,
-                                                                         url, navegador, dia_da_semana)
-
-                        print("--------------parte 8---------------")
-                        if parar_tarefas:
-                            break
-
-                    # (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas, lista_tarefas_fazer,
-                    #  pontos_disponiveis, hora_fim_tarefa) = \
-                    #     (Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador, dia_da_semana))
 
                 hora_que_rodou = datetime.datetime.now().strftime('%H:%M:%S')
 
@@ -427,13 +289,6 @@ while True:
 
         elif entrou_corretamente:  # se nao entrou no face
 
-            if hora_fim_tarefa:
-                valores = [""]
-                #  apaga os valore quando da a hoara de sair do tarefas
-                Google.apagar_numerodo_pc(valores, guia, linha)  # apaga o nume do pc
-                Google.apagar_numerodo_pc(valores, guia, linha_novo)  # apaga o nume do pc
 
-            else:
-                # escre os valores na planilha
-                Google.escrever_valores_lote(valores, guia, linha)  # escreve as informaçoes na planilha apartir da coluna E
-                id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
+            Google.escrever_valores_lote(valores, guia, linha)  # escreve as informaçoes na planilha apartir da coluna E
+            id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo

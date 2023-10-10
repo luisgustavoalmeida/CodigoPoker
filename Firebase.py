@@ -60,8 +60,12 @@ def cria_caminho_resposta_fb():
                 grupo_modificado = re.sub(r'group', r'Comandos', grupo)
                 print(f"{conteudo} está no grupo {grupo_modificado} ({numero_grupo})")
                 caminho_resposta = f'{grupo_modificado}/{conteudo}'
-                print(caminho_resposta)
-                return caminho_resposta
+                print("caminho_resposta :",caminho_resposta)  # Comandos2/PC23
+                caminho_resposta1 = f'Resposta1/{conteudo}'
+                print("caminho_resposta1 :", caminho_resposta1)  # Comandos2/PC23
+
+
+                return caminho_resposta , caminho_resposta1
         else:
             print(f"{conteudo} não está em nenhum dos grupos")
     else:
@@ -77,8 +81,7 @@ if nome_computador in lista_PC_meste:
     caminho_resposta = f"Resposta1"
 else:
     print(f"O nome do computador ({nome_computador}) não está na lista de PCs mestres.")
-    caminho_resposta = cria_caminho_resposta_fb()
-
+    caminho_resposta, caminho_resposta1 = cria_caminho_resposta_fb()
 
 # Define listas de arranjos de computadores cada arranjo será uma mesa diferente
 arranjo1_pc = ('Comandos1/PC01', 'Comandos1/PC04', 'Comandos1/PC07',
@@ -184,6 +187,24 @@ def atualizar_dados_globais():
 # Chame a função para atualizar os dados globais com os dados do Firebase
 atualizar_dados_globais()
 
+def escreve_resposta_escravo(resposta_escravo):
+    ''' da a resposta do estado do computador '''
+    try:
+        # Escreva a informação aleatória no banco de dados Firebase
+        db.child(caminho_resposta1).set(resposta_escravo)
+        print(f"Informação aleatória {resposta_escravo} escrita com sucesso em {caminho_resposta1}")
+    except Exception as e:
+        print(f"Ocorreu um erro ao escrever a informação: {str(e)}")
+
+def confirmacao_escravo(resposta_escravo):
+    '''Esta função escreve no banco onde é destinado a receber comando, com o intuito de deixar um comando nao aplicavel'''
+    try:
+        # Escreva a informação aleatória no banco de dados Firebase
+        db.child(caminho_resposta).set(resposta_escravo)
+        print(f"Informação aleatória {resposta_escravo} escrita com sucesso em {caminho_resposta1}")
+    except Exception as e:
+        print(f"Ocorreu um erro ao escrever a informação: {str(e)}")
+
 # caminho = "Resposta1/PC01"
 #
 # def escrever_informacoes_aleatorias():
@@ -219,3 +240,5 @@ atualizar_dados_globais()
 # escrever_dado("Comandos/PC01/Teste", "Firebase!")
 #
 # ler_dado("Comandos/PC01/Teste")
+
+
