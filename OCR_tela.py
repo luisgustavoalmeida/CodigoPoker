@@ -135,10 +135,10 @@ def valor_fichas(x_origem, y_origem):
     #contraste_pos = 1.6
 
     fator_ampliacao = 4
-    contraste_pre = 1.23
+    contraste_pre = 1.24
     contraste_pos = 2.5
-
-    regiao_ficha = (x_origem + 43, y_origem + 9, x_origem + 105, y_origem + 23)  # Ficha
+    #regiao_ficha = (x_origem + 43, y_origem + 9, x_origem + 105, y_origem + 23)  # Ficha
+    regiao_ficha = (x_origem + 37, y_origem + 5, x_origem + 108, y_origem + 29)  # Ficha
     #
     #config = '--psm 7 --oem 1 -c tessedit_char_whitelist=0123456789.'config = '--psm 6 --oem 3 -c tessedit_char_whitelist=0123456789'
     config = '--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789.'
@@ -161,7 +161,9 @@ def valor_fichas(x_origem, y_origem):
 
     #config = '--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789.'
 
-    #config = '--psm 7 --oem 1 -c tessedit_char_whitelist=0123456789.'
+    print('segunda tentativa')
+
+    config = '--psm 7 --oem 1 -c tessedit_char_whitelist=0123456789.'
     lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
     print(lido)
 
@@ -177,6 +179,8 @@ def valor_fichas(x_origem, y_origem):
         except ValueError:
             # Lidar com a conversão falhada para um número inteiro
             print("Erro ao converter para inteiro")
+
+    print('terceira tentativa')
 
     #config = '--psm 6 -c tessedit_char_whitelist=0123456789.'
     config = '--psm 3 --oem 0 -c tessedit_char_whitelist=0123456789.'
@@ -681,9 +685,9 @@ def aviso_sistema(x_origem, y_origem):
 # #
 # # # #         #aviso_do_sistema()
 #
-# x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
+#x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
 # # # pontuacao_tarefas(x_origem, y_origem)
-# lido = valor_fichas(x_origem, y_origem)
+#lido = valor_fichas(x_origem, y_origem)
 # # # # tarefas_diaris_trocar(x_origem, y_origem)
 # # # tarefas_diaris(x_origem, y_origem)
 # # # # # # # # # # # # print(y_origem)

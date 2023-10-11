@@ -37,18 +37,55 @@ def cadeiras_livres(x_origem, y_origem):
     print("esta mesa tem: ", cadeiras_livres, " cadeiras livres")
 
 def clica_seta_sentar(x_origem, y_origem):
+    # dicionari_PC_cadeira = {'PC-I5-8600K': {'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)},
+    #                         'PC-I5-9400A': {'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_3': (847, 366), 'cadeira_2': (828, 211), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131), 'cadeira_1': (659, 127)},
+    #                         'PC-I5-9400B': {'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211)},
+    #                         'PC-I5-9400C': {'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_9': (312, 131), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_8': (134, 194)},
+    #                         'PC-I7-9700KF': {'cadeira_7': (118, 360), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)},
+    #                         'PC-R5-7600A': {'cadeira_7': (118, 360), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)},
+    #                         'PC-I5-13400A': {'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)},
+    #                         'PC-I5-13400B': {'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_3': (847, 366), 'cadeira_2': (828, 211), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131), 'cadeira_1': (659, 127)},
+    #                         'PC-I5-13400D': {'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211)},
+    #                         'PC-I7-11850H': {'cadeira_7': (118, 360), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)},
+    #                         'PC-i3-8145U': {'cadeira_7': (118, 360), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)}}
 
-    dicionari_PC_cadeira = {'PC-I5-8600K': {'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)},
-                            'PC-I5-9400A': {'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_3': (847, 366), 'cadeira_2': (828, 211), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131), 'cadeira_1': (659, 127)},
-                            'PC-I5-9400B': {'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211)},
-                            'PC-I5-9400C': {'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_9': (312, 131), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_8': (134, 194)},
-                            'PC-I7-9700KF': {'cadeira_7': (118, 360), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)},
-                            'PC-R5-7600A': {'cadeira_7': (118, 360), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)},
-                            'PC-I5-13400A': {'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)},
-                            'PC-I5-13400B': {'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_3': (847, 366), 'cadeira_2': (828, 211), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131), 'cadeira_1': (659, 127)},
-                            'PC-I5-13400D': {'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211)},
-                            'PC-I7-11850H': {'cadeira_7': (118, 360), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)},
-                            'PC-i3-8145U': {'cadeira_7': (118, 360), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)}}
+    dicionari_PC_cadeira = {'PC-I5-8600K': {'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_3': (847, 366),
+                                            'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451),
+                                            'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)},
+                            'PC-I5-9400A': {'cadeira_2': (828, 211), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451),
+                                            'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360),
+                                            'cadeira_8': (134, 194), 'cadeira_9': (312, 131), 'cadeira_1': (659, 127)},
+                            'PC-I5-9400B': {'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452),
+                                            'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_8': (134, 194),
+                                            'cadeira_9': (312, 131), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211)},
+                            'PC-I5-9400C': {'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451),
+                                            'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131),
+                                            'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_3': (847, 366)},
+                            'PC-R5-7600A': {'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360),
+                                            'cadeira_8': (134, 194), 'cadeira_9': (312, 131), 'cadeira_1': (659, 127),
+                                            'cadeira_2': (828, 211), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451)},
+                            'PC-I5-13400A': {'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_8': (134, 194),
+                                             'cadeira_9': (312, 131), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211),
+                                             'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452)},
+                            'PC-I5-13400B': {'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131),
+                                             'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_3': (847, 366),
+                                             'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451)},
+                            'PC-I5-13400C': {'cadeira_8': (134, 194), 'cadeira_9': (312, 131), 'cadeira_1': (659, 127),
+                                             'cadeira_2': (828, 211), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451),
+                                             'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360)},
+                            'PC-I5-13400D': {'cadeira_9': (312, 131), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211),
+                                             'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452),
+                                             'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_8': (134, 194)},
+                            'PC-I7-11850H': {'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_3': (847, 366),
+                                             'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451),
+                                             'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)},
+                            'PC-i3-8145U': {'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_3': (847, 366),
+                                            'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451),
+                                            'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)},
+                            'PC-I7-9700KF': {'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_3': (847, 366),
+                                             'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451),
+                                             'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)},
+                            }
 
     nome_computador = socket.gethostname()
     prioridade_cadeira = dicionari_PC_cadeira[nome_computador]
@@ -223,7 +260,6 @@ def escolher_blind(x_origem, y_origem, blind):
     pyautogui.doubleClick(200 + x_origem, posicao_lista + y_origem, button='left')  # clica no valor dentro da lista
     time.sleep(0.2)
 
-
     # Testa se esta mrcado apenas as salas de 9 lugares
     for i in range(30):
         if pyautogui.pixelMatchesColor((x_origem + 139), (y_origem + 492), (201, 201, 201), tolerance=1):
@@ -257,7 +293,6 @@ def escolher_blind(x_origem, y_origem, blind):
         else:
             print('Sala de 2 lugares desmarcada')
             break
-
 
     pyautogui.click(71 + x_origem, 619 + y_origem, button='left')  # clica para fechar o blind
 
