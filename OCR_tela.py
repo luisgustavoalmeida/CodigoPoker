@@ -716,8 +716,7 @@ def level_conta(x_origem, y_origem):
 
 
 
-#
-# x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
+#x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
 # level_conta(x_origem, y_origem)
 
 # # # pontuacao_tarefas(x_origem, y_origem)
