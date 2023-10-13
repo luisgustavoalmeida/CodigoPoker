@@ -28,8 +28,15 @@ orderem_chave = {
     'group2': ['PC02', 'PC05', 'PC08', 'PC11', 'PC14', 'PC17', 'PC20', 'PC23', 'PC26'],
     'group3': ['PC03', 'PC06', 'PC09', 'PC12', 'PC15', 'PC18', 'PC21', 'PC24', 'PC27'],
 }
+
 teve_atualizacao = False
 comando_escravo = None
+
+nome_computador = socket.gethostname()
+nome_usuario = os.getlogin()
+
+#  lista com os computadores que vao dar comando nos escravos, colocar nesta lista para funcionar como metre
+lista_PC_meste = ('xPC-I7-9700KF','PC-i3-8145U','Thiago-PC')
 
 
 def cria_caminho_resposta_fb():
@@ -71,11 +78,6 @@ def cria_caminho_resposta_fb():
     else:
         print(f"{nome_completo} não encontrado no dicionário")
 
-#  lista com os computadores que vao dar comando nos escravos, colocar nesta lista para funcionar como metre
-lista_PC_meste = ('xPC-I7-9700KF','PC-i3-8145U','Thiago-PC')
-
-nome_computador = socket.gethostname()
-
 if nome_computador in lista_PC_meste:
     print(f"O nome do computador ({nome_computador}) está na lista de PCs mestres.")
     caminho_resposta = f"Resposta1"
@@ -113,7 +115,11 @@ def enviar_comando_coletivo(arranjo, comando):
     for caminho in arranjo:
         # Define a chave do dicionário como o caminho e o valor como o comando
         atualizacoes[caminho] = comando
-    db.update(atualizacoes) # responsável por atualizar os dados no banco de dados Firebase
+    try:
+        db.update(atualizacoes) # responsável por atualizar os dados no banco de dados Firebase
+        print("Comando coletivo executado")
+    except Exception as e:
+        print("Erro ao processar atualização:", e)
 
 # Referência para o nó do Firebase que você deseja observar
 ref = firebase.database().child(caminho_resposta)  # colocar o caminho de onde vem os comandos
@@ -192,18 +198,69 @@ def escreve_resposta_escravo(resposta_escravo):
     try:
         # Escreva a informação aleatória no banco de dados Firebase
         db.child(caminho_resposta1).set(resposta_escravo)
-        print(f"Informação aleatória {resposta_escravo} escrita com sucesso em {caminho_resposta1}")
+        print(f"Informação {resposta_escravo} escrita com sucesso em {caminho_resposta1}")
     except Exception as e:
         print(f"Ocorreu um erro ao escrever a informação: {str(e)}")
 
+resposta_anterior = None
 def confirmacao_escravo(resposta_escravo):
+    global resposta_anterior
     '''Esta função escreve no banco onde é destinado a receber comando, com o intuito de deixar um comando nao aplicavel'''
-    try:
-        # Escreva a informação aleatória no banco de dados Firebase
-        db.child(caminho_resposta).set(resposta_escravo)
-        print(f"Informação aleatória {resposta_escravo} escrita com sucesso em {caminho_resposta1}")
-    except Exception as e:
-        print(f"Ocorreu um erro ao escrever a informação: {str(e)}")
+
+    if resposta_anterior != resposta_escravo:
+        resposta_anterior = resposta_escravo
+        # LEMBRETE, criar um teste para mandar comando apenas se o valor for diferete do anterior
+        try:
+            # Escreva a informação aleatória no banco de dados Firebase
+            db.child(caminho_resposta).set(resposta_escravo)
+            print(f"Informação: {resposta_escravo}, escrita com sucesso em: {caminho_resposta}")
+        except Exception as e:
+            print(f"Ocorreu um erro ao escrever a informação: {str(e)}")
+    else:
+        return
+
+
+def confirmacao_comando_resposta(resposta_escravo):
+    global resposta_anterior
+    '''Esta função escreve no banco onde é destinado a receber comando, com o intuito de deixar um comando não aplicável'''
+
+    if resposta_anterior != resposta_escravo:
+        resposta_anterior = resposta_escravo
+
+        try:
+            # Crie um dicionário com os caminhos de resposta e seus valores correspondentes
+            dados_para_atualizar = {
+                caminho_resposta: resposta_escravo,
+                caminho_resposta1: resposta_escravo
+            }
+
+            # Use a função update() para atualizar ambos os caminhos com os respectivos valores
+            db.update(dados_para_atualizar)
+
+            print(f"Informação: {resposta_escravo}, escrita com sucesso em: {caminho_resposta} e {caminho_resposta1}")
+        except Exception as e:
+            print(f"Ocorreu um erro ao escrever a informação: {str(e)}")
+    else:
+        return
+
+def comando_coleetivo_escravo_escravo(comando):
+
+    ''''quando um escravo precisa comandar os outro escravos de forma automatica'''
+    if nome_usuario == "PokerIP":
+        print(nome_usuario )
+        enviar_comando_coletivo(arranjo1_pc, comando)
+    elif nome_usuario == "lgagu":
+        print(nome_usuario)
+        enviar_comando_coletivo(arranjo2_pc, comando)
+    elif nome_usuario == "Poker":
+        print(nome_usuario)
+        enviar_comando_coletivo(arranjo3_pc, comando)
+    else:
+        print("nome de usuario não configurado")
+
+
+
+
 
 # caminho = "Resposta1/PC01"
 #

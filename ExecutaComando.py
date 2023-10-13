@@ -24,6 +24,8 @@ import datetime
 import os
 import socket
 import threading
+import xp2
+
 
 
 import Firebase
@@ -227,22 +229,48 @@ while True:
                 # codigo deve ser escrito aqui dentro ...
                 Firebase.escreve_resposta_escravo('Aguardando comando')
 
+                status_comando = None
                 while True:
                     comando = Firebase.comando_escravo
-                    print(comando)
-                    time.sleep(2)
+                    #print(comando)
+
                     if comando == "Sair":
                         break
-                    elif comando == "Mesa":
-                        Mesa.escolher_blind(x_origem, y_origem, '200/400')
-                        Firebase.confirmacao_escravo('200/400')
-                        print("teste")
+
+                    elif comando == "Mesa1":
+                        status_comando = Mesa.escolher_blind(x_origem, y_origem, '500/1K')
+
+                    elif comando == "Mesa2":
+                        status_comando = Mesa.escolher_blind(x_origem, y_origem, '1K/2K')
+
                     elif comando == "Senta":
-                        Mesa.sentar_mesa()
+                        sentou = Mesa.sentar_mesa(x_origem, y_origem, False, '25/50')
+                        if sentou:
+                            status_comando = "Sentou"
+                        else:
+                            status_comando = "Não sentou"
+
+                    elif comando == "Levanta":
+                        status_comando = Mesa.levantar_mesa(x_origem, y_origem)
+
+                    elif comando == "2xp":
+                        status_comando = xp2.pega_2xp(x_origem, y_origem)
+
+
+                    ###################################################################################
+
+                    if status_comando == "Sentou":
+                        status_mesa = Mesa.passa_ate_lv7(x_origem, y_origem)
+                        if status_mesa == 'Levantou':
+                            print("Emvia um comando para levantar os outros escravos")
+                            Firebase.comando_coleetivo_escravo_escravo("Levanta")
+
+                    Firebase.confirmacao_comando_resposta(status_comando)
+
+
+
 
                 Firebase.confirmacao_escravo('Aguardando')
-
-
 
                 hora_que_rodou = datetime.datetime.now().strftime('%H:%M:%S')
 

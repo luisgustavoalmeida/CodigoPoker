@@ -4,9 +4,9 @@ from tkinter import scrolledtext
 import Firebase
 from Firebase import global_variables, teve_atualizacao
 
-dicionario_comandos = {0: 'Senta', 1: 'Levanta', 2: 'Passa', 3: 'Corre', 4: 'Cartas', 5: 'Genius', 6: 'Mesa',
-                       7: 'Joga', 8: 'Corre', 9: 'Loby', 10: 'Sair', 11: 'limpa', 12: 'Aposta tudo',
-                       13: 'Slote classico', 14: "Entra"}
+dicionario_comandos = {0: 'Senta', 1: 'Levanta', 2: 'Recolher', 3: 'Slot', 4: 'Genius', 5: 'Cartas', 6: 'Mesa1',
+                       7: 'Mesa2', 8: '2xp', 9: 'Loby', 10: 'Sair', 11: 'limpa', 12: 'Aposta tudo',
+                       13: 'Slote classico', 14: "Sair"}
 
 
 # Função que será chamada quando um botão for pressionado

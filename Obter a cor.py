@@ -22,8 +22,8 @@ print(x_origem, y_origem)
 
 
 
-x = (x_origem + 139)
-y = (y_origem + 492)
+x = (x_origem + 767)
+y = (y_origem + 457)
 
 
 

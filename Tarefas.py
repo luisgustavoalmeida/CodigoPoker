@@ -11,6 +11,7 @@ import datetime
 import Limpa
 import Aneis
 import HoraT
+import Origem_pg
 # import Origem_pg
 # from fuzzywuzzy import fuzz #pip install fuzzywuzzy
 # import Levenshtein #pip install python-Levenshtein
@@ -335,9 +336,50 @@ def testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador
     return (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas, lista_tarefas_fazer,
             pontos_disponiveis, hora_fim_tarefa)
 
+
+
+def recolher_tarefa_upando(x_origem, y_origem):
+    print("recolher_tarefa_upando")
+    if pyautogui.pixelMatchesColor((x_origem + 627), (y_origem + 35), (228, 194, 31), tolerance=30):  # testa se tem que recolher icone das tarefas amarelo
+        print('Tem missão para recolher')
+        for i in range(30):
+            pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias para abrir
+            print('Click para abrir os tarefas')
+
+            if pyautogui.pixelMatchesColor((x_origem + 495), (y_origem + 125), (0, 51, 248), tolerance=10):  # testa se esta aberto a lista de tarefas
+                print('Tarefas abertas')
+
+                posicao_recolher_tarefa_y = (361, 457, 553)
+                clique_recolher = []
+
+                for recolher_y in posicao_recolher_tarefa_y:
+                    #print(recolher_y)
+                    if pyautogui.pixelMatchesColor((x_origem + 767), (y_origem + recolher_y), (240, 249, 240), tolerance=10):  # testa se tem "Retirar" em braco
+                        clique_recolher.append(recolher_y)  # adiciona as coordenada de y que deve ser clicadas
+
+                if len(clique_recolher) > 0:
+                    for recolhe in clique_recolher:
+                        pyautogui.click(x_origem + 767, y_origem + recolhe)  # clica no recolher
+                    time.sleep(1)
+
+                posicao_recolher_presentes = (215, 400, 585, 770)
+
+                for recolhe in posicao_recolher_presentes:
+                    pyautogui.click(x_origem + recolhe, y_origem + 246)  # clica nos presentes
+                time.sleep(1)
+
+                if not (pyautogui.pixelMatchesColor((x_origem + 627), (y_origem + 35), (228, 194, 31), tolerance=30)):  # testa se NÂO tem que recolher icone das tarefas amarelo
+                    pyautogui.click(x_origem + 816, y_origem + 142)  # clica para fechar as tarefas
+                    return "Recolhido"
+            time.sleep(0.2)
+    else:
+        print('Não tem missão para recolher')
+    return "Recolhido"
+
 #
 # #
 # x_origem, y_origem = Origem_pg.x_y()
+# recolher_tarefa_upando(x_origem, y_origem)
 #
 # comparar_listas(x_origem, y_origem)
 

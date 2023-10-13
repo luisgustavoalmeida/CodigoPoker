@@ -687,10 +687,39 @@ def aviso_sistema(x_origem, y_origem):
     else:
         return False, resposta
 
-# #
-# # # #         #aviso_do_sistema()
+
+def level_conta(x_origem, y_origem):
+    # Define a região de interesse
+    inveter_cor = True
+    esca_ciza = False
+    fator_ampliacao = 12
+    contraste_pre = 1
+    contraste_pos = 1.6
+    regiao_ficha = (x_origem + 90, y_origem + 27, x_origem + 124, y_origem + 37)  # leval
+    config = '--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789'
+    lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
+    #print(lido)
+    if lido is not None:
+        lido = re.sub(r"\D+", "", lido)  # remove caracteres nao numericos
+        lido = lido.replace(" ", "").replace(".", "")
+        #print(lido)
+        try:
+            lido = int(lido)
+            if 1 < lido < 10:
+                print("Leval da conta: ", lido)
+                return lido
+        except ValueError:
+            # Lidar com a conversão falhada para um número inteiro
+            print("Erro ao converter para inteiro")
+            return 0
+
+
+
+
 #
 # x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
+# level_conta(x_origem, y_origem)
+
 # # # pontuacao_tarefas(x_origem, y_origem)
 # lido = valor_fichas(x_origem, y_origem)
 # # # # tarefas_diaris_trocar(x_origem, y_origem)
