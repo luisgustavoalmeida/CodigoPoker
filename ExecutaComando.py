@@ -227,31 +227,43 @@ while True:
                     break
 
                 # codigo deve ser escrito aqui dentro ...
-                Firebase.escreve_resposta_escravo('Aguardando comando')
 
-                status_comando = None
+
+                status_comando = 'Aguardando comando'
+                blind = ""
                 while True:
                     comando = Firebase.comando_escravo
                     #print(comando)
+                    Tarefas.recolher_tarefa_upando(x_origem, y_origem)
 
                     if comando == "Sair":
+                        status_comando = "Saindo"
                         break
 
                     elif comando == "Mesa1":
-                        status_comando = Mesa.escolher_blind(x_origem, y_origem, '500/1K')
+                        blind = '500/1K'
+                        status_comando = Mesa.escolher_blind(x_origem, y_origem, blind)
 
                     elif comando == "Mesa2":
-                        status_comando = Mesa.escolher_blind(x_origem, y_origem, '1K/2K')
+                        blind = '1K/2K'
+                        status_comando = Mesa.escolher_blind(x_origem, y_origem, blind)
 
                     elif comando == "Senta":
-                        sentou = Mesa.sentar_mesa(x_origem, y_origem, False, '25/50')
+                        sentou = Mesa.sentar_mesa(x_origem, y_origem, False, blind)
                         if sentou:
                             status_comando = "Sentou"
                         else:
                             status_comando = "Não sentou"
 
+                    elif comando == "Recolher":
+                        status_comando = Tarefas.recolher_tarefa_upando(x_origem, y_origem)
+
                     elif comando == "Levanta":
                         status_comando = Mesa.levantar_mesa(x_origem, y_origem)
+
+                    elif comando == "Slot":
+                        Firebase.confirmacao_comando_resposta("Fazendo Slot")
+                        Slot.solot_joga_vezes_upando(x_origem, y_origem)
 
                     elif comando == "2xp":
                         status_comando = xp2.pega_2xp(x_origem, y_origem)
@@ -267,10 +279,7 @@ while True:
 
                     Firebase.confirmacao_comando_resposta(status_comando)
 
-
-
-
-                Firebase.confirmacao_escravo('Aguardando')
+                Firebase.confirmacao_comando_resposta('Entrendo em uma nova conta')
 
                 hora_que_rodou = datetime.datetime.now().strftime('%H:%M:%S')
 

@@ -484,4 +484,13 @@
 #
 #
 #
-
+# import Origem_pg
+# import Slot
+# import Tarefas
+#
+#
+# x_origem, y_origem = Origem_pg.x_y()
+# # slot_aberto = Slot.abre_slot(x_origem, y_origem, True)
+# # status_tarefa = Tarefas.recolher_tarefa_upando(x_origem, y_origem)
+# # Slot.ajustar_valor(x_origem, y_origem, True)
+# Slot.solot_joga_vezes_upando(x_origem, y_origem)

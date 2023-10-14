@@ -12,8 +12,8 @@ import Tarefas
 import HoraT
 import Origem_pg
 
-lista_salas_niquel = ('1537',  '1538', '1546', '1542', '1545', '1543', '1541', '1540', '1536', '1535', '1769', '1768',
-                      '1767', '1766', '1765',)
+lista_salas_niquel = ('1537', '1538', '1546', '1542', '1545', '1543', '1542', '1541', '1540', '1538', '1536', '1535',
+                      '1769', '1768', '1767', '1766', '1765')
 
 def localizar_imagem(imagem, regiao, precisao):
     try:
@@ -704,10 +704,13 @@ def dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, valor_fichas, time_rodo
                 time.sleep(1)
                 pyautogui.doubleClick(x_origem + 683, y_origem + 14)  # clica no icone roleta, ja roda sozinho
 
+        Limpa.fecha_tarefa(x_origem, y_origem)
+
+        Limpa.limpa_promocao(x_origem, y_origem)
+
         Limpa.limpa_total(x_origem, y_origem)
 
-        print('conta nao esta upada abre os iniciantes')
-
+        print('Joga uma vez')
         joga_uma_vez(x_origem, y_origem)
         time.sleep(2)
         Limpa.iniciantes(x_origem, y_origem)
@@ -749,8 +752,13 @@ def passa_ate_lv7(x_origem, y_origem): # para se fazer tarefas
         print("Levantou")
         return 'Levantou'
     else:
+        Tarefas.recolher_tarefa_upando(x_origem, y_origem)
 
-        if level_conta < 8:
+        if pyautogui.pixelMatchesColor((x_origem + 480), (y_origem + 650), (43, 16, 9), tolerance=3):
+            pyautogui.click((x_origem + 640), (y_origem + 72))
+
+        Limpa.limpa_jogando(x_origem, y_origem)
+        if level_conta < 7:
             # se nao esta com v azul dentro do quadrado branco e se esta com quadrado branco
             if ((not pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (59, 171, 228), tolerance=1))
                     and (pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (255, 255, 255), tolerance=1))):
@@ -769,6 +777,7 @@ def passa_ate_lv7(x_origem, y_origem): # para se fazer tarefas
         else:
             if pyautogui.pixelMatchesColor((x_origem + 480), (y_origem + 650), (255, 255, 255), tolerance=1): # testa se tem area branca
                 pyautogui.click((x_origem + 528), (y_origem + 605))  # clica no correr
+                #level_conta = OCR_tela.level_conta(x_origem, y_origem)
                 #time.sleep(0.3)
                 print("area de valor branco")
                 return 'Correu'
@@ -778,10 +787,12 @@ def passa_ate_lv7(x_origem, y_origem): # para se fazer tarefas
 
 
 
-
-# x_origem, y_origem = Origem_pg.x_y()
-# passa_ate_lv7(x_origem, y_origem)
 #
+# x_origem, y_origem = Origem_pg.x_y()
+# Limpa.fecha_tarefa(x_origem, y_origem)
+# while True:
+#     passa_ate_lv7(x_origem, y_origem)
+# #
 # levantar_mesa(x_origem, y_origem)
 
 # #blind_escolha = '500/1K'

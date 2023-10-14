@@ -91,7 +91,6 @@ def testa_slot_lipo(x_origem, y_origem):
             return True
         time.sleep(0.3)
 
-
 def ajustar_valor(x_origem, y_origem, joga_vezes):
     print('ajustar_valor')
 
@@ -189,7 +188,46 @@ def solot_joga_vezes(x_origem, y_origem, id, senha, url, navegador, joga_vezes):
         abre_slot(x_origem, y_origem, joga_vezes)
     return
 
-# x_origem, y_origem = Origem_pg.x_y()
+def solot_joga_vezes_upando(x_origem, y_origem, joga_vezes = True):
+
+    continua_jogando = True
+
+    if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
+        return "sair da conta"
+
+    abre_slot(x_origem, y_origem, joga_vezes)
+
+    while continua_jogando: # permanece joghando cartas premiadas ate nao ter mais a mição jogar x vezes
+
+        slot_aberto = abre_slot(x_origem, y_origem, joga_vezes)
+        if slot_aberto:
+            print('espera girar na cor certa')
+            for i in range(20):
+                #espera poder clicar no girar
+                if pyautogui.pixelMatchesColor((x_origem + 922), (y_origem + 609), (216, 17, 2), tolerance=5):
+                    pyautogui.doubleClick(x_origem + 922, y_origem + 609)  # clica em girar
+                    print("clicar no girar")
+                    break
+                time.sleep(0.3)
+
+        status_tarefa = Tarefas.recolher_tarefa_upando(x_origem, y_origem)
+        print(status_tarefa)
+        if status_tarefa == "Não tem missão":
+            continua_jogando = True
+        elif status_tarefa == "Recolhido":
+            continua_jogando = False
+        else:
+            continua_jogando = False
+
+        if not continua_jogando:
+            print("FIM")
+            if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
+                return "sair da conta"
+            return
+    return
+
+
+#solot_joga_vezes_upando(x_origem, y_origem)
 # # #solot_joga_vezes(x_origem, y_origem)
 # #abre_slot(x_origem, y_origem, False)
 # ajustar_valor(x_origem, y_origem, False)

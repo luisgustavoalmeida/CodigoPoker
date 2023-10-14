@@ -37,10 +37,15 @@ def abre_genius(x_origem, y_origem):
 
             elif pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 612), (111, 100, 105), tolerance=5):
 
-                print("Genius, entrou")
-                valor = 200
-                ajustado = ajustar_valor(x_origem, y_origem, valor)
-                if ajustado:
+                if pyautogui.pixelMatchesColor((x_origem + 449), (y_origem + 655), (193, 119, 70), tolerance=5):
+                    # Testa se tem uma setinha para cima
+
+                    print("Genius, entrou")
+                    valor = 200
+                    if ajustar_valor(x_origem, y_origem, valor):
+                        return True
+                else:
+                    print("Genius, entrou. Conta sendo upada")
                     return True
 
             elif pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 612), (78, 70, 74), tolerance=5): # genius com foco na mensagem
@@ -66,8 +71,7 @@ def abre_genius(x_origem, y_origem):
             return "sair da conta"
 
 
-
-def ajustar_valor(x_origem, y_origem, valor):
+def ajustar_valor(x_origem, y_origem, valor=200):
 
     Limpa.aviso_canto_lobby(x_origem, y_origem)  # fecha propaganda
     regiao = (304 + x_origem, 637 + y_origem, 88, 30)  # (x, y, largura, altura)
@@ -108,6 +112,7 @@ def ajustar_valor(x_origem, y_origem, valor):
                         or pyautogui.pixelMatchesColor((x_origem + 449), (y_origem + 622), (61, 55, 57), tolerance=5):  # testa se a lista esta aberta
                     pyautogui.click(x_origem + 449, y_origem + 568)  # escolhe o valor 2000
             time.sleep(0.25)
+    return False
 
 
 
@@ -122,16 +127,6 @@ def genius_joga_vezes(x_origem, y_origem, id, senha, url, navegador):
     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
         return "sair da conta"
 
-    # for i in range(2):
-    #     # lipa tudo antes de começar vai para o lobby
-    #     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-    #         return "sair da conta"
-    #     Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
-    #     continua_jogando, tarefa = Tarefas.comparar_listas_fazendo_tarefa(tarefas_fazer, x_origem, y_origem)
-    #     print("tarefa que tem: \n",tarefa)
-    #     Limpa.fecha_tarefa(x_origem, y_origem)  # fecha a lista de tarefas diarias
-    #     if continua_jogando:
-    #         break
 
     abre_genius(x_origem, y_origem)
     cont_jogadas_troca_ip = 0
@@ -149,7 +144,7 @@ def genius_joga_vezes(x_origem, y_origem, id, senha, url, navegador):
 
         genius_aberto = abre_genius(x_origem, y_origem)
 
-        if genius_aberto == True:
+        if genius_aberto:
             print('espera espera pelo valor de tempo certo')
             regiao = (473 + x_origem, 101 + y_origem, 20, 32)  # (x, y, largura, altura)
             imagem1 = r'Imagens\Genius\tempo6.png'
@@ -189,7 +184,7 @@ def genius_joga_vezes(x_origem, y_origem, id, senha, url, navegador):
         abre_genius(x_origem, y_origem)
     return
 
-def genius_joga_valor (x_origem, y_origem, id, senha, url, navegador, lista_tarefas_disponivel):
+def genius_joga_valor(x_origem, y_origem, id, senha, url, navegador, lista_tarefas_disponivel):
 
     tarefas_fazer = ('Ganhar 100.000 fichas no Casino Genius Pro',
                      'Ganhar 30.000 fichas no Casino Genius Pro',
@@ -210,16 +205,6 @@ def genius_joga_valor (x_origem, y_origem, id, senha, url, navegador, lista_tare
     if continua_jogando is False:
         return
 
-    # for i in range(2):
-    #     # lipa tudo antes de começar vai para o lobby
-    #     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-    #         return "sair da conta"
-    #     Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
-    #     continua_jogando, tarefa = Tarefas.comparar_listas_fazendo_tarefa(tarefas_fazer, x_origem, y_origem)
-    #     print("tarefa que tem: \n",tarefa)
-    #     Limpa.fecha_tarefa(x_origem, y_origem)  # fecha a lista de tarefas diarias
-    #     if continua_jogando:
-    #         break
 
     abre_genius(x_origem, y_origem)
     cont_jogadas_troca_ip = 0
@@ -340,6 +325,56 @@ def genius_joga_valor (x_origem, y_origem, id, senha, url, navegador, lista_tare
     return
 
 
+def genius_joga_vezes_upando(x_origem, y_origem):
+    abre_genius(x_origem, y_origem)
+    continua_jogando = True
+
+    while continua_jogando: # permanece joghando cartas premiadas ate nao ter mais a mição jogar x vezes
+
+        genius_aberto = abre_genius(x_origem, y_origem)
+
+        if genius_aberto:
+            print('espera espera pelo valor de tempo certo')
+            regiao = (473 + x_origem, 101 + y_origem, 20, 32)  # (x, y, largura, altura)
+            imagem1 = r'Imagens\Genius\tempo6.png'
+            precisao = 0.9
+            for i in range(80):
+                #espera o time
+                posicao = localizar_imagem(imagem1, regiao, precisao)
+                if posicao is not None:  # Verifica se a imagem foi encontrada
+                    print("faz a aposta")
+                    if pyautogui.pixelMatchesColor((x_origem + 449), (y_origem + 655), (193, 119, 70), tolerance=5):
+                        # Testa se tem uma setinha para cima
+                        pyautogui.click(x_origem + 603, y_origem + 223)  # clica em Staci ganha
+                        print('espera o tempo passar ate sair o premio')
+
+                    else:
+                        for i in range(5):
+                            pyautogui.click(x_origem + 603, y_origem + 223)  # clica em Staci ganha
+                            time.sleep(0.1)
+
+                    time.sleep(10)
+                    break
+
+                time.sleep(0.3)
+
+            status_tarefa = Tarefas.recolher_tarefa_upando(x_origem, y_origem)
+            print(status_tarefa)
+            if status_tarefa == "Não tem missão":
+                continua_jogando = True
+            elif status_tarefa == "Recolhido":
+                continua_jogando = False
+            else:
+                continua_jogando = False
+
+            if not continua_jogando:
+                print("FIM")
+                if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
+                    return "sair da conta"
+                return
+    return
+
 # x_origem, y_origem = Origem_pg.x_y()
+# genius_joga_vezes_upando(x_origem, y_origem)
 # genius_joga_valor(x_origem, y_origem)
 # genius_joga_vezes(x_origem, y_origem)

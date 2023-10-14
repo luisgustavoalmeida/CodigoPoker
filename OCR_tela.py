@@ -692,7 +692,7 @@ def level_conta(x_origem, y_origem):
     # Define a região de interesse
     inveter_cor = True
     esca_ciza = False
-    fator_ampliacao = 12
+    fator_ampliacao = 1
     contraste_pre = 1
     contraste_pos = 1.6
     regiao_ficha = (x_origem + 90, y_origem + 27, x_origem + 124, y_origem + 37)  # leval
@@ -716,7 +716,7 @@ def level_conta(x_origem, y_origem):
 
 
 
-#x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
+# x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
 # level_conta(x_origem, y_origem)
 
 # # # pontuacao_tarefas(x_origem, y_origem)

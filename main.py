@@ -247,7 +247,8 @@ while True:
                         print('tempo que ja clicou no rodou: ', tempo_total)
                         if tempo_total >= 12:
                             print('ja pode sair do r1')
-                            pyautogui.click(882 + x_origem, 171 + y_origem)
+                            if pyautogui.pixelMatchesColor((x_origem + 495), (y_origem + 315), (211, 110, 12), tolerance=10):  # testa de roleta 1 ta aberta Pino dourado apontando para cima
+                                pyautogui.click(882 + x_origem, 171 + y_origem) # clica para fechar a roleta 1
                             break
 
                         time.sleep(0.3)

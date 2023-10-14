@@ -18,7 +18,7 @@ import Slot
 def teste_limpo(x_origem, y_origem):
     pyautogui.click(490 + x_origem, 70 + y_origem) # clique bobo para passar alguma naimação
     #barra azul do looby
-    if pyautogui.pixelMatchesColor((x_origem + 685), (y_origem + 360), (215, 234, 244), tolerance=5):
+    if pyautogui.pixelMatchesColor((x_origem + 685), (y_origem + 360), (215, 234, 244), tolerance=3):
         print("Esta no Lobby, ta limpo")
         return True
     else:
@@ -301,9 +301,9 @@ def fecha_tarefa(x_origem, y_origem): #fecha a lista de tarefas diarias
     #pyautogui.click(490 + x_origem, 70 + y_origem, button='left')  # clique bobo para passar alguma naimação
     #Tarefas diarias
     for i in range(20):
-        if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 133), (47, 0, 90), tolerance=5):
+        if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 133), (47, 0, 90), tolerance=2):
             pyautogui.click(821 + x_origem, 138 + y_origem)
-            time.sleep(0.3)
+            time.sleep(0.5)
             print("fecha Tarefas diarias")
         else:
             return
@@ -697,11 +697,11 @@ def limpa_abre_tarefa2(x_origem, y_origem): #abre o tarefas
         for i in range(20):
             #IP.f5_quando_internete_ocila(id, senha, url, navegador)
             #time.sleep(2)
-            pyautogui.doubleClick(x_origem + 635, y_origem + 25) #clica no tarefas diarias
+            pyautogui.doubleClick(x_origem + 635, y_origem + 25) # clica no tarefas diarias
             print("Limpa Tarefas diarias")
             time.sleep(0.5)
-            pyautogui.doubleClick(x_origem + 193, y_origem + 172) #clica dentro do tarefas diarias
-            #time.sleep(0.5)
+            pyautogui.doubleClick(x_origem + 193, y_origem + 172) # clica dentro do tarefas diarias
+            # time.sleep(0.5)
 
             limpa_pequeno(x_origem, y_origem)
             #testa se tarefa diariaria esta aberta e limpa
@@ -724,7 +724,8 @@ def limpa_abre_tarefa2(x_origem, y_origem): #abre o tarefas
 
 #
 # x_origem, y_origem = Origem_pg.x_y()
-# # #limpa_total(x_origem, y_origem)
+# # limpa_jogando(x_origem, y_origem)
+# limpa_total(x_origem, y_origem)
 # # faz_tutorial(x_origem,y_origem)
 # # # # # #iniciantes(x_origem, y_origem)
 # # # # # # # # # # aviso_canto_lobby(x_origem, y_origem)
