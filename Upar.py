@@ -46,7 +46,7 @@ def solot_joga_vezes_upando(x_origem, y_origem):
 
         if not continua_jogando:
             print("FIM")
-            Limpa.limpa_total(x_origem, y_origem)"
+            Limpa.limpa_total(x_origem, y_origem)
             Firebase.confirmacao_comando_resposta('Terminou Slote')
             return 'Terminou Slote'
     return
