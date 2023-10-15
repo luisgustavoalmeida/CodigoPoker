@@ -11,20 +11,17 @@ import OCR_tela
 
 
 def solot_joga_vezes_upando(x_origem, y_origem):
+    Firebase.confirmacao_comando_resposta('Iniciando Slote')
     joga_vezes = True
     cont_jogadas = 0
-    status_upando = 'Iniciando Slote'
-    Firebase.confirmacao_comando_resposta(status_upando)
     continua_jogando = True
 
-    if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-        return "sair da conta"
-
-    Slot.abre_slot(x_origem, y_origem, joga_vezes)
+    Limpa.limpa_total(x_origem, y_origem)
 
     while continua_jogando: # permanece joghando cartas premiadas ate nao ter mais a mição jogar x vezes
 
         slot_aberto = Slot.abre_slot(x_origem, y_origem, joga_vezes)
+
         if slot_aberto:
             print('espera girar na cor certa')
             for i in range(20):
@@ -49,20 +46,21 @@ def solot_joga_vezes_upando(x_origem, y_origem):
 
         if not continua_jogando:
             print("FIM")
-            if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-                return "sair da conta"
+            Limpa.limpa_total(x_origem, y_origem)"
             Firebase.confirmacao_comando_resposta('Terminou Slote')
-            return 'Slot terminado'
+            return 'Terminou Slote'
     return
 
 
 def genius_joga_vezes_upando(x_origem, y_origem):
+    Firebase.confirmacao_comando_resposta('Iniciando Genius')
     cont_jogadas = 0
-    Genius.abre_genius(x_origem, y_origem)
     continua_jogando = True
     regiao = (473 + x_origem, 101 + y_origem, 20, 32)  # (x, y, largura, altura)
     imagem1 = r'Imagens\Genius\tempo6.png'
     precisao = 0.9
+
+    Limpa.limpa_total(x_origem, y_origem)
 
     while continua_jogando: # permanece joghando cartas premiadas ate nao ter mais a mição jogar x vezes
 
@@ -106,23 +104,18 @@ def genius_joga_vezes_upando(x_origem, y_origem):
 
             if not continua_jogando:
                 print("FIM")
-                if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-                    return "sair da conta"
+                Limpa.limpa_total(x_origem, y_origem)
                 Firebase.confirmacao_comando_resposta('Terminou Genius')
-                return
+                return 'Terminou Genius'
     return
 
 
 def cartas_premidas_joga_vezes_upando(x_origem, y_origem):
+    Firebase.confirmacao_comando_resposta('Iniciando Cartas')
     cont_jogadas = 0
-    Firebase.confirmacao_comando_resposta('Iniciando cartas')
-
-    if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-        return "sair da conta"
-
-    Cartas.abre_cartas_premidas(x_origem, y_origem)
-
     continua_jogando = True
+
+    Limpa.limpa_total(x_origem, y_origem)
 
     while continua_jogando: # permanece joghando cartas premiadas ate nao ter mais a mição jogar x vezes
         cartas_aberto = Cartas.abre_cartas_premidas(x_origem, y_origem)  # abre o cartas premidas
@@ -179,17 +172,14 @@ def cartas_premidas_joga_vezes_upando(x_origem, y_origem):
 
         if not continua_jogando:
             print("FIM")
-            if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-                return "sair da conta"
-
+            Limpa.limpa_total(x_origem, y_origem)
             Firebase.confirmacao_comando_resposta('Terminou Cartas')
-            return
+            return 'Terminou Cartas'
 
     return
 
 
 def levantar_mesa(x_origem, y_origem):
-    #Mesa
     sentado = "sentado"
     for i in range (50):
         if pyautogui.pixelMatchesColor((x_origem + 619), (y_origem + 631), (67, 89, 136), tolerance=1):  # testa se esta dentro da mesa
@@ -197,8 +187,8 @@ def levantar_mesa(x_origem, y_origem):
             sentado = "levantou da mesa"
             break
 
-        if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (27, 92, 155),  tolerance=19) \
-                or pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (19, 64, 109),  tolerance=19) :  # testa se esta dentro da mesa
+        if (pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (27, 92, 155),  tolerance=19)
+                or pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (19, 64, 109),  tolerance=19)):  # testa se esta dentro da mesa
 
             pyautogui.click(947 + x_origem, 78 + y_origem)#setinha
             time.sleep(0.3)
@@ -211,47 +201,55 @@ def levantar_mesa(x_origem, y_origem):
                 pyautogui.click(947 + x_origem, 78 + y_origem)  # setinha
                 time.sleep(0.3)
                 pyautogui.click(925 + x_origem, 204 + y_origem)  # Levantar
-            print("Sai da Mesa")
+
     return sentado
 
+
 def passa_ate_lv7(x_origem, y_origem): # para se fazer tarefas
+    Firebase.confirmacao_comando_resposta("Jogando mesa")
     level_conta = 0
-    Firebase.comando_coleetivo_escravo_escravo("Jogando mesa")
+
     while True:
-        if pyautogui.pixelMatchesColor((x_origem + 619), (y_origem + 631), (67, 89, 136), tolerance=1):  # testa se esta dentro da mesa
+        comando = Firebase.comando_escravo
+        if comando == "Levanta":
+            status_comando = levantar_mesa(x_origem, y_origem)
+
+        Firebase.confirmacao_comando_resposta(status_comando)
+
+        Limpa.limpa_jogando(x_origem, y_origem)
+
+        Tarefas.recolher_tarefa_upando(x_origem, y_origem)
+
+        if pyautogui.pixelMatchesColor((x_origem + 480), (y_origem + 650), (43, 16, 9), tolerance=3):
+            pyautogui.click((x_origem + 640), (y_origem + 72)) # clica para passar animação de recolher
+
+        if pyautogui.pixelMatchesColor((x_origem + 619), (y_origem + 631), (67, 89, 136), tolerance=1):  # testa se esta sentado
             print("Levantou")
             print("Emvia um comando para levantar os outros escravos")
             Firebase.comando_coleetivo_escravo_escravo("Levanta")
             break
+
         else:
-            Tarefas.recolher_tarefa_upando(x_origem, y_origem)
 
-            if pyautogui.pixelMatchesColor((x_origem + 480), (y_origem + 650), (43, 16, 9), tolerance=3):
-                pyautogui.click((x_origem + 640), (y_origem + 72))
-
-            Limpa.limpa_jogando(x_origem, y_origem)
             if level_conta < 7:
                 # se nao esta com v azul dentro do quadrado branco e se esta com quadrado branco
                 if ((not pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (59, 171, 228), tolerance=1))
                         and (pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (255, 255, 255), tolerance=1))):
                     pyautogui.click((x_origem + 337), (y_origem + 605))
-                    time.sleep(0.3)
+                    # time.sleep(0.3)
                     print("Passou")
                     level_conta = OCR_tela.level_conta(x_origem, y_origem)
-                    Firebase.comando_coleetivo_escravo_escravo("Passou")
-                    #return 'Passou'
+                    status_comando = "Passou"
 
                 elif pyautogui.pixelMatchesColor((x_origem + 480), (y_origem + 650), (255, 255, 255), tolerance=1): # testa se tem area branca
                     pyautogui.click((x_origem + 337), (y_origem + 605))
-                    #time.sleep(0.3)
                     print("Pagou")
                     level_conta = OCR_tela.level_conta(x_origem, y_origem)
-                    Firebase.comando_coleetivo_escravo_escravo("Pagou")
-                    #return 'Pagou'
+                    status_comando = "Pagou"
+
             else:
                 if pyautogui.pixelMatchesColor((x_origem + 480), (y_origem + 650), (255, 255, 255), tolerance=1): # testa se tem area branca
                     pyautogui.click((x_origem + 528), (y_origem + 605))  # clica no correr
-                    #level_conta = OCR_tela.level_conta(x_origem, y_origem)
-                    #time.sleep(0.3)
-                    Firebase.comando_coleetivo_escravo_escravo("Passou")
                     print("Correu")
+                    status_comando = "Correu"
+
