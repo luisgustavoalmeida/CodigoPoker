@@ -107,27 +107,24 @@ def sentar_mesa(x_origem, y_origem, senta_com_maximo, blind='2040'):
     if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (27, 92, 155), tolerance=19):#testa se esta dentro da mesa
         print("esta dentro da mesa")
 
-        blind_sala = OCR_tela.blind_sala(x_origem, y_origem)
-        blind = blind.replace("/", "")
-        print("blind_sala :", blind_sala )
-        print("blind :", blind)
-        if blind == blind_sala:
-            print("sentar mesa Esta na sala certa")
-        else:
-            print("sentar mesa Esta na sala errada")
-            sentou = False
-            return False
-
-        posicao_jogaragora_x = 495 + x_origem
-        posicao_jogaragora_y = 627 + y_origem
-        cor_jogaragora = (15, 160, 220)
-
-        if not(pyautogui.pixelMatchesColor(posicao_jogaragora_x, posicao_jogaragora_y, cor_jogaragora, tolerance=10)): # test se tem o botao jogar agoar apara seber se ja ta sentado
+        if not(pyautogui.pixelMatchesColor(495 + x_origem, 627 + y_origem, (15, 160, 220), tolerance=10)): # test se tem o botao jogar agoar apara seber se ja ta sentado
             print('ja esta sentado')
             sentou = True
             return sentou
         else:
+
+            blind_sala = OCR_tela.blind_sala(x_origem, y_origem)
+            blind = blind.replace("/", "")
+            print("blind_sala :", blind_sala)
+            print("blind :", blind)
+            if blind == blind_sala:
+                print("sentar mesa Esta na sala certa")
+            else:
+                print("sentar mesa Esta na sala errada")
+                sentou = False
+                return False
             print('tenta sentar')
+
             for i in range(10):
                 print("CHAMA A FUNÇÃO SENTAR")
                 clica_seta = clica_seta_sentar(x_origem, y_origem)

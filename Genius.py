@@ -117,6 +117,9 @@ def ajustar_valor(x_origem, y_origem, valor=200):
 
 
 def genius_joga_vezes(x_origem, y_origem, id, senha, url, navegador):
+    regiao = (473 + x_origem, 101 + y_origem, 20, 32)  # (x, y, largura, altura)
+    imagem1 = r'Imagens\Genius\tempo6.png'
+    precisao = 0.9
 
     tarefas_fazer = ('Jogar no Casino Genius Pro 100 vezes',
                      'Jogar no Casino Genius Pro 50 vezes',
@@ -146,9 +149,7 @@ def genius_joga_vezes(x_origem, y_origem, id, senha, url, navegador):
 
         if genius_aberto:
             print('espera espera pelo valor de tempo certo')
-            regiao = (473 + x_origem, 101 + y_origem, 20, 32)  # (x, y, largura, altura)
-            imagem1 = r'Imagens\Genius\tempo6.png'
-            precisao = 0.9
+
             for i in range(80):
                 #espera o time
                 posicao = localizar_imagem(imagem1, regiao, precisao)
@@ -185,6 +186,9 @@ def genius_joga_vezes(x_origem, y_origem, id, senha, url, navegador):
     return
 
 def genius_joga_valor(x_origem, y_origem, id, senha, url, navegador, lista_tarefas_disponivel):
+    regiao = (473 + x_origem, 101 + y_origem, 20, 32)  # (x, y, largura, altura)
+    imagem1 = r'Imagens\Genius\tempo6.png'
+    precisao = 0.9
 
     tarefas_fazer = ('Ganhar 100.000 fichas no Casino Genius Pro',
                      'Ganhar 30.000 fichas no Casino Genius Pro',
@@ -223,9 +227,6 @@ def genius_joga_valor(x_origem, y_origem, id, senha, url, navegador, lista_taref
 
         if genius_aberto == True:
             print('espera espera pelo valor de tempo certo')
-            regiao = (473 + x_origem, 101 + y_origem, 20, 32)  # (x, y, largura, altura)
-            imagem1 = r'Imagens\Genius\tempo6.png'
-            precisao = 0.9
             for i in range(80):
                 #espera o time
                 posicao = localizar_imagem(imagem1, regiao, precisao)
@@ -328,6 +329,9 @@ def genius_joga_valor(x_origem, y_origem, id, senha, url, navegador, lista_taref
 def genius_joga_vezes_upando(x_origem, y_origem):
     abre_genius(x_origem, y_origem)
     continua_jogando = True
+    regiao = (473 + x_origem, 101 + y_origem, 20, 32)  # (x, y, largura, altura)
+    imagem1 = r'Imagens\Genius\tempo6.png'
+    precisao = 0.9
 
     while continua_jogando: # permanece joghando cartas premiadas ate nao ter mais a mição jogar x vezes
 
@@ -335,9 +339,7 @@ def genius_joga_vezes_upando(x_origem, y_origem):
 
         if genius_aberto:
             print('espera espera pelo valor de tempo certo')
-            regiao = (473 + x_origem, 101 + y_origem, 20, 32)  # (x, y, largura, altura)
-            imagem1 = r'Imagens\Genius\tempo6.png'
-            precisao = 0.9
+
             for i in range(80):
                 #espera o time
                 posicao = localizar_imagem(imagem1, regiao, precisao)

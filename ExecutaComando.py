@@ -1,8 +1,4 @@
 
-import Firebase
-print(Firebase.comando_escravo)
-
-
 import Aneis
 import Google
 import Seleniun
@@ -25,9 +21,6 @@ import os
 import socket
 import threading
 import xp2
-
-
-
 import Firebase
 
 
@@ -209,7 +202,7 @@ while True:
 
             #######################Tarefas
             if guia == "Up":
-                Firebase.escreve_resposta_escravo('Entrou')
+                Firebase.confirmacao_comando_resposta('Entrou')
 
                 pontos_disponiveis = 200
                 pontuacao_tarefas = 0
@@ -227,7 +220,6 @@ while True:
                     break
 
                 # codigo deve ser escrito aqui dentro ...
-
 
                 status_comando = 'Aguardando comando'
                 blind = ""
@@ -267,15 +259,6 @@ while True:
 
                     elif comando == "2xp":
                         status_comando = xp2.pega_2xp(x_origem, y_origem)
-
-
-                    ###################################################################################
-
-                    if status_comando == "Sentou":
-                        status_mesa = Mesa.passa_ate_lv7(x_origem, y_origem)
-                        if status_mesa == 'Levantou':
-                            print("Emvia um comando para levantar os outros escravos")
-                            Firebase.comando_coleetivo_escravo_escravo("Levanta")
 
                     Firebase.confirmacao_comando_resposta(status_comando)
 
