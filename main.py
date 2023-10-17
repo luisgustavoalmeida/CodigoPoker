@@ -297,17 +297,10 @@ while True:
                     for i in range(3):
                         print('\n TAREFAS \n')
 
-                        # if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
-                        #     parar_tarefas = True
-                        #     break
-                        # if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-                        #     parar_tarefas = True
-                        #     break
-
-                        (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas, lista_tarefas_fazer,
-                         pontos_disponiveis, hora_fim_tarefa) \
-                            = (Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador,
-                                                                      dia_da_semana))
+                        (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
+                         lista_tarefas_fazer, pontos_disponiveis, hora_fim_tarefa) \
+                            = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha,
+                                                                     url, navegador, dia_da_semana)
                         time.sleep(2)
 
                         if parar_tarefas:
@@ -325,7 +318,6 @@ while True:
                             print("\n\n Jogar o caca-niquel da mesa vezes \n\n")
 
                             Mesa.joga(x_origem, y_origem, id, senha, url, navegador, 200)
-                            time.sleep(1)
 
                             (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas,
                              lista_tarefas_fazer, pontos_disponiveis, hora_fim_tarefa) \

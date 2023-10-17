@@ -10,20 +10,16 @@ import Seleniun
 import Slot
 
 
-
-
-#x_origem, y_origem = Origem_pg.carregado_origem()
-#print(x_origem, y_origem)
-
 def teste_limpo(x_origem, y_origem):
     pyautogui.click(490 + x_origem, 70 + y_origem) # clique bobo para passar alguma naimação
     #barra azul do looby
     if pyautogui.pixelMatchesColor((x_origem + 685), (y_origem + 360), (215, 234, 244), tolerance=3):
-        print("Esta no Lobby, ta limpo")
+        print("teste_limpo: Esta no Lobby, ta limpo")
         return True
     else:
-        print('não esta limpo')
+        print('teste_limpo: não esta limpo')
         return False
+
 
 def ja_esta_logado(x_origem, y_origem):
 
@@ -43,7 +39,6 @@ def limpa_jogando(x_origem, y_origem):
     print('limpa_jogando')
 
     pyautogui.click(x_origem + 43, y_origem + 388) # clica no anel
-
 
     if (pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 117), (72, 71, 76), tolerance=5) or
             pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 117), (22, 21, 23), tolerance=5)):
@@ -91,9 +86,6 @@ def limpa_jogando(x_origem, y_origem):
     elif pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 118), (72, 71, 76), tolerance=20):
         pyautogui.click(821 + x_origem, 138 + y_origem, button='left')
         print("Promoção padrão")
-
-
-
 
     # # aviso do sistema "tem certesa de que quer sair da mesa?" "vc so pode jogar depois de estar sentado""
     # elif pyautogui.pixelMatchesColor((x_origem + 452), (y_origem + 407), (28, 129, 205), tolerance=6) \
@@ -247,6 +239,7 @@ def limpa_pequeno(x_origem, y_origem):
         # Lide com o erro aqui, por exemplo, exiba uma mensagem de erro ou registre-o em um arquivo de log
         print(f'Erro: {e}')
 
+
 def limpa_tarefas(x_origem, y_origem): # fecha todas as tarefas que sao feitas
     print('limpa_tarefas')
     pyautogui.click(490 + x_origem, 70 + y_origem, button='left')  # clique bobo para passar alguma naimação
@@ -283,7 +276,6 @@ def limpa_tarefas(x_origem, y_origem): # fecha todas as tarefas que sao feitas
 
         print("Sai da Mesa")
 
-
     #Casino Genius
     elif pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 612), (111, 100, 105), tolerance=19):
         pyautogui.click(910 + x_origem, 80 + y_origem)
@@ -296,6 +288,8 @@ def limpa_tarefas(x_origem, y_origem): # fecha todas as tarefas que sao feitas
         print("Slot Classico")
 
     fecha_tarefa(x_origem, y_origem)
+
+
 def fecha_tarefa(x_origem, y_origem): #fecha a lista de tarefas diarias
     print('fecha_tarefa')
     #pyautogui.click(490 + x_origem, 70 + y_origem, button='left')  # clique bobo para passar alguma naimação
@@ -315,6 +309,7 @@ def fecha_tarefa(x_origem, y_origem): #fecha a lista de tarefas diarias
 
         time.sleep(0.3)
     limpa_total(x_origem, y_origem)
+
 
 def limpa_promocao(x_origem, y_origem):
     '''Limpa as promoções exceto as tarefas que são feitas'''
@@ -342,7 +337,7 @@ def limpa_promocao(x_origem, y_origem):
         print("Fique milionario jogando")
 
     # Valete ou mais
-    if pyautogui.pixelMatchesColor((x_origem + 400), (y_origem + 70), (12, 6, 42), tolerance=20):
+    if pyautogui.pixelMatchesColor((x_origem + 400), (y_origem + 70), (12, 6, 42), tolerance=10):
         pyautogui.mouseDown(895 + x_origem, 82 + y_origem) # aperta e segura
         time.sleep(0.4)
         pyautogui.mouseUp(895 + x_origem, 82 + y_origem)  # aperta e segura
@@ -415,6 +410,7 @@ def limpa_promocao(x_origem, y_origem):
     if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 225), (13, 17, 41), tolerance=6):
         pyautogui.click(x_origem + 722, y_origem + 219, button='left')
         print("Voce Noa Jogou Nehum Jogo De Poker Essasemana")
+
 
 def limpa_total(x_origem, y_origem):
 
@@ -518,6 +514,7 @@ def limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador): #abre o ta
         return False
     return False
 
+
 def forca_iniciante(x_origem, y_origem):
     print('forca_iniciante')
     limpa_total(x_origem, y_origem)
@@ -535,7 +532,6 @@ def forca_iniciante(x_origem, y_origem):
             return
         time.sleep(1)
     return
-
 
 
 def iniciantes(x_origem, y_origem):
@@ -636,8 +632,6 @@ def faz_tutorial(x_origem,y_origem):
             break
 
 
-
-
 def premio_r1 (x_origem, y_origem):
     print('premio_r1')
     fecha_tarefa(x_origem, y_origem)
@@ -659,6 +653,7 @@ def premio_r1 (x_origem, y_origem):
     print('deu o tempo')
     return True
 
+
 def premio_r2 (x_origem, y_origem):
     print('premio_r2')
     for i in range(100):
@@ -676,14 +671,13 @@ def premio_r2 (x_origem, y_origem):
     print('deu o tempo')
     return True
 
+
 def aviso_canto_lobby (x_origem, y_origem):
     '''Fecha propaganda'''
     #fecha mnsagem no canto inferior da tela
     if pyautogui.pixelMatchesColor((x_origem + 281), (y_origem + 561), (255, 255, 255), tolerance=5):
         pyautogui.click(x_origem + 281, y_origem + 561)
         print("fechou aviso canto da tela")
-
-
 
 
 def limpa_abre_tarefa2(x_origem, y_origem): #abre o tarefas

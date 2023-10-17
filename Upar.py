@@ -181,7 +181,7 @@ def cartas_premidas_joga_vezes_upando(x_origem, y_origem):
 
 def levantar_mesa(x_origem, y_origem):
     sentado = "sentado"
-    for i in range (50):
+    for i in range(50):
         if pyautogui.pixelMatchesColor((x_origem + 619), (y_origem + 631), (67, 89, 136), tolerance=1):  # testa se esta dentro da mesa
             print('Não esta sentado')
             sentado = "levantou da mesa"

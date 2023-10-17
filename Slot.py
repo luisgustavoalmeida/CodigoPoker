@@ -18,13 +18,13 @@ def localizar_imagem(imagem, regiao, precisao):
         time.sleep(2)
         return None
 
-def abre_slot(x_origem, y_origem, joga_vezes):
+
+def abre_slot(x_origem, y_origem, joga_vezes=True):
     print('abre_slot')
     while True:
         for i in range(40):
-            limpo = Limpa.teste_limpo(x_origem, y_origem)
 
-            if limpo:
+            if Limpa.teste_limpo(x_origem, y_origem):
                 pyautogui.click(x_origem + 920, y_origem + 150)
                 print('clica para abrir o slot 777')
                 time.sleep(1)
@@ -32,19 +32,21 @@ def abre_slot(x_origem, y_origem, joga_vezes):
             # Slot Classico testa se esta no slot com ele limpo ou com alguma mensagem, quando tem alguma messagem fica um pouco escuro
             if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 668), (46, 22, 9), tolerance=5) \
                     or pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 668), (18, 9, 4), tolerance=5):
-                nao_esta_limpo = testa_slot_lipo(x_origem, y_origem)
-                if nao_esta_limpo:
+                print("slote aberto")
+
+                if testa_slot_lipo(x_origem, y_origem):
+                    print('manda limpara total fazendo tarefas')
                     if Limpa.limpa_total_fazendo_tarefa(x_origem, y_origem) == "sair da conta":
                         return "sair da conta"
 
                 print("Slot Classico, entrou")
 
-                ajustado = ajustar_valor(x_origem, y_origem, joga_vezes)
-                if ajustado:
+                if ajustar_valor(x_origem, y_origem, joga_vezes):
                     return True
 
             time.sleep(0.2)
 
+        print('limite de tentativas manda limpara total')
         if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
             return "sair da conta"
 
@@ -58,9 +60,11 @@ def testa_slot_lipo(x_origem, y_origem):
 
         if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 668), (46, 22, 9), tolerance=5) \
                 and pyautogui.pixelMatchesColor((x_origem + 624), (y_origem + 336), (0, 0, 0), tolerance=5):
+            print("testa_slot_lipo: slote limpo")
             # testa se esta limpo, se esta com a cor clara sem foco na mensagem e se a lista preta de divisão esta apatecendo
             return False
         else:
+            print("slote NÂO limpo")
             if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 668), (18, 9, 4), tolerance=5): # esta com alguma mensagem de bonus, fica mais escuro com foco na mensagem
                 pyautogui.click(x_origem + 684, y_origem + 258)  # rodada bonus
                 pyautogui.click(x_origem + 716, y_origem + 256)  # mega win
@@ -91,20 +95,20 @@ def testa_slot_lipo(x_origem, y_origem):
             return True
         time.sleep(0.3)
 
+
 def ajustar_valor(x_origem, y_origem, joga_vezes):
     print('ajustar_valor')
 
     Limpa.aviso_canto_lobby(x_origem, y_origem)  # fecha propaganda
     imagem1 = r'Imagens\Slot\linhas9.png'
     regiao1 = (230 + x_origem, 591 + y_origem, 55, 19)  # (x, y, largura, altura)
+    regiao2 = (379 + x_origem, 591 + y_origem, 55, 18)  # (x, y, largura, altura)
+    precisao = 0.98
 
     if joga_vezes:
         imagem2 = r'Imagens\Slot\aposta20.png'
     else:
         imagem2 = r'Imagens\Slot\aposta200.png'
-
-    regiao2 = (379 + x_origem, 591 + y_origem, 55, 18)  # (x, y, largura, altura)
-    precisao = 0.98
 
     for i in range(20):
         print('procura numero linha')
@@ -127,6 +131,7 @@ def ajustar_valor(x_origem, y_origem, joga_vezes):
             pyautogui.click(x_origem + 289, y_origem + 601)  # mudar numero de linhas
             time.sleep(0.2)
     return False
+
 
 def solot_joga_vezes(x_origem, y_origem, id, senha, url, navegador, joga_vezes):
     if joga_vezes:
