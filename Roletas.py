@@ -113,8 +113,8 @@ def roletas(x_origem, y_origem, id, senha, url, navegador):
         else:
             print('nao tem roleta 2')
             roleta = 'roleta_1'
-            if (not pyautogui.pixelMatchesColor((x_origem + 680), (y_origem + 14), (227, 235, 248), tolerance=20))\
-                and (not pyautogui.pixelMatchesColor((x_origem + 680), (y_origem + 14), (146, 172, 208), tolerance=20)):  # testa se o icone da roleta NÃO esta cinsa
+            if ((not pyautogui.pixelMatchesColor((x_origem + 680), (y_origem + 14), (227, 235, 248), tolerance=20))
+                    and (not pyautogui.pixelMatchesColor((x_origem + 680), (y_origem + 14), (146, 172, 208), tolerance=20))):  # testa se o icone da roleta NÃO esta cinsa
 
                 print("espera abrir a roleta 1")
                 for i in range(50):
@@ -125,7 +125,7 @@ def roletas(x_origem, y_origem, id, senha, url, navegador):
 
                     pyautogui.click(490 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
 
-                    if pyautogui.pixelMatchesColor((x_origem + 495), (y_origem + 315), (211, 110, 12), tolerance=10):  # testa de roleta 1 ta aberta Pino dourado apontando para cima
+                    if pyautogui.pixelMatchesColor((x_origem + 495), (y_origem + 315), (211, 110, 12), tolerance=15):  # testa de roleta 1 ta aberta Pino dourado apontando para cima
                         pyautogui.doubleClick(x_origem + 492, y_origem + 383)  # clica no meio da roleta para rodar
                         print("roleta 1 aberta")
                         time.sleep(0.3)
