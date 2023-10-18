@@ -36,6 +36,7 @@ for i in range(100):
     if pyautogui.pixelMatchesColor(x, y, (156, 184, 207), tolerance=tolerancia):
         print('tem a cor, tolerancia :', tolerancia)
 
+    tolerancia = tolerancia + 1
 
     time.sleep(0.2)
 
