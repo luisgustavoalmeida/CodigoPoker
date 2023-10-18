@@ -636,6 +636,7 @@ def joga_uma_vez(x_origem, y_origem):
                     return
 
                 jogou_uma_vez = False
+                time_entrou = time.perf_counter()
 
 
         else:
