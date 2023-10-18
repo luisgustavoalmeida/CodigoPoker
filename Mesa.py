@@ -466,8 +466,8 @@ def passa_corre_joga(x_origem, y_origem): # para se fazer tarefas
     print("jogando")
     jogou_uma_vez = False
     # se nao esta com v azul dentro do quadrado branco e se esta com quadrado branco
-    if (not pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (59, 171, 228), tolerance=1)) \
-            and (pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (255, 255, 255), tolerance=1)):
+    if ((not pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (59, 171, 228), tolerance=1))
+            and (pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (255, 255, 255), tolerance=1))):
         pyautogui.click((x_origem + 337), (y_origem + 605))
         time.sleep(0.3)
         print("foi encontado o quadrado")
@@ -600,11 +600,14 @@ def joga(x_origem, y_origem, id, senha, url, navegador, ajusta_aposta):
         time.sleep(1)
     return
 
+
 def joga_uma_vez(x_origem, y_origem):
     print('joga_uma_vez')
 
+
     continua_jogando = True
     jogou_uma_vez = False
+    jogou_seguda_vez = False
     senta_com_maximo = False
 
     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
@@ -622,8 +625,17 @@ def joga_uma_vez(x_origem, y_origem):
 
         if jogou_uma_vez:
             if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=10):  # testa se apareceu as mensagens verdes na parte de baixo
-                continua_jogando = False
-                print('apareceu a mensagem pode sair')
+                #continua_jogando = False
+                if jogou_seguda_vez:
+                    if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=10):  # testa se apareceu as mensagens verdes na parte de baixo
+                        continua_jogando = False
+                        if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
+                            return "sair da conta"
+                        return
+                        print('apareceu a mensagem pode sair')
+
+                jogou_uma_vez = False
+                jogou_seguda_vez = True
 
         else:
             # if pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 604), (255, 255, 255), tolerance=5):
@@ -650,11 +662,11 @@ def joga_uma_vez(x_origem, y_origem):
                 jogou_uma_vez = True
 
         else:
-            if jogou_uma_vez:
-                if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-                    return "sair da conta"
-                Limpa.limpa_jogando(x_origem, y_origem)
-                return
+            # if jogou_uma_vez:
+            #     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
+            #         return "sair da conta"
+            #     Limpa.limpa_jogando(x_origem, y_origem)
+            #     return
 
             print("ainda nao esta sentado")
             for i in range(2):
