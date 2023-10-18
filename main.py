@@ -117,10 +117,11 @@ while True:
     else:
         id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
 
-    dia_da_semana = int(datetime.datetime.now().weekday()) # busca o dia da semana 0 segunda 1 terça ... 6 domeingo
+    #dia_da_semana = int(datetime.datetime.now().weekday()) # busca o dia da semana 0 segunda 1 terça ... 6 domeingo
 
     #login
     while True:
+        dia_da_semana = int(datetime.datetime.now().weekday())  # busca o dia da semana 0 segunda 1 terça ... 6 domeingo
         #parte deo codigo que faz loguin
         #ip, com_internet = IP.meu_ip()  # obtem meu endereço de IP
         ip = ""
@@ -268,7 +269,7 @@ while True:
                             break
                         time.sleep(0.3)
                         # pyautogui.doubleClick(x_origem + 683, y_origem + 14)  # clica no icone roleta, ja roda sozinho
-                    Mesa.dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, valor_fichas, time_rodou, roleta)
+                    # Mesa.dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, valor_fichas, time_rodou, roleta)
 
                 # valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
                 roda = False
