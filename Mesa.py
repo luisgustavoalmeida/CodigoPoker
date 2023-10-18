@@ -607,7 +607,7 @@ def joga_uma_vez(x_origem, y_origem):
 
     continua_jogando = True
     jogou_uma_vez = False
-    jogou_seguda_vez = False
+    cont_jogou = 0
     senta_com_maximo = False
 
     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
@@ -626,16 +626,17 @@ def joga_uma_vez(x_origem, y_origem):
         if jogou_uma_vez:
             if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=10):  # testa se apareceu as mensagens verdes na parte de baixo
                 #continua_jogando = False
-                if jogou_seguda_vez:
-                    if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=10):  # testa se apareceu as mensagens verdes na parte de baixo
-                        continua_jogando = False
-                        if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-                            return "sair da conta"
-                        return
-                        print('apareceu a mensagem pode sair')
+                cont_jogou += 1
+                print("Jogou vezes igua a: ", cont_jogou)
+                if cont_jogou >= 3:
+                    if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
+                        return "sair da conta"
+
+                    print('apareceu a mensagem pode sair')
+                    return
 
                 jogou_uma_vez = False
-                jogou_seguda_vez = True
+
 
         else:
             # if pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 604), (255, 255, 255), tolerance=5):
