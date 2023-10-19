@@ -12,8 +12,52 @@ import Tarefas
 import HoraT
 import Origem_pg
 
-lista_salas_niquel = ('1537', '1538', '1546', '1542', '1545', '1543', '1542', '1541', '1540', '1538', '1536', '1535',
-                      '1769', '1768', '1767', '1766', '1765')
+nome_computador = socket.gethostname()
+
+lista_salas_niquel = ['1537', '1538', '1546', '1542', '1545', '1543', '1542', '1541', '1540', '1538', '1536', '1535',
+                      '1769', '1768', '1767', '1766', '1765']
+
+
+
+dicionari_PC_cadeira = {'PC-I5-8600K': {'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_3': (847, 366),
+                                        'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451),
+                                        'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)},
+                        'PC-I5-9400A': {'cadeira_2': (828, 211), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451),
+                                        'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360),
+                                        'cadeira_8': (134, 194), 'cadeira_9': (312, 131), 'cadeira_1': (659, 127)},
+                        'PC-I5-9400B': {'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452),
+                                        'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_8': (134, 194),
+                                        'cadeira_9': (312, 131), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211)},
+                        'PC-I5-9400C': {'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451),
+                                        'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131),
+                                        'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_3': (847, 366)},
+                        'PC-R5-7600A': {'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360),
+                                        'cadeira_8': (134, 194), 'cadeira_9': (312, 131), 'cadeira_1': (659, 127),
+                                        'cadeira_2': (828, 211), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451)},
+                        'PC-I5-13400A': {'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_8': (134, 194),
+                                         'cadeira_9': (312, 131), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211),
+                                         'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452)},
+                        'PC-I5-13400B': {'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131),
+                                         'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_3': (847, 366),
+                                         'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451)},
+                        'PC-I5-13400C': {'cadeira_8': (134, 194), 'cadeira_9': (312, 131), 'cadeira_1': (659, 127),
+                                         'cadeira_2': (828, 211), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451),
+                                         'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360)},
+                        'PC-I5-13400D': {'cadeira_9': (312, 131), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211),
+                                         'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452),
+                                         'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_8': (134, 194)},
+                        'PC-I7-11850H': {'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_3': (847, 366),
+                                         'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451),
+                                         'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)},
+                        'PC-i3-8145U': {'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_3': (847, 366),
+                                        'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451),
+                                        'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)},
+                        'PC-I7-9700KF': {'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_3': (847, 366),
+                                         'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451),
+                                         'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)},
+                        }
+
+prioridade_cadeira = dicionari_PC_cadeira[nome_computador]
 
 def localizar_imagem(imagem, regiao, precisao):
     try:
@@ -24,79 +68,27 @@ def localizar_imagem(imagem, regiao, precisao):
         time.sleep(2)
         return None
 
+
 def cadeiras_livres(x_origem, y_origem):
-    dicionario_cadeira = {'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)}
+    dicionario_cadeira = {'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_3': (847, 366),
+                          'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451),
+                          'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)}
     cadeiras_livres = 0
     for chave, valor in dicionario_cadeira.items():
-        print("chave: ", chave, "  valor :", valor)
-        cadeira_x, cadeira_y = valor
-        cor_seta_amarela = (254, 207, 0)
-        if pyautogui.pixelMatchesColor((x_origem + cadeira_x), (y_origem + cadeira_y), (cor_seta_amarela), tolerance=10):
+        if pyautogui.pixelMatchesColor((x_origem + valor[0]), (y_origem + valor[1]), (254, 207, 0), tolerance=10):
             cadeiras_livres += 1
             print(cadeiras_livres)
     print("esta mesa tem: ", cadeiras_livres, " cadeiras livres")
 
+
 def clica_seta_sentar(x_origem, y_origem):
-    # dicionari_PC_cadeira = {'PC-I5-8600K': {'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)},
-    #                         'PC-I5-9400A': {'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_3': (847, 366), 'cadeira_2': (828, 211), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131), 'cadeira_1': (659, 127)},
-    #                         'PC-I5-9400B': {'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211)},
-    #                         'PC-I5-9400C': {'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_9': (312, 131), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_8': (134, 194)},
-    #                         'PC-I7-9700KF': {'cadeira_7': (118, 360), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)},
-    #                         'PC-R5-7600A': {'cadeira_7': (118, 360), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)},
-    #                         'PC-I5-13400A': {'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)},
-    #                         'PC-I5-13400B': {'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_3': (847, 366), 'cadeira_2': (828, 211), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131), 'cadeira_1': (659, 127)},
-    #                         'PC-I5-13400D': {'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211)},
-    #                         'PC-I7-11850H': {'cadeira_7': (118, 360), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)},
-    #                         'PC-i3-8145U': {'cadeira_7': (118, 360), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)}}
-
-    dicionari_PC_cadeira = {'PC-I5-8600K': {'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_3': (847, 366),
-                                            'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451),
-                                            'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)},
-                            'PC-I5-9400A': {'cadeira_2': (828, 211), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451),
-                                            'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360),
-                                            'cadeira_8': (134, 194), 'cadeira_9': (312, 131), 'cadeira_1': (659, 127)},
-                            'PC-I5-9400B': {'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452),
-                                            'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_8': (134, 194),
-                                            'cadeira_9': (312, 131), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211)},
-                            'PC-I5-9400C': {'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451),
-                                            'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131),
-                                            'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_3': (847, 366)},
-                            'PC-R5-7600A': {'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360),
-                                            'cadeira_8': (134, 194), 'cadeira_9': (312, 131), 'cadeira_1': (659, 127),
-                                            'cadeira_2': (828, 211), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451)},
-                            'PC-I5-13400A': {'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_8': (134, 194),
-                                             'cadeira_9': (312, 131), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211),
-                                             'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452)},
-                            'PC-I5-13400B': {'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131),
-                                             'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_3': (847, 366),
-                                             'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451)},
-                            'PC-I5-13400C': {'cadeira_8': (134, 194), 'cadeira_9': (312, 131), 'cadeira_1': (659, 127),
-                                             'cadeira_2': (828, 211), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451),
-                                             'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360)},
-                            'PC-I5-13400D': {'cadeira_9': (312, 131), 'cadeira_1': (659, 127), 'cadeira_2': (828, 211),
-                                             'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452),
-                                             'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_8': (134, 194)},
-                            'PC-I7-11850H': {'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_3': (847, 366),
-                                             'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451),
-                                             'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)},
-                            'PC-i3-8145U': {'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_3': (847, 366),
-                                            'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451),
-                                            'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)},
-                            'PC-I7-9700KF': {'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_3': (847, 366),
-                                             'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451),
-                                             'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)},
-                            }
-
-    nome_computador = socket.gethostname()
-    prioridade_cadeira = dicionari_PC_cadeira[nome_computador]
-    #print(prioridade_cadeira)
     for chave, valor in prioridade_cadeira.items():
-        cadeira_x, cadeira_y = valor
-        if pyautogui.pixelMatchesColor((x_origem + cadeira_x), (y_origem + cadeira_y), (254, 207, 0), tolerance=10):
-            pyautogui.click((x_origem + cadeira_x), (y_origem + cadeira_y))
-            print(chave, "livre" )
+        if pyautogui.pixelMatchesColor((x_origem + valor[0]), (y_origem + valor[1]), (254, 207, 0), tolerance=10):
+            pyautogui.click((x_origem + valor[0]), (y_origem + valor[1]))
+            print(chave, "livre")
             return True
     return False
+
 
 def sentar_mesa(x_origem, y_origem, senta_com_maximo, blind='2040'):
     print('sentar_mesa')
@@ -146,11 +138,10 @@ def sentar_mesa(x_origem, y_origem, senta_com_maximo, blind='2040'):
                     for i in range(20):#testa algumas vezes
                         #time.sleep(0.5)
                         # teste se o botão azul do com comprar esta visivel
-                        if pyautogui.pixelMatchesColor( posicao_comprar_x, posicao_comprar_y, cor_comprar, tolerance=35):
+                        if pyautogui.pixelMatchesColor(posicao_comprar_x, posicao_comprar_y, cor_comprar, tolerance=35):
                             print("tem comprar")
-
                             #testa o tipo de caixa de comprar ficha, testa se a caixa é mais larga, olha uma mao cinsa segurando um dinheiro
-                            if pyautogui.pixelMatchesColor((x_origem + 313), (y_origem + 445), (55,57,62), tolerance=20):
+                            if pyautogui.pixelMatchesColor((x_origem + 313), (y_origem + 445), (55, 57, 62), tolerance=20):
                                 print("janela mais alta")
                                 # Marca a re-compra automatica
                                 pyautogui.click((x_origem + 522), (y_origem + 405))
@@ -160,10 +151,9 @@ def sentar_mesa(x_origem, y_origem, senta_com_maximo, blind='2040'):
                                 posicao_valor_maximo_y = 354 + y_origem
                                 posicao_recompra_automatica_x = 520 + x_origem
                                 posicao_recompra_automatica_Y = 407 + y_origem
-
                             else:
                                 #testa o tipo de caixa de comprar ficha, testa se a caixa é mais larga, olha uma mao cinsa segurando um dinheiro
-                            #elif pyautogui.pixelMatchesColor((x_origem + 313), (y_origem + 445), (222,225,227), tolerance=20):
+                                #elif pyautogui.pixelMatchesColor((x_origem + 313), (y_origem + 445), (222,225,227), tolerance=20):
                                 print("janela mais baixa")
                                 # Marca a re-compra automatica
                                 pyautogui.click((x_origem + 522), (y_origem + 424))
@@ -192,10 +182,10 @@ def sentar_mesa(x_origem, y_origem, senta_com_maximo, blind='2040'):
                                     pyautogui.mouseDown(posicao_recompra_automatica_x, posicao_recompra_automatica_Y)  # Clica no recompra automatica
                                     print('marca recompra automatica')
                                     time.sleep(0.3)
-                                for i in range(10):
+                                for i in range(15):
                                     pyautogui.mouseDown(posicao_comprar_x, posicao_comprar_y)  # clica no comprar
                                     print("Clicou no comprar")
-                                    time.sleep(0.6)
+                                    time.sleep(0.7)
                                     pyautogui.mouseUp(posicao_comprar_x, posicao_comprar_y)  # clica no comprar
                                     if not (pyautogui.pixelMatchesColor(posicao_comprar_x, posicao_comprar_y, cor_comprar, tolerance=35)):
                                         break
@@ -204,7 +194,8 @@ def sentar_mesa(x_origem, y_origem, senta_com_maximo, blind='2040'):
                                     pyautogui.click((x_origem + 641), (y_origem + 278))  # clica no fechar mensagem de nao tem fichas
                                     print("Ja tem alguem sentado ou duas contas ao mesmo tempo")
                                     sentou = False
-                                    return sentou
+                                    break
+                                    #return sentou
                                 else:
                                     print('sentar_mesa , sentou')
                                     sentou = True
@@ -219,6 +210,8 @@ def sentar_mesa(x_origem, y_origem, senta_com_maximo, blind='2040'):
                             return sentou
     print('nao esta dentro da mesa')
     return sentou
+
+
 def escolher_blind(x_origem, y_origem, blind):
     blinb_rolagem = {'1/2': (534, 478), '2/4': (534, 504), '5/10': (534, 530), '10/20': (534, 556), '20/40': (534, 582),
                      '20/50': (548, 478), '50/100': (548, 504), '100/200': (548, 530), '200/400': (548, 556), '500/1K': (548, 582),
@@ -316,7 +309,6 @@ def escolher_blind(x_origem, y_origem, blind):
         return False
 
 
-
 def ajuste_valor_niquel(x_origem, y_origem, ajusta_aposta):
     print("ajuste_valor_niquel :", ajusta_aposta)
     aposta, auto10 = False, False
@@ -396,6 +388,15 @@ def sala_minima_niquel(x_origem, y_origem, num_mesa):
     time.sleep(0.5)
     cont_erro_entrar_mesa = 0
     blind_sala = None
+    if pyautogui.pixelMatchesColor((x_origem + 205), (y_origem + 265), (46, 87, 132), tolerance=3):
+        print("Não existe sala com esse numero")
+        global lista_salas_niquel
+        print(lista_salas_niquel)
+        lista_salas_niquel.remove(num_mesa)
+        lista_salas_niquel.append(num_mesa)
+        print(lista_salas_niquel)
+        return False
+
     for i in range(20):
         if pyautogui.pixelMatchesColor((x_origem + 435), (y_origem + 264), (26, 29, 33), tolerance=5):  # testa se tem sala com pelo menos um lugar vazio, olha se tem preto no fim da barra de ocupação
             pyautogui.doubleClick(490 + x_origem, 263 + y_origem)  # clica para entar na sala vazia
@@ -411,16 +412,16 @@ def sala_minima_niquel(x_origem, y_origem, num_mesa):
                     Limpa.limpa_jogando(x_origem, y_origem)
                     blind_sala = OCR_tela.blind_sala(x_origem, y_origem)
                     print(blind_sala)
-                    break
-
+                    if blind_sala == "2040":
+                        print("Esta na sala certa")
+                        return True
+                    else:
+                        print("Esta na sala errada")
+                        return False
                 time.sleep(1)
-
                 if cont_erro_entrar_mesa >= 5:
                     Limpa.limpa_total(x_origem, y_origem)
                     break
-
-            if blind_sala != None:
-                break
         else:
             print("Não tem sala vazia")
 
@@ -430,6 +431,10 @@ def sala_minima_niquel(x_origem, y_origem, num_mesa):
     else:
         print("Esta na sala errada")
         return False
+
+
+
+
 
 def gira_niquel(x_origem, y_origem):
     posicao_10auto = None
@@ -500,6 +505,7 @@ def passa_corre_joga(x_origem, y_origem): # para se fazer tarefas
     return jogou_uma_vez
 
 def joga(x_origem, y_origem, id, senha, url, navegador, ajusta_aposta):
+    global lista_salas_niquel
 
     if ajusta_aposta == 200:
         tarefas_fazer = ('Jogar o caca-niquel da mesa 150 vezes',
@@ -602,9 +608,8 @@ def joga(x_origem, y_origem, id, senha, url, navegador, ajusta_aposta):
 
 
 def joga_uma_vez(x_origem, y_origem):
+    global lista_salas_niquel
     print('joga_uma_vez')
-
-
     continua_jogando = True
     jogou_uma_vez = False
     cont_jogou = 0
@@ -625,62 +630,39 @@ def joga_uma_vez(x_origem, y_origem):
 
         if jogou_uma_vez:
             if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=10):  # testa se apareceu as mensagens verdes na parte de baixo
-                #continua_jogando = False
                 cont_jogou += 1
                 print("Jogou vezes igua a: ", cont_jogou)
                 if cont_jogou >= 3:
-                    if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-                        return "sair da conta"
-
-                    print('apareceu a mensagem pode sair')
-                    return
-
+                    break
                 jogou_uma_vez = False
                 time_entrou = time.perf_counter()
 
-
         else:
-            # if pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 604), (255, 255, 255), tolerance=5):
-            #     jogou_uma_vez = True
-            #     print('jougou uma vez')
             time_sair = time.perf_counter()
             tempo_total = time_sair - time_entrou
             print('tempo que esta esperando', tempo_total)
-            if tempo_total > 120: # troica de mesa se ficar muito tempo parado sem entrar alguem para jogar
+            if tempo_total > 130: # troica de mesa se ficar muito tempo parado sem entrar alguem para jogar
                 print("tempo limite atingido sem outro jogador, sai da mesa para tentar em outra")
                 Limpa.limpa_total(x_origem, y_origem)
                 Limpa.limpa_jogando(x_origem, y_origem)
-
-        if not continua_jogando:
-            print("FIM")
-            if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-                return "sair da conta"
-            Limpa.limpa_jogando(x_origem, y_origem)
-            return
 
         if sentou:
             print("esta sentado")
             if passa_corre_joga(x_origem, y_origem):
                 jogou_uma_vez = True
-
         else:
-            # if jogou_uma_vez:
-            #     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-            #         return "sair da conta"
-            #     Limpa.limpa_jogando(x_origem, y_origem)
-            #     return
-
             print("ainda nao esta sentado")
             for i in range(2):
+
                 for num_mesa in lista_salas_niquel:
+                    print('procura mesa')
+                    print(lista_salas_niquel)
                     print('Mumero da mesa para tentar sentar: ', num_mesa)
                     IP.tem_internet()
                     Limpa.limpa_jogando(x_origem, y_origem)
                     Limpa.limpa_total(x_origem, y_origem)
-                    #blind_certo = escolher_blind(x_origem, y_origem, '20/40')
                     blind_certo = sala_minima_niquel(x_origem, y_origem, num_mesa)
                     if blind_certo:
-
                         sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo)
                         if sentou:
                             time_entrou = time.perf_counter()
@@ -697,6 +679,9 @@ def joga_uma_vez(x_origem, y_origem):
                 time.sleep(15)
 
         time.sleep(1)
+    if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
+        return "sair da conta"
+    Limpa.limpa_jogando(x_origem, y_origem)
     return
 
 
@@ -793,50 +778,36 @@ def passa_ate_lv7(x_origem, y_origem): # para se fazer tarefas
                 #time.sleep(0.3)
                 print("area de valor branco")
                 return 'Correu'
+    return
 
 
 
 
 
 
-#
-# x_origem, y_origem = Origem_pg.x_y()
+x_origem, y_origem = Origem_pg.x_y()
+joga_uma_vez(x_origem, y_origem)
+# joga_uma_vez(x_origem, y_origem)
 # Limpa.fecha_tarefa(x_origem, y_origem)
-# while True:
-#     passa_ate_lv7(x_origem, y_origem)
-# #
 # levantar_mesa(x_origem, y_origem)
-
-# #blind_escolha = '500/1K'
+# blind_escolha = '500/1K'
 # blind_escolha = '1K/2K'
-#
-# #escolher_blind(x_origem, y_origem, '1K/2K')
+# escolher_blind(x_origem, y_origem, '1K/2K')
 # escolher_blind(x_origem, y_origem, blind_escolha)
-#
 # senta_com_maximo = False
 # sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_escolha)
-
-
-# # joga(x_origem, y_origem, 0, 0, 0, 0)
-# # # # # passa_corre_joga(x_origem, y_origem)
-# # #
-# # # # x_origem, y_origem = Origem_pg.x_y()
-
-# # # print(x_origem, y_origem )
+# joga(x_origem, y_origem, 0, 0, 0, 0)
+# passa_corre_joga(x_origem, y_origem)
+# x_origem, y_origem = Origem_pg.x_y()
 # senta_com_maximo = False
 # sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, '200/400')
-# # print(sentou)
-#
-# #ajuste_valor_niquel(x_origem, y_origem)
-# # x_origem, y_origem = Origem_pg.x_y()
-# #
-# # gira_niquel(x_origem, y_origem)
-#
-#
+# print(sentou)
+# ajuste_valor_niquel(x_origem, y_origem)
+# x_origem, y_origem = Origem_pg.x_y()
+# gira_niquel(x_origem, y_origem)
 # sala_minima_niquel(x_origem, y_origem)
-#
-# # tem_tarefa = Tarefas.comparar_imagens_tarefa(tarefas_fazer_niquel, x_origem, y_origem)
-# # print(tem_tarefa)
+# tem_tarefa = Tarefas.comparar_imagens_tarefa(tarefas_fazer_niquel, x_origem, y_origem)
+# print(tem_tarefa)
 
 
 
