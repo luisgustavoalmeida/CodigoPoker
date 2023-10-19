@@ -785,8 +785,8 @@ def passa_ate_lv7(x_origem, y_origem): # para se fazer tarefas
 
 
 
-x_origem, y_origem = Origem_pg.x_y()
-joga_uma_vez(x_origem, y_origem)
+# x_origem, y_origem = Origem_pg.x_y()
+# joga_uma_vez(x_origem, y_origem)
 # joga_uma_vez(x_origem, y_origem)
 # Limpa.fecha_tarefa(x_origem, y_origem)
 # levantar_mesa(x_origem, y_origem)
