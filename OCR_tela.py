@@ -236,9 +236,12 @@ def tempo_roleta(x_origem, y_origem):
     # print("tepo: ", tempo)
     return tempo
 
+
 valores = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200]
+
+
 def pontuacao_tarefas(x_origem, y_origem):
-    pontuacao = 0
+
     inveter_cor = True
     esca_ciza = True
     fator_ampliacao = 4
@@ -296,6 +299,7 @@ def pontuacao_tarefas(x_origem, y_origem):
     # print("pontuacao: ", pontuacao)
     return pontuacao
 
+
 def tarefas_diaris_posicao1(x_origem, y_origem):
     lista = []
 
@@ -320,6 +324,8 @@ def tarefas_diaris_posicao1(x_origem, y_origem):
             #print(lista)
             return lista
     return lista
+
+
 def tarefas_diaris_posicao2(x_origem, y_origem):
     lista = []
     if pyautogui.pixelMatchesColor((x_origem + 707), (y_origem + 280), (87, 0, 176), tolerance=3):  # testa se tem barra de rolagem na lista de tarefas
@@ -380,6 +386,7 @@ dicionario_tarefas_fazer = {#caça-níquel da mesa
                             'Ganhar 100.000 fichas no caca niquel Slot Poker': 30,
                             'Ganhar 30.000 fichas no caca niquel Slot Poker': 20,
                             'Ganhar 10.000 fichas no caca niquel Slot Poker': 10}
+
 
 def tarefas_diaris(x_origem, y_origem):
 
@@ -471,6 +478,7 @@ para_trocar = ['Participe de um GIRE & GANHE/campeonato de eliminacao 1 vezes',
                        'Tirar Flush ou qualquer mao superior 2 vezes em mesas com blinds maiores que 100',
                        'Tirar Sequencia 2 vezes em mesas com blinds maiores que 100',
                        'Tirar Trinca 2 vezes em mesas com blinds maiores que 100']
+
 
 def tarefas_diaris_trocar(x_origem, y_origem):
     for i in range(2):
@@ -603,6 +611,7 @@ def blind_sala(x_origem, y_origem):
 
         return pontuacao
 
+
 def valor_apostar(x_origem, y_origem):
     inveter_cor = False
     esca_ciza = True
@@ -620,6 +629,7 @@ def valor_apostar(x_origem, y_origem):
         valor = 0
         print("pontuacao: ", valor)
         return valor
+
 
 def aviso_do_sistema():
     '''Retona True se caso tivert aviso do sistema :
@@ -648,6 +658,7 @@ def aviso_do_sistema():
             return False
     else:
         return False
+
 
 def aviso_sistema(x_origem, y_origem):
     print('aviso_sistema')
@@ -714,29 +725,22 @@ def level_conta(x_origem, y_origem):
             return 0
 
 
-
-
 # x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
+# pontuacao_tarefas(x_origem, y_origem)
 # level_conta(x_origem, y_origem)
-
 # # # pontuacao_tarefas(x_origem, y_origem)
 # lido = valor_fichas(x_origem, y_origem)
-# # # # tarefas_diaris_trocar(x_origem, y_origem)
-# # # tarefas_diaris(x_origem, y_origem)
-# # # # # # # # # # # # print(y_origem)
-# # # # # # # # # # # # # valor_apostar(x_origem, y_origem)
-# # # # # # # # # # # #
-# # # # # # # # # # # # # # valor = blind_sala(x_origem, y_origem)
-# # # # # # # # # # # # # # print(valor)
-# # # lista_tarefas_disponivel = tarefas_diaris(x_origem, y_origem)
-# # # print(lista_tarefas_disponivel)
-# # # # # # # # # # # #
-# # # # # # tempo_roleta(x_origem, y_origem)
-# # # # # # # # # # #
-#lido = valor_fichas(x_origem, y_origem)
+# tarefas_diaris_trocar(x_origem, y_origem)
+# tarefas_diaris(x_origem, y_origem)
+# print(y_origem)
+# valor_apostar(x_origem, y_origem)
+# valor = blind_sala(x_origem, y_origem)
+# print(valor)
+# lista_tarefas_disponivel = tarefas_diaris(x_origem, y_origem)
+# print(lista_tarefas_disponivel)
+# tempo_roleta(x_origem, y_origem)
+# lido = valor_fichas(x_origem, y_origem)
 # print(lido)
-# # # # # # # # #
 # pontuacao_tarefas(x_origem, y_origem)
-# # # # # #
-# # # # # # #def rola_tarefa_0():
-# # # # # # #pyautogui.click(708 + x_origem, 426 + y_origem, button='left')
+# def rola_tarefa_0():
+# pyautogui.click(708 + x_origem, 426 + y_origem, button='left')
