@@ -198,6 +198,9 @@ def limpa_pequeno(x_origem, y_origem):
                 pyautogui.press('f5')
                 # Seleniun.atualizar_pagina(navegador, url)
                 time.sleep(25)
+    # um martelo gratis par adestruir os goblins e receber recompensa ( tema de halowin)
+    elif pyautogui.pixelMatchesColor((x_origem + 500), (y_origem + 190), (0, 27, 38), tolerance=5):
+        pyautogui.click(495 + x_origem, 520 + y_origem)
 
     elif pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 370), (224, 227, 229), tolerance=5):
         aviso_sistema, resposta = OCR_tela.aviso_sistema(x_origem, y_origem)
@@ -372,8 +375,15 @@ def limpa_promocao(x_origem, y_origem):
         pyautogui.click(826 + x_origem, 176 + y_origem, button='left')
         print("Oferta de primeira recarga")
 
+    # Banco do poker regras aberto
+    if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (46, 38, 26), tolerance=20):
+        pyautogui.click(777 + x_origem, 217 + y_origem, button='left')
+        time.sleep(0.5)
+        pyautogui.click(821 + x_origem, 138 + y_origem, button='left')
+        print("Banco do poker")
+
     # Banco do poker
-    if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (114,97,64), tolerance=20):
+    if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (115, 96, 64), tolerance=20):
         pyautogui.click(821 + x_origem, 138 + y_origem, button='left')
         print("Banco do poker")
 
