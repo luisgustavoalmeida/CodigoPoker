@@ -361,6 +361,13 @@ def limpa_promocao(x_origem, y_origem):
         pyautogui.click(884 + x_origem, 135 + y_origem, button='left')
         print("Mega Giro e roleta2")
 
+    # Ranking , Fichas ou travessuras
+    if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (36, 36, 37), tolerance=20):
+        pyautogui.click(389 + x_origem, 143 + y_origem)
+        print("Ranking ")
+        pyautogui.click(821 + x_origem, 138 + y_origem)
+        print("Fichas ou travessuras")
+
     # Fecha promoçoes exceto tarefas
     if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (73, 71, 76), tolerance=20):
         print("Promoção padrão")
