@@ -57,7 +57,7 @@ dicionari_PC_cadeira = {'PC-I5-8600K': {'cadeira_1': (659, 127), 'cadeira_2': (8
                                         'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)},
                         'PC-I7-9700KF': {'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_3': (847, 366),
                                          'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451),
-                                         'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)},
+                                         'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)}
                         }
 
 prioridade_cadeira = dicionari_PC_cadeira[nome_computador]
@@ -689,7 +689,7 @@ def joga_uma_vez(x_origem, y_origem):
 
 
 def dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, valor_fichas, time_rodou, roleta):
-    if dia_da_semana == 4 or dia_da_semana == 5 or dia_da_semana == 6:  # testa se é sabado ou domingo
+    if dia_da_semana == 0 or dia_da_semana == 1 or dia_da_semana == 2 or dia_da_semana == 3 or dia_da_semana == 4 or dia_da_semana == 5 or dia_da_semana == 6:  # testa se é sabado ou domingo
             # 0 segunda, 1 terça, 2 quarta, 3 quinta, 4 sexta, 5 sabado,6 domingo
             #if pyautogui.pixelMatchesColor((x_origem + 750), (y_origem + 38), (245, 218, 96), tolerance=10) or pyautogui.pixelMatchesColor((x_origem + 802), (y_origem + 38), (245, 218, 96), tolerance=10) or (100000 < valor_fichas < 400000):
         print('conta para jogar mesa')

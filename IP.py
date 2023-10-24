@@ -49,17 +49,17 @@ celula = valor_dicionario[0]  # pega o primeiro item da tupla
 tipo_conexao = valor_dicionario[1]  # pega o segundo item da tuplas
 
 sites = [
-    'http://www.google.com',
-    'http://www.facebook.com',
-    'http://www.twitter.com',
-    'http://www.youtube.com',
-    'http://www.instagram.com',
-    'http://www.linkedin.com',
-    'http://www.github.com',
-    'http://www.reddit.com',
-    'http://www.amazon.com',
-    'http://www.netflix.com'
-]
+        'http://www.google.com',
+        'http://www.facebook.com',
+        'http://www.twitter.com',
+        'http://www.youtube.com',
+        'http://www.instagram.com',
+        'http://www.linkedin.com',
+        'http://www.github.com',
+        'http://www.reddit.com',
+        'http://www.amazon.com',
+        'http://www.netflix.com'
+        ]
 
 lista_negra_ip = []
 cont_lista_negra = 0
