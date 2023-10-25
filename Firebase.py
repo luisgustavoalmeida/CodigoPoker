@@ -104,6 +104,7 @@ firebase = pyrebase.initialize_app(config)
 # Obtém uma referência para o banco de dados
 db = firebase.database()
 
+
 def enviar_comando_coletivo(arranjo, comando):
 
     """Envie nesta fonção dois parametros que pode ser a tiplae dos arranjos dos conputadores "arranjo3_pc" ou

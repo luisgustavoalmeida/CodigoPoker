@@ -477,7 +477,7 @@ def passa_corre_joga(x_origem, y_origem): # para se fazer tarefas
     if ((not pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (59, 171, 228), tolerance=1))
             and (pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (255, 255, 255), tolerance=1))):
         pyautogui.click((x_origem + 337), (y_origem + 605))
-        time.sleep(0.3)
+        #time.sleep(0.3)
         print("foi encontado o quadrado")
         jogou_uma_vez = True
 
@@ -493,7 +493,7 @@ def passa_corre_joga(x_origem, y_origem): # para se fazer tarefas
                 print("tem que passar")
                 jogou_uma_vez = True
             else:
-                pyautogui.click((x_origem + 528), (y_origem + 605))  # clica no correr
+                #pyautogui.click((x_origem + 528), (y_origem + 605))  # clica no correr
                 print("tem que correr")
                 jogou_uma_vez = True
 
@@ -502,7 +502,7 @@ def passa_corre_joga(x_origem, y_origem): # para se fazer tarefas
             # print("ta com all-in ou ta tudo azul")
             # if pyautogui.pixelMatchesColor((x_origem + 528), (y_origem + 603), (255, 255, 255), tolerance=1):
             print("ta com x branco do correr")
-            pyautogui.click((x_origem + 528), (y_origem + 605))  # clica no correr
+            #pyautogui.click((x_origem + 528), (y_origem + 605))  # clica no correr
             jogou_uma_vez = True
 
     return jogou_uma_vez

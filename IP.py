@@ -15,6 +15,7 @@ import random
 import Seleniun
 import pygetwindow as gw
 import subprocess
+import ListaIpFirebase
 
 LIMITE_IP = 6
 
@@ -161,8 +162,9 @@ def tem_internet():
             continue
         print('contagem de erro 1: ', cont_erro)
         print('contagem de erro 2: ', cont_erro2)
-
     return True
+
+
 def meu_ip():
     urls = [
             'https://api.ipify.org',
@@ -197,6 +199,7 @@ def meu_ip():
                 print(e)
                 time.sleep(5)
 
+
 def nao_tem_internet():
     for i in range(20):
         try:
@@ -210,6 +213,7 @@ def nao_tem_internet():
             time.sleep(5)
             break
 
+
 def ip_troca_agora():
     while True:
         # com_internete = tem_internet()
@@ -219,21 +223,26 @@ def ip_troca_agora():
             conexao()  # chama a função que troca ip
             print('espera a internete estar estavel')
             tem_internet()  # testa ate que internete esteja estavel
-            if testa_lista_negra_ip():
-                print("Vai para a função que zera a contagem")
-                Google.zera_cont_IP(celula)  # Zera a contegem de ip na planilha
-                return
+            meu_ip_agora, teste = meu_ip()
+            if testa_lista_negra_ip(meu_ip_agora):
+                if ListaIpFirebase.verifica_e_adiciona_ip(meu_ip_agora):
+                    print("Vai para a função que zera a contagem")
+                    Google.zera_cont_IP(celula)  # Zera a contegem de ip na planilha
+                    return
         elif (nome_usuario == "lgagu") and (nome_computador == "PC-I7-9700KF"):
             print("Vai par a função de trocar ip")
             conexao()  # chama a função que troca ip
             print('espera a internete estar estavel')
             tem_internet()  # testa ate que internete esteja estavel
-            if testa_lista_negra_ip():
-                print("Vai para a função que zera a contagem")
-                Google.zera_cont_IP(celula)  # Zera a contegem de ip na planilha
-                return
+            meu_ip_agora, teste = meu_ip()
+            if testa_lista_negra_ip(meu_ip_agora):
+                if ListaIpFirebase.verifica_e_adiciona_ip(meu_ip_agora):
+                    print("Vai para a função que zera a contagem")
+                    Google.zera_cont_IP(celula)  # Zera a contegem de ip na planilha
+                    return
         else:
             return
+
 
 def contagem_IP():
     while True:
@@ -264,20 +273,24 @@ def ip(LIMITE_IP):
                     conexao()  # chama a função que troca ip
                     print('espera a internete estar estavel')
                     tem_internet()  # testa ate que internete esteja estavel
-                    if testa_lista_negra_ip():
-                        print("Vai para a função que zera a contagem")
-                        Google.zera_cont_IP(celula)  # Zera a contegem de ip na planilha
-                        return
+                    meu_ip_agora, teste = meu_ip()
+                    if testa_lista_negra_ip(meu_ip_agora):
+                        if ListaIpFirebase.verifica_e_adiciona_ip(meu_ip_agora):
+                            print("Vai para a função que zera a contagem")
+                            Google.zera_cont_IP(celula)  # Zera a contegem de ip na planilha
+                            return
 
                 elif (nome_usuario == "lgagu") and (nome_computador == "PC-I7-9700KF"):
                     print("Vai par a função de trocar ip")
                     conexao()  # chama a função que troca ip
                     print('espera a internete estar estavel')
                     tem_internet()  # testa ate que internete esteja estavel
-                    if testa_lista_negra_ip():
-                        print("Vai para a função que zera a contagem")
-                        Google.zera_cont_IP(celula) # Zera a contegem de ip na planilha
-                        return
+                    meu_ip_agora, teste = meu_ip()
+                    if testa_lista_negra_ip(meu_ip_agora):
+                        if ListaIpFirebase.verifica_e_adiciona_ip(meu_ip_agora):
+                            print("Vai para a função que zera a contagem")
+                            Google.zera_cont_IP(celula) # Zera a contegem de ip na planilha
+                            return
 
                 else:
                     print("Espera liberar IP")
@@ -571,7 +584,7 @@ def obter_nomes_conexoes():
     return nomes
 
 
-def testa_lista_negra_ip():
+def testa_lista_negra_ip(meu_ip_agora):
 
     global lista_negra_ip
     global cont_lista_negra
@@ -586,7 +599,7 @@ def testa_lista_negra_ip():
         lista_negra_ip = Google.lista_ip_banidos()
 
     print('testa lista negra')
-    meu_ip_agora, teste = meu_ip()
+    #meu_ip_agora, teste = meu_ip()
     if meu_ip_agora in lista_negra_ip:
         print(f"IP {meu_ip_agora} está na lista de IPs banidos.")
         return False
