@@ -181,10 +181,11 @@ def sentar_mesa(x_origem, y_origem, senta_com_maximo, blind='2040'):
                                 compra_ajustada = True
 
                             if compra_ajustada:
-                                if not (pyautogui.pixelMatchesColor(posicao_recompra_automatica_x, posicao_recompra_automatica_Y, cor_recompra_automatica, tolerance=10)):  # testa se o botao ta azul
-                                    pyautogui.mouseDown(posicao_recompra_automatica_x, posicao_recompra_automatica_Y)  # Clica no recompra automatica
-                                    print('marca recompra automatica')
-                                    time.sleep(0.3)
+                                # if not (pyautogui.pixelMatchesColor(posicao_recompra_automatica_x, posicao_recompra_automatica_Y, cor_recompra_automatica, tolerance=10)):  # testa se o botao ta azul
+                                #     pyautogui.mouseDown(posicao_recompra_automatica_x, posicao_recompra_automatica_Y)  # Clica no recompra automatica
+                                #     print('marca recompra automatica')
+                                #     time.sleep(0.3)
+                                #     pyautogui.mouseUp(posicao_recompra_automatica_x, posicao_recompra_automatica_Y)  # Clica no recompra automatica
                                 for i in range(15):
                                     pyautogui.mouseDown(posicao_comprar_x, posicao_comprar_y)  # clica no comprar
                                     print("Clicou no comprar")
@@ -606,7 +607,7 @@ def joga(x_origem, y_origem, id, senha, url, navegador, ajusta_aposta):
                 break
         if sentou:
             gira_niquel(x_origem, y_origem)
-        time.sleep(1)
+        time.sleep(0.5)
     return
 
 
@@ -681,7 +682,7 @@ def joga_uma_vez(x_origem, y_origem):
                 pyautogui.press('f5')
                 time.sleep(15)
 
-        time.sleep(1)
+        #time.sleep(1)
     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
         return "sair da conta"
     Limpa.limpa_jogando(x_origem, y_origem)
