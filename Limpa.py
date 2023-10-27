@@ -110,19 +110,19 @@ def limpa_pequeno(x_origem, y_origem):
         return "sair da conta"
 
     pyautogui.click(490 + x_origem, 70 + y_origem, button='left')  # clique bobo para passar alguma naimação
-    #voce ja recebeu seu premio, deixe um pouco para os outros
-    if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 435), (175,23,18), tolerance=6):
+    # voce ja recebeu seu premio, deixe um pouco para os outros
+    if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 435), (175, 23, 18), tolerance=15):
         pyautogui.click(x_origem + 490, y_origem + 435, button='left')
         print("voce ja recebeu seu premio, deixe um pouco para os outros")
 
-    #voce ganhou 2500
-    elif pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 179), (71,0,148), tolerance=6):
+    # voce ganhou 2500
+    elif pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 179), (71, 0, 148), tolerance=15):
         pyautogui.click(x_origem + 490, y_origem + 480, button='left')
         print("Voce ganhou 2500")
 
     # Subiu de nivel
-    elif pyautogui.pixelMatchesColor((x_origem + 492), (y_origem + 443), (25, 118, 188), tolerance=6) \
-            or pyautogui.pixelMatchesColor((x_origem + 492), (y_origem + 443), (29, 139, 200), tolerance=6):
+    elif (pyautogui.pixelMatchesColor((x_origem + 492), (y_origem + 443), (25, 118, 188), tolerance=15)
+          or pyautogui.pixelMatchesColor((x_origem + 492), (y_origem + 443), (29, 139, 200), tolerance=15)):
         pyautogui.click(x_origem + 492, y_origem + 443, button='left')
         print("Subiu de nivel")
 
@@ -137,7 +137,7 @@ def limpa_pequeno(x_origem, y_origem):
         print("nivel 2")
 
     # Quebou seu recorde
-    elif pyautogui.pixelMatchesColor((x_origem + 772), (y_origem + 170), (242, 246, 0), tolerance=6) :
+    elif pyautogui.pixelMatchesColor((x_origem + 772), (y_origem + 170), (242, 246, 0), tolerance=15):
         pyautogui.click(x_origem + 703, y_origem + 170, button='left')
         print("Quebou seu recorde")
 
@@ -153,7 +153,7 @@ def limpa_pequeno(x_origem, y_origem):
                 return "sair da conta"
 
     # clica no Normal
-    elif pyautogui.pixelMatchesColor((x_origem + 162), (y_origem + 160), (12, 72, 108), tolerance=5):
+    elif pyautogui.pixelMatchesColor((x_origem + 162), (y_origem + 160), (12, 72, 108), tolerance=15):
         pyautogui.click(x_origem + 164, y_origem + 161)
         print("Clica no Normal")
 
@@ -163,18 +163,19 @@ def limpa_pequeno(x_origem, y_origem):
         print("dispo nivel em acesso antecipado para jogadores VIP")
 
     ## Genius Muito tempo desde a sua unlima aposta
-    elif pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 612), (80, 73, 76), tolerance=5):
-        if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 415), (25, 118, 188), tolerance=5) \
-                or pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 415), (29, 139, 200), tolerance=5):## Genius Muito tempo desde a sua unlima aposta
+    elif pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 612), (80, 73, 76), tolerance=15):
+        if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 415), (25, 118, 188), tolerance=15) \
+                or pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 415), (29, 139, 200), tolerance=15):## Genius Muito tempo desde a sua unlima aposta
             pyautogui.mouseDown(x_origem + 490, y_origem + 415, button='left')
             print("Genius Muito tempo desde a sua unlima apostar")
             time.sleep(1)
             pyautogui.mouseUp()
 
     # testa se o torneino semanal esta no loob
-    elif pyautogui.pixelMatchesColor((x_origem + 154), (y_origem + 105), (70, 70, 71), tolerance=5):
+    elif pyautogui.pixelMatchesColor((x_origem + 154), (y_origem + 105), (70, 70, 71), tolerance=15):
         # Slot Classico testa se esta no slot com ele limpo ou com alguma mensagem, quando tem alguma messagem fica um pouco escuro
-        if not(pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 668), (46, 22, 9), tolerance=5) or pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 668), (18, 9, 4), tolerance=5)):
+        if not (pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 668), (46, 22, 9), tolerance=15)
+                or pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 668), (18, 9, 4), tolerance=5)):
             print('print("Torneio semanal de forma errada no loby")')
             limpo = teste_limpo(x_origem, y_origem)
             if limpo:
@@ -183,8 +184,8 @@ def limpa_pequeno(x_origem, y_origem):
                 time.sleep(3)
                 for i in range(40):
                     # Slot Classico
-                    if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 668), (46, 22, 9), tolerance=5) \
-                         or pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 668), (18, 9, 4), tolerance=5):
+                    if (pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 668), (46, 22, 9), tolerance=15)
+                            or pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 668), (18, 9, 4), tolerance=15)):
                         pyautogui.click(910 + x_origem, 80 + y_origem)
                         print("Slot Classico, fecha")
                         limpa_tarefas(x_origem, y_origem)
@@ -199,10 +200,10 @@ def limpa_pequeno(x_origem, y_origem):
                 # Seleniun.atualizar_pagina(navegador, url)
                 time.sleep(25)
     # um martelo gratis par adestruir os goblins e receber recompensa ( tema de halowin)
-    elif pyautogui.pixelMatchesColor((x_origem + 500), (y_origem + 190), (0, 27, 38), tolerance=5):
+    elif pyautogui.pixelMatchesColor((x_origem + 500), (y_origem + 190), (0, 27, 38), tolerance=15):
         pyautogui.click(495 + x_origem, 520 + y_origem)
 
-    elif pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 370), (224, 227, 229), tolerance=5):
+    elif pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 370), (224, 227, 229), tolerance=15):
         aviso_sistema, resposta = OCR_tela.aviso_sistema(x_origem, y_origem)
         if aviso_sistema:
             if resposta == "sair da conta":
