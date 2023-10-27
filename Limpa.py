@@ -12,6 +12,7 @@ import Slot
 
 def teste_limpo(x_origem, y_origem):
     pyautogui.click(490 + x_origem, 70 + y_origem) # clique bobo para passar alguma naimação
+    limpa_pequeno(x_origem, y_origem)
     #barra azul do looby
     if pyautogui.pixelMatchesColor((x_origem + 685), (y_origem + 360), (215, 234, 244), tolerance=5):
         print("teste_limpo: Esta no Lobby, ta limpo")
@@ -104,6 +105,7 @@ def limpa_jogando(x_origem, y_origem):
         pyautogui.click(x_origem + 164, y_origem + 161)
         print("Clica no Normal")
 
+
 def limpa_pequeno(x_origem, y_origem):
     print('limpa_pequeno')
     if ja_esta_logado(x_origem, y_origem) == "sair da conta" :
@@ -112,7 +114,7 @@ def limpa_pequeno(x_origem, y_origem):
     pyautogui.click(490 + x_origem, 70 + y_origem, button='left')  # clique bobo para passar alguma naimação
     # voce ja recebeu seu premio, deixe um pouco para os outros
     if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 435), (175, 23, 18), tolerance=15):
-        pyautogui.click(x_origem + 490, y_origem + 435, button='left')
+        pyautogui.click(x_origem + 490, y_origem + 435)
         print("voce ja recebeu seu premio, deixe um pouco para os outros")
 
     # voce ganhou 2500
@@ -734,8 +736,9 @@ def limpa_abre_tarefa2(x_origem, y_origem): #abre o tarefas
         time.sleep(1)
     return False
 
-#
+# #
 # x_origem, y_origem = Origem_pg.x_y()
+# limpa_pequeno(x_origem, y_origem)
 # # limpa_jogando(x_origem, y_origem)
 # limpa_total(x_origem, y_origem)
 # # faz_tutorial(x_origem,y_origem)
