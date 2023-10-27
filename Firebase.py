@@ -36,7 +36,7 @@ nome_computador = socket.gethostname()
 nome_usuario = os.getlogin()
 
 #  lista com os computadores que vao dar comando nos escravos, colocar nesta lista para funcionar como metre
-lista_PC_meste = ('xPC-I7-9700KF','PC-i3-8145U','Thiago-PC')
+lista_PC_meste = ('PC-I7-9700KF','PC-i3-8145U','Thiago-PC')
 
 
 def cria_caminho_resposta_fb():
@@ -174,8 +174,9 @@ def alterar_dado_global(nome_variavel, valor):
 
         print("comando: ", comando_escravo)
 
-# Função para atualizar as informações do dicionário global com os dados do Firebase
+
 def atualizar_dados_globais():
+    # Função para atualizar as informações do dicionário global com os dados do Firebase
     try:
         # Use db.child() para acessar o nó desejado no Firebase
         dados_firebase = db.child(caminho_resposta).get()
@@ -194,6 +195,7 @@ def atualizar_dados_globais():
 # Chame a função para atualizar os dados globais com os dados do Firebase
 atualizar_dados_globais()
 
+
 def escreve_resposta_escravo(resposta_escravo):
     ''' da a resposta do estado do computador '''
     try:
@@ -204,6 +206,8 @@ def escreve_resposta_escravo(resposta_escravo):
         print(f"Ocorreu um erro ao escrever a informação: {str(e)}")
 
 resposta_anterior = None
+
+
 def confirmacao_escravo(resposta_escravo):
     global resposta_anterior
     '''Esta função escreve no banco onde é destinado a receber comando, com o intuito de deixar um comando nao aplicavel'''
