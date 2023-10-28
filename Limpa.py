@@ -249,6 +249,7 @@ def limpa_pequeno(x_origem, y_origem):
 def limpa_tarefas(x_origem, y_origem): # fecha todas as tarefas que sao feitas
     print('limpa_tarefas')
     pyautogui.click(490 + x_origem, 70 + y_origem, button='left')  # clique bobo para passar alguma naimação
+    limpa_pequeno(x_origem, y_origem)
     if teste_limpo(x_origem, y_origem): # se ta limpo nem entra
         return
 
@@ -321,6 +322,7 @@ def limpa_promocao(x_origem, y_origem):
     '''Limpa as promoções exceto as tarefas que são feitas'''
     print('limpa_promocao')
     pyautogui.click(490 + x_origem, 70 + y_origem, button='left')  # clique bobo para passar alguma naimação
+    limpa_pequeno(x_origem, y_origem)
     if ja_esta_logado(x_origem, y_origem) == "sair da conta" :
         return "sair da conta"
 
@@ -438,7 +440,7 @@ def limpa_total(x_origem, y_origem):
     cont_erro_limpa = 0
     for i in range(50):
         pyautogui.click(490 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
-
+        limpa_pequeno(x_origem, y_origem)
         cont_erro_limpa += 1
         if cont_erro_limpa >= 30:
             cont_erro_limpa = 0
