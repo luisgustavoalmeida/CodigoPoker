@@ -496,6 +496,7 @@ def passa_corre_joga(x_origem, y_origem): # para se fazer tarefas
             else:
                 #pyautogui.click((x_origem + 528), (y_origem + 605))  # clica no correr
                 print("tem que correr")
+                time.sleep(3)
                 jogou_uma_vez = True
 
         # se nao tem area branca com valor
@@ -503,6 +504,7 @@ def passa_corre_joga(x_origem, y_origem): # para se fazer tarefas
             # print("ta com all-in ou ta tudo azul")
             # if pyautogui.pixelMatchesColor((x_origem + 528), (y_origem + 603), (255, 255, 255), tolerance=1):
             print("ta com x branco do correr")
+            time.sleep(3)
             #pyautogui.click((x_origem + 528), (y_origem + 605))  # clica no correr
             jogou_uma_vez = True
 
@@ -649,6 +651,7 @@ def joga_uma_vez(x_origem, y_origem):
                 print("tempo limite atingido sem outro jogador, sai da mesa para tentar em outra")
                 Limpa.limpa_total(x_origem, y_origem)
                 Limpa.limpa_jogando(x_origem, y_origem)
+            time.sleep(1)
 
         if sentou:
             print("esta sentado")
@@ -709,11 +712,13 @@ def dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, valor_fichas, time_rodo
 
         Limpa.limpa_promocao(x_origem, y_origem)
 
+        time.sleep(2)
+
         Limpa.limpa_total(x_origem, y_origem)
 
         print('Joga uma vez')
         joga_uma_vez(x_origem, y_origem)
-        time.sleep(2)
+        time.sleep(1)
         Limpa.iniciantes(x_origem, y_origem)
         Limpa.limpa_total(x_origem, y_origem)
     return

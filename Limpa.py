@@ -12,7 +12,6 @@ import Slot
 
 def teste_limpo(x_origem, y_origem):
     pyautogui.click(490 + x_origem, 70 + y_origem) # clique bobo para passar alguma naimação
-
     #barra azul do looby
     if pyautogui.pixelMatchesColor((x_origem + 685), (y_origem + 360), (215, 234, 244), tolerance=5):
         print("teste_limpo: Esta no Lobby, ta limpo")
@@ -87,18 +86,6 @@ def limpa_jogando(x_origem, y_origem):
     elif pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 118), (72, 71, 76), tolerance=20):
         pyautogui.click(821 + x_origem, 138 + y_origem, button='left')
         print("Promoção padrão")
-
-    # # aviso do sistema "tem certesa de que quer sair da mesa?" "vc so pode jogar depois de estar sentado""
-    # elif pyautogui.pixelMatchesColor((x_origem + 452), (y_origem + 407), (28, 129, 205), tolerance=6) \
-    #         or pyautogui.pixelMatchesColor((x_origem + 452), (y_origem + 407), (33, 157, 215), tolerance=6):  # aviso do sistema "tem certesa de que quer sair da mesa?"
-    #     pyautogui.click(641 + x_origem, 278 + y_origem)  # clica no x do aviso do sistema "tem certesa de que quer sair da mesa?"
-    #     print("aviso do sistema: tem certesa de que quer sair da mesa?")
-    #
-    #     # aviso do sistema "bonus por jogar 5 rodadas ..""
-    # elif pyautogui.pixelMatchesColor((x_origem + 430), (y_origem + 400), (209, 211, 213), tolerance=10) \
-    #         and pyautogui.pixelMatchesColor((x_origem + 450), (y_origem + 400), (30, 138, 218), tolerance=10):  # aviso do sistema "tem certesa de que quer sair da mesa?"
-    #     pyautogui.click(641 + x_origem, 278 + y_origem)  # clica no x do aviso do sistema "tem certesa de que quer sair da mesa?"
-    #     print("aviso do sistema: bonus por jogar x rodadas ...")
 
     # clica no Normal
     elif pyautogui.pixelMatchesColor((x_origem + 162), (y_origem + 160), (12, 72, 108), tolerance=5):
@@ -188,6 +175,7 @@ def limpa_pequeno(x_origem, y_origem):
                     # Slot Classico
                     if (pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 668), (46, 22, 9), tolerance=15)
                             or pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 668), (18, 9, 4), tolerance=15)):
+                        time.sleep(10)
                         pyautogui.click(910 + x_origem, 80 + y_origem)
                         print("Slot Classico, fecha")
                         limpa_tarefas(x_origem, y_origem)
@@ -196,11 +184,20 @@ def limpa_pequeno(x_origem, y_origem):
                             break
                     time.sleep(0.5)
                 limpa_tarefas(x_origem, y_origem)
-                IP.tem_internet()
-                print("erro no torneio semanal, Da um F5")
-                pyautogui.press('f5')
-                # Seleniun.atualizar_pagina(navegador, url)
-                time.sleep(25)
+                # testa se o torneino semanal esta no loob
+                if pyautogui.pixelMatchesColor((x_origem + 154), (y_origem + 105), (70, 70, 71), tolerance=15):
+                    # Slot Classico testa se esta no slot com ele limpo ou com alguma mensagem, quando tem alguma messagem fica um pouco escuro
+                    if not (pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 668), (46, 22, 9), tolerance=15)
+                            or pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 668), (18, 9, 4), tolerance=5)):
+                        print('print("Torneio semanal de forma errada no loby")')
+                        limpo = teste_limpo(x_origem, y_origem)
+                        if limpo:
+                            IP.tem_internet()
+                            print("erro no torneio semanal, Da um F5")
+                            pyautogui.press('f5')
+                            # Seleniun.atualizar_pagina(navegador, url)
+                            time.sleep(25)
+
     # um martelo gratis par adestruir os goblins e receber recompensa ( tema de halowin)
     elif pyautogui.pixelMatchesColor((x_origem + 500), (y_origem + 190), (0, 27, 38), tolerance=15):
         pyautogui.click(495 + x_origem, 520 + y_origem)
@@ -366,12 +363,11 @@ def limpa_promocao(x_origem, y_origem):
         pyautogui.click(884 + x_origem, 135 + y_origem, button='left')
         print("Mega Giro e roleta2")
 
-    # Ranking , Fichas ou travessuras
-    if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (36, 36, 37), tolerance=20):
-        pyautogui.click(389 + x_origem, 143 + y_origem)
-        print("Ranking ")
-        pyautogui.click(821 + x_origem, 138 + y_origem)
-        print("Fichas ou travessuras")
+    # Gostosuras de Halloween
+    if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (18, 17, 19), tolerance=10):
+        pyautogui.click(495 + x_origem, 315 + y_origem)
+        print("Gostosuras de Halloween")
+        time.sleep(1)
 
     # Fecha promoçoes exceto tarefas
     if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (73, 71, 76), tolerance=20):
@@ -400,14 +396,12 @@ def limpa_promocao(x_origem, y_origem):
         print("Banco do poker")
 
     # VS pegar a carta
-    if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (29,28,30), tolerance=15):
+    if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (29,28,30), tolerance=8):
         pyautogui.click(477 + x_origem, 500 + y_origem, button='left')
         print("VS pegar a carta")
 
     # Roleta 1
-    if (pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 146), (36, 24, 74), tolerance=20)
-            or pyautogui.pixelMatchesColor((x_origem + 345), (y_origem + 146), (36, 24, 74), tolerance=20)
-            or pyautogui.pixelMatchesColor((x_origem + 495), (y_origem + 315), (227, 120, 14), tolerance=20)):
+    if pyautogui.pixelMatchesColor((x_origem + 495), (y_origem + 315), (211, 110, 12), tolerance=25):
         pyautogui.click(882 + x_origem, 171 + y_origem)
         print("limpa Roleta1")
 

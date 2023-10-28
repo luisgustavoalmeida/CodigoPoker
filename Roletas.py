@@ -125,8 +125,7 @@ def roletas(x_origem, y_origem, id, senha, url, navegador):
 
                     pyautogui.click(490 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
 
-                    if (pyautogui.pixelMatchesColor((x_origem + 495), (y_origem + 315), (211, 110, 12), tolerance=25)
-                            or pyautogui.pixelMatchesColor((x_origem + 495), (y_origem + 315), (196, 114, 36), tolerance=25)):  # testa de roleta 1 ta aberta Pino dourado apontando para cima
+                    if pyautogui.pixelMatchesColor((x_origem + 495), (y_origem + 315), (211, 110, 12), tolerance=25):  # testa de roleta 1 ta aberta Pino dourado apontando para cima
 
                         pyautogui.doubleClick(x_origem + 492, y_origem + 383)  # clica no meio da roleta para rodar
                         print("roleta 1 aberta")
