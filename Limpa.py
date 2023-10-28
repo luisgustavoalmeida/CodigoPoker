@@ -179,28 +179,28 @@ def limpa_pequeno(x_origem, y_origem):
         if not (pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 668), (46, 22, 9), tolerance=15)
                 or pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 668), (18, 9, 4), tolerance=5)):
             print('print("Torneio semanal de forma errada no loby")')
-            limpo = teste_limpo(x_origem, y_origem)
-            if limpo:
-                pyautogui.click(x_origem + 920, y_origem + 150)
-                print('clica para abrir o slot 777')
-                time.sleep(3)
-                for i in range(40):
-                    # Slot Classico
-                    if (pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 668), (46, 22, 9), tolerance=15)
-                            or pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 668), (18, 9, 4), tolerance=15)):
-                        pyautogui.click(910 + x_origem, 80 + y_origem)
-                        print("Slot Classico, fecha")
-                        limpa_tarefas(x_origem, y_origem)
-                        limpo = teste_limpo(x_origem, y_origem)
-                        if limpo:
-                            break
-                    time.sleep(0.5)
-                limpa_tarefas(x_origem, y_origem)
-                IP.tem_internet()
-                print("erro no torneio semanal, Da um F5")
-                pyautogui.press('f5')
-                # Seleniun.atualizar_pagina(navegador, url)
-                time.sleep(25)
+            # limpo = teste_limpo(x_origem, y_origem)
+            # if limpo:
+            pyautogui.click(x_origem + 920, y_origem + 150)
+            print('clica para abrir o slot 777')
+            time.sleep(3)
+            for i in range(40):
+                # Slot Classico
+                if (pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 668), (46, 22, 9), tolerance=15)
+                        or pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 668), (18, 9, 4), tolerance=15)):
+                    pyautogui.click(910 + x_origem, 80 + y_origem)
+                    print("Slot Classico, fecha")
+                    limpa_tarefas(x_origem, y_origem)
+                    limpo = teste_limpo(x_origem, y_origem)
+                    if limpo:
+                        break
+                time.sleep(0.5)
+            limpa_tarefas(x_origem, y_origem)
+            IP.tem_internet()
+            print("erro no torneio semanal, Da um F5")
+            pyautogui.press('f5')
+            # Seleniun.atualizar_pagina(navegador, url)
+            time.sleep(25)
     # um martelo gratis par adestruir os goblins e receber recompensa ( tema de halowin)
     elif pyautogui.pixelMatchesColor((x_origem + 500), (y_origem + 190), (0, 27, 38), tolerance=15):
         pyautogui.click(495 + x_origem, 520 + y_origem)
