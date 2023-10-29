@@ -243,7 +243,7 @@ def limpa_pequeno(x_origem, y_origem):
 def limpa_tarefas(x_origem, y_origem): # fecha todas as tarefas que sao feitas
     print('limpa_tarefas')
     pyautogui.click(490 + x_origem, 70 + y_origem, button='left')  # clique bobo para passar alguma naimação
-    limpa_pequeno(x_origem, y_origem)
+
     if teste_limpo(x_origem, y_origem): # se ta limpo nem entra
         return
 
