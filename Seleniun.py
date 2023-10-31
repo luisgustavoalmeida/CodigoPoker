@@ -396,14 +396,17 @@ def busca_link(navegador):
     if (nome_usuario == "PokerIP") and (nome_computador == "PC-I5-8600K"):
         id = "Luis.gustavo.almeida88"
         senha = "020996Pa"
+        endereco_falha = 'F2'
 
     elif (nome_usuario == "lgagu") and (nome_computador == "PC-I7-9700KF"):
-        id = "ariane.machado.7528"
-        senha = "Lg1405lG"
+        id = "stefaniaalmeida.jf"
+        senha = "$TE20091992te"
+        endereco_falha = 'F3'
 
     elif (nome_usuario == "PokerIP") and (nome_computador == "PC-i3-8145U"):
         id = "carolina.fedoci"
         senha = "Lg1405lG"
+        endereco_falha = 'F4'
 
     url = "https://pt-br.facebook.com/"
 
@@ -426,24 +429,37 @@ def busca_link(navegador):
     login_button.click()
 
     print('fez login')
-    time.sleep(3)
+    #time.sleep(3)
 
     # Abrir a página do Facebook da qual você deseja obter a última postagem
     pagina_do_facebook = "https://www.facebook.com/people/Poker-Brasil/100064546038812/"
     navegador.get(pagina_do_facebook)
 
-    time.sleep(5)
+    # time.sleep(5)
+    #
+    # # Localizar todos os elementos de imagem
+    # elementos_imagem = navegador.find_elements(By.TAG_NAME, 'img')
 
-    # Localizar todos os elementos de imagem
-    elementos_imagem = navegador.find_elements(By.TAG_NAME, 'img')
+    try:
+        # Espera até que o elemento de imagem seja visível e clique nele
+        WebDriverWait(navegador, 15).until(EC.element_to_be_clickable((By.TAG_NAME, 'img')))
+        elementos_imagem = navegador.find_elements(By.TAG_NAME, 'img')
+    except TimeoutException:
+        print("Tempo limite excedido ao tentar encontrar o elemento de imagem.")
+        Google.escrever_celula("Tempo limite excedido ao tentar encontrar o elemento de imagem.", 'Dados', endereco_falha)
+        return
 
     # Procurar o primeiro link que começa com o padrão especificado
-    link_encontrado = None
-    for elemento in elementos_imagem:
-        src = elemento.get_attribute('src')
-        if src and src.startswith("https://external.fjdf2-2.fna.fbcdn.net/emg1"):
-            link_encontrado = src
-            break
+    try:
+        for elemento in elementos_imagem:
+            src = elemento.get_attribute('src')
+            if src and src.startswith("https://external.fjdf2-2.fna.fbcdn.net/emg1"):
+                link_encontrado = src
+                # Restante do seu código para manipular o link encontrado
+                break
+    except Exception as e:
+        Google.escrever_celula("erro ao buscar o link", 'Dados', endereco_falha)
+        return
 
     if link_encontrado:
         print("Primeiro link encontrado:", link_encontrado)
@@ -456,6 +472,7 @@ def busca_link(navegador):
                 break
 
         if imagem_correspondente:
+
             # Clicar na imagem correspondente
             imagem_correspondente.click()
             print("Clicou na imagem correspondente")
@@ -464,7 +481,7 @@ def busca_link(navegador):
             navegador.switch_to.window(navegador.window_handles[1])
             time.sleep(5)
             # Pegar o link da barra de endereço do navegador
-            link_da_barra_de_endereco = pega_url(navegador, url)
+            link_da_barra_de_endereco = navegador.current_url
             # Feche a segunda guia
             navegador.close()
             # Volte para a primeira guia, se necessário
@@ -481,27 +498,30 @@ def busca_link(navegador):
                 data_hora_atual = str(datetime.datetime.now())
                 print('escreve a data da atialização: ', data_hora_atual)
                 if (nome_usuario == "PokerIP") and (nome_computador == "PC-I5-8600K"):
-                    Google.escrever_celula(data_hora_atual, 'Dados', 'F2')
+                    Google.escrever_celula(data_hora_atual, 'Dados', endereco_falha)
                 elif (nome_usuario == "lgagu") and (nome_computador == "PC-I7-9700KF"):
-                    Google.escrever_celula(data_hora_atual, 'Dados', 'F3')
+                    Google.escrever_celula(data_hora_atual, 'Dados', endereco_falha)
+
+                print('Link copiado com sucesso')
                 time.sleep(5)
                 return
             else:
-                Google.escrever_celula("erro ao buscar o link fanpag, link fanpag fora do padrão", 'Dados', 'F2')
+                Google.escrever_celula("erro ao buscar o link fanpag, link fanpag fora do padrão", 'Dados', endereco_falha)
                 print("A URL não começa com o padrão desejado.")
             return
         else:
-            Google.escrever_celula("erro ao buscar o link fanpage, imagem nao encontrada", 'Dados', 'F2')
+            Google.escrever_celula("erro ao buscar o link fanpage, imagem nao encontrada", 'Dados', endereco_falha)
             print("Imagem correspondente não encontrada")
             return
     else:
-        Google.escrever_celula("erro ao buscar o link fanpage, linque externo não encontrado", 'Dados', 'F2')
+        Google.escrever_celula("erro ao buscar o link fanpage, linque externo não encontrado", 'Dados', endereco_falha)
         print("Nenhum link encontrado com o padrão especificado")
         return
 
 ######################################################################################################################
 # # para abrir o navegador e deixar abero. Descomentar as duas linhas abaixo
-#navegador = cria_nevegador()
+# navegador = cria_nevegador()
+# busca_link(navegador)
 #time.sleep(10000)
 
 
