@@ -394,12 +394,12 @@ def busca_link(navegador):
     print('busca_link')
 
     if (nome_usuario == "PokerIP") and (nome_computador == "PC-I5-8600K"):
-        id = "ariane.machado.7528"
-        senha = "Lg1405lG"
-
-    elif (nome_usuario == "lgagu") and (nome_computador == "PC-I7-9700KF"):
         id = "Luis.gustavo.almeida88"
         senha = "020996Pa"
+
+    elif (nome_usuario == "lgagu") and (nome_computador == "PC-I7-9700KF"):
+        id = "ariane.machado.7528"
+        senha = "Lg1405lG"
 
     elif (nome_usuario == "PokerIP") and (nome_computador == "PC-i3-8145U"):
         id = "carolina.fedoci"
