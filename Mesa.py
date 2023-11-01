@@ -14,9 +14,22 @@ import Origem_pg
 
 nome_computador = socket.gethostname()
 
-lista_salas_niquel = ['1537', '1538', '1546', '1542', '52', '1545', '1543', '1542', '1541', '1540', '1538', '1536',
-                      '1535', '1769', '1768', '1767', '1766', '1765', '296', '12', '297', '295', '294']
+lista_salas_niquel = [{'1537': ('2040', 80, 40)}, {'1538': ('2040', 80, 40)}, {'1546': ('2040', 80, 40)},
+                      {'1542': ('2040', 80, 40)}, {'1545': ('2040', 80, 40)},{'1543': ('2040', 80, 40)},
+                      {'1542': ('2040', 80, 40)}, {'1541': ('2040', 80, 40)}, {'1540': ('2040', 80, 40)},
+                      {'1538': ('2040', 80, 40)},{'1536': ('2040', 80, 40)}, {'1535': ('2040', 80, 40)},
+                      {'1769': ('2040', 80, 40)}, {'1768': ('2040', 80, 40)}, {'1767': ('2040', 80, 40)},
+                      {'1766': ('2040', 80, 40)}, {'1765': ('2040', 80, 40)}]
 
+lista_salas_jogar = [{'12': ('12', 2, 4)}, {'296': ('12', 2, 4)}, {'4': ('12', 2, 4)}, {'297': ('12', 2, 4)},
+                     {'295': ('12', 2, 4)}, {'294': ('12', 2, 4)}, {'293': ('12', 2, 4)},
+                     {'52': ('24', 4, 8)},
+                     {'1537': ('2040', 80, 40)}, {'1538': ('2040', 80, 40)}, {'1546': ('2040', 80, 40)},
+                     {'1542': ('2040', 80, 40)}, {'1545': ('2040', 80, 40)}, {'1543': ('2040', 80, 40)},
+                     {'1542': ('2040', 80, 40)}, {'1541': ('2040', 80, 40)}, {'1540': ('2040', 80, 40)},
+                     {'1538': ('2040', 80, 40)}, {'1536': ('2040', 80, 40)}, {'1535': ('2040', 80, 40)},
+                     {'1769': ('2040', 80, 40)}, {'1768': ('2040', 80, 40)}, {'1767': ('2040', 80, 40)},
+                     {'1766': ('2040', 80, 40)}, {'1765': ('2040', 80, 40)}]
 
 
 dicionari_PC_cadeira = {'PC-I5-8600K': {'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_3': (847, 366),
@@ -375,34 +388,35 @@ def ajuste_valor_niquel(x_origem, y_origem, ajusta_aposta):
     return aposta, auto10
 
 
-def sala_minima_niquel(x_origem, y_origem, num_mesa):
-
-    if not pyautogui.pixelMatchesColor((x_origem + 280), (y_origem + 210), (73, 177, 9), tolerance=5):
+def sala_minima_niquel(x_origem, y_origem, num_mesa, blind_mesa):
+    if blind_mesa == 12:
+        pyautogui.click(130 + x_origem, 200 + y_origem) # clica na lista de iniciantes
+    elif blind_mesa == 2040 or blind_mesa == 24:
         pyautogui.click(280 + x_origem, 200 + y_origem)  # clica na lista de aprendizes
-        time.sleep(1)
+        # if not pyautogui.pixelMatchesColor((x_origem + 280), (y_origem + 210), (73, 177, 9), tolerance=5):
+    #     pyautogui.click(280 + x_origem, 200 + y_origem)  # clica na lista de aprendizes
+    #     time.sleep(1)
     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
         return "sair da conta"
     Limpa.aviso_canto_lobby(x_origem, y_origem)
     pyautogui.doubleClick(310 + x_origem, 617 + y_origem)  # clica FORA caixa de busca de salas para apagar o valor
-    time.sleep(0.3)
-    pyautogui.doubleClick(190 + x_origem, 617 + y_origem) #clica na caixa de busca de salas
-    time.sleep(0.3)
-    pyautogui.write(num_mesa) #escreve o numero da sala na barra de busca
+    time.sleep(0.2)
+    pyautogui.doubleClick(190 + x_origem, 617 + y_origem) # clica na caixa de busca de salas
+    time.sleep(0.2)
+    pyautogui.write(num_mesa) # escreve o numero da sala na barra de busca
+    time.sleep(0.2)
+    pyautogui.press('enter') # Pressiona a tecla Enter
     print('mesa: ', num_mesa)
-    time.sleep(0.5)
+    #time.sleep(0.5)
     cont_erro_entrar_mesa = 0
     blind_sala = None
-    if pyautogui.pixelMatchesColor((x_origem + 205), (y_origem + 265), (46, 87, 132), tolerance=3):
-        print("Não existe sala com esse numero")
-        global lista_salas_niquel
-        print(lista_salas_niquel)
-        lista_salas_niquel.remove(num_mesa)
-        lista_salas_niquel.append(num_mesa)
-        print(lista_salas_niquel)
-        return False
-
     for i in range(20):
-        if pyautogui.pixelMatchesColor((x_origem + 435), (y_origem + 264), (26, 29, 33), tolerance=5):  # testa se tem sala com pelo menos um lugar vazio, olha se tem preto no fim da barra de ocupação
+        print(i)
+        if pyautogui.pixelMatchesColor((x_origem + 205), (y_origem + 265), (46, 87, 132), tolerance=3): # testa se existe sala com este numero
+            print("Não existe sala com esse numero")
+            return False, False
+
+        elif pyautogui.pixelMatchesColor((x_origem + 435), (y_origem + 264), (26, 29, 33), tolerance=5):  # testa se tem sala com pelo menos um lugar vazio, olha se tem preto no fim da barra de ocupação
             pyautogui.doubleClick(490 + x_origem, 263 + y_origem)  # clica para entar na sala vazia
 
             for i in range(40):
@@ -415,29 +429,27 @@ def sala_minima_niquel(x_origem, y_origem, num_mesa):
                 if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (27, 92, 155), tolerance=19):  # testa se esta dentro da mesa
                     Limpa.limpa_jogando(x_origem, y_origem)
                     blind_sala = OCR_tela.blind_sala(x_origem, y_origem)
-                    print(blind_sala)
-                    if blind_sala == "2040":
+                    print('blind_sala: ', blind_sala)
+                    if blind_sala == blind_mesa:
                         print("Esta na sala certa")
-                        return True
+                        return True, True
                     else:
                         print("Esta na sala errada")
-                        return False
+                        return False, True
                 time.sleep(1)
                 if cont_erro_entrar_mesa >= 5:
                     Limpa.limpa_total(x_origem, y_origem)
                     break
-        else:
+        elif pyautogui.pixelMatchesColor((x_origem + 435), (y_origem + 264), (203, 107, 7), tolerance=5):
             print("Não tem sala vazia")
+            return False, True
 
-    if "2040" == blind_sala:
+    if blind_sala == blind_mesa:
         print("Esta na sala certa")
-        return True
+        return True, True
     else:
         print("Esta na sala errada")
-        return False
-
-
-
+        return False, True
 
 
 def gira_niquel(x_origem, y_origem):
@@ -471,8 +483,8 @@ def gira_10auto(x_origem, y_origem):
         gira = False
         return gira
 
-def passa_corre_joga(x_origem, y_origem): # para se fazer tarefas
-    print("jogando")
+def passa_corre_joga(x_origem, y_origem, valor_aposta1 = 40, valor_aposta2 = 80): # para se fazer tarefas
+    print("passa_corre_joga")
     jogou_uma_vez = False
     # se nao esta com v azul dentro do quadrado branco e se esta com quadrado branco
     if ((not pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (59, 171, 228), tolerance=1))
@@ -488,8 +500,8 @@ def passa_corre_joga(x_origem, y_origem): # para se fazer tarefas
         if pyautogui.pixelMatchesColor((x_origem + 480), (y_origem + 650), (255, 255, 255), tolerance=1): # testa se tem area branca
             print("area de valor branco")
             valor = OCR_tela.valor_apostar(x_origem, y_origem)
-            print(valor)
-            if (valor == 40) or (valor == 80):
+            print('Valor da aposta: ', valor)
+            if (valor == valor_aposta1) or (valor == valor_aposta2):
                 pyautogui.click((x_origem + 337), (y_origem + 605))# clica no passar
                 print("tem que passar")
                 jogou_uma_vez = True
@@ -512,6 +524,8 @@ def passa_corre_joga(x_origem, y_origem): # para se fazer tarefas
 
 def joga(x_origem, y_origem, id, senha, url, navegador, ajusta_aposta):
     global lista_salas_niquel
+    blind_mesa = None
+    sentou = False
 
     if ajusta_aposta == 200:
         tarefas_fazer = ('Jogar o caca-niquel da mesa 150 vezes',
@@ -534,12 +548,13 @@ def joga(x_origem, y_origem, id, senha, url, navegador, ajusta_aposta):
         print('joga mesa')
         Limpa.fecha_tarefa(x_origem, y_origem)
         Limpa.limpa_jogando(x_origem, y_origem)
-        sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo)
+
+        sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa)
         print("sentou : ", sentou)
 
         if sentou:
             print("esta sentado")
-            passa_corre_joga(x_origem, y_origem)
+            passa_corre_joga(x_origem, y_origem, valor_aposta1, valor_aposta2)
             auto10 = gira_10auto(x_origem, y_origem)
             if auto10:
                 #Limpa.limpa_abre_tarefa2(x_origem, y_origem)
@@ -566,17 +581,31 @@ def joga(x_origem, y_origem, id, senha, url, navegador, ajusta_aposta):
         else:
             print("ainda nao esta sentado")
             for i in range(2):
-                for num_mesa in lista_salas_niquel:
+                for dicionario in lista_salas_niquel:
+                    num_mesa = list(dicionario.keys())[0] # Obtendo a chave do dicionário
+                    valor_tupla = dicionario[num_mesa]  # Obtendo a tupla associada à chave
+                    blind_mesa = valor_tupla[0]  # Obtendo a string da tupla
+                    valor_aposta1 = valor_tupla[1]  # Obtendo o primeiro número da tupla
+                    valor_aposta2 = valor_tupla[2]  # Obtendo o segundo número da tupla
+
                     print('Mumero da mesa para tentar sentar: ', num_mesa)
                     IP.tem_internet()
                     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
                         return "sair da conta"
                     # blind_certo = escolher_blind(x_origem, y_origem, '20/40')
-                    blind_certo = sala_minima_niquel(x_origem, y_origem, num_mesa)
+                    blind_certo, sala_existe = sala_minima_niquel(x_origem, y_origem, num_mesa, blind_mesa)
+                    if not sala_existe:
+                        print(lista_salas_niquel)
+                        # Remover o primeiro item da lista usando pop(0)
+                        primeiro_item = lista_salas_niquel.pop(0)
+                        # Adicionar o primeiro item de volta à lista usando append(), colocando-o no final
+                        lista_salas_niquel.append(primeiro_item)
+                        print(lista_salas_niquel)
+
                     if blind_certo:
                         aposta, auto10 = ajuste_valor_niquel(x_origem, y_origem, ajusta_aposta)
 
-                        sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo)
+                        sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa)
 
                         if sentou and aposta and auto10:
                             print('esta tudo ok, slote e sentado')
@@ -614,7 +643,10 @@ def joga(x_origem, y_origem, id, senha, url, navegador, ajusta_aposta):
 
 
 def joga_uma_vez(x_origem, y_origem):
-    global lista_salas_niquel
+    global lista_salas_jogar
+    blind_mesa = None
+    sentou = False
+
     print('joga_uma_vez')
     continua_jogando = True
     jogou_uma_vez = False
@@ -631,7 +663,8 @@ def joga_uma_vez(x_origem, y_origem):
         print('joga mesa')
         Limpa.fecha_tarefa(x_origem, y_origem)
         Limpa.limpa_jogando(x_origem, y_origem)
-        sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo)
+
+        sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa)
         print("sentou")
 
         if jogou_uma_vez:
@@ -655,22 +688,35 @@ def joga_uma_vez(x_origem, y_origem):
 
         if sentou:
             print("esta sentado")
-            if passa_corre_joga(x_origem, y_origem):
+            if passa_corre_joga(x_origem, y_origem, valor_aposta1, valor_aposta2):
                 jogou_uma_vez = True
         else:
             print("ainda nao esta sentado")
             for i in range(2):
+                for dicionario in lista_salas_jogar:
+                    num_mesa = list(dicionario.keys())[0]  # Obtendo a chave do dicionário
+                    valor_tupla = dicionario[num_mesa]  # Obtendo a tupla associada à chave
+                    blind_mesa = valor_tupla[0]  # Obtendo a string da tupla
+                    valor_aposta1 = valor_tupla[1]  # Obtendo o primeiro número da tupla
+                    valor_aposta2 = valor_tupla[2]  # Obtendo o segundo número da tupla
 
-                for num_mesa in lista_salas_niquel:
                     print('procura mesa')
-                    print(lista_salas_niquel)
+                    print(lista_salas_jogar)
                     print('Mumero da mesa para tentar sentar: ', num_mesa)
                     IP.tem_internet()
                     Limpa.limpa_jogando(x_origem, y_origem)
                     Limpa.limpa_total(x_origem, y_origem)
-                    blind_certo = sala_minima_niquel(x_origem, y_origem, num_mesa)
+                    blind_certo, sala_existe = sala_minima_niquel(x_origem, y_origem, num_mesa, blind_mesa)
+                    if not sala_existe:
+                        print(lista_salas_jogar)
+                        # Remover o primeiro item da lista usando pop(0)
+                        primeiro_item = lista_salas_jogar.pop(0)
+                        # Adicionar o primeiro item de volta à lista usando append(), colocando-o no final
+                        lista_salas_jogar.append(primeiro_item)
+                        print(lista_salas_jogar)
+
                     if blind_certo:
-                        sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo)
+                        sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa)
                         if sentou:
                             time_entrou = time.perf_counter()
                             print('esta tudo ok, slote e sentado')
@@ -693,7 +739,7 @@ def joga_uma_vez(x_origem, y_origem):
 
 
 def dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, valor_fichas, time_rodou, roleta):
-    if  dia_da_semana == 5 or dia_da_semana == 6:  # testa se é sabado ou domingo
+    if dia_da_semana == 5 or dia_da_semana == 6:  # testa se é sabado ou domingo
             # 0 segunda, 1 terça, 2 quarta, 3 quinta, 4 sexta, 5 sabado,6 domingo
             #if pyautogui.pixelMatchesColor((x_origem + 750), (y_origem + 38), (245, 218, 96), tolerance=10) or pyautogui.pixelMatchesColor((x_origem + 802), (y_origem + 38), (245, 218, 96), tolerance=10) or (100000 < valor_fichas < 400000):
         print('conta para jogar mesa')

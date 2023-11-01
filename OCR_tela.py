@@ -588,28 +588,22 @@ def remover_termos(texto):
 
 
 def blind_sala(x_origem, y_origem):
+    blind = None
     inveter_cor = True
     esca_ciza = True
-    fator_ampliacao = 1
+    fator_ampliacao = 3
     contraste_pre = 1
-    contraste_pos = 1
-    config = '--psm 7 --oem 3 -c tessedit_char_whitelist=0123456789KM' #
+    contraste_pos = 1.5
+    config = '--psm 7 --oem 3 -c tessedit_char_whitelist=/0123456789KM'
     regiao = (x_origem + 52, y_origem + 99, x_origem + 125, y_origem + 115)
-    pontuacao = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza) #pontuação
-    if pontuacao is not None:
-        pontuacao = pontuacao.replace(" ", "")
-        pontuacao = pontuacao.replace("/", "")
-        # pontuacao = pontuacao.split('/')
-        # pontuacao = pontuacao[0]
-        # pontuacao = re.sub(r"\D", "", pontuacao)  # pega apenas os numero
-        # #pontuacao = re.sub(r" ", "", pontuacao)  # remove espoços
-        # pontuacao = int(pontuacao)
-        # #print("pontuacao: ", pontuacao)
-        return pontuacao
-    else:
-        pontuacao = 0
+    blind = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza) #pontuação
 
-        return pontuacao
+    if blind is not None:
+        blind = blind.replace(' ', '')
+        blind = blind.replace('/', '')
+        return blind
+    else:
+        return '0'
 
 
 def valor_apostar(x_origem, y_origem):
