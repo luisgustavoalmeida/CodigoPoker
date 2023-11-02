@@ -36,7 +36,7 @@ nome_computador = socket.gethostname()
 nome_usuario = os.getlogin()
 
 #  lista com os computadores que vao dar comando nos escravos, colocar nesta lista para funcionar como metre
-lista_PC_meste = ('PC-I7-9700KF','PC-i3-8145U','Thiago-PC')
+lista_PC_meste = ('xPC-I7-9700KF', 'PC-i3-8145U', 'Thiago-PC')
 
 
 def cria_caminho_resposta_fb():
@@ -143,6 +143,7 @@ def on_update(event):
 # A função "on" irá chamar a função "on_update" sempre que ocorrer uma edição no nó referenciado
 ref.stream(on_update)
 
+
 def alterar_dado_global(nome_variavel, valor):
     global global_variables
     global teve_atualizacao
@@ -230,20 +231,21 @@ def confirmacao_comando_resposta(resposta_escravo):
     '''Esta função escreve no banco onde é destinado a receber comando, com o intuito de deixar um comando não aplicável'''
 
     if resposta_anterior != resposta_escravo:
-        resposta_anterior = resposta_escravo
-
+        # Crie um dicionário com os caminhos de resposta e seus valores correspondentes
+        dados_para_atualizar = {
+            caminho_resposta1: resposta_escravo,
+            caminho_resposta: resposta_escravo
+        }
         try:
-            # Crie um dicionário com os caminhos de resposta e seus valores correspondentes
-            dados_para_atualizar = {
-                caminho_resposta: resposta_escravo,
-                caminho_resposta1: resposta_escravo
-            }
-
             # Use a função update() para atualizar ambos os caminhos com os respectivos valores
             db.update(dados_para_atualizar)
 
+            resposta_anterior = resposta_escravo
+
             print(f"Informação: {resposta_escravo}, escrita com sucesso em: {caminho_resposta} e {caminho_resposta1}")
+            time.sleep(2)
         except Exception as e:
+            resposta_anterior = None
             print(f"Ocorreu um erro ao escrever a informação: {str(e)}")
     else:
         return

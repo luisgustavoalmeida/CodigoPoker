@@ -44,7 +44,7 @@ dicionari_token_credencial_n = {'PC-I5-8600K_PokerIP':  ("token1.json", "credent
                                 'PC-I7-11850H_Poker':   ("token33.json", "credentials4.json", 33),
 
                                 'PC-I7-9700KF_PokerIP': ("token34.json", "credentials5.json", 34),
-                                'PC-I7-9700KF_lgagu':   ("token35.json", "credentials5.json", 35),
+                                'PC-I7-9700KF_lgagu':   ("token35.json", "credentials5.json", 23),
                                 'PC-I7-9700KF_Poker':   ("token36.json", "credentials5.json", 36),
 
                                 'PC-i3-8145U_PokerIP':  ("token37.json", "credentials5.json", 37)

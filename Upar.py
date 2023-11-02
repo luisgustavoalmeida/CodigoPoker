@@ -8,6 +8,7 @@ import Cartas
 import Genius
 import Limpa
 import OCR_tela
+import Mesa
 
 
 def solot_joga_vezes_upando(x_origem, y_origem):
@@ -180,11 +181,12 @@ def cartas_premidas_joga_vezes_upando(x_origem, y_origem):
 
 
 def levantar_mesa(x_origem, y_origem):
-    sentado = "sentado"
+    sentado = "manda levantar"
     for i in range(50):
         if pyautogui.pixelMatchesColor((x_origem + 619), (y_origem + 631), (67, 89, 136), tolerance=1):  # testa se esta dentro da mesa
             print('Não esta sentado')
             sentado = "levantou da mesa"
+            Firebase.confirmacao_comando_resposta(sentado)
             break
 
         if (pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (27, 92, 155),  tolerance=19)
@@ -206,19 +208,25 @@ def levantar_mesa(x_origem, y_origem):
 
 
 def passa_ate_lv7(x_origem, y_origem): # para se fazer tarefas
-    Firebase.confirmacao_comando_resposta("Jogando mesa")
+    #Firebase.confirmacao_comando_resposta("Jogando mesa")
     level_conta = 0
+    status_comando = "Jogando mesa"
+    so_tem_gire = "continua"
 
     while True:
         comando = Firebase.comando_escravo
         if comando == "Levanta":
             status_comando = levantar_mesa(x_origem, y_origem)
+            return
 
         Firebase.confirmacao_comando_resposta(status_comando)
 
         Limpa.limpa_jogando(x_origem, y_origem)
 
-        Tarefas.recolher_tarefa_upando(x_origem, y_origem)
+        status_tarefas = Tarefas.recolher_tarefa_upando(x_origem, y_origem)
+
+        if status_tarefas == "Recolhido":
+            lista, so_tem_gire = OCR_tela.tarefas_diaris_upando(x_origem, y_origem)
 
         if pyautogui.pixelMatchesColor((x_origem + 480), (y_origem + 650), (43, 16, 9), tolerance=3):
             pyautogui.click((x_origem + 640), (y_origem + 72)) # clica para passar animação de recolher
@@ -227,7 +235,7 @@ def passa_ate_lv7(x_origem, y_origem): # para se fazer tarefas
             print("Levantou")
             print("Emvia um comando para levantar os outros escravos")
             Firebase.comando_coleetivo_escravo_escravo("Levanta")
-            break
+            return
 
         else:
 
@@ -239,17 +247,32 @@ def passa_ate_lv7(x_origem, y_origem): # para se fazer tarefas
                     # time.sleep(0.3)
                     print("Passou")
                     level_conta = OCR_tela.level_conta(x_origem, y_origem)
-                    status_comando = "Passou"
+                    status_comando = "Passou" + " " + so_tem_gire
 
                 elif pyautogui.pixelMatchesColor((x_origem + 480), (y_origem + 650), (255, 255, 255), tolerance=1): # testa se tem area branca
                     pyautogui.click((x_origem + 337), (y_origem + 605))
                     print("Pagou")
                     level_conta = OCR_tela.level_conta(x_origem, y_origem)
-                    status_comando = "Pagou"
+                    status_comando = "Pagou" + " " + so_tem_gire
 
             else:
                 if pyautogui.pixelMatchesColor((x_origem + 480), (y_origem + 650), (255, 255, 255), tolerance=1): # testa se tem area branca
                     pyautogui.click((x_origem + 528), (y_origem + 605))  # clica no correr
                     print("Correu")
-                    status_comando = "Correu"
+                    status_comando = "Correu" + " " + so_tem_gire
 
+
+def solot_genius_cartas_upando(x_origem, y_origem, blind):
+    solot_joga_vezes_upando(x_origem, y_origem)
+    genius_joga_vezes_upando(x_origem, y_origem)
+    cartas_premidas_joga_vezes_upando(x_origem, y_origem)
+    Mesa.escolher_blind(x_origem, y_origem, blind)
+
+def genius_cartas_upando(x_origem, y_origem, blind):
+    genius_joga_vezes_upando(x_origem, y_origem)
+    cartas_premidas_joga_vezes_upando(x_origem, y_origem)
+    Mesa.escolher_blind(x_origem, y_origem, blind)
+
+def cartas_upando(x_origem, y_origem, blind):
+    cartas_premidas_joga_vezes_upando(x_origem, y_origem)
+    Mesa.escolher_blind(x_origem, y_origem, blind)

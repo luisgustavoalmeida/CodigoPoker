@@ -22,6 +22,7 @@ import socket
 import threading
 import xp2
 import Firebase
+import Upar
 
 
 
@@ -202,6 +203,7 @@ while True:
 
             #######################Tarefas
             if guia == "Up":
+
                 Firebase.confirmacao_comando_resposta('Entrou')
 
                 pontos_disponiveis = 200
@@ -211,6 +213,7 @@ while True:
                 valor_fichas = 0
                 parar_tarefas = False
                 lista_tarefas_fazer = []
+                blind = '500/1K'
 
                 if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
                     parar_tarefas = True
@@ -220,12 +223,16 @@ while True:
                     break
 
                 # codigo deve ser escrito aqui dentro ...
+                status_comando = xp2.pega_2xp(x_origem, y_origem)
+                Firebase.confirmacao_comando_resposta(status_comando)
 
                 status_comando = 'Aguardando comando'
-                blind = ""
+
                 while True:
+                    time.sleep(1)
+
                     comando = Firebase.comando_escravo
-                    #print(comando)
+                    print(comando)
                     Tarefas.recolher_tarefa_upando(x_origem, y_origem)
 
                     if comando == "Sair":
@@ -247,15 +254,23 @@ while True:
                         else:
                             status_comando = "Não sentou"
 
+                    elif comando == "Joga":
+                        Upar.passa_ate_lv7(x_origem, y_origem)
+
                     elif comando == "Recolher":
                         status_comando = Tarefas.recolher_tarefa_upando(x_origem, y_origem)
 
                     elif comando == "Levanta":
-                        status_comando = Mesa.levantar_mesa(x_origem, y_origem)
+                        status_comando = Upar.levantar_mesa(x_origem, y_origem, blind)
 
                     elif comando == "Slot":
-                        Firebase.confirmacao_comando_resposta("Fazendo Slot")
-                        Slot.solot_joga_vezes_upando(x_origem, y_origem)
+                        Upar.solot_genius_cartas_upando(x_origem, y_origem, blind)
+
+                    elif comando == "Genius":
+                        Upar.genius_cartas_upando(x_origem, y_origem, blind)
+
+                    elif comando == "Cartas":
+                        Upar.cartas_upando(x_origem, y_origem, blind)
 
                     elif comando == "2xp":
                         status_comando = xp2.pega_2xp(x_origem, y_origem)

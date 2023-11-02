@@ -12,6 +12,7 @@ import Slot
 
 def teste_limpo(x_origem, y_origem):
     pyautogui.click(490 + x_origem, 70 + y_origem) # clique bobo para passar alguma naimação
+    pyautogui.click(686 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
     #barra azul do looby
     if pyautogui.pixelMatchesColor((x_origem + 685), (y_origem + 360), (215, 234, 244), tolerance=5):
         print("teste_limpo: Esta no Lobby, ta limpo")
@@ -38,7 +39,9 @@ def ja_esta_logado(x_origem, y_origem):
 def limpa_jogando(x_origem, y_origem):
     print('limpa_jogando')
 
-    pyautogui.click(x_origem + 43, y_origem + 388) # clica no anel
+    if (not pyautogui.pixelMatchesColor((x_origem + 43), (y_origem + 388), (76, 37, 30), tolerance=10)
+            and not pyautogui.pixelMatchesColor((x_origem + 43), (y_origem + 388), (64, 34, 8), tolerance=10)):
+        pyautogui.click(x_origem + 43, y_origem + 388) # clica no anel
 
     if (pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 117), (72, 71, 76), tolerance=5) or
             pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 117), (22, 21, 23), tolerance=5)):
@@ -57,7 +60,7 @@ def limpa_jogando(x_origem, y_origem):
         print("Subiu de nivel")
 
     # Quebou seu recorde
-    elif pyautogui.pixelMatchesColor((x_origem + 772), (y_origem + 170), (242, 246, 0), tolerance=6) :
+    elif pyautogui.pixelMatchesColor((x_origem + 639), (y_origem + 266), (255, 136, 29), tolerance=20):
         pyautogui.click(x_origem + 703, y_origem + 170, button='left')
         print("Quebou seu recorde")
 
@@ -83,9 +86,10 @@ def limpa_jogando(x_origem, y_origem):
         print("promoçao laranja")
 
     # Fecha promoçoes
-    elif pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 118), (72, 71, 76), tolerance=20):
-        pyautogui.click(821 + x_origem, 138 + y_origem, button='left')
-        print("Promoção padrão")
+    # elif pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 118), (72, 71, 76), tolerance=10):
+    elif pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (73, 71, 76), tolerance=10):
+        pyautogui.click(821 + x_origem, 138 + y_origem)
+        print("Promoção padrão, limpa_jogando, clica no fechar")
 
     # clica no Normal
     elif pyautogui.pixelMatchesColor((x_origem + 162), (y_origem + 160), (12, 72, 108), tolerance=5):

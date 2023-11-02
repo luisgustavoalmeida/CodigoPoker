@@ -14,6 +14,7 @@ import Origem_pg
 import IP
 import difflib
 import Variaveis_Globais
+from difflib import SequenceMatcher
 from PIL import Image
 
 
@@ -125,6 +126,8 @@ def OCR_regiao (regiao, config, inveter_cor, fator_ampliacao, contraste_pre, con
     except Exception as e:
         print("Erro ao executar OCR: ", e)
         return None
+
+
 def valor_fichas(x_origem, y_origem):
     print('Lendo o valor das fichas ...')
     # Define a região de interesse
@@ -435,49 +438,50 @@ def tarefas_diaris(x_origem, y_origem):
     #print(lista)
     return lista
 
+
 para_trocar = ['Participe de um GIRE & GANHE/campeonato de eliminacao 1 vezes',
-                       'Participe de um GIRE & GANHE/campeonato de eliminacao 2 vezes',
-                       'Participe de um GIRE & GANHE/campeonato de eliminacao 3 vezes',
-                       'Ganhar um premio em um GIRE & GANHE/torneio de eliminacao',
-                       'Jogue 10 maos nas mesas OMAHA com blinds acima de 200',
-                       'Jogue 20 maos nas mesas OMAHA com blinds acima de 200',
-                       'Jogue 40 maos nas mesas OMAHA com blinds acima de 200',
-                       'Ganhe 5 maos nas mesas OMAHA com blinds acima de 200',
-                       'Ganhe 10 maos nas mesas OMAHA com blinds acima de 200',
-                       'Ganhe 20 maos nas mesas OMAHA com blinds acima de 200',
-                       'Ganhe 10.000 fichas nas mesas OMAHA',
-                       'Ganhe 50.000 fichas nas mesas OMAHA',
-                       'Ganhe 200.000 fichas nas mesas OMAHA',
-                       'Jogue JACKS OR BETTER 10 vezes',
-                       'Jogue JACKS OR BETTER 50 vezes',
-                       'Jogue JACKS OR BETTER 100 vezes',
-                       'Ganhe 10.000 fichas do JACKS OR BETTER',
-                       'Ganhe 50.000 fichas do JACKS OR BETTER',
-                       'Ganhe 200.000 fichas do JACKS OR BETTER',
-                       'Consiga Flush ou qualquer mao superior nas mesas OMAHA',
-                       'Ganhar 10 maos em uma mesa com blinds acima de 25',
-                       'Jogar 20 mao em uma mesa com blinds acima de 25',
-                       'Tirar Sequencia 1 vezes em mesas com blinds maiores que 25',
-                       'Tirar trinca 1 vez em mesa com blinds maiores que 25',
-                       'Tirar um flush ou quaquer maos superior 1 vez em mesas com blinds laiores que 25',
-                       'Ganhar 10 maos em uma mesa com blinds acima de 50',
-                       'Ganhar 20 maos em uma mesa com blinds acima de 50',
-                       'Ganhar 30.000 fichas em mesas com blinds acima da 50',
-                       'Jogar 20 mao em uma mesa com blinds acima de 50',
-                       'Jogar 40 mao em uma mesa com blinds acima de 50',
-                       'Tirar Flush ou qualquer mao superior 1 vez em mesas com blindes maiores que 25',
-                       'Tirar Sequencia 1 vez em mesas com blinds maiores que 50',
-                       'Tirar Sequencia 2 vezes em mesas com blinds maiores que 50',
-                       'Tirar trinca 1 vez em mesas com blinds maiores que 50',
-                       'Ganhar 20 maos em uma mesa com blinds acima de 100',
-                       'Ganhar 100.000 fichas em mesas com blinds acima de 50',
-                       'Ganhe 200.000 fichas em mesas com blinds acima de 100',
-                       'Jogar 20 mao em uma mesa com blinds acima de 100',
-                       'Jogar 40 mao em uma mesa com blinds acima de 100',
-                       'Tirar Flush ou qualquer mao superior 1 vez em mesas com blindes maiores que 50',
-                       'Tirar Flush ou qualquer mao superior 2 vezes em mesas com blinds maiores que 100',
-                       'Tirar Sequencia 2 vezes em mesas com blinds maiores que 100',
-                       'Tirar Trinca 2 vezes em mesas com blinds maiores que 100']
+               'Participe de um GIRE & GANHE/campeonato de eliminacao 2 vezes',
+               'Participe de um GIRE & GANHE/campeonato de eliminacao 3 vezes',
+               'Ganhar um premio em um GIRE & GANHE/torneio de eliminacao',
+               'Jogue 10 maos nas mesas OMAHA com blinds acima de 200',
+               'Jogue 20 maos nas mesas OMAHA com blinds acima de 200',
+               'Jogue 40 maos nas mesas OMAHA com blinds acima de 200',
+               'Ganhe 5 maos nas mesas OMAHA com blinds acima de 200',
+               'Ganhe 10 maos nas mesas OMAHA com blinds acima de 200',
+               'Ganhe 20 maos nas mesas OMAHA com blinds acima de 200',
+               'Ganhe 10.000 fichas nas mesas OMAHA',
+               'Ganhe 50.000 fichas nas mesas OMAHA',
+               'Ganhe 200.000 fichas nas mesas OMAHA',
+               'Jogue JACKS OR BETTER 10 vezes',
+               'Jogue JACKS OR BETTER 50 vezes',
+               'Jogue JACKS OR BETTER 100 vezes',
+               'Ganhe 10.000 fichas do JACKS OR BETTER',
+               'Ganhe 50.000 fichas do JACKS OR BETTER',
+               'Ganhe 200.000 fichas do JACKS OR BETTER',
+               'Consiga Flush ou qualquer mao superior nas mesas OMAHA',
+               'Ganhar 10 maos em uma mesa com blinds acima de 25',
+               'Jogar 20 mao em uma mesa com blinds acima de 25',
+               'Tirar Sequencia 1 vezes em mesas com blinds maiores que 25',
+               'Tirar trinca 1 vez em mesa com blinds maiores que 25',
+               'Tirar um flush ou quaquer maos superior 1 vez em mesas com blinds laiores que 25',
+               'Ganhar 10 maos em uma mesa com blinds acima de 50',
+               'Ganhar 20 maos em uma mesa com blinds acima de 50',
+               'Ganhar 30.000 fichas em mesas com blinds acima da 50',
+               'Jogar 20 mao em uma mesa com blinds acima de 50',
+               'Jogar 40 mao em uma mesa com blinds acima de 50',
+               'Tirar Flush ou qualquer mao superior 1 vez em mesas com blindes maiores que 25',
+               'Tirar Sequencia 1 vez em mesas com blinds maiores que 50',
+               'Tirar Sequencia 2 vezes em mesas com blinds maiores que 50',
+               'Tirar trinca 1 vez em mesas com blinds maiores que 50',
+               'Ganhar 20 maos em uma mesa com blinds acima de 100',
+               'Ganhar 100.000 fichas em mesas com blinds acima de 50',
+               'Ganhe 200.000 fichas em mesas com blinds acima de 100',
+               'Jogar 20 mao em uma mesa com blinds acima de 100',
+               'Jogar 40 mao em uma mesa com blinds acima de 100',
+               'Tirar Flush ou qualquer mao superior 1 vez em mesas com blindes maiores que 50',
+               'Tirar Flush ou qualquer mao superior 2 vezes em mesas com blinds maiores que 100',
+               'Tirar Sequencia 2 vezes em mesas com blinds maiores que 100',
+               'Tirar Trinca 2 vezes em mesas com blinds maiores que 100']
 
 
 def tarefas_diaris_trocar(x_origem, y_origem):
@@ -586,7 +590,93 @@ def remover_termos(texto):
     # print(lista)
     return lista
 
+def remover_caracteres_especiais(texto):
+    # Define a expressão regular para encontrar caracteres especiais
+    caracteres_especiais = r'[.,()=+*—/]'  # Ponto, parênteses, sinal de igual, mais, traço, barra
+    texto_sem_especiais = re.sub(caracteres_especiais, '', texto)
+    # Remove espaços no início e no final da string
+    texto_limpo = texto_sem_especiais.strip()
+    return texto_limpo
 
+
+tarefas_upando = ['Gire 10 vezes no caça-níqueis', 'Jogar 10 mãos em qualquer mesa',
+                  'Conclua suas tarefas atuais para desbloquear a próxima rodada']
+
+
+def remover_termos_upando(texto):
+    if texto is None:
+        return []
+
+    lista_original = texto.split('\n')
+    # Remove itens com menos de 30 caracteres da lista original
+    lista_original = [item for item in lista_original if len(item) >= 25]
+
+    # Remove caracteres especiais de cada item na lista original
+    lista_original = [remover_caracteres_especiais(item) for item in lista_original]
+
+    print('lista_original')
+    print(lista_original)
+
+    # Lista para armazenar os itens limpos
+    itens_em_comum = []
+
+    # Defina a tolerância para a comparação
+    tolerancia = 0.8
+
+    # Percorra a lista de tarefas limpas
+    for item in tarefas_upando:
+        # Verifique se o item está na lista original (comparação com tolerância)
+        for original_item in lista_original:
+            similarity_ratio = SequenceMatcher(None, item, original_item).ratio()
+            if similarity_ratio >= tolerancia:
+                itens_em_comum.append(item)
+
+    print('itens_em_comum')
+    print(itens_em_comum)
+    return itens_em_comum
+
+def tarefas_diaris_upando(x_origem, y_origem):
+    lista = []
+    # Define a região de interesse
+    config = '--psm 6 --oem 1'
+    inveter_cor = True
+    esca_ciza = True
+    fator_ampliacao = 1
+    contraste_pre = 1
+    contraste_pos = 1
+    #config = None
+    # print('\n\n OCR tarefas diarias \n')
+    regiao = (x_origem + 278, y_origem + 329, x_origem + 784, y_origem + 563)
+
+    for i in range(30):
+        pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias para abrir
+        print('Click para abrir os tarefas')
+        if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (73, 71, 76), tolerance=20):
+
+            if pyautogui.pixelMatchesColor((x_origem + 495), (y_origem + 125), (0, 51, 248), tolerance=10):  # testa se esta aberto a lista de tarefas
+                print('Tarefas abertas, conta sem Upar')
+                break
+        time.sleep(0.5)
+
+    #print("chama o ocr a 1 vez \n")
+    texto = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
+
+    pyautogui.click(x_origem + 816, y_origem + 142)  # clica para fechar as tarefas
+
+    # print(texto)
+
+    lista = remover_termos_upando(texto)
+
+    # Verifica se a lista contém exatamente dois itens e se um deles é 'Gire 10 vezes no caça-níqueis'
+    if len(lista) == 2 and 'Gire 10 vezes no caça-níqueis' in lista:
+        so_tem_gire = "acabou"
+    else:
+        so_tem_gire = "continua"
+
+
+    # print("Tarefas upando")
+    # print(lista)
+    return lista, so_tem_gire
 def blind_sala(x_origem, y_origem):
     blind = None
     inveter_cor = True
@@ -602,6 +692,26 @@ def blind_sala(x_origem, y_origem):
         blind = blind.replace(' ', '')
         blind = blind.replace('/', '')
         return blind
+    else:
+        return '0'
+
+
+def numero_sala(x_origem, y_origem):
+    numero = None
+    inveter_cor = True
+    esca_ciza = True
+    fator_ampliacao = 3
+    contraste_pre = 1
+    contraste_pos = 1.5
+    config = '--psm 7 --oem 3 -c tessedit_char_whitelist=/0123456789KM'
+    regiao = (x_origem + 52, y_origem + 77, x_origem + 89, y_origem + 93)
+    numero = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza) #pontuação
+
+    if numero is not None:
+        numero = numero.replace(' ', '')
+        numero = numero.replace('.', '')
+        print(numero)
+        return numero
     else:
         return '0'
 
@@ -722,6 +832,8 @@ def level_conta(x_origem, y_origem):
 
 # aviso_do_sistema()
 # x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
+# numero_sala(x_origem, y_origem)
+# tarefas_diaris_upando(x_origem, y_origem)
 # pontuacao_tarefas(x_origem, y_origem)
 # level_conta(x_origem, y_origem)
 # # # pontuacao_tarefas(x_origem, y_origem)

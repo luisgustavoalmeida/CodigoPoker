@@ -337,7 +337,6 @@ def testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador
             pontos_disponiveis, hora_fim_tarefa)
 
 
-
 def recolher_tarefa_upando(x_origem, y_origem):
     status_tarefas = "Não tem missão"
     #print("recolher_tarefa_upando")
@@ -384,7 +383,7 @@ def recolher_tarefa_upando(x_origem, y_origem):
 
             time.sleep(0.2)
     #else:
-    print(status_tarefas)
+    #print(status_tarefas)
     return status_tarefas
 
 #

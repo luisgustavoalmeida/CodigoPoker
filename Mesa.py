@@ -319,11 +319,12 @@ def escolher_blind(x_origem, y_origem, blind):
             print("Não tem sala vazia")
     blind = blind.replace("/", "")
     if blind == blind_sala:
+        numero = OCR_tela.numero_sala(x_origem, y_origem)
         print("Esta na sala certa")
-        return True
+        return numero
     else:
         print("Esta na sala errada")
-        return False
+        return 0
 
 
 def ajuste_valor_niquel(x_origem, y_origem, ajusta_aposta):
@@ -772,7 +773,7 @@ def dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, valor_fichas, time_rodo
 def levantar_mesa(x_origem, y_origem):
     #Mesa
     sentado = "sentado"
-    for i in range (50):
+    for i in range(50):
         if pyautogui.pixelMatchesColor((x_origem + 619), (y_origem + 631), (67, 89, 136), tolerance=1):  # testa se esta dentro da mesa
             print('Não esta sentado')
             sentado = "levantou da mesa"
