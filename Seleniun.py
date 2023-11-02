@@ -435,14 +435,14 @@ def busca_link(navegador):
     pagina_do_facebook = "https://www.facebook.com/people/Poker-Brasil/100064546038812/"
     navegador.get(pagina_do_facebook)
 
-    # time.sleep(5)
+    time.sleep(5)
     #
     # # Localizar todos os elementos de imagem
     # elementos_imagem = navegador.find_elements(By.TAG_NAME, 'img')
 
     try:
         # Espera até que o elemento de imagem seja visível e clique nele
-        WebDriverWait(navegador, 15).until(EC.element_to_be_clickable((By.TAG_NAME, 'img')))
+        #WebDriverWait(navegador, 15).until(EC.element_to_be_clickable((By.TAG_NAME, 'img')))
         elementos_imagem = navegador.find_elements(By.TAG_NAME, 'img')
     except TimeoutException:
         print("Tempo limite excedido ao tentar encontrar o elemento de imagem.")
@@ -457,6 +457,10 @@ def busca_link(navegador):
                 link_encontrado = src
                 # Restante do seu código para manipular o link encontrado
                 break
+            else:
+                print("erro ao encontar o link")
+                Google.escrever_celula("erro ao buscar o link", 'Dados', endereco_falha)
+                return
     except Exception as e:
         Google.escrever_celula("erro ao buscar o link", 'Dados', endereco_falha)
         return
@@ -520,8 +524,8 @@ def busca_link(navegador):
 
 ######################################################################################################################
 # # para abrir o navegador e deixar abero. Descomentar as duas linhas abaixo
-# navegador = cria_nevegador()
-# busca_link(navegador)
+#navegador = cria_nevegador()
+#busca_link(navegador)
 #time.sleep(10000)
 
 
