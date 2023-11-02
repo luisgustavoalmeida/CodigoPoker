@@ -241,6 +241,7 @@ valores = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160
 
 
 def pontuacao_tarefas(x_origem, y_origem):
+    pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
 
     inveter_cor = True
     esca_ciza = True
@@ -252,10 +253,9 @@ def pontuacao_tarefas(x_origem, y_origem):
     # config = '--psm 6 --oem 1 -c tessedit_char_whitelist=0123456789/'
 
     config = '--psm 6 --oem 1 -c tessedit_char_whitelist=0123456789/'
-    for i in range(2):
+    for i in range(4):
         pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
-        time.sleep(0.3)
-
+        # time.sleep(0.3)
         pontuacao = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza) #pontuação
         print('pontiuação: ', pontuacao)
 
@@ -272,12 +272,12 @@ def pontuacao_tarefas(x_origem, y_origem):
                 except:
                     continue
         pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
-        time.sleep(2)
+        time.sleep(1)
 
     config = '--psm 6 -c tessedit_char_whitelist=0123456789/'
-    for i in range(2):
+    for i in range(4):
         pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
-        time.sleep(0.3)
+        # time.sleep(0.3)
         pontuacao = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)  # pontuação
         print('pontiuação: ', pontuacao)
         if pontuacao is not None:
@@ -293,7 +293,7 @@ def pontuacao_tarefas(x_origem, y_origem):
                 except:
                     continue
         pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
-        time.sleep(2)
+        time.sleep(1)
 
     pontuacao = 1
     # print("pontuacao: ", pontuacao)
