@@ -261,7 +261,7 @@ while True:
                         status_comando = Tarefas.recolher_tarefa_upando(x_origem, y_origem)
 
                     elif comando == "Levanta":
-                        status_comando = Upar.levantar_mesa(x_origem, y_origem, blind)
+                        status_comando = Upar.levantar_mesa(x_origem, y_origem)
 
                     elif comando == "Slot":
                         Upar.solot_genius_cartas_upando(x_origem, y_origem, blind)
