@@ -231,22 +231,27 @@ def confirmacao_comando_resposta(resposta_escravo):
     '''Esta função escreve no banco onde é destinado a receber comando, com o intuito de deixar um comando não aplicável'''
 
     if resposta_anterior != resposta_escravo:
-        # Crie um dicionário com os caminhos de resposta e seus valores correspondentes
-        dados_para_atualizar = {
-            caminho_resposta1: resposta_escravo,
-            caminho_resposta: resposta_escravo
-        }
-        try:
-            # Use a função update() para atualizar ambos os caminhos com os respectivos valores
-            db.update(dados_para_atualizar)
+        # # Crie um dicionário com os caminhos de resposta e seus valores correspondentes
+        # dados_para_atualizar = {
+        #     caminho_resposta1: resposta_escravo,
+        #     caminho_resposta: resposta_escravo
+        # }
+        # try:
+        #     # Use a função update() para atualizar ambos os caminhos com os respectivos valores
+        #     db.update(dados_para_atualizar)
+        #
+        #     resposta_anterior = resposta_escravo
+        #
+        #     print(f"Informação: {resposta_escravo}, escrita com sucesso em: {caminho_resposta} e {caminho_resposta1}")
+        #     time.sleep(2)
+        # except Exception as e:
+        #     resposta_anterior = None
+        #     print(f"Ocorreu um erro ao escrever a informação: {str(e)}")
 
-            resposta_anterior = resposta_escravo
+        confirmacao_escravo(resposta_escravo)
+        escreve_resposta_escravo(resposta_escravo)
 
-            print(f"Informação: {resposta_escravo}, escrita com sucesso em: {caminho_resposta} e {caminho_resposta1}")
-            time.sleep(2)
-        except Exception as e:
-            resposta_anterior = None
-            print(f"Ocorreu um erro ao escrever a informação: {str(e)}")
+
     else:
         return
 
@@ -304,5 +309,8 @@ def comando_coleetivo_escravo_escravo(comando):
 # escrever_dado("Comandos/PC01/Teste", "Firebase!")
 #
 # ler_dado("Comandos/PC01/Teste")
+
+# confirmacao_escravo("funciona")
+# escreve_resposta_escravo("funciona")
 
 
