@@ -410,13 +410,9 @@ def sala_minima_niquel(x_origem, y_origem, num_mesa, blind_mesa):
     #time.sleep(0.5)
     cont_erro_entrar_mesa = 0
     blind_sala = None
-    for i in range(20):
-        print(i)
-        if pyautogui.pixelMatchesColor((x_origem + 205), (y_origem + 265), (46, 87, 132), tolerance=3): # testa se existe sala com este numero
-            print("Não existe sala com esse numero")
-            return False, False
-
-        elif pyautogui.pixelMatchesColor((x_origem + 435), (y_origem + 264), (26, 29, 33), tolerance=5):  # testa se tem sala com pelo menos um lugar vazio, olha se tem preto no fim da barra de ocupação
+    for j in range(20):
+        print(j)
+        if pyautogui.pixelMatchesColor((x_origem + 435), (y_origem + 264), (26, 29, 33), tolerance=5):  # testa se tem sala com pelo menos um lugar vazio, olha se tem preto no fim da barra de ocupação
             pyautogui.doubleClick(490 + x_origem, 263 + y_origem)  # clica para entar na sala vazia
 
             for i in range(40):
@@ -440,16 +436,19 @@ def sala_minima_niquel(x_origem, y_origem, num_mesa, blind_mesa):
                 if cont_erro_entrar_mesa >= 5:
                     Limpa.limpa_total(x_origem, y_origem)
                     break
+
         elif pyautogui.pixelMatchesColor((x_origem + 435), (y_origem + 264), (203, 107, 7), tolerance=5):
             print("Não tem sala vazia")
             return False, True
 
-    if blind_sala == blind_mesa:
-        print("Esta na sala certa")
-        return True, True
-    else:
-        print("Esta na sala errada")
-        return False, True
+        elif pyautogui.pixelMatchesColor((x_origem + 205), (y_origem + 265), (46, 87, 132), tolerance=3): # testa se existe sala com este numero
+            print("Não existe sala com esse numero")
+            if j > 5:
+                return False, False
+        time.sleep(0.2)
+    Limpa.limpa_total(x_origem, y_origem)
+    print("alguma outra falha para achar mesa")
+    return False, True
 
 
 def gira_niquel(x_origem, y_origem):
