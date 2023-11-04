@@ -463,6 +463,9 @@ def busca_link(navegador):
                 # Se encontrar a URL válida, clicar no elemento e sair do loop
                 elemento.click()
                 break
+            else:
+                print('nao tem URL com no padrao')
+                Google.escrever_celula("nao tem URL com no padrao", 'Dados', endereco_falha)
 
     except Exception as e:
         # Se ocorrer uma exceção ao encontrar a URL, informar o erro e escrever no arquivo de dados
