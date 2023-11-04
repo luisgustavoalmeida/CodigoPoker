@@ -393,19 +393,19 @@ def atualizar_pagina(navegador, url):
 def busca_link(navegador):
     print('busca_link')
 
-    if (nome_usuario == "PokerIP") and (nome_computador == "PC-I5-8600K"):
+    if (nome_usuario == "PokerIP"): #and (nome_computador == "PC-I5-8600K"):
         id = "stefaniaalmeida.jf"
         senha = "$TE20091992te"
         # id = "Luis.gustavo.almeida88"
         # senha = "020996Pa"
         endereco_falha = 'F2'
 
-    elif (nome_usuario == "lgagu") and (nome_computador == "PC-I7-9700KF"):
+    elif (nome_usuario == "lgagu"): #and (nome_computador == "PC-I7-9700KF"):
         id = "stefaniaalmeida.jf"
         senha = "$TE20091992te"
         endereco_falha = 'F3'
 
-    elif (nome_usuario == "PokerIP") and (nome_computador == "PC-i3-8145U"):
+    elif (nome_usuario == "PokerIP"): #and (nome_computador == "PC-i3-8145U"):
         id = "carolina.fedoci"
         senha = "Lg1405lG"
         endereco_falha = 'F4'
@@ -430,8 +430,8 @@ def busca_link(navegador):
     login_button = navegador.find_element(By.NAME, 'login')
     login_button.click()
 
-    print('fez login agurda 5 segundo para a paguna carregar')
-    time.sleep(5)
+    print('fez login agurda 7 segundo para a paguna carregar')
+    time.sleep(7)
     print('digita o endereço da fanpage')
     # Abrir a página do Facebook da qual você deseja obter a última postagem
     pagina_do_facebook = "https://www.facebook.com/people/Poker-Brasil/100064546038812/"
@@ -459,7 +459,7 @@ def busca_link(navegador):
         # Iterar sobre os elementos de imagem e verificar se a URL começa com o padrão desejado
         for elemento in elementos_imagem:
             url_imagem = elemento.get_attribute('src')
-            print(url_imagem)
+            # print(url_imagem)
             # Verificar se a URL começa com o padrão especificado
             if url_imagem.startswith("https://external.fjdf2-2.fna.fbcdn.net/emg1"):
                 print("\n\n URL válida: \n\n", url_imagem)
