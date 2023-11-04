@@ -456,9 +456,10 @@ def busca_link(navegador):
         # Iterar sobre os elementos de imagem e verificar se a URL começa com o padrão desejado
         for elemento in elementos_imagem:
             url_imagem = elemento.get_attribute('src')
+            print(url_imagem)
             # Verificar se a URL começa com o padrão especificado
             if url_imagem.startswith("https://external.fjdf2-2.fna.fbcdn.net/emg1"):
-                print("\n\n URL válida:", url_imagem)
+                print("\n\n URL válida: \n\n", url_imagem)
                 # Se encontrar a URL válida, clicar no elemento e sair do loop
                 elemento.click()
                 break
