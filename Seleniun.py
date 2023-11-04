@@ -494,6 +494,23 @@ def busca_link(navegador):
         # Faça algo com as duas guias, se necessário
     else:
         print("Não existem duas guias abertas.")
+        Google.escrever_celula('url fora do padrao ou nao encontrada a imagem com clique burro ', 'Dados', endereco_falha)
+
+        guias_abertas = navegador.window_handles
+
+        # Verifica se há mais de uma guia aberta
+        if len(guias_abertas) > 1:
+            # Fecha todas as guias adicionais, exceto a primeira
+            for guia_id in guias_abertas[1:]:
+                navegador.switch_to.window(guia_id)  # Alterna para a guia que será fechada
+                navegador.close()  # Fecha a guia ativa
+
+            # Após fechar as guias adicionais, volta para a primeira guia
+            navegador.switch_to.window(guias_abertas[0])
+
+            print("Apenas uma guia foi mantida aberta.")
+        else:
+            print("Apenas uma guia já está aberta.")
         return
 
     # Alterne o foco para a nova guia (segunda guia)
@@ -531,8 +548,8 @@ def busca_link(navegador):
 
 ######################################################################################################################
 # # para abrir o navegador e deixar abero. Descomentar as duas linhas abaixo
-navegador = cria_nevegador()
-busca_link(navegador)
+# navegador = cria_nevegador()
+# busca_link(navegador)
 #time.sleep(10000)
 
 
