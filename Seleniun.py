@@ -394,10 +394,8 @@ def busca_link(navegador):
     print('busca_link')
 
     if (nome_usuario == "PokerIP"): #and (nome_computador == "PC-I5-8600K"):
-        id = "stefaniaalmeida.jf"
-        senha = "$TE20091992te"
-        # id = "Luis.gustavo.almeida88"
-        # senha = "020996Pa"
+        id = "Luis.gustavo.almeida88"
+        senha = "020996Pa"
         endereco_falha = 'F2'
 
     elif (nome_usuario == "lgagu"): #and (nome_computador == "PC-I7-9700KF"):
@@ -406,8 +404,8 @@ def busca_link(navegador):
         endereco_falha = 'F3'
 
     elif (nome_usuario == "PokerIP"): #and (nome_computador == "PC-i3-8145U"):
-        id = "carolina.fedoci"
-        senha = "Lg1405lG"
+        id = "Luis.gustavo.almeida88"
+        senha = "020996Pa"
         endereco_falha = 'F4'
 
     url = "https://pt-br.facebook.com/"
@@ -550,6 +548,6 @@ def busca_link(navegador):
 # # para abrir o navegador e deixar abero. Descomentar as duas linhas abaixo
 # navegador = cria_nevegador()
 # busca_link(navegador)
-#time.sleep(10000)
+# time.sleep(10000)
 
 
