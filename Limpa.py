@@ -204,7 +204,7 @@ def limpa_pequeno(x_origem, y_origem):
         pyautogui.click(495 + x_origem, 520 + y_origem)
 
     # voce esta convidado a participar de uma festa em las vegasuma surpresa esta esperando por vc
-    elif pyautogui.pixelMatchesColor((x_origem + 520), (y_origem + 480), (0, 27, 38), tolerance=15):
+    elif pyautogui.pixelMatchesColor((x_origem + 520), (y_origem + 480), (64, 37, 165), tolerance=15):
         pyautogui.click(490 + x_origem, 485 + y_origem)
 
     elif pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 370), (224, 227, 229), tolerance=15):
