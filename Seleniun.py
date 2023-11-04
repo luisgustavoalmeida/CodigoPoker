@@ -477,7 +477,7 @@ def busca_link(navegador):
 
     if not teste_url:
         print('url fora do padrao ou nao encontrada')
-        Google.escrever_celula('url fora do padrao ou nao encontrada', 'Dados', endereco_falha)
+        #Google.escrever_celula('url fora do padrao ou nao encontrada', 'Dados', endereco_falha)
         pyautogui.click(670, 730)
         print('clique burro para tentar achar a imagem')
         #return
