@@ -465,6 +465,7 @@ def busca_link(navegador):
                 print("\n\n URL válida: \n\n", url_imagem)
                 # Se encontrar a URL válida, clicar no elemento e sair do loop
                 elemento.click()
+                print("\n\n Clicou na imagem correspondente \n\n ")
                 teste_url = True
                 break
 
@@ -477,11 +478,24 @@ def busca_link(navegador):
     if not teste_url:
         print('url fora do padrao ou nao encontrada')
         Google.escrever_celula('url fora do padrao ou nao encontrada', 'Dados', endereco_falha)
+        pyautogui.click(670, 730)
+        print('clique burro para tentar achar a imagem')
+        #return
+
+    time.sleep(5)
+
+    # Obtém todos os identificadores de guias abertas
+    guias_abertas = navegador.window_handles
+
+    # Verifica o número de guias abertas
+    if len(guias_abertas) == 2:
+
+        print("Existem duas guias abertas, continua.")
+        # Faça algo com as duas guias, se necessário
+    else:
+        print("Não existem duas guias abertas.")
         return
 
-
-    print("\n\n Clicou na imagem correspondente \n\n ")
-    time.sleep(3)
     # Alterne o foco para a nova guia (segunda guia)
     navegador.switch_to.window(navegador.window_handles[1])
     time.sleep(5)
