@@ -452,6 +452,7 @@ def busca_link(navegador):
         return
 
     # Procurar o primeiro link que começa com o padrão especificado
+    teste_url = False
     try:
         # Iterar sobre os elementos de imagem e verificar se a URL começa com o padrão desejado
         for elemento in elementos_imagem:
@@ -462,15 +463,18 @@ def busca_link(navegador):
                 print("\n\n URL válida: \n\n", url_imagem)
                 # Se encontrar a URL válida, clicar no elemento e sair do loop
                 elemento.click()
+                teste_url = True
                 break
-            else:
-                print('nao tem URL com no padrao')
-                Google.escrever_celula("nao tem URL com no padrao", 'Dados', endereco_falha)
 
     except Exception as e:
         # Se ocorrer uma exceção ao encontrar a URL, informar o erro e escrever no arquivo de dados
         print('Erro ao encontrar a URL:', str(e))
         Google.escrever_celula("Erro ao encontrar a URL", 'Dados', endereco_falha)
+        return
+
+    if not teste_url:
+        print('url fora do padrao ou nao encontrada')
+        Google.escrever_celula('url fora do padrao ou nao encontrada', 'Dados', endereco_falha)
         return
 
 
