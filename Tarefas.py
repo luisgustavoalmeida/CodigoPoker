@@ -347,6 +347,7 @@ def recolher_tarefa_upando(x_origem, y_origem):
             pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias para abrir
             print('Click para abrir os tarefas')
             if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (73, 71, 76), tolerance=20):
+                # testa se ja abriu a janela
 
                 if pyautogui.pixelMatchesColor((x_origem + 495), (y_origem + 125), (0, 51, 248), tolerance=10):  # testa se esta aberto a lista de tarefas
                     print('Tarefas abertas, conta sem Upar')

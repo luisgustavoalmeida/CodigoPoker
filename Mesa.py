@@ -390,13 +390,13 @@ def ajuste_valor_niquel(x_origem, y_origem, ajusta_aposta):
 
 
 def sala_minima_niquel(x_origem, y_origem, num_mesa, blind_mesa):
-    if blind_mesa == 12:
-        pyautogui.click(130 + x_origem, 200 + y_origem) # clica na lista de iniciantes
-    elif blind_mesa == 2040 or blind_mesa == 24:
-        pyautogui.click(280 + x_origem, 200 + y_origem)  # clica na lista de aprendizes
+    if blind_mesa == "12":
+        pyautogui.doubleClick(130 + x_origem, 200 + y_origem) # clica na lista de iniciantes
+    elif blind_mesa == "2040" or blind_mesa == "24":
+        pyautogui.doubleClick(280 + x_origem, 200 + y_origem)  # clica na lista de aprendizes
         # if not pyautogui.pixelMatchesColor((x_origem + 280), (y_origem + 210), (73, 177, 9), tolerance=5):
     #     pyautogui.click(280 + x_origem, 200 + y_origem)  # clica na lista de aprendizes
-    #     time.sleep(1)
+    time.sleep(0.3)
     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
         return "sair da conta"
     Limpa.aviso_canto_lobby(x_origem, y_origem)
@@ -736,6 +736,7 @@ def joga_uma_vez(x_origem, y_origem):
         return "sair da conta"
     Limpa.limpa_jogando(x_origem, y_origem)
     return
+
 
 
 def dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, valor_fichas, time_rodou, roleta):

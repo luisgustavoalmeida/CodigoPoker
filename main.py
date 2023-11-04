@@ -273,6 +273,8 @@ while True:
                         # pyautogui.doubleClick(x_origem + 683, y_origem + 14)  # clica no icone roleta, ja roda sozinho
                     # Mesa.dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, valor_fichas, time_rodou, roleta)
 
+                Tarefas.recolher_tarefa_upando(x_origem, y_origem)
+
                 # valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
                 roda = False
                 break
