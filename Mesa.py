@@ -15,9 +15,9 @@ import Origem_pg
 nome_computador = socket.gethostname()
 
 lista_salas_niquel = [{'1537': ('2040', 80, 40)}, {'1538': ('2040', 80, 40)}, {'1546': ('2040', 80, 40)},
-                      {'1542': ('2040', 80, 40)}, {'1545': ('2040', 80, 40)},{'1543': ('2040', 80, 40)},
+                      {'1542': ('2040', 80, 40)}, {'1545': ('2040', 80, 40)}, {'1543': ('2040', 80, 40)},
                       {'1542': ('2040', 80, 40)}, {'1541': ('2040', 80, 40)}, {'1540': ('2040', 80, 40)},
-                      {'1538': ('2040', 80, 40)},{'1536': ('2040', 80, 40)}, {'1535': ('2040', 80, 40)},
+                      {'1538': ('2040', 80, 40)}, {'1536': ('2040', 80, 40)}, {'1535': ('2040', 80, 40)},
                       {'1769': ('2040', 80, 40)}, {'1768': ('2040', 80, 40)}, {'1767': ('2040', 80, 40)},
                       {'1766': ('2040', 80, 40)}, {'1765': ('2040', 80, 40)}]
 
@@ -407,6 +407,9 @@ def sala_minima_niquel(x_origem, y_origem, num_mesa, blind_mesa):
     pyautogui.write(num_mesa) # escreve o numero da sala na barra de busca
     time.sleep(0.2)
     pyautogui.press('enter') # Pressiona a tecla Enter
+    pyautogui.doubleClick(99 + x_origem, 234 + y_origem)  # clica na primeira coluna do id
+    time.sleep(0.2)
+
     print('mesa: ', num_mesa)
     #time.sleep(0.5)
     cont_erro_entrar_mesa = 0
@@ -424,15 +427,27 @@ def sala_minima_niquel(x_origem, y_origem, num_mesa, blind_mesa):
                 Limpa.limpa_jogando(x_origem, y_origem)
 
                 if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (27, 92, 155), tolerance=19):  # testa se esta dentro da mesa
-                    Limpa.limpa_jogando(x_origem, y_origem)
-                    blind_sala = OCR_tela.blind_sala(x_origem, y_origem)
-                    print('blind_sala: ', blind_sala)
-                    if blind_sala == blind_mesa:
+                    #Limpa.limpa_jogando(x_origem, y_origem)
+
+                    num_sala = OCR_tela.numero_sala(x_origem, y_origem)
+                    print("num_sala", num_sala)
+                    print('num_mesa', num_mesa)
+
+                    if num_sala == num_mesa:
                         print("Esta na sala certa")
                         return True, True
                     else:
                         print("Esta na sala errada")
                         return False, True
+
+                    # blind_sala = OCR_tela.blind_sala(x_origem, y_origem)
+                    # print('blind_sala: ', blind_sala)
+                    # if blind_sala == blind_mesa:
+                    #     print("Esta na sala certa")
+                    #     return True, True
+                    # else:
+                    #     print("Esta na sala errada")
+                    #     return False, True
                 time.sleep(1)
                 if cont_erro_entrar_mesa >= 5:
                     Limpa.limpa_total(x_origem, y_origem)

@@ -703,15 +703,17 @@ def numero_sala(x_origem, y_origem):
     fator_ampliacao = 3
     contraste_pre = 1
     contraste_pos = 1.5
-    config = '--psm 7 --oem 3 -c tessedit_char_whitelist=/0123456789KM'
+    config = '--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789 '
     regiao = (x_origem + 52, y_origem + 77, x_origem + 89, y_origem + 93)
     numero = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza) #pontuação
+    #print('numero_sala: ', numero)
 
     if numero is not None:
+        numero = numero.split(" ")[0]
         numero = numero.replace(' ', '')
-        numero = numero.replace('.', '')
-        print(numero)
-        return numero
+
+        print('numero_sala: ', numero)
+        return str(numero)
     else:
         return '0'
 
