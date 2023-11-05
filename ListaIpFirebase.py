@@ -13,6 +13,17 @@ config = {
   "appId": "1:240019464920:web:a746cddaf41f43642aadad"
 }
 
+# config = {
+#     "apiKey": "AIzaSyBWJEh-hD6UIkpMz8J4V2Es4mP2AtuHx9k",
+#     "authDomain": "poker-dados.firebaseapp.com",
+#     "databaseURL": "https://poker-dados-default-rtdb.firebaseio.com",
+#     "projectId": "poker-dados",
+#     "storageBucket": "poker-dados.appspot.com",
+#     "messagingSenderId": "968238353891",
+#     "appId": "1:968238353891:web:b0026783a590efa99c24d6"
+# }
+
+
 # Inicializa o Firebase
 firebase = pyrebase.initialize_app(config)
 
@@ -21,8 +32,7 @@ db = firebase.database()
 
 
 def verifica_e_adiciona_ip(ip):
-    '''
-    Verifica se um IP está na lista de IPs no Firebase e adiciona se não estiver.
+    """Verifica se um IP está na lista de IPs no Firebase e adiciona se não estiver.
 
     Parâmetros:
     ip (str): Endereço de IP a ser verificado e adicionado.
@@ -40,8 +50,8 @@ def verifica_e_adiciona_ip(ip):
     if resultado:
         print(f"O IP {ip} foi adicionado à lista de IPs.")
     else:
-        print(f"O IP {ip} já está na lista de IPs.")
-    '''
+        print(f"O IP {ip} já está na lista de IPs.")"""
+
 
     print('Testa se IP ja fou usado')
 
@@ -53,7 +63,7 @@ def verifica_e_adiciona_ip(ip):
         lista_ips = []
 
     # Remove IPs que estão na lista por mais de 24 horas
-    lista_ips = [ip_info for ip_info in lista_ips if time.time() - ip_info['timestamp'] <= 24 * 3600]
+    lista_ips = [ip_info for ip_info in lista_ips if time.time() - ip_info['timestamp'] <= 20 * 3600]
 
     # Verifica se o IP já está na lista
     for ip_info in lista_ips:

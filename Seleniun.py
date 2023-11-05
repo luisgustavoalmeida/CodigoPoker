@@ -393,17 +393,17 @@ def atualizar_pagina(navegador, url):
 def busca_link(navegador):
     print('busca_link')
 
-    if (nome_usuario == "PokerIP"): #and (nome_computador == "PC-I5-8600K"):
+    if nome_usuario == "PokerIP": #and (nome_computador == "PC-I5-8600K"):
         id = "Luis.gustavo.almeida88"
         senha = "020996Pa"
         endereco_falha = 'F2'
 
-    elif (nome_usuario == "lgagu"): #and (nome_computador == "PC-I7-9700KF"):
+    elif nome_usuario == "lgagu": #and (nome_computador == "PC-I7-9700KF"):
         id = "stefaniaalmeida.jf"
         senha = "$TE20091992te"
         endereco_falha = 'F3'
 
-    elif (nome_usuario == "PokerIP"): #and (nome_computador == "PC-i3-8145U"):
+    elif nome_usuario == "PokerIP": #and (nome_computador == "PC-i3-8145U"):
         id = "Luis.gustavo.almeida88"
         senha = "020996Pa"
         endereco_falha = 'F4'

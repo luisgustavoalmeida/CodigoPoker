@@ -2,12 +2,10 @@ import time
 import pyautogui
 # Desabilitar o fail-safe
 pyautogui.FAILSAFE = False
-import Origem_pg
 pyautogui.PAUSE = 0
 import OCR_tela
 import IP
 import Seleniun
-import Slot
 
 
 def teste_limpo(x_origem, y_origem):
@@ -102,7 +100,9 @@ def limpa_pequeno(x_origem, y_origem):
     if ja_esta_logado(x_origem, y_origem) == "sair da conta" :
         return "sair da conta"
 
-    pyautogui.click(490 + x_origem, 70 + y_origem, button='left')  # clique bobo para passar alguma naimação
+    pyautogui.click(490 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
+    pyautogui.click(686 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
+
     # voce ja recebeu seu premio, deixe um pouco para os outros
     if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 435), (175, 23, 18), tolerance=15):
         pyautogui.click(x_origem + 490, y_origem + 435)
@@ -141,19 +141,20 @@ def limpa_pequeno(x_origem, y_origem):
         if pyautogui.pixelMatchesColor((x_origem + 491), (y_origem + 417), (25, 118, 188), tolerance=20):
             print('tem mensagem com atuializar')
             aviso_sistema, resposta = OCR_tela.aviso_sistema(x_origem, y_origem)
-            if resposta == "sair da conta":
-                print("sair da conta")
-                return "sair da conta"
+            if aviso_sistema:
+                if resposta == "sair da conta":
+                    print("sair da conta")
+                    return "sair da conta"
 
     # clica no Normal
     elif pyautogui.pixelMatchesColor((x_origem + 162), (y_origem + 160), (12, 72, 108), tolerance=15):
         pyautogui.click(x_origem + 164, y_origem + 161)
         print("Clica no Normal")
 
-    # dispo nivel em acesso antecipado para jogadores VIP
-    elif pyautogui.pixelMatchesColor((x_origem + 702), (y_origem + 104), (27, 53, 167), tolerance=10):
-        pyautogui.click(x_origem + 896, y_origem + 22)
-        print("dispo nivel em acesso antecipado para jogadores VIP")
+    # # dispo nivel em acesso antecipado para jogadores VIP
+    # elif pyautogui.pixelMatchesColor((x_origem + 702), (y_origem + 104), (27, 53, 167), tolerance=10):
+    #     pyautogui.click(x_origem + 896, y_origem + 22)
+    #     print("dispo nivel em acesso antecipado para jogadores VIP")
 
     ## Genius Muito tempo desde a sua unlima aposta
     elif pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 612), (80, 73, 76), tolerance=15):
@@ -199,9 +200,9 @@ def limpa_pequeno(x_origem, y_origem):
                     # Seleniun.atualizar_pagina(navegador, url)
                     time.sleep(25)
 
-    # um martelo gratis par adestruir os goblins e receber recompensa ( tema de halowin)
-    elif pyautogui.pixelMatchesColor((x_origem + 500), (y_origem + 190), (0, 27, 38), tolerance=15):
-        pyautogui.click(495 + x_origem, 520 + y_origem)
+    # # um martelo gratis par adestruir os goblins e receber recompensa ( tema de halowin)
+    # elif pyautogui.pixelMatchesColor((x_origem + 500), (y_origem + 190), (0, 27, 38), tolerance=15):
+    #     pyautogui.click(495 + x_origem, 520 + y_origem)
 
     # voce esta convidado a participar de uma festa em las vegasuma surpresa esta esperando por vc
     elif pyautogui.pixelMatchesColor((x_origem + 520), (y_origem + 480), (64, 37, 165), tolerance=15):
@@ -250,7 +251,11 @@ def limpa_pequeno(x_origem, y_origem):
 
 def limpa_tarefas(x_origem, y_origem): # fecha todas as tarefas que sao feitas
     print('limpa_tarefas')
-    pyautogui.click(490 + x_origem, 70 + y_origem, button='left')  # clique bobo para passar alguma naimação
+
+    limpa_pequeno(x_origem, y_origem)
+
+    # pyautogui.click(490 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
+    # pyautogui.click(686 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
 
     if teste_limpo(x_origem, y_origem): # se ta limpo nem entra
         return
@@ -323,8 +328,11 @@ def fecha_tarefa(x_origem, y_origem): #fecha a lista de tarefas diarias
 def limpa_promocao(x_origem, y_origem):
     '''Limpa as promoções exceto as tarefas que são feitas'''
     print('limpa_promocao')
-    pyautogui.click(490 + x_origem, 70 + y_origem, button='left')  # clique bobo para passar alguma naimação
-    limpa_pequeno(x_origem, y_origem)
+
+    # pyautogui.click(490 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
+    # pyautogui.click(686 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
+
+    #limpa_pequeno(x_origem, y_origem)
     if ja_esta_logado(x_origem, y_origem) == "sair da conta" :
         return "sair da conta"
 
@@ -368,11 +376,11 @@ def limpa_promocao(x_origem, y_origem):
         pyautogui.click(884 + x_origem, 135 + y_origem, button='left')
         print("Mega Giro e roleta2")
 
-    # Gostosuras de Halloween
-    if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (18, 17, 19), tolerance=10):
-        pyautogui.click(495 + x_origem, 315 + y_origem)
-        print("Gostosuras de Halloween")
-        time.sleep(1)
+    # # Gostosuras de Halloween
+    # if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (18, 17, 19), tolerance=10):
+    #     pyautogui.click(495 + x_origem, 315 + y_origem)
+    #     print("Gostosuras de Halloween")
+    #     time.sleep(1)
 
     # Fecha promoçoes exceto tarefas
     if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (73, 71, 76), tolerance=20):
@@ -438,8 +446,9 @@ def limpa_total(x_origem, y_origem):
     print('limpa_total')
     cont_erro_limpa = 0
     for i in range(50):
-        pyautogui.click(490 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
-        limpa_pequeno(x_origem, y_origem)
+        # pyautogui.click(490 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
+        # pyautogui.click(686 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
+
         cont_erro_limpa += 1
         if cont_erro_limpa >= 30:
             cont_erro_limpa = 0
@@ -463,9 +472,9 @@ def limpa_total(x_origem, y_origem):
         limpa_promocao(x_origem, y_origem)
         if teste_limpo(x_origem, y_origem):  # se ta limpo nem entra
             return None
-        limpa_tarefas(x_origem, y_origem)
-        if teste_limpo(x_origem, y_origem):  # se ta limpo nem entra
-            return None
+        # limpa_tarefas(x_origem, y_origem)
+        # if teste_limpo(x_origem, y_origem):  # se ta limpo nem entra
+        #     return None
         iniciantes(x_origem, y_origem)
         if teste_limpo(x_origem, y_origem):  # se ta limpo nem entra
             return None

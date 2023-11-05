@@ -495,3 +495,5 @@ import Tarefas
 # # status_tarefa = Tarefas.recolher_tarefa_upando(x_origem, y_origem)
 # # Slot.ajustar_valor(x_origem, y_origem, True)
 # Slot.solot_joga_vezes_upando(x_origem, y_origem)
+
+
