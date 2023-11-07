@@ -227,27 +227,37 @@ while True:
                 Firebase.confirmacao_comando_resposta(status_comando)
 
                 status_comando = 'Aguardando comando'
-
+                recebido1 = None
+                recebido2 = None
+                comando = None
                 while True:
                     time.sleep(1)
 
-                    comando = Firebase.comando_escravo
-                    print(comando)
+                    recebido1 = Firebase.comando_escravo
+                    if recebido1 != recebido2:
+                        recebido2 = recebido1
+                        comando = recebido1
+                    print('comando :', comando)
+
                     Tarefas.recolher_tarefa_upando(x_origem, y_origem)
 
                     if comando == "Sair":
                         status_comando = "Saindo"
+                        comando = 'Executado'
                         break
 
                     elif comando == "Mesa1":
                         blind = '500/1K'
+                        comando = 'Executado'
                         status_comando = Mesa.escolher_blind(x_origem, y_origem, blind)
 
                     elif comando == "Mesa2":
                         blind = '1K/2K'
+                        comando = 'Executado'
                         status_comando = Mesa.escolher_blind(x_origem, y_origem, blind)
 
                     elif comando == "Senta":
+                        comando = 'Executado'
                         sentou = Mesa.sentar_mesa(x_origem, y_origem, False, blind)
                         if sentou:
                             status_comando = "Sentou"
@@ -255,24 +265,31 @@ while True:
                             status_comando = "Não sentou"
 
                     elif comando == "Joga":
+                        comando = 'Executado'
                         Upar.passa_ate_lv7(x_origem, y_origem)
 
                     elif comando == "Recolher":
+                        comando = 'Executado'
                         status_comando = Tarefas.recolher_tarefa_upando(x_origem, y_origem)
 
                     elif comando == "Levanta":
+                        comando = 'Executado'
                         status_comando = Upar.levantar_mesa(x_origem, y_origem)
 
                     elif comando == "Slot":
+                        comando = 'Executado'
                         Upar.solot_genius_cartas_upando(x_origem, y_origem, blind)
 
                     elif comando == "Genius":
+                        comando = 'Executado'
                         Upar.genius_cartas_upando(x_origem, y_origem, blind)
 
                     elif comando == "Cartas":
+                        comando = 'Executado'
                         Upar.cartas_upando(x_origem, y_origem, blind)
 
                     elif comando == "2xp":
+                        comando = 'Executado'
                         status_comando = xp2.pega_2xp(x_origem, y_origem)
 
                     Firebase.confirmacao_comando_resposta(status_comando)
