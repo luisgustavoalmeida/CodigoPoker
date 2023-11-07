@@ -201,6 +201,8 @@ while True:
             if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
                 break
 
+            Firebase.confirmacao_escravo('Entrou')
+
             #######################Tarefas
             if guia == "Up":
 
@@ -245,6 +247,11 @@ while True:
                         status_comando = "Saindo"
                         comando = 'Executado'
                         break
+
+                    if comando == "Limpa":
+                        status_comando = "Limpando"
+                        comando = 'Executado'
+                        Limpa.limpa_total(x_origem, y_origem)
 
                     elif comando == "Mesa1":
                         blind = '500/1K'
@@ -296,11 +303,15 @@ while True:
 
                 Firebase.confirmacao_comando_resposta('Entrendo em uma nova conta')
 
+
+                valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem)
                 hora_que_rodou = datetime.datetime.now().strftime('%H:%M:%S')
 
                 print('valor_fichas', valor_fichas)
                 print('pontuacao_tarefas', pontuacao_tarefas)
                 print('hora_que_rodou', hora_que_rodou)
+
+                Firebase.confirmacao_escravo('Entrendo em uma nova conta')
 
                 roda = False
                 break

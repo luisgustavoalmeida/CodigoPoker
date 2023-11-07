@@ -247,9 +247,11 @@ def confirmacao_comando_resposta(resposta_escravo):
         # except Exception as e:
         #     resposta_anterior = None
         #     print(f"Ocorreu um erro ao escrever a informação: {str(e)}")
+        if resposta_escravo == "Sair":
+            confirmacao_escravo('Saindo')
 
-        #confirmacao_escravo(resposta_escravo)
         escreve_resposta_escravo(resposta_escravo)
+        resposta_anterior = resposta_escravo
 
 
     else:
