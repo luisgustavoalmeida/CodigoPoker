@@ -29,14 +29,14 @@ def roletas(x_origem, y_origem, id, senha, url, navegador):
             break
 
         #testa se tem a barra vermelha ou #testa se tem a barra amarela ou #testa se tem a barra amarelo meio cinza # se tem siguinifica que ja fez o R1
-        if (pyautogui.pixelMatchesColor((x_origem + 702), (y_origem + 41), (161, 6, 93), tolerance=20) or
-                pyautogui.pixelMatchesColor((x_origem + 673), (y_origem + 41), (253, 195, 44), tolerance=20) or
+        if (pyautogui.pixelMatchesColor((x_origem + 702), (y_origem + 41), (153, 3, 86), tolerance=20) or
+                pyautogui.pixelMatchesColor((x_origem + 673), (y_origem + 41), (254, 191, 35), tolerance=20) or
                 pyautogui.pixelMatchesColor((x_origem + 673), (y_origem + 41), (166, 113, 35), tolerance=20)):
             roleta = 'roleta_2'
             print("Jarodou a roleta 1, tem que fazer a roleta 2")
             # faz roleta 2# se tem roleta 2 tem que ta com o icone da roleta amarelo
-            if (not pyautogui.pixelMatchesColor((x_origem + 680), (y_origem + 14), (227, 235, 248), tolerance=20)) \
-                    and (not pyautogui.pixelMatchesColor((x_origem + 680), (y_origem + 14), (146, 172, 208), tolerance=20)):#testa se o icone da roleta NÃO esta cinsa
+            if ((not pyautogui.pixelMatchesColor((x_origem + 680), (y_origem + 14), (227, 235, 248), tolerance=20))
+                    and (not pyautogui.pixelMatchesColor((x_origem + 680), (y_origem + 14), (146, 172, 208), tolerance=20))):#testa se o icone da roleta NÃO esta cinsa
                 # ricone da roleta esta mamarelo
                 print("espera abrir a roleta 2")
                 for i in range(100):
