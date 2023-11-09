@@ -256,6 +256,8 @@ def fazer_login(id, senha, url, navegador):
                             return entrou, status
 
                         elif "/privacy/" in url_atual:
+
+                            elemento_clicavel_encontrado = False
                             #  https://www.facebook.com/privacy/consent/lgpd_migrated/?source=lgpd_blocking_flow
                             print("A conta termos de privacidade")
                             time.sleep(5)
@@ -263,6 +265,8 @@ def fazer_login(id, senha, url, navegador):
                             for item in lista_face: # percorre os textos que tem quando tem conta caida para o face
                                 try:
                                     elemento = navegador.find_element(By.XPATH, f"//span[contains(text(), '{item}')]")
+
+                                    elemento_clicavel_encontrado = True
                                     print(item)
                                     status = item
                                     entrou = False
@@ -271,11 +275,9 @@ def fazer_login(id, senha, url, navegador):
                                     continue
 
                             # lista de elemento clicaveis
-                            elementos_para_clicar = ['Começar', 'Gerenciar configurações', 'Salvar,' 'Continuar',
+                            elementos_para_clicar = ['Começar', 'Gerenciar configurações', 'Salvar', 'Continuar',
                                                      'Voltar para o Facebook', 'Usar essa atividade',
                                                      'Usar gratuitamente', 'Concordo', 'Fechar']
-
-                            elemento_clicavel_encontrado = False
 
                             for i in range(2):
                                 for elemento in elementos_para_clicar:
@@ -285,11 +287,39 @@ def fazer_login(id, senha, url, navegador):
                                         elemento_clicavel = WebDriverWait(navegador, 3).until(
                                             EC.element_to_be_clickable((By.CSS_SELECTOR, elemento_seletor)))
                                         elemento_clicavel.click()
+                                        print('cicou no elemento :', elemento)
                                         elemento_clicavel_encontrado = True
+                                        time.sleep(3)
                                     except Exception as e:  # Corrigido o erro aqui, "as e" ao invés de "e Exception:"
                                         print("Elememto para clicar não encontrado: ", elemento)
-                                        print(e)
+                                        #print(e)
                                         continue
+
+
+                            # Lista de elementos para clicar
+                            elementos_para_clicar = ["Usar gratuitamente", 'Concordo']
+
+                            for i in range(2):
+                                for elemento_texto in elementos_para_clicar:
+                                    # Construir a expressão XPath para o elemento atual na lista
+                                    xpath_expression = f"//span[text()='{elemento_texto}']"
+                                    print("procura: ", elemento)
+
+                                    try:
+                                        # Esperar até que o elemento seja clicável (nesse caso, esperaremos até 10 segundos)
+                                        elemento = WebDriverWait(navegador, 3).until(EC.element_to_be_clickable((By.XPATH, xpath_expression)))
+
+                                        # Clicar no elemento
+                                        elemento.click()
+                                        print('cicou no elemento :', elemento)
+                                        elemento_clicavel_encontrado = True
+                                        time.sleep(3)
+
+                                        # Após clicar, você pode realizar outras operações na nova página ou continuar com o seu script
+
+                                    except Exception as e:
+                                        print(f"Elemento para clicar não encontrado: {elemento_texto}")
+                                        #print(e)
 
                             if not elemento_clicavel_encontrado:
                                 print("Nenhum elemento para clicar foi encontrado.")

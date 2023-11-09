@@ -99,6 +99,16 @@ def carregado_origem(id, senha, url, navegador):#navegador
                     print("clica no continuar")
                     time.sleep(2)
 
+                regiao = (620, 640, 360, 170)
+                imagem = r'Imagens\Continuar3.png'
+                precisao = 0.8
+                localizado = localizar_imagem(imagem, regiao, precisao)
+                if localizado is not None:
+                    centro = pyautogui.center(localizado)
+                    pyautogui.doubleClick(centro.x, centro.y, button='left')
+                    print("clica no continuar")
+                    time.sleep(2)
+
                 regiao = (410, 400, 580, 300)
                 imagem = r'Imagens\Atualizar.png'
                 precisao = 0.8
