@@ -273,7 +273,9 @@ def fazer_login(id, senha, url, navegador):
                             # lista de elemento clicaveis
                             elementos_para_clicar = ["Começar", "Gerenciar configurações", "Salvar", "Continuar",
                                                      "Voltar para o Facebook", "Usar essa atividade",
-                                                     "Usar essa atividade", "Fechar"]
+                                                     'Usar gratuitamente', 'Concordo', "Fechar"]
+
+                            elemento_clicavel_encontrado = False
 
                             for i in range(2):
                                 for elemento in elementos_para_clicar:
@@ -283,10 +285,17 @@ def fazer_login(id, senha, url, navegador):
                                         elemento_clicavel = WebDriverWait(navegador, 3).until(
                                             EC.element_to_be_clickable((By.CSS_SELECTOR, elemento_seletor)))
                                         elemento_clicavel.click()
+                                        elemento_clicavel_encontrado = True
                                     except Exception as e:  # Corrigido o erro aqui, "as e" ao invés de "e Exception:"
                                         print("Elememto para clicar não encontrado: ", elemento)
                                         print(e)
                                         continue
+
+                            if not elemento_clicavel_encontrado:
+                                print("Nenhum elemento para clicar foi encontrado.")
+                                status = 'Nova interação'
+                                entrou = False
+                                return entrou, status
 
                             time.sleep(3)
                             navegador.get(url)
