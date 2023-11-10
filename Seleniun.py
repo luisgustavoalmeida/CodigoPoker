@@ -277,19 +277,20 @@ def fazer_login(id, senha, url, navegador):
                             # lista de elemento clicaveis
                             elementos_para_clicar = ['Começar', 'Gerenciar configurações', 'Salvar', 'Continuar',
                                                      'Voltar para o Facebook', 'Usar essa atividade',
+                                                     'Usar esta atividade', 'Usar gratuitamente', 'Concordo',
                                                      'Usar gratuitamente', 'Concordo', 'Fechar']
-
+                            time.sleep(3)
                             for i in range(2):
                                 for elemento in elementos_para_clicar:
                                     elemento_seletor = f'div[aria-label="{elemento}"]'
                                     print("procura: ", elemento)
                                     try:
-                                        elemento_clicavel = WebDriverWait(navegador, 3).until(
+                                        elemento_clicavel = WebDriverWait(navegador, 1).until(
                                             EC.element_to_be_clickable((By.CSS_SELECTOR, elemento_seletor)))
                                         elemento_clicavel.click()
                                         print('cicou no elemento :', elemento)
                                         elemento_clicavel_encontrado = True
-                                        time.sleep(3)
+                                        time.sleep(4)
                                     except Exception as e:  # Corrigido o erro aqui, "as e" ao invés de "e Exception:"
                                         print("Elememto para clicar não encontrado: ", elemento)
                                         #print(e)
@@ -297,7 +298,7 @@ def fazer_login(id, senha, url, navegador):
 
 
                             # Lista de elementos para clicar
-                            elementos_para_clicar = ["Usar gratuitamente", 'Concordo']
+                            #elementos_para_clicar = ["Usar gratuitamente", 'Concordo']
 
                             for i in range(2):
                                 for elemento_texto in elementos_para_clicar:
@@ -307,13 +308,13 @@ def fazer_login(id, senha, url, navegador):
 
                                     try:
                                         # Esperar até que o elemento seja clicável (nesse caso, esperaremos até 10 segundos)
-                                        elemento = WebDriverWait(navegador, 3).until(EC.element_to_be_clickable((By.XPATH, xpath_expression)))
+                                        elemento = WebDriverWait(navegador, 1).until(EC.element_to_be_clickable((By.XPATH, xpath_expression)))
 
                                         # Clicar no elemento
                                         elemento.click()
                                         print('cicou no elemento :', elemento)
                                         elemento_clicavel_encontrado = True
-                                        time.sleep(3)
+                                        time.sleep(4)
 
                                         # Após clicar, você pode realizar outras operações na nova página ou continuar com o seu script
 
