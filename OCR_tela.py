@@ -777,7 +777,7 @@ def aviso_sistema(x_origem, y_origem):
         # testa se tem a borda preta da caixa
         print('tem a caixa com o aviso do sistema')
 
-        if pyautogui.pixelMatchesColor((x_origem + 641), (y_origem + 278), (255, 255, 255), tolerance=10)
+        if pyautogui.pixelMatchesColor((x_origem + 641), (y_origem + 278), (255, 255, 255), tolerance=10):
             # ou testar se tem o X de fachar a caixa
             print('clica no X da caixa de aviso do sistema')
             pyautogui.click(x_origem + 641, y_origem + 278)  # clica no x do aviso so sistema
