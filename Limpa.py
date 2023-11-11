@@ -21,17 +21,18 @@ def teste_limpo(x_origem, y_origem):
 
 
 def ja_esta_logado(x_origem, y_origem):
+    print('Testa aviso do sistema')
+    # testa se tem as cores da caixa de mensagem de aviso do sistema
 
-    if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 370), (224, 227, 229), tolerance=5):
-        print('ja_esta_logado')
-        aviso_sistema, resposta = OCR_tela.aviso_sistema(x_origem, y_origem)
-        print(resposta)
-        if aviso_sistema:
-            if resposta == "sair da conta":
-                print("sair da conta")
-                return "sair da conta"
+    aviso_sistema, resposta = OCR_tela.aviso_sistema(x_origem, y_origem)
+    print(resposta)
+    if aviso_sistema:
+        if resposta == "sair da conta":
+            print("sair da conta")
+            return "sair da conta"
     else:
         return False
+
 
 
 def limpa_jogando(x_origem, y_origem):

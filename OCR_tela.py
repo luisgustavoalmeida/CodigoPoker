@@ -770,7 +770,13 @@ def aviso_sistema(x_origem, y_origem):
     print('aviso_sistema')
     # testa sem tem o azul do atualizar a pagina do aviso do sistema
     resposta = "ok"
-    if pyautogui.pixelMatchesColor((x_origem + 491), (y_origem + 417), (25, 117, 186), tolerance=19):
+    # testa se tem cinsa claro do meio da caixa
+    # testa se tem cnsa mais escurao da parte debaixo da caixa
+    # testa se tem a borda preta da caixa
+    if (pyautogui.pixelMatchesColor((x_origem + 500), (y_origem + 380), (224, 227, 229), tolerance=1)
+            and pyautogui.pixelMatchesColor((x_origem + 500), (y_origem + 400), (209, 211, 213), tolerance=1)
+            and pyautogui.pixelMatchesColor((x_origem + 321), (y_origem + 273), (0, 0, 0), tolerance=1)):
+        print('tem a caixa com o aviso do sistema')
         inveter_cor = False
         esca_ciza = True
         fator_ampliacao = 1
@@ -779,6 +785,7 @@ def aviso_sistema(x_origem, y_origem):
         config = '--psm 3'
         regiao = (x_origem + 321, y_origem + 268, x_origem + 658, y_origem + 433)
         valor = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
+        print("valor lido pelo OCR aviso do sistema: ", valor)
         if valor is not None:
             if 'Aviso do sistema' in valor:
                 print('foi encontrado um: Aviso do sistema')
@@ -793,8 +800,8 @@ def aviso_sistema(x_origem, y_origem):
                     IP.tem_internet()
                     print('Erro de comunicação, favor atualizar a página para continuar com o processo')
                     pyautogui.press('f5')
-                    print('espera 25 segundos')
-                    time.sleep(25)
+                    print('espera 30 segundos')
+                    time.sleep(30)
                     print('continua')
                     return True, resposta
                 else:
@@ -802,6 +809,7 @@ def aviso_sistema(x_origem, y_origem):
         else:
             return False, resposta
     else:
+        print('nao tem caixa com aviso do sistema ')
         return False, resposta
 
 
