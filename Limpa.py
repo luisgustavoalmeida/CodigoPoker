@@ -24,8 +24,10 @@ def ja_esta_logado(x_origem, y_origem):
     print('Testa aviso do sistema')
     # testa se tem as cores da caixa de mensagem de aviso do sistema
 
-    aviso_sistema, resposta = OCR_tela.aviso_sistema(x_origem, y_origem)
-    print(resposta)
+    resultado_aviso_sistema = OCR_tela.aviso_sistema(x_origem, y_origem)
+    print(resultado_aviso_sistema)
+    aviso_sistema, resposta = resultado_aviso_sistema
+
     if aviso_sistema:
         if resposta == "sair da conta":
             print("sair da conta")

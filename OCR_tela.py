@@ -770,29 +770,39 @@ def aviso_sistema(x_origem, y_origem):
     print('aviso_sistema')
     # testa sem tem o azul do atualizar a pagina do aviso do sistema
     resposta = "ok"
-    # testa se tem cinsa claro do meio da caixa
-    # testa se tem cnsa mais escurao da parte debaixo da caixa
-    # testa se tem a borda preta da caixa
+
     if (pyautogui.pixelMatchesColor((x_origem + 500), (y_origem + 380), (224, 227, 229), tolerance=1)
-            and pyautogui.pixelMatchesColor((x_origem + 500), (y_origem + 400), (209, 211, 213), tolerance=1)
             and pyautogui.pixelMatchesColor((x_origem + 321), (y_origem + 273), (0, 0, 0), tolerance=1)):
+        # testa se tem cinsa claro do meio da caixa
+        # testa se tem a borda preta da caixa
         print('tem a caixa com o aviso do sistema')
-        inveter_cor = False
-        esca_ciza = True
-        fator_ampliacao = 1
-        contraste_pre = 1
-        contraste_pos = 1
-        config = '--psm 3'
-        regiao = (x_origem + 321, y_origem + 268, x_origem + 658, y_origem + 433)
-        valor = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
-        print("valor lido pelo OCR aviso do sistema: ", valor)
-        if valor is not None:
-            if 'Aviso do sistema' in valor:
+
+        if pyautogui.pixelMatchesColor((x_origem + 641), (y_origem + 278), (255, 255, 255), tolerance=10)
+            # ou testar se tem o X de fachar a caixa
+            print('clica no X da caixa de aviso do sistema')
+            pyautogui.click(x_origem + 641, y_origem + 278)  # clica no x do aviso so sistema
+            return False, resposta
+
+        elif pyautogui.pixelMatchesColor((x_origem + 450), (y_origem + 408), (209, 211, 213), tolerance=1):
+            # testa se tem cnsa mais escurao da parte debaixo da caixa e testa se nao tem botao azul
+            print('testa se tem que atualizar a pagina ou se tem que sair da conta')
+            inveter_cor = False
+            esca_ciza = True
+            fator_ampliacao = 1
+            contraste_pre = 1
+            contraste_pos = 1
+            config = '--psm 3'
+            regiao = (x_origem + 321, y_origem + 268, x_origem + 658, y_origem + 433)
+            valor = None
+            valor = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
+            print("valor lido pelo OCR aviso do sistema: ", valor)
+            if valor is not None and 'Aviso do sistema' in valor:
                 print('foi encontrado um: Aviso do sistema')
                 if 'cancelada' in valor:
                     print("Mesagem: ", valor)
                     Variaveis_Globais.alterar_global_aviso_sistema(True) # muda o valor da variavel global destinado a sair da conta
                     resposta = "sair da conta"
+                    print('tem que sair da conta')
                     return True, resposta
                 elif 'atualizar' in valor:
                     print("Mesagem: ", valor)
@@ -806,7 +816,13 @@ def aviso_sistema(x_origem, y_origem):
                     return True, resposta
                 else:
                     return False, resposta
+            else:
+                print('tenta clica no X da caixa de aviso do sistema')
+                pyautogui.click(x_origem + 641, y_origem + 278)  # clica no x do aviso so sistema
+                return False, resposta
         else:
+            print('tenta clica no X da caixa de aviso do sistema')
+            pyautogui.click(x_origem + 641, y_origem + 278)  # clica no x do aviso so sistema
             return False, resposta
     else:
         print('nao tem caixa com aviso do sistema ')
