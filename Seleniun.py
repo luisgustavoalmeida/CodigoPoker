@@ -75,7 +75,7 @@ def cria_nevegador():
     print('Criando o navegador')
     navegador = webdriver.Chrome(service=servico, options=options)  # Inicializar o driver do navegador
     # Redefina o tempo limite para 10 segundos para a segunda parte do código
-    navegador.set_page_load_timeout(60)
+    navegador.set_page_load_timeout(80)
     return navegador
     # while True:
     #     try:
@@ -102,12 +102,28 @@ def abrir_navegador(url, navegador):
 
 
 def se_esta_lagado(navegador):
-    if navegador.get_cookie("c_user"):
-        print("Está logado no Facebook.")
-        return True
-    else:
-        print("Não está logado no Facebook.")
-        return False
+    # Especifique o nome do cookie associado ao estado de login do Facebook
+    nome_cookie = "c_user"
+
+    # Obtém todos os cookies
+    cookies = navegador.get_cookies()
+
+    # Verifica se o cookie está presente
+    for cookie in cookies:
+        if cookie["name"] == nome_cookie:
+            print("Está logado no Facebook.")
+            return True
+
+    print("Não está logado no Facebook.")
+    return False
+
+
+    # if navegador.get_cookie("c_user"):
+    #     print("Está logado no Facebook.")
+    #     return True
+    # else:
+    #     print("Não está logado no Facebook.")
+    #     return False
 
 
 def pega_url(navegador, url):
