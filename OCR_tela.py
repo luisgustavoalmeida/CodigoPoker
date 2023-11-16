@@ -849,6 +849,9 @@ def level_conta(x_origem, y_origem):
             if 1 < lido < 10:
                 print("Leval da conta: ", lido)
                 return lido
+            else:
+                print("Valor fora da faixa desejada")
+                return 0
         except ValueError:
             # Lidar com a conversão falhada para um número inteiro
             print("Erro ao converter para inteiro")
