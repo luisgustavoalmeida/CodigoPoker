@@ -73,7 +73,12 @@ dicionari_PC_cadeira = {'PC-I5-8600K': {'cadeira_1': (659, 127), 'cadeira_2': (8
                                          'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)}
                         }
 
+dicionario_cadeira = {'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_3': (847, 366),
+                      'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451),
+                      'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)}
+
 prioridade_cadeira = dicionari_PC_cadeira[nome_computador]
+
 
 def localizar_imagem(imagem, regiao, precisao):
     try:
@@ -85,16 +90,52 @@ def localizar_imagem(imagem, regiao, precisao):
         return None
 
 
-def cadeiras_livres(x_origem, y_origem):
-    dicionario_cadeira = {'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_3': (847, 366),
-                          'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451),
-                          'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)}
-    cadeiras_livres = 0
-    for chave, valor in dicionario_cadeira.items():
-        if pyautogui.pixelMatchesColor((x_origem + valor[0]), (y_origem + valor[1]), (254, 207, 0), tolerance=10):
-            cadeiras_livres += 1
-            print(cadeiras_livres)
-    print("esta mesa tem: ", cadeiras_livres, " cadeiras livres")
+def conta_cadeiras_livres(x_origem, y_origem, cor_cadeira=(254, 207, 0), tolerancia=10):
+    """
+    Conta o número de cadeiras livres ao redor de uma mesa.
+
+    Parâmetros:
+    - x_origem: A coordenada X da origem da mesa.
+    - y_origem: A coordenada Y da origem da mesa.
+    - cor_cadeira: A cor da cadeira em formato RGB.
+    - tolerancia: A tolerância para correspondência de cor.
+
+    Retorna:
+    - O número de cadeiras livres ao redor da mesa.
+    """
+
+    # Usando uma list comprehension e a função sum para contar cadeiras livres
+    cadeiras_livres = sum(
+        1 for valor in dicionario_cadeira.values()
+        if pyautogui.pixelMatchesColor(x_origem + valor[0], y_origem + valor[1], cor_cadeira, tolerance=tolerancia)
+    )
+
+    # Exibindo a mensagem com o número de cadeiras livres
+    print(f"Esta mesa tem {cadeiras_livres} cadeiras livres.")
+    return cadeiras_livres
+
+
+def cadeiras_livres(x_origem, y_origem, cor_cadeira=(254, 207, 0), tolerancia=10):
+    """
+    Verifica se todas as cadeiras em torno de uma mesa estão livres.
+
+    Parâmetros:
+    - x_origem: A coordenada X da origem da mesa.
+    - y_origem: A coordenada Y da origem da mesa.
+    - cor_cadeira: A cor da cadeira em formato RGB.
+    - tolerancia: A tolerância para correspondência de cor.
+
+    Retorna:
+    - True se todas as cadeiras estiverem livres, False se pelo menos uma cadeira estiver ocupada.
+    """
+    for x, y in dicionario_cadeira.values():
+        if not pyautogui.pixelMatchesColor(x_origem + x, y_origem + y, cor_cadeira, tolerance=tolerancia):
+            print('Pelo menos uma cadeira está ocupada.')
+            return False
+
+    print('Todas as cadeiras estão livres.')
+    return True
+
 
 
 def clica_seta_sentar(x_origem, y_origem):
@@ -483,6 +524,7 @@ def gira_niquel(x_origem, y_origem):
         gira = False
         return gira
 
+
 def gira_10auto(x_origem, y_origem):
     posicao_10auto = None
     regiao = (207 + x_origem, 652 + y_origem, 58, 13) # (x, y, largura, altura)
@@ -814,8 +856,9 @@ def levantar_mesa(x_origem, y_origem):
             print("Sai da Mesa")
     return sentado
 
-
 level_conta = 0
+
+
 def passa_ate_lv7(x_origem, y_origem): # para se fazer tarefas
     global level_conta
     # print("jogando")
@@ -856,10 +899,12 @@ def passa_ate_lv7(x_origem, y_origem): # para se fazer tarefas
 
 
 
-
-
-
 # x_origem, y_origem = Origem_pg.x_y()
+#
+# cadeiras_livres_resultado = cadeiras_livres(x_origem, y_origem )
+# print("Resultado:", cadeiras_livres_resultado)
+# conta_cadeiras_livres(x_origem, y_origem )
+
 # joga_uma_vez(x_origem, y_origem)
 # joga_uma_vez(x_origem, y_origem)
 # Limpa.fecha_tarefa(x_origem, y_origem)

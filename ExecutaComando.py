@@ -234,11 +234,12 @@ while True:
                 comando = None
                 while True:
                     time.sleep(1)
+                    Limpa.limpa_total(x_origem, y_origem)
 
                     recebido1 = Firebase.comando_escravo
                     if recebido1 != recebido2:
                         recebido2 = recebido1
-                        comando = recebido1
+                        comando = recebido1.strip().title() # remove espaços vasiao e coloca a primeira letra amiusculo
                     print('comando :', comando)
 
                     Tarefas.recolher_tarefa_upando(x_origem, y_origem)
@@ -251,7 +252,9 @@ while True:
                     if comando == "Limpa":
                         status_comando = "Limpando"
                         comando = 'Executado'
-                        Limpa.limpa_total(x_origem, y_origem)
+                        for i in range(5):
+                            Limpa.limpa_total(x_origem, y_origem)
+
 
                     elif comando == "Mesa1":
                         blind = '500/1K'
@@ -265,11 +268,15 @@ while True:
 
                     elif comando == "Senta":
                         comando = 'Executado'
-                        sentou = Mesa.sentar_mesa(x_origem, y_origem, False, blind)
-                        if sentou:
-                            status_comando = "Sentou"
+                        if Mesa.cadeiras_livres(x_origem, y_origem):
+                            sentou = Mesa.sentar_mesa(x_origem, y_origem, False, blind)
+                            if sentou:
+                                status_comando = "Sentou"
+                            else:
+                                status_comando = "Não sentou"
                         else:
-                            status_comando = "Não sentou"
+                            status_comando = "Mesa ocupada"
+
 
                     elif comando == "Joga":
                         comando = 'Executado'

@@ -35,8 +35,6 @@ def ja_esta_logado(x_origem, y_origem):
     else:
         return False
 
-
-
 def limpa_jogando(x_origem, y_origem):
     print('limpa_jogando')
 
