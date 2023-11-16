@@ -234,7 +234,7 @@ while True:
                 comando = None
                 while True:
                     time.sleep(1)
-                    Limpa.limpa_total(x_origem, y_origem)
+                    #Limpa.limpa_total(x_origem, y_origem)
 
                     recebido1 = Firebase.comando_escravo
                     if recebido1 != recebido2:
