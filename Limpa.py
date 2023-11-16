@@ -63,6 +63,11 @@ def limpa_jogando(x_origem, y_origem):
         pyautogui.click(x_origem + 703, y_origem + 170, button='left')
         print("Quebou seu recorde")
 
+    # Você avançou para broinse II e ganhou 100 fichas
+    elif pyautogui.pixelMatchesColor((x_origem + 365), (y_origem + 235), (255, 237, 151), tolerance=20):
+        pyautogui.click(x_origem + 490, y_origem + 435, button='left') # continuar
+        print("Você avançou para broinse II e ganhou 100 fichas")
+
     # nivel 2
     elif pyautogui.pixelMatchesColor((x_origem + 492), (y_origem + 390), (237, 105, 0), tolerance=10):
         pyautogui.click(x_origem + 492, y_origem + 390, button='left')
@@ -134,6 +139,11 @@ def limpa_pequeno(x_origem, y_origem):
     elif pyautogui.pixelMatchesColor((x_origem + 772), (y_origem + 170), (242, 246, 0), tolerance=15):
         pyautogui.click(x_origem + 703, y_origem + 170, button='left')
         print("Quebou seu recorde")
+
+    # Você avançou para broinse II e ganhou 100 fichas
+    elif pyautogui.pixelMatchesColor((x_origem + 365), (y_origem + 235), (255, 237, 151), tolerance=20):
+        pyautogui.click(x_origem + 490, y_origem + 435, button='left')  # continuar
+        print("Você avançou para broinse II e ganhou 100 fichas")
 
     # aviso do sistema "tem certesa de que quer sair da mesa?" "vc so pode jogar depois de estar sentado""
     elif pyautogui.pixelMatchesColor((x_origem + 455), (y_origem + 417), (25, 116, 184), tolerance=19):  # aviso do sistema "tem certesa de que quer sair da mesa?"

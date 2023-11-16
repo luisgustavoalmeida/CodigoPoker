@@ -262,13 +262,13 @@ def passa_ate_lv7(x_origem, y_origem): # para se fazer tarefas
                     pyautogui.click((x_origem + 337), (y_origem + 605))
                     # time.sleep(0.3)
                     print("Passou")
-                    level_conta = OCR_tela.level_conta(x_origem, y_origem)
+                    level_conta = int(OCR_tela.level_conta(x_origem, y_origem))
                     status_comando = "Passou" + " " + so_tem_gire
 
                 elif pyautogui.pixelMatchesColor((x_origem + 480), (y_origem + 650), (255, 255, 255), tolerance=1): # testa se tem area branca
                     pyautogui.click((x_origem + 337), (y_origem + 605))
                     print("Pagou")
-                    level_conta = OCR_tela.level_conta(x_origem, y_origem)
+                    level_conta = int(OCR_tela.level_conta(x_origem, y_origem))
                     status_comando = "Pagou" + " " + so_tem_gire
 
             else:
