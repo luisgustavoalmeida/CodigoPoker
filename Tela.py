@@ -5,7 +5,7 @@ import Firebase
 from Firebase import global_variables, teve_atualizacao
 
 dicionario_comandos = {0: 'Senta', 1: 'Levanta', 2: 'Joga', 3: 'Slot', 4: 'Genius', 5: 'Cartas', 6: 'Mesa1',
-                       7: 'Mesa2', 8: '2xp', 9: 'Limpa', 10: 'F5', 11: 'Sair', 12: '',
+                       7: 'Mesa2', 8: '2Xp', 9: 'Limpa', 10: 'F5', 11: 'Sair', 12: '',
                        13: '', 14: ''}
 
 

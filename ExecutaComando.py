@@ -260,7 +260,6 @@ while True:
                         for i in range(5):
                             Limpa.limpa_total(x_origem, y_origem)
 
-
                     elif comando == "Mesa1":
                         blind = '500/1K'
                         comando = 'Executado'
@@ -281,7 +280,6 @@ while True:
                                 status_comando = "Não sentou"
                         else:
                             status_comando = "Mesa ocupada"
-
 
                     elif comando == "Joga":
                         comando = 'Executado'
@@ -307,7 +305,7 @@ while True:
                         comando = 'Executado'
                         Upar.cartas_upando(x_origem, y_origem, blind)
 
-                    elif comando == "2xp":
+                    elif comando == "2Xp":
                         comando = 'Executado'
                         status_comando = xp2.pega_2xp(x_origem, y_origem)
 
