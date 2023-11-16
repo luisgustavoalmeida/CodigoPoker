@@ -17,7 +17,7 @@ import Origem_pg
 # import Levenshtein #pip install python-Levenshtein
 
 
-tarefas_fazerF = (#caça-níquel da mesa
+tarefas_fazerF = (# caça-níquel da mesa
                 'Jogar o caca-niquel da mesa 150 vezes',
                 'Jogar o caca-niquel da mesa 70 vezes',
                 'Jogar o caca-niquel da mesa 10 vezes',
@@ -31,14 +31,14 @@ tarefas_fazerF = (#caça-níquel da mesa
                 'Ganhar 100.000 fichas no Casino Genius Pro',
                 'Ganhar 30.000 fichas no Casino Genius Pro',
                 'Ganhar 4.000 fichas no Casino Genius Pro',
-                #Cartas Premiadas
+                # Cartas Premiadas
                 'Jogar 100 vezes nas Cartas Premiadas',
                 'Jogar 50 vezes nas Cartas Premiadas',
                 'Jogar 10 vezes nas Cartas Premiadas',
                 'Ganhar 100.000 fichas nas Cartas Premiadas',
                 'Ganhar 30.000 fichas nas Cartas Premiadas',
                 'Ganhar 4.000 fichas nas Cartas Premiadas',
-                #Poker Slot
+                # Poker Slot
                 'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 150 vezes',
                 'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 70 vezes',
                 'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 10 vezes',
@@ -46,7 +46,7 @@ tarefas_fazerF = (#caça-níquel da mesa
                 'Ganhar 30.000 fichas no caca niquel Slot Poker',
                 'Ganhar 10.000 fichas no caca niquel Slot Poker')
 
-dicionario_tarefas_fazer = {#caça-níquel da mesa
+dicionario_tarefas_fazer = {  # caça-níquel da mesa
                             'Jogar o caca-niquel da mesa 150 vezes': 30,
                             'Jogar o caca-niquel da mesa 70 vezes': 20,
                             'Jogar o caca-niquel da mesa 10 vezes': 10,
@@ -57,57 +57,59 @@ dicionario_tarefas_fazer = {#caça-níquel da mesa
                             'Ganhar 100.000 fichas no Casino Genius Pro': 30,
                             'Ganhar 30.000 fichas no Casino Genius Pro': 20,
                             'Ganhar 4.000 fichas no Casino Genius Pro': 10,
-                            #Cartas Premiadas
+                            # Cartas Premiadas
                             'Jogar 100 vezes nas Cartas Premiadas': 30,
                             'Jogar 50 vezes nas Cartas Premiadas': 20,
                             'Jogar 10 vezes nas Cartas Premiadas': 10,
                             'Ganhar 100.000 fichas nas Cartas Premiadas': 30,
                             'Ganhar 30.000 fichas nas Cartas Premiadas': 20,
                             'Ganhar 4.000 fichas nas Cartas Premiadas': 10,
-                            #Poker Slot
+                            # Poker Slot
                             'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 150 vezes': 30,
                             'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 70 vezes': 20,
-                            'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 10 vezes': 10,
+                            'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 10 vezes': 10
                             }
 
-dicionario_tarefas_fazer_sabado = {#caça-níquel da mesa
-                            'Jogar o caca-niquel da mesa 150 vezes': 30,
-                            'Jogar o caca-niquel da mesa 70 vezes': 20,
-                            'Jogar o caca-niquel da mesa 10 vezes': 10,
-                            'Ganhar 100.000 fichas no caca niquel da mesa': 30,
-                            'Ganhar 30.000 fichas no caca niquel da mesa': 20,
-                            'Ganhar 10.000 fichas no caca niquel da mesa': 10,
-                            # Casino Genius
-                            'Jogar no Casino Genius Pro 100 vezes': 30,
-                            'Jogar no Casino Genius Pro 50 vezes': 20,
-                            'Jogar no Casino Genius Pro 10 vezes': 10,
-                            'Ganhar 100.000 fichas no Casino Genius Pro': 30,
-                            'Ganhar 30.000 fichas no Casino Genius Pro': 20,
-                            'Ganhar 4.000 fichas no Casino Genius Pro': 10,
-                            #Cartas Premiadas
-                            'Jogar 100 vezes nas Cartas Premiadas': 30,
-                            'Jogar 50 vezes nas Cartas Premiadas': 20,
-                            'Jogar 10 vezes nas Cartas Premiadas': 10,
-                            'Ganhar 100.000 fichas nas Cartas Premiadas': 30,
-                            'Ganhar 30.000 fichas nas Cartas Premiadas': 20,
-                            'Ganhar 4.000 fichas nas Cartas Premiadas': 10,
-                            #Poker Slot
-                            'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 150 vezes': 30,
-                            'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 70 vezes': 20,
-                            'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 10 vezes': 10,
-                            'Ganhar 100.000 fichas no caca niquel Slot Poker': 30,
-                            'Ganhar 30.000 fichas no caca niquel Slot Poker': 20,
-                            'Ganhar 10.000 fichas no caca niquel Slot Poker': 10}
+dicionario_tarefas_fazer_sabado = {  # caça-níquel da mesa
+                                    'Jogar o caca-niquel da mesa 150 vezes': 30,
+                                    'Jogar o caca-niquel da mesa 70 vezes': 20,
+                                    'Jogar o caca-niquel da mesa 10 vezes': 10,
+                                    'Ganhar 100.000 fichas no caca niquel da mesa': 30,
+                                    'Ganhar 30.000 fichas no caca niquel da mesa': 20,
+                                    'Ganhar 10.000 fichas no caca niquel da mesa': 10,
+                                    # Casino Genius
+                                    'Jogar no Casino Genius Pro 100 vezes': 30,
+                                    'Jogar no Casino Genius Pro 50 vezes': 20,
+                                    'Jogar no Casino Genius Pro 10 vezes': 10,
+                                    'Ganhar 100.000 fichas no Casino Genius Pro': 30,
+                                    'Ganhar 30.000 fichas no Casino Genius Pro': 20,
+                                    'Ganhar 4.000 fichas no Casino Genius Pro': 10,
+                                    # Cartas Premiadas
+                                    'Jogar 100 vezes nas Cartas Premiadas': 30,
+                                    'Jogar 50 vezes nas Cartas Premiadas': 20,
+                                    'Jogar 10 vezes nas Cartas Premiadas': 10,
+                                    'Ganhar 100.000 fichas nas Cartas Premiadas': 30,
+                                    'Ganhar 30.000 fichas nas Cartas Premiadas': 20,
+                                    'Ganhar 4.000 fichas nas Cartas Premiadas': 10,
+                                    # Poker Slot
+                                    'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 150 vezes': 30,
+                                    'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 70 vezes': 20,
+                                    'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 10 vezes': 10,
+                                    'Ganhar 100.000 fichas no caca niquel Slot Poker': 30,
+                                    'Ganhar 30.000 fichas no caca niquel Slot Poker': 20,
+                                    'Ganhar 10.000 fichas no caca niquel Slot Poker': 10
+                                    }
 
 
 def localizar_imagem(imagem, regiao, precisao): # ainda tem que implementar
     try:
         posicao = pyautogui.locateOnScreen(imagem, region=regiao, confidence=precisao, grayscale=True)
         return posicao
-    except :
+    except:
         print("Ocorreu um erro ao localizar a imagem")
         time.sleep(2)
         return None
+
 
 def comparar_listas(x_origem, y_origem, dia_da_semana):
 
@@ -137,7 +139,6 @@ def comparar_listas_fazendo_tarefa(tarefas_fazer, x_origem, y_origem):
     continua_jogando = False
     lista_tarefas_disponivel = OCR_tela.tarefas_diaris_posicao1(x_origem, y_origem)
 
-
     for chave in tarefas_fazer:
         if chave in lista_tarefas_disponivel:
             print('comparar_listas_fazendo_tarefa', chave)
@@ -159,13 +160,12 @@ def comparar_imagens(tarefas_fazer, x_origem, y_origem):
 
     lista_comum = []
     regiao_tarefas = (x_origem + 270, y_origem + 260, 325, 290)
-    #print(regiao_tarefas)
+    #  print(regiao_tarefas)
     caminho_tarefas = "Imagens\\TarefasFazer\\"
     for i in range(2):
         for nome_tarefa in tarefas_fazer:
             caminho_tarefa = os.path.join(caminho_tarefas + nome_tarefa + ".png")
-            #print(caminho_tarefa)
-
+            #  print(caminho_tarefa)
             tarefa_encontrada = pyautogui.locateOnScreen(caminho_tarefa, region=regiao_tarefas, confidence=0.985, grayscale=True)
             if tarefa_encontrada is not None:
                 lista_comum.append(nome_tarefa)
@@ -180,12 +180,12 @@ def comparar_imagens_tarefa(tarefas_fazer, x_origem, y_origem):# procura as tare
     lista_comum = []
     regiao_tarefas = (x_origem + 270, y_origem + 260, 342, 290)
     precisao =0.94
-    #print(regiao_tarefas)
+    # print(regiao_tarefas)
     caminho_tarefas = "Imagens\\TarefasFazer\\"
 # assim que encontra a plimeira tarefa da lista ele retona como True
     for nome_tarefa in tarefas_fazer:
         caminho_tarefa = os.path.join(caminho_tarefas + nome_tarefa + ".png")
-        #print(caminho_tarefa)
+        # print(caminho_tarefa)
         tarefa_encontrada = localizar_imagem(caminho_tarefa, regiao_tarefas, precisao)
         if tarefa_encontrada is not None:
             return True, nome_tarefa
@@ -193,7 +193,7 @@ def comparar_imagens_tarefa(tarefas_fazer, x_origem, y_origem):# procura as tare
     time.sleep(0.2)
     for nome_tarefa in tarefas_fazer:
         caminho_tarefa = os.path.join(caminho_tarefas + nome_tarefa + ".png")
-        #print(caminho_tarefa)
+        # print(caminho_tarefa)
         tarefa_encontrada = localizar_imagem(caminho_tarefa, regiao_tarefas, precisao)
         if tarefa_encontrada is not None:
             return True, nome_tarefa
@@ -211,7 +211,7 @@ def recolher_tarefa(x_origem, y_origem):
         # testa se tem que recolher "verde" apartir da primeira linha
         print("Tem missão para recolher")
         for recolher_y in posicao_recolher_tarefa_y:
-            #print(recolher_y)
+            # print(recolher_y)
             if pyautogui.pixelMatchesColor((x_origem + 670), (y_origem + recolher_y), (59, 182, 21), tolerance=40):
                 # testa se tem que recolher "verde"
                 clique_recolher.append(recolher_y)  # adiciona as coordenada de y que deve ser clicadas
@@ -223,7 +223,7 @@ def recolher_tarefa(x_origem, y_origem):
             # testa se tem que recolher "verde" apartir da segunda linha
             print("Tem missão para recolher")
             for recolher_y in posicao_recolher_tarefa_y:
-                #print(recolher_y)
+                # print(recolher_y)
                 if pyautogui.pixelMatchesColor((x_origem + 670), (y_origem + recolher_y), (59, 182, 21), tolerance=40):
                     # testa se tem que recolher "verde"
                     clique_recolher.append(recolher_y)  # adiciona as coordenada de y que deve ser clicadas
@@ -259,6 +259,7 @@ def meta_tarefas(x_origem, y_origem):
         print('Meta não atingida')
         return False, pontuacao_tarefas
 
+
 def tem_tarefa_para_recolher(x_origem, y_origem, id, senha, url, navegador):
     if pyautogui.pixelMatchesColor((x_origem + 627), (y_origem + 35), (228, 194, 31), tolerance=30):  # testa se tem que recolher icone das tarefas amarelo
         Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
@@ -269,6 +270,7 @@ def tem_tarefa_para_recolher(x_origem, y_origem, id, senha, url, navegador):
 
     else:
         return None, None
+
 
 def testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador, dia_da_semana):
     parar_tarefas = False
@@ -330,7 +332,6 @@ def testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador
         print('Ultimo dia das tarefas, continua somente se for possivel atigir 150 ou 200 pontos')
         print('pontuacao_tarefas + pontos_disponiveis :', pontuacao_tarefas + pontos_disponiveis)
 
-
         if ((pontuacao_tarefas + pontos_disponiveis) < 150) and (pontuacao_tarefas < 150):
             print(
                 '\n\nA soma dos pontos disponiveis e os pontos feitos não atigem 150, o máximo que pode atingir é: ',
@@ -348,7 +349,7 @@ def testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador
 
 def recolher_tarefa_upando(x_origem, y_origem):
     status_tarefas = "Não tem missão"
-    #print("recolher_tarefa_upando")
+    # print("recolher_tarefa_upando")
     if pyautogui.pixelMatchesColor((x_origem + 627), (y_origem + 35), (228, 194, 31), tolerance=10):  # testa se tem que recolher icone das tarefas amarelo
         print('Tem missão para recolher, aguarda um tempo pequeno')
         status_tarefas = "Recolhido"
@@ -362,12 +363,11 @@ def recolher_tarefa_upando(x_origem, y_origem):
                 time.sleep(2)
                 if pyautogui.pixelMatchesColor((x_origem + 495), (y_origem + 125), (0, 51, 248), tolerance=10):  # testa se esta aberto a lista de tarefas
                     print('Tarefas abertas, conta sem Upar')
-
                     posicao_recolher_tarefa_y = (361, 457, 553)
                     clique_recolher = []
 
                     for recolher_y in posicao_recolher_tarefa_y:
-                        #print(recolher_y)
+                        # print(recolher_y)
                         if pyautogui.pixelMatchesColor((x_origem + 767), (y_origem + recolher_y), (240, 249, 240), tolerance=10):  # testa se tem "Retirar" em braco
                             clique_recolher.append(recolher_y)  # adiciona as coordenada de y que deve ser clicadas
 
