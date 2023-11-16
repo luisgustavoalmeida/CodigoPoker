@@ -145,10 +145,11 @@ ref = firebase.database().child(caminho_resposta)  # colocar o caminho de onde v
 
 # Função para reconectar ao Firebase
 def reconectar_firebase():
-    global firebase, db
+    global firebase, db, ref
     print("Tentando reconectar ao Firebase...")
     firebase = inicializar_firebase()
     db = firebase.database()
+    ref = firebase.database().child(caminho_resposta)  # colocar o caminho de onde vem os comandos
 # Função de callback para manipular os dados quando houver uma atualização
 def on_update(event):
     try:
