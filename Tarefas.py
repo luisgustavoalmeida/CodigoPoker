@@ -340,7 +340,7 @@ def testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador
 def recolher_tarefa_upando(x_origem, y_origem):
     status_tarefas = "Não tem missão"
     #print("recolher_tarefa_upando")
-    if pyautogui.pixelMatchesColor((x_origem + 627), (y_origem + 35), (228, 194, 31), tolerance=30):  # testa se tem que recolher icone das tarefas amarelo
+    if pyautogui.pixelMatchesColor((x_origem + 627), (y_origem + 35), (228, 194, 31), tolerance=10):  # testa se tem que recolher icone das tarefas amarelo
         print('Tem missão para recolher, aguarda um tempo pequeno')
         status_tarefas = "Recolhido"
         time.sleep(2)
