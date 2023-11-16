@@ -12,6 +12,7 @@ import Mesa
 
 
 def solot_joga_vezes_upando(x_origem, y_origem):
+    print('solot_joga_vezes_upando')
     Firebase.confirmacao_comando_resposta('Iniciando Slote')
     joga_vezes = True
     cont_jogadas = 0
@@ -59,6 +60,7 @@ def solot_joga_vezes_upando(x_origem, y_origem):
 
 
 def genius_joga_vezes_upando(x_origem, y_origem):
+    print('cartas_premidas_joga_vezes_upando')
     Firebase.confirmacao_comando_resposta('Iniciando Genius')
     cont_jogadas = 0
     continua_jogando = True
@@ -122,6 +124,7 @@ def genius_joga_vezes_upando(x_origem, y_origem):
 
 
 def cartas_premidas_joga_vezes_upando(x_origem, y_origem):
+    print('cartas_premidas_joga_vezes_upando')
     Firebase.confirmacao_comando_resposta('Iniciando Cartas')
     cont_jogadas = 0
     continua_jogando = True
@@ -197,6 +200,7 @@ def cartas_premidas_joga_vezes_upando(x_origem, y_origem):
 
 
 def levantar_mesa(x_origem, y_origem):
+    print('levantar_mesa')
     sentado = "manda levantar"
     for i in range(50):
         if pyautogui.pixelMatchesColor((x_origem + 619), (y_origem + 631), (67, 89, 136), tolerance=1):  # testa se esta dentro da mesa
@@ -224,6 +228,7 @@ def levantar_mesa(x_origem, y_origem):
 
 
 def passa_ate_lv7(x_origem, y_origem): # para se fazer tarefas
+    print('passa_ate_lv7')
     #Firebase.confirmacao_comando_resposta("Jogando mesa")
     level_conta = 0
     status_comando = "Jogando mesa"
