@@ -4,6 +4,7 @@ import socket
 import os
 import pyrebase
 import re
+from requests.exceptions import ConnectionError
 # importa o dicionário com os nomes dos computadores e o námero referete a cada um
 from Parametros import dicionari_token_credencial_n
 
@@ -98,6 +99,16 @@ arranjo3_pc = ('Comandos3/PC03', 'Comandos3/PC06', 'Comandos3/PC09',
                'Comandos3/PC12', 'Comandos3/PC15', 'Comandos3/PC18',
                'Comandos3/PC21', 'Comandos3/PC24', 'Comandos3/PC27')
 
+def inicializar_firebase():
+    while True:
+        try:
+            firebase = pyrebase.initialize_app(config)
+            return firebase
+        except ConnectionError as e:
+            print(f"Erro de conexão com o Firebase: {e}")
+            print("Tentando reconectar em 5 segundos...")
+            time.sleep(5)
+
 # Inicializa o Firebase
 firebase = pyrebase.initialize_app(config)
 
@@ -124,6 +135,14 @@ def enviar_comando_coletivo(arranjo, comando):
 
 # Referência para o nó do Firebase que você deseja observar
 ref = firebase.database().child(caminho_resposta)  # colocar o caminho de onde vem os comandos
+
+# Função para reconectar ao Firebase
+def reconectar_firebase():
+    global firebase, db
+    print("Tentando reconectar ao Firebase...")
+    firebase = inicializar_firebase()
+    db = firebase.database()
+
 # Função de callback para manipular os dados quando houver uma atualização
 def on_update(event):
     try:
@@ -138,6 +157,8 @@ def on_update(event):
 
     except Exception as e:
         print("Erro ao processar atualização:", e)
+        # Reconecta ao Firebase se ocorrer um erro
+        reconectar_firebase()
 
 # Registrar o observador usando o método "stream"
 # A função "on" irá chamar a função "on_update" sempre que ocorrer uma edição no nó referenciado
