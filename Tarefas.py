@@ -397,8 +397,8 @@ def recolher_tarefa_upando(x_origem, y_origem):
                     Limpa.fecha_tarefa(x_origem, y_origem)
 
             time.sleep(0.2)
-    #else:
-    #print(status_tarefas)
+    # else:
+    # print(status_tarefas)
     return status_tarefas
 
 #
