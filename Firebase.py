@@ -161,9 +161,11 @@ def on_update(event):
         print(dado_atualizado)
         alterar_dado_global(caminho_atualizado, dado_atualizado)
 
-    except:
-        #print("Erro ao processar atualização:", e)
-        # Reconecta ao Firebase se ocorrer um erro
+    except Exception as e:
+        print("Erro ao processar atualização:", e)
+        # Se ocorrer um erro durante a atualização, aguarde e tente novamente
+        time.sleep(5)  # Ajuste o tempo de espera conforme necessário
+        print("Tentando reconectar...")
         reconectar_firebase()
 
 # Registrar o observador usando o método "stream"
