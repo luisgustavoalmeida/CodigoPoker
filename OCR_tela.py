@@ -669,7 +669,7 @@ def tarefas_diaris_upando(x_origem, y_origem):
 
     # Verifica se a lista contém exatamente dois itens e se um deles é 'Gire 10 vezes no caça-níqueis'
     if len(lista) == 2 and 'Gire 10 vezes no caça-níqueis' in lista:
-        so_tem_gire = "acabou"
+        so_tem_gire = "tem apenas Slote"
     else:
         so_tem_gire = "continua"
 
