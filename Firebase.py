@@ -4,6 +4,7 @@ import socket
 import os
 import pyrebase
 import re
+import requests
 from requests.exceptions import ConnectionError
 # importa o dicionário com os nomes dos computadores e o námero referete a cada um
 from Parametros import dicionari_token_credencial_n
@@ -99,15 +100,22 @@ arranjo3_pc = ('Comandos3/PC03', 'Comandos3/PC06', 'Comandos3/PC09',
                'Comandos3/PC12', 'Comandos3/PC15', 'Comandos3/PC18',
                'Comandos3/PC21', 'Comandos3/PC24', 'Comandos3/PC27')
 
+
 def inicializar_firebase():
     while True:
-        try:
-            firebase = pyrebase.initialize_app(config)
-            return firebase
-        except ConnectionError as e:
-            print(f"Erro de conexão com o Firebase: {e}")
-            print("Tentando reconectar em 5 segundos...")
+        response = requests.get('http://www.google.com', timeout=5)
+        if response.status_code == 200 or response.status_code == 429:
+            try:
+                firebase = pyrebase.initialize_app(config)
+                return firebase
+            except ConnectionError as e:
+                print(f"Erro de conexão com o Firebase: {e}")
+                print("Tentando reconectar em 5 segundos...")
+                time.sleep(5)
+        else:
+            print('firebase sem internete')
             time.sleep(5)
+
 
 # Inicializa o Firebase
 firebase = pyrebase.initialize_app(config)
@@ -115,14 +123,13 @@ firebase = pyrebase.initialize_app(config)
 # Obtém uma referência para o banco de dados
 db = firebase.database()
 
-
 def enviar_comando_coletivo(arranjo, comando):
 
     """Envie nesta fonção dois parametros que pode ser a tiplae dos arranjos dos conputadores "arranjo3_pc" ou
     uma lista do com um unico itêm "['Comandos3/PC03']" que contenha o caminho e nome do computado a ser atualizado.
     O segundo paremetro a ser recebido deve ser o comando que deve ser executado pelo arranjo de computadores ou pelo
     computador individual ex: "senta", "passa" ..."""
-
+    global firebase, db
     atualizacoes = {}
     for caminho in arranjo:
         # Define a chave do dicionário como o caminho e o valor como o comando
@@ -142,7 +149,6 @@ def reconectar_firebase():
     print("Tentando reconectar ao Firebase...")
     firebase = inicializar_firebase()
     db = firebase.database()
-
 # Função de callback para manipular os dados quando houver uma atualização
 def on_update(event):
     try:
@@ -155,8 +161,8 @@ def on_update(event):
         print(dado_atualizado)
         alterar_dado_global(caminho_atualizado, dado_atualizado)
 
-    except Exception as e:
-        print("Erro ao processar atualização:", e)
+    except:
+        #print("Erro ao processar atualização:", e)
         # Reconecta ao Firebase se ocorrer um erro
         reconectar_firebase()
 
@@ -199,6 +205,7 @@ def alterar_dado_global(nome_variavel, valor):
 
 def atualizar_dados_globais():
     # Função para atualizar as informações do dicionário global com os dados do Firebase
+    global firebase, db
     try:
         # Use db.child() para acessar o nó desejado no Firebase
         dados_firebase = db.child(caminho_resposta).get()
@@ -220,6 +227,7 @@ atualizar_dados_globais()
 
 def escreve_resposta_escravo(resposta_escravo):
     ''' da a resposta do estado do computador '''
+    global firebase, db
     try:
         # Escreva a informação aleatória no banco de dados Firebase
         db.child(caminho_resposta1).set(resposta_escravo)
@@ -233,7 +241,7 @@ resposta_anterior = None
 def confirmacao_escravo(resposta_escravo):
     global resposta_anterior
     '''Esta função escreve no banco onde é destinado a receber comando, com o intuito de deixar um comando nao aplicavel'''
-
+    global firebase, db
     if resposta_anterior != resposta_escravo:
         resposta_anterior = resposta_escravo
         # LEMBRETE, criar um teste para mandar comando apenas se o valor for diferete do anterior
