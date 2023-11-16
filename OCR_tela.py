@@ -861,8 +861,8 @@ def level_conta(x_origem, y_origem):
 
 
 # aviso_do_sistema()
-x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
-level_conta(x_origem, y_origem)
+# x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
+# level_conta(x_origem, y_origem)
 # numero_sala(x_origem, y_origem)
 # tarefas_diaris_upando(x_origem, y_origem)
 # pontuacao_tarefas(x_origem, y_origem)
