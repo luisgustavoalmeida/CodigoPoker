@@ -210,8 +210,8 @@ def update_text_widgets():
     # Agende a próxima chamada desta função após 5 segundos (ou ajuste o intervalo desejado)
     janela.after(300, update_text_widgets)
 
-janela.after(50, update_text_widgets)
 
+janela.after(50, update_text_widgets)
 
 
 # Inicie o loop principal da interface gráfica
