@@ -3,25 +3,25 @@ import pyrebase
 import time
 
 # Configuração do Firebase
-config = {
-  "apiKey": "AIzaSyDDzQMVxpKKqBZrDlhA9E4sInXB5toVRT8",
-  "authDomain": "pokerdados-6884e.firebaseapp.com",
-  "databaseURL": "https://pokerdados-6884e-default-rtdb.firebaseio.com",
-  "projectId": "pokerdados-6884e",
-  "storageBucket": "pokerdados-6884e.appspot.com",
-  "messagingSenderId": "240019464920",
-  "appId": "1:240019464920:web:a746cddaf41f43642aadad"
-}
-
 # config = {
-#     "apiKey": "AIzaSyBWJEh-hD6UIkpMz8J4V2Es4mP2AtuHx9k",
-#     "authDomain": "poker-dados.firebaseapp.com",
-#     "databaseURL": "https://poker-dados-default-rtdb.firebaseio.com",
-#     "projectId": "poker-dados",
-#     "storageBucket": "poker-dados.appspot.com",
-#     "messagingSenderId": "968238353891",
-#     "appId": "1:968238353891:web:b0026783a590efa99c24d6"
+#   "apiKey": "AIzaSyDDzQMVxpKKqBZrDlhA9E4sInXB5toVRT8",
+#   "authDomain": "pokerdados-6884e.firebaseapp.com",
+#   "databaseURL": "https://pokerdados-6884e-default-rtdb.firebaseio.com",
+#   "projectId": "pokerdados-6884e",
+#   "storageBucket": "pokerdados-6884e.appspot.com",
+#   "messagingSenderId": "240019464920",
+#   "appId": "1:240019464920:web:a746cddaf41f43642aadad"
 # }
+
+config = {
+    "apiKey": "AIzaSyBWJEh-hD6UIkpMz8J4V2Es4mP2AtuHx9k",
+    "authDomain": "poker-dados.firebaseapp.com",
+    "databaseURL": "https://poker-dados-default-rtdb.firebaseio.com",
+    "projectId": "poker-dados",
+    "storageBucket": "poker-dados.appspot.com",
+    "messagingSenderId": "968238353891",
+    "appId": "1:968238353891:web:b0026783a590efa99c24d6"
+}
 
 
 # Inicializa o Firebase

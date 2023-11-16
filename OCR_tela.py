@@ -834,17 +834,17 @@ def level_conta(x_origem, y_origem):
     # Define a região de interesse
     inveter_cor = True
     esca_ciza = False
-    fator_ampliacao = 1
+    fator_ampliacao = 5
     contraste_pre = 1
     contraste_pos = 1.6
     regiao_ficha = (x_origem + 90, y_origem + 27, x_origem + 124, y_origem + 37)  # leval
     config = '--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789'
     lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
-    #print(lido)
+    # print(lido)
     if lido is not None:
         lido = re.sub(r"\D+", "", lido)  # remove caracteres nao numericos
         lido = lido.replace(" ", "").replace(".", "")
-        #print(lido)
+        # print(lido)
         try:
             lido = int(lido)
             if 1 < lido < 10:
@@ -861,7 +861,8 @@ def level_conta(x_origem, y_origem):
 
 
 # aviso_do_sistema()
-# x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
+x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
+level_conta(x_origem, y_origem)
 # numero_sala(x_origem, y_origem)
 # tarefas_diaris_upando(x_origem, y_origem)
 # pontuacao_tarefas(x_origem, y_origem)
