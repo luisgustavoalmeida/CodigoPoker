@@ -9,9 +9,9 @@ import Seleniun
 
 
 def teste_limpo(x_origem, y_origem):
-    pyautogui.click(490 + x_origem, 70 + y_origem) # clique bobo para passar alguma naimação
+    pyautogui.click(490 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
     pyautogui.click(686 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
-    #barra azul do looby
+    # barra azul do looby
     if pyautogui.pixelMatchesColor((x_origem + 685), (y_origem + 360), (215, 234, 244), tolerance=5):
         print("teste_limpo: Esta no Lobby, ta limpo")
         return True
@@ -190,38 +190,6 @@ def limpa_pequeno(x_origem, y_origem):
                 # Seleniun.atualizar_pagina(navegador, url)
                 time.sleep(25)
 
-
-                # pyautogui.click(x_origem + 920, y_origem + 150)
-                # print('clica para abrir o slot 777')
-                # time.sleep(3)
-                # for i in range(40):
-                #     # Slot Classico
-                #     if (pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 668), (46, 22, 9), tolerance=15)
-                #             or pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 668), (18, 9, 4), tolerance=15)):
-                #         time.sleep(5)
-                #         pyautogui.click(910 + x_origem, 80 + y_origem)
-                #         print("Slot Classico, fecha")
-                #         time.sleep(5)
-                #         limpa_tarefas(x_origem, y_origem)
-                #         limpo = teste_limpo(x_origem, y_origem)
-                #         if limpo:
-                #             break
-                #     time.sleep(0.5)
-                # limpa_tarefas(x_origem, y_origem)
-                # time.sleep(2)
-                # # testa se o torneino semanal esta no loob
-                # if pyautogui.pixelMatchesColor((x_origem + 154), (y_origem + 105), (70, 70, 71), tolerance=15):
-                #
-                #     IP.tem_internet()
-                #     print("erro no torneio semanal, Da um F5")
-                #     pyautogui.press('f5')
-                #     # Seleniun.atualizar_pagina(navegador, url)
-                #     time.sleep(25)
-
-    # # um martelo gratis par adestruir os goblins e receber recompensa ( tema de halowin)
-    # elif pyautogui.pixelMatchesColor((x_origem + 500), (y_origem + 190), (0, 27, 38), tolerance=15):
-    #     pyautogui.click(495 + x_origem, 520 + y_origem)
-
     # voce esta convidado a participar de uma festa em las vegasuma surpresa esta esperando por vc
     elif pyautogui.pixelMatchesColor((x_origem + 520), (y_origem + 480), (64, 37, 165), tolerance=15):
         pyautogui.click(490 + x_origem, 485 + y_origem)
@@ -394,12 +362,6 @@ def limpa_promocao(x_origem, y_origem):
         pyautogui.click(884 + x_origem, 135 + y_origem, button='left')
         print("Mega Giro e roleta2")
 
-    # # Gostosuras de Halloween
-    # if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (18, 17, 19), tolerance=10):
-    #     pyautogui.click(495 + x_origem, 315 + y_origem)
-    #     print("Gostosuras de Halloween")
-    #     time.sleep(1)
-
     # Fecha promoçoes exceto tarefas
     if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (73, 71, 76), tolerance=20):
         print("Promoção padrão")
@@ -490,9 +452,6 @@ def limpa_total(x_origem, y_origem):
         limpa_promocao(x_origem, y_origem)
         if teste_limpo(x_origem, y_origem):  # se ta limpo nem entra
             return None
-        # limpa_tarefas(x_origem, y_origem)
-        # if teste_limpo(x_origem, y_origem):  # se ta limpo nem entra
-        #     return None
         iniciantes(x_origem, y_origem)
         if teste_limpo(x_origem, y_origem):  # se ta limpo nem entra
             return None
@@ -521,8 +480,7 @@ def limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador): #abre o ta
         print("Tarefas diarias conta upada")
 
         cont_limpa_tarefas = 0
-        for i in range(600):
-
+        for i in range(60):
             for i in range(20):
                 IP.f5_quando_internete_ocila(id, senha, url, navegador)
                 pyautogui.doubleClick(x_origem + 635, y_origem + 25) #clica no tarefas diarias
@@ -734,7 +692,7 @@ def limpa_abre_tarefa2(x_origem, y_origem): #abre o tarefas
     #     print("Tarefas diarias ja esta limpo")
     #     return True
 
-    for i in range(600):
+    for i in range(6):
 
         for i in range(20):
             #IP.f5_quando_internete_ocila(id, senha, url, navegador)

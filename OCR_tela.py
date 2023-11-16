@@ -635,6 +635,7 @@ def remover_termos_upando(texto):
     print(itens_em_comum)
     return itens_em_comum
 
+
 def tarefas_diaris_upando(x_origem, y_origem):
     lista = []
     # Define a região de interesse
@@ -672,11 +673,11 @@ def tarefas_diaris_upando(x_origem, y_origem):
         so_tem_gire = "tem apenas Slote"
     else:
         so_tem_gire = "continua"
-
-
     # print("Tarefas upando")
     # print(lista)
     return lista, so_tem_gire
+
+
 def blind_sala(x_origem, y_origem):
     blind = None
     inveter_cor = True
