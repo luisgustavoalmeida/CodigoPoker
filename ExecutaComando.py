@@ -252,9 +252,7 @@ while True:
                     elif comando == "F5":
                         status_comando = "Dando F5"
                         comando = 'Executado'
-                        for i in range(5):
-                            Limpa.limpa_total(x_origem, y_origem)
-
+                        pyautogui.press('f5')
 
                     elif comando == "Limpa":
                         status_comando = "Limpando"
