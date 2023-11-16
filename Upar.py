@@ -21,6 +21,11 @@ def solot_joga_vezes_upando(x_origem, y_origem):
 
     while continua_jogando: # permanece joghando cartas premiadas ate nao ter mais a mição jogar x vezes
 
+        comando = Firebase.comando_escravo
+        if comando == "Levanta":
+            status_comando = levantar_mesa(x_origem, y_origem)
+            return
+
         slot_aberto = Slot.abre_slot(x_origem, y_origem, joga_vezes)
 
         if slot_aberto:
@@ -64,6 +69,11 @@ def genius_joga_vezes_upando(x_origem, y_origem):
     Limpa.limpa_total(x_origem, y_origem)
 
     while continua_jogando: # permanece joghando cartas premiadas ate nao ter mais a mição jogar x vezes
+
+        comando = Firebase.comando_escravo
+        if comando == "Levanta":
+            status_comando = levantar_mesa(x_origem, y_origem)
+            return
 
         genius_aberto = Genius.abre_genius(x_origem, y_origem)
 
@@ -119,6 +129,12 @@ def cartas_premidas_joga_vezes_upando(x_origem, y_origem):
     Limpa.limpa_total(x_origem, y_origem)
 
     while continua_jogando: # permanece joghando cartas premiadas ate nao ter mais a mição jogar x vezes
+
+        comando = Firebase.comando_escravo
+        if comando == "Levanta":
+            status_comando = levantar_mesa(x_origem, y_origem)
+            return
+
         cartas_aberto = Cartas.abre_cartas_premidas(x_origem, y_origem)  # abre o cartas premidas
         confirmar = False
         if cartas_aberto:

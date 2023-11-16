@@ -369,11 +369,12 @@ def recolher_tarefa_upando(x_origem, y_origem):
 
                     for recolhe in posicao_recolher_presentes:
                         pyautogui.click(x_origem + recolhe, y_origem + 246)  # clica nos presentes
-                    time.sleep(1)
+                    time.sleep(2)
 
                     if not (pyautogui.pixelMatchesColor((x_origem + 627), (y_origem + 35), (228, 194, 31), tolerance=30)):  # testa se NÂO tem que recolher icone das tarefas amarelo
                         pyautogui.click(x_origem + 816, y_origem + 142)  # clica para fechar as tarefas
                         status_tarefas = "Recolhido"
+                        time.sleep(2)
                         return status_tarefas
 
                 else:

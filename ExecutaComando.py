@@ -249,7 +249,14 @@ while True:
                         comando = 'Executado'
                         break
 
-                    if comando == "Limpa":
+                    elif comando == "F5":
+                        status_comando = "Dando F5"
+                        comando = 'Executado'
+                        for i in range(5):
+                            Limpa.limpa_total(x_origem, y_origem)
+
+
+                    elif comando == "Limpa":
                         status_comando = "Limpando"
                         comando = 'Executado'
                         for i in range(5):
