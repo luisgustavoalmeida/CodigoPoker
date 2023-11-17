@@ -237,6 +237,7 @@ while True:
 
                 #status_comando = 'Aguardando comando'
                 status_comando = Mesa.escolher_blind(x_origem, y_origem, blind)
+                Firebase.confirmacao_comando_resposta(status_comando)
 
                 recebido1 = None
                 recebido2 = None
