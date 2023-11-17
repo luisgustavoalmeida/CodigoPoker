@@ -107,13 +107,12 @@ while True:
 
     print("guia:", guia)
     if id == id_novo or id == "":
+
         id, senha, linha, cont_IP = Google.credenciais(guia)
 
         if id == "":
             Seleniun.sair_face(url, navegador)
-            guia = HoraT.mudar_guia(id, guia)
             id, senha, linha, cont_IP = Google.credenciais(guia)
-
     else:
         id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
 
@@ -140,10 +139,10 @@ while True:
 
             entrou_corretamente, stataus_facebook = Seleniun.fazer_login(id, senha, url, navegador)
 
-            print('____________________ manda iniciar a tarefa independete_________________')
-            # Comando para iniciar a tarefa independente
-            continuar_tarefa = True
-            iniciar_tarefa.release()
+            # print('____________________ manda iniciar a tarefa independete_________________')
+            # # Comando para iniciar a tarefa independente
+            # continuar_tarefa = True
+            # iniciar_tarefa.release()
 
             if entrou_corretamente is False:  # se nao entrou no face
                 print("conta nao entou no Facebook")
@@ -330,38 +329,43 @@ while True:
         valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
         Seleniun.sair_face(url, navegador)
 
-        print('-----------------espera terminar tarefa independente----------------')
-        # Aguardar a tarefa terminar
-        tarefa_concluida.acquire()
+        # print('-----------------espera terminar tarefa independente----------------')
+        # # Aguardar a tarefa terminar
+        # tarefa_concluida.acquire()
+        #
+        # print('tarefa independente liberada')
+        #
+        # while True:
+        #     if not continuar_tarefa:
+        #         break
+        #     time.sleep(0.3)
+        #
+        # print('tarefa independente terminada')
 
-        print('tarefa independente liberada')
-
-        while True:
-            if not continuar_tarefa:
-                break
-            time.sleep(0.3)
-
-        print('tarefa independente terminada')
+        id = ""
 
         if entrou_corretamente is False:  # se nao entrou no face
 
             print("Conta não entou, o Statos é: ", stataus_facebook)
             Google.marca_caida(stataus_facebook, guia, linha)
-            id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
+            # id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
+            break
 
         elif status_poker == 'Banida':
 
             print("Conta não entou, o Statos é: ", status_poker)
             Google.marca_caida(status_poker, guia, linha)
-            id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
+            # id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
+            break
 
         elif status_poker == 'Atualizar':
 
             print("Conta não entou, o Statos é: ", status_poker)
-            id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
+            # id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
+            break
 
         elif entrou_corretamente:  # se nao entrou no face
 
-
             Google.escrever_valores_lote(valores, guia, linha)  # escreve as informaçoes na planilha apartir da coluna E
-            id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
+            # id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
+            break
