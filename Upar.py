@@ -287,7 +287,8 @@ def passa_ate_lv7(x_origem, y_origem): # para se fazer tarefas
                     pyautogui.click((x_origem + 528), (y_origem + 605))  # clica no correr
                     print("Correu")
                     status_comando = "Correu" + " " + so_tem_gire
-
+                    if Limpa.limpa_abre_tarefa2(x_origem, y_origem):
+                        so_tem_gire = 'acabou de Upar'
 
 def solot_genius_cartas_upando(x_origem, y_origem, blind):
     solot_joga_vezes_upando(x_origem, y_origem)
