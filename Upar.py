@@ -91,7 +91,7 @@ def genius_joga_vezes_upando(x_origem, y_origem):
                         # Testa se tem uma setinha para cima
                         pyautogui.click(x_origem + 603, y_origem + 223)  # clica em Staci ganha
                         cont_jogadas += 1
-                        status_upando = 'Jogando Slote ' + str(cont_jogadas)
+                        status_upando = 'Jogando Genius ' + str(cont_jogadas)
                         Firebase.confirmacao_comando_resposta(status_upando)
                         print('espera o tempo passar ate sair o premio')
 
