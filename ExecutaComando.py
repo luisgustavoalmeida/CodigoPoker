@@ -235,7 +235,9 @@ while True:
                     Limpa.limpa_total(x_origem, y_origem)
                     time.sleep(2)
 
-                status_comando = 'Aguardando comando'
+                #status_comando = 'Aguardando comando'
+                status_comando = Mesa.escolher_blind(x_origem, y_origem, blind)
+
                 recebido1 = None
                 recebido2 = None
                 comando = None
@@ -283,6 +285,7 @@ while True:
                             sentou = Mesa.sentar_mesa(x_origem, y_origem, False, blind)
                             if sentou:
                                 status_comando = "Sentou"
+                                Upar.passa_ate_lv7(x_origem, y_origem)
                             else:
                                 status_comando = "Não sentou"
                         else:
