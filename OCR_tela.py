@@ -707,17 +707,20 @@ def numero_sala(x_origem, y_origem):
     contraste_pos = 1.3
     config = '--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789 '
     regiao = (x_origem + 56, y_origem + 77, x_origem + 89, y_origem + 93)
-    numero = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza) #pontuação
-    print('numero_sala: ', numero)
 
-    if numero is not None:
-        numero = numero.split(" ")[0]
-        numero = numero.replace(' ', '')
-
+    for i in range(5):
+        numero = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza) #pontuação
         print('numero_sala: ', numero)
-        return str(numero)
-    else:
-        return '0'
+
+        if numero:
+            numero = numero.split(" ")[0]
+            numero = numero.replace(' ', '')
+
+            print('numero_sala: ', numero)
+            return str(numero)
+
+        time.sleep(1)
+    return "0"
 
 
 def valor_apostar(x_origem, y_origem):
