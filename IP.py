@@ -64,16 +64,21 @@ sites = [
 
 lista_negra_ip = []
 cont_lista_negra = 0
+
+
 def usuario_IP_nao():
     #nome_usuario = os.getlogin()
     if nome_usuario != "PokerIP":
         ip(LIMITE_IP)
         return
+
+
 def usuario_IP_sim():
     #nome_usuario = os.getlogin()
     if nome_usuario == "PokerIP":
         ip(LIMITE_IP)
         return
+
 
 def testa_trocar_IP():
     if (nome_usuario == "PokerIP") and (nome_computador != "PC-I7-9700KF"):  # teste se o usuario do computador é o que troca IP se nao for fica esperando esta livre
@@ -84,6 +89,7 @@ def testa_trocar_IP():
         return
     else:
         return
+
 
 def f5_quando_internete_ocila(id, senha, url, navegador):
     print('f5_quando_internete_ocila')
