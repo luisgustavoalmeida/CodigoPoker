@@ -4,17 +4,11 @@ import Google
 import Seleniun
 import Origem_pg
 import OCR_tela
-import Roletas
 import Limpa
 import IP
-import HoraT
 import Tarefas
-import datetime
 import time
 import Mesa
-import Cartas
-import Slot
-import Genius
 import pyautogui
 import datetime
 import os
