@@ -361,7 +361,7 @@ def recolher_tarefa_upando(x_origem, y_origem):
             if (pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (73, 71, 76), tolerance=20)
                     or pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (22, 21, 23), tolerance=20)):
                 # testa se ja abriu a janela bora cinza da janela
-                time.sleep(1)
+                time.sleep(2)
                 if pyautogui.pixelMatchesColor((x_origem + 495), (y_origem + 125), (0, 51, 248), tolerance=10):  # testa se esta aberto a lista de tarefas
                     print('Tarefas abertas, conta sem Upar')
                     posicao_recolher_tarefa_y = (361, 457, 553)
@@ -375,7 +375,7 @@ def recolher_tarefa_upando(x_origem, y_origem):
                     if len(clique_recolher) > 0:
                         for recolhe in clique_recolher:
                             pyautogui.click(x_origem + 767, y_origem + recolhe)  # clica no recolher
-                        time.sleep(1)
+                        time.sleep(3)
 
                     posicao_recolher_presentes = (215, 400, 585, 770)
 
