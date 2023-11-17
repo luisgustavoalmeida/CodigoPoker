@@ -288,7 +288,9 @@ def passa_ate_lv7(x_origem, y_origem): # para se fazer tarefas
                     print("Correu")
                     status_comando = "Correu" + " " + so_tem_gire
                     if Limpa.limpa_abre_tarefa2(x_origem, y_origem):
-                        so_tem_gire = 'acabou de Upar'
+                        so_tem_gire = 'caonta Upada'
+                    else:
+                        so_tem_gire = 'upando'
 
 def solot_genius_cartas_upando(x_origem, y_origem, blind):
     solot_joga_vezes_upando(x_origem, y_origem)
