@@ -389,8 +389,8 @@ def recolher_tarefa_upando(x_origem, y_origem):
                     if (not pyautogui.pixelMatchesColor((x_origem + 627), (y_origem + 35), (228, 194, 31), tolerance=5)
                             and pyautogui.pixelMatchesColor((x_origem + 627), (y_origem + 35), (119, 168, 219), tolerance=5)):
                         # testa se NÂO tem que recolher icone das tarefas amarelo
-                        pyautogui.click(x_origem + 816, y_origem + 142)  # clica para fechar as tarefas
-                        Limpa.fecha_tarefa(x_origem, y_origem)
+
+                        pyautogui.click(821 + x_origem, 138 + y_origem)  # fecha tarefa
                         status_tarefas = "Recolhido"
                         time.sleep(1)
                         return status_tarefas
@@ -401,15 +401,17 @@ def recolher_tarefa_upando(x_origem, y_origem):
                     if conta_upada:
                         print('Tarefas abertas, conta Upada')
                         recolher_tarefa(x_origem, y_origem)  # recolhe se tiver alguma tarefa batida
-                    Limpa.fecha_tarefa(x_origem, y_origem)
+                    pyautogui.click(821 + x_origem, 138 + y_origem)  # fecha tarefa
+                    time.sleep(1)
                     status_tarefas = "Recolhido"
                     return status_tarefas
 
             time.sleep(0.2)
     else:
         # print(status_tarefas)
+        #pyautogui.click(821 + x_origem, 138 + y_origem)  # fecha tarefa
         return status_tarefas
-        Limpa.fecha_tarefa(x_origem, y_origem)
+
 
 #
 # #
