@@ -353,14 +353,14 @@ def recolher_tarefa_upando(x_origem, y_origem):
     if pyautogui.pixelMatchesColor((x_origem + 627), (y_origem + 35), (228, 194, 31), tolerance=10):  # testa se tem que recolher icone das tarefas amarelo
         print('Tem missão para recolher, aguarda um tempo pequeno')
         status_tarefas = "Recolhido"
-        time.sleep(2)
+        #time.sleep(2)
         for i in range(30):
             pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias para abrir
             print('Click para abrir os tarefas')
             if (pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (73, 71, 76), tolerance=20)
                     or pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (22, 21, 23), tolerance=20)):
                 # testa se ja abriu a janela bora cinza da janela
-                time.sleep(2)
+                time.sleep(5)
                 if pyautogui.pixelMatchesColor((x_origem + 495), (y_origem + 125), (0, 51, 248), tolerance=10):  # testa se esta aberto a lista de tarefas
                     print('Tarefas abertas, conta sem Upar')
                     posicao_recolher_tarefa_y = (361, 457, 553)
@@ -374,13 +374,13 @@ def recolher_tarefa_upando(x_origem, y_origem):
                     if len(clique_recolher) > 0:
                         for recolhe in clique_recolher:
                             pyautogui.click(x_origem + 767, y_origem + recolhe)  # clica no recolher
-                        time.sleep(1)
+                        time.sleep(2)
 
                     posicao_recolher_presentes = (215, 400, 585, 770)
 
                     for recolhe in posicao_recolher_presentes:
                         pyautogui.click(x_origem + recolhe, y_origem + 246)  # clica nos presentes
-                    time.sleep(2)
+                    time.sleep(3)
 
                     if not (pyautogui.pixelMatchesColor((x_origem + 627), (y_origem + 35), (228, 194, 31), tolerance=30)):  # testa se NÂO tem que recolher icone das tarefas amarelo
                         pyautogui.click(x_origem + 816, y_origem + 142)  # clica para fechar as tarefas
