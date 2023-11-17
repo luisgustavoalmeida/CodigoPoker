@@ -293,16 +293,19 @@ def passa_ate_lv7(x_origem, y_origem): # para se fazer tarefas
                         so_tem_gire = 'upando'
                     pyautogui.click(821 + x_origem, 138 + y_origem)  # fecha tarefa
 
+
 def solot_genius_cartas_upando(x_origem, y_origem, blind):
     solot_joga_vezes_upando(x_origem, y_origem)
     genius_joga_vezes_upando(x_origem, y_origem)
     cartas_premidas_joga_vezes_upando(x_origem, y_origem)
     Mesa.escolher_blind(x_origem, y_origem, blind)
 
+
 def genius_cartas_upando(x_origem, y_origem, blind):
     genius_joga_vezes_upando(x_origem, y_origem)
     cartas_premidas_joga_vezes_upando(x_origem, y_origem)
     Mesa.escolher_blind(x_origem, y_origem, blind)
+
 
 def cartas_upando(x_origem, y_origem, blind):
     cartas_premidas_joga_vezes_upando(x_origem, y_origem)
