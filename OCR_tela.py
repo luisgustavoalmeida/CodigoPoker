@@ -637,7 +637,7 @@ def remover_termos_upando(texto):
     return itens_em_comum
 
 
-def  tarefas_diaris_upando(x_origem, y_origem):
+def tarefas_diaris_upando(x_origem, y_origem):
     lista = []
     # Define a região de interesse
     config = '--psm 6 --oem 1'
@@ -702,11 +702,13 @@ def numero_sala(x_origem, y_origem):
     numero = None
     inveter_cor = True
     esca_ciza = True
-    fator_ampliacao = 3
+    fator_ampliacao = 4
     contraste_pre = 1.1
     contraste_pos = 1.3
     config = '--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789 '
     regiao = (x_origem + 56, y_origem + 77, x_origem + 89, y_origem + 93)
+
+    pyautogui.click(x_origem + 43, y_origem + 388)  # clica no anel
 
     for i in range(5):
         numero = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza) #pontuação
