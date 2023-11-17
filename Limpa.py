@@ -304,9 +304,8 @@ def fecha_tarefa(x_origem, y_origem): #fecha a lista de tarefas diarias
                 or pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (73, 71, 76), tolerance=20)):
 
             pyautogui.click(821 + x_origem, 138 + y_origem)
-            time.sleep(0.5)
             print("fecha Tarefas diarias")
-
+            time.sleep(0.5)
         else:
             return
 
