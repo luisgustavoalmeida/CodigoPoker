@@ -291,6 +291,7 @@ def passa_ate_lv7(x_origem, y_origem): # para se fazer tarefas
                         so_tem_gire = 'caonta Upada'
                     else:
                         so_tem_gire = 'upando'
+                    Limpa.fecha_tarefa(x_origem, y_origem)
 
 def solot_genius_cartas_upando(x_origem, y_origem, blind):
     solot_joga_vezes_upando(x_origem, y_origem)
