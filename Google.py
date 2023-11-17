@@ -195,6 +195,7 @@ linha_vazia_anterior = 2  # Inicializa a variável global
 intervalo_de_busca = 500
 guia_antiga = None
 
+
 def primeira_celula_vazia(guia):
     global linha_vazia_anterior  # Indica que vamos utilizar a variável global
     global intervalo_de_busca
