@@ -799,7 +799,7 @@ def joga_uma_vez(x_origem, y_origem):
 
 
 def dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, valor_fichas, time_rodou, roleta):
-    if dia_da_semana == 5 or dia_da_semana == 6 or dia_da_semana == 0:  # testa se é sabado ou domingo
+    if dia_da_semana == 5 or dia_da_semana == 6:  # testa se é sabado ou domingo
             # 0 segunda, 1 terça, 2 quarta, 3 quinta, 4 sexta, 5 sabado, 6 domingo
             #if pyautogui.pixelMatchesColor((x_origem + 750), (y_origem + 38), (245, 218, 96), tolerance=10) or pyautogui.pixelMatchesColor((x_origem + 802), (y_origem + 38), (245, 218, 96), tolerance=10) or (100000 < valor_fichas < 400000):
         print('conta para jogar mesa')

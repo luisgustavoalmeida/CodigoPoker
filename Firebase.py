@@ -116,13 +116,6 @@ def inicializar_firebase():
             print('firebase sem internete')
             time.sleep(5)
 
-
-# Inicializa o Firebase
-firebase = pyrebase.initialize_app(config)
-
-# Obtém uma referência para o banco de dados
-db = firebase.database()
-
 def enviar_comando_coletivo(arranjo, comando):
 
     """Envie nesta fonção dois parametros que pode ser a tiplae dos arranjos dos conputadores "arranjo3_pc" ou
@@ -140,15 +133,7 @@ def enviar_comando_coletivo(arranjo, comando):
     except Exception as e:
         print("Erro ao processar atualização:", e)
 
-# Referência para o nó do Firebase que você deseja observar
-ref = firebase.database().child(caminho_resposta)  # colocar o caminho de onde vem os comandos
 
-# Função para reconectar ao Firebase
-def reconectar_firebase():
-    global firebase, db
-    print("Tentando reconectar ao Firebase...")
-    firebase = inicializar_firebase()
-    db = firebase.database()
 # Função de callback para manipular os dados quando houver uma atualização
 def on_update(event):
     try:
@@ -168,9 +153,32 @@ def on_update(event):
         print("Tentando reconectar...")
         reconectar_firebase()
 
-# Registrar o observador usando o método "stream"
-# A função "on" irá chamar a função "on_update" sempre que ocorrer uma edição no nó referenciado
-ref.stream(on_update)
+
+# # Inicializa o Firebase
+# firebase = pyrebase.initialize_app(config)
+#
+# # Obtém uma referência para o banco de dados
+# db = firebase.database()
+#
+# # Referência para o nó do Firebase que você deseja observar
+# ref = firebase.database().child(caminho_resposta)  # colocar o caminho de onde vem os comandos
+#
+# # Registrar o observador usando o método "stream"
+# # A função "on" irá chamar a função "on_update" sempre que ocorrer uma edição no nó referenciado
+# ref.stream(on_update)
+
+
+# Função para reconectar ao Firebase
+def reconectar_firebase():
+    global firebase, db, ref, caminho_resposta
+    print("Tentando reconectar ao Firebase...")
+    firebase = inicializar_firebase()
+    db = firebase.database()
+    ref = firebase.database().child(caminho_resposta)  # colocar o caminho de onde vem os comandos
+    ref.stream(on_update)
+
+
+reconectar_firebase()
 
 
 def alterar_dado_global(nome_variavel, valor):
@@ -237,6 +245,7 @@ def escreve_resposta_escravo(resposta_escravo):
     except Exception as e:
         print(f"Ocorreu um erro ao escrever a informação: {str(e)}")
 
+
 resposta_anterior = None
 
 
@@ -283,8 +292,6 @@ def confirmacao_comando_resposta(resposta_escravo):
 
         escreve_resposta_escravo(resposta_escravo)
         resposta_anterior = resposta_escravo
-
-
     else:
         return
 
