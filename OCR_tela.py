@@ -361,6 +361,7 @@ def tarefas_diaris_posicao2(x_origem, y_origem):
         return lista
     return lista
 
+
 dicionario_tarefas_fazer = {#caça-níquel da mesa
                             'Jogar o caca-niquel da mesa 150 vezes': 30,
                             'Jogar o caca-niquel da mesa 70 vezes': 20,
@@ -701,7 +702,7 @@ def numero_sala(x_origem, y_origem):
     numero = None
     inveter_cor = True
     esca_ciza = True
-    fator_ampliacao = 3
+    fator_ampliacao = 4
     contraste_pre = 1
     contraste_pos = 1.5
     config = '--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789 '
@@ -858,8 +859,6 @@ def level_conta(x_origem, y_origem):
             print("Erro ao converter para inteiro")
             return 0
 
-
-
 # aviso_do_sistema()
 # x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
 # level_conta(x_origem, y_origem)
@@ -883,3 +882,4 @@ def level_conta(x_origem, y_origem):
 # pontuacao_tarefas(x_origem, y_origem)
 # def rola_tarefa_0():
 # pyautogui.click(708 + x_origem, 426 + y_origem, button='left')
+
