@@ -707,8 +707,13 @@ def numero_sala(x_origem, y_origem):
     contraste_pos = 1.3
     config = '--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789 '
     regiao = (x_origem + 56, y_origem + 77, x_origem + 89, y_origem + 93)
-
-    pyautogui.click(x_origem + 43, y_origem + 388)  # clica no anel
+    for i in range(30):
+        # printa se esta disponivel o numero
+        if pyautogui.pixelMatchesColor((x_origem + 86), (y_origem + 66), (43, 14, 10), tolerance=5):
+            break
+        time.sleep(1)
+        print('espera ficar visivel o numero da sala')
+        pyautogui.click(x_origem + 43, y_origem + 388)  # clica no anel
 
     for i in range(5):
         numero = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza) #pontuação

@@ -296,14 +296,10 @@ def fecha_tarefa(x_origem, y_origem): #fecha a lista de tarefas diarias
     #pyautogui.click(490 + x_origem, 70 + y_origem, button='left')  # clique bobo para passar alguma naimação
     #Tarefas diarias
     for i in range(20):
-        if (pyautogui.pixelMatchesColor((x_origem + 750), (y_origem + 38), (245, 218, 96), tolerance=2)
-              or pyautogui.pixelMatchesColor((x_origem + 802), (y_origem + 38), (245, 218, 96), tolerance=2)
-              or pyautogui.pixelMatchesColor((x_origem + 750), (y_origem + 38), (10, 54, 112), tolerance=2)
-              or pyautogui.pixelMatchesColor((x_origem + 802), (y_origem + 38), (10, 54, 112), tolerance=2)
-              or pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 133), (47, 0, 90), tolerance=2)):
-            print("fecha Tarefas diarias")
+        if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 133), (47, 0, 90), tolerance=2):
             pyautogui.click(821 + x_origem, 138 + y_origem)
             time.sleep(0.5)
+            print("fecha Tarefas diarias")
         else:
             return
 
