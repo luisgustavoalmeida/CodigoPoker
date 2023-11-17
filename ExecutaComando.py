@@ -231,11 +231,7 @@ while True:
                 status_comando = xp2.pega_2xp(x_origem, y_origem)
                 Firebase.confirmacao_comando_resposta(status_comando)
 
-                for i in range(7):
-                    Limpa.limpa_total(x_origem, y_origem)
-                    time.sleep(2)
-
-                #status_comando = 'Aguardando comando'
+                # status_comando = 'Aguardando comando'
                 status_comando = Mesa.escolher_blind(x_origem, y_origem, blind)
                 Firebase.confirmacao_comando_resposta(status_comando)
 

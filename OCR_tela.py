@@ -96,9 +96,9 @@ def OCR_regiao (regiao, config, inveter_cor, fator_ampliacao, contraste_pre, con
             imagem_recortada = cv2.convertScaleAbs(imagem_recortada, alpha=contraste_pos, beta=0)
 
         # print("iamgem cor invertida pos contraste")
-        # cv2.imshow("Imagem", imagem_recortada)
-        # cv2.waitKey(0)
-        # cv2.destroyAllWindows()
+        cv2.imshow("Imagem", imagem_recortada)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
         # passa o OCR na imagem recortada
         pytesseract.pytesseract.tesseract_cmd = caminho_tesseract
@@ -702,13 +702,13 @@ def numero_sala(x_origem, y_origem):
     numero = None
     inveter_cor = True
     esca_ciza = True
-    fator_ampliacao = 4
-    contraste_pre = 1
-    contraste_pos = 1.5
+    fator_ampliacao = 3
+    contraste_pre = 1.1
+    contraste_pos = 1.3
     config = '--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789 '
-    regiao = (x_origem + 52, y_origem + 77, x_origem + 89, y_origem + 93)
+    regiao = (x_origem + 56, y_origem + 77, x_origem + 89, y_origem + 93)
     numero = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza) #pontuação
-    #print('numero_sala: ', numero)
+    print('numero_sala: ', numero)
 
     if numero is not None:
         numero = numero.split(" ")[0]
