@@ -637,7 +637,7 @@ def remover_termos_upando(texto):
     return itens_em_comum
 
 
-def tarefas_diaris_upando(x_origem, y_origem):
+def  tarefas_diaris_upando(x_origem, y_origem):
     lista = []
     # Define a região de interesse
     config = '--psm 6 --oem 1'
