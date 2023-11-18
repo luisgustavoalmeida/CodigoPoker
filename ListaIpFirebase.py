@@ -165,9 +165,11 @@ def verifica_e_adiciona_ip(ip):
     return True  # O IP não estava na lista, retorna True e foi adicionado
 
 # # Chama a função para verificar e adicionar IP (substitua pelo IP desejado)
-verifica_e_adiciona_ip('1.1.1.1')
-#
+# verifica_e_adiciona_ip('1.1.1.1')
+
 # unir_e_atualizar_dados()
+#
+#unir_e_atualizar_dados()
 
 
 
