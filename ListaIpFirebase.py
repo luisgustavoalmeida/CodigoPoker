@@ -50,11 +50,11 @@ def escolher_configuracao_e_db():
     dia_atual = datetime.datetime.now().day
 
     if dia_atual <= 10:
-        configuracao = config1
-        print('Sera usado o bando 1')
-    elif 10 < dia_atual <= 20:
         configuracao = config2
         print('Sera usado o bando 2')
+    elif 10 < dia_atual <= 20:
+        configuracao = config1
+        print('Sera usado o bando 1')
     else:
         configuracao = config3
         print('Sera usado o bando 3')
@@ -165,7 +165,7 @@ def verifica_e_adiciona_ip(ip):
     return True  # O IP não estava na lista, retorna True e foi adicionado
 
 # # Chama a função para verificar e adicionar IP (substitua pelo IP desejado)
-# verifica_e_adiciona_ip('1.1.1.1')
+verifica_e_adiciona_ip('1.1.1.1')
 #
 # unir_e_atualizar_dados()
 
