@@ -1010,14 +1010,14 @@ def valor_fichas_perfil(x_origem, y_origem):
         # testa se a tela do perfil esta aberta
         if (pyautogui.pixelMatchesColor((x_origem + 241), (y_origem + 170), (227, 18, 5), tolerance=1)
                 and pyautogui.pixelMatchesColor((x_origem + 449), (y_origem + 292), (239, 247, 252), tolerance=1)):
-            time.sleep(0.5)
+            time.sleep(1)
             break
         time.sleep(0.2)
 
     # Configurações para o processo OCR
     inveter_cor = False
     esca_ciza = True
-    fator_ampliacao = 1
+    fator_ampliacao = 2
     contraste_pre = 1
     contraste_pos = 1
     regiao_ficha = (x_origem + 416, y_origem + 262, x_origem + 493, y_origem + 283)  # leval
