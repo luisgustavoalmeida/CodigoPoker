@@ -14,8 +14,8 @@ print(x_origem, y_origem)
 
 # pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 580), (47, 136, 196), tolerance=19)
 
-x = (x_origem + 449)
-y = (y_origem + 292)
+x = (x_origem + 406)
+y = (y_origem + 273)
 
 tolerancia = 0
 pyautogui.moveTo(x, y)
