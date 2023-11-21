@@ -486,8 +486,7 @@
 #
 # import Origem_pg
 # import Slot
-import Tarefas
-#testa_slot_lipo(x_origem, y_origem)
+# testa_slot_lipo(x_origem, y_origem)
 #
 # x_origem, y_origem = Origem_pg.x_y()
 # slot_aberto = Slot.abre_slot(x_origem, y_origem, True)
@@ -495,5 +494,3 @@ import Tarefas
 # # status_tarefa = Tarefas.recolher_tarefa_upando(x_origem, y_origem)
 # # Slot.ajustar_valor(x_origem, y_origem, True)
 # Slot.solot_joga_vezes_upando(x_origem, y_origem)
-
-

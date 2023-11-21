@@ -1,2 +1,0 @@
-# import mouseinfo
-# mouseinfo.MouseInfoWindow()

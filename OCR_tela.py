@@ -1,22 +1,21 @@
-import time
-import cv2
+import difflib
 import os
 import re
+import time
+from difflib import SequenceMatcher
+
+import cv2
 import numpy
 import pyautogui
+import pytesseract
+from fuzzywuzzy import fuzz
 
-import Limpa
+import IP
+import Origem_pg
+import Variaveis_Globais
 
 # Desabilitar o fail-safe
 pyautogui.FAILSAFE = False
-import pytesseract
-import Origem_pg
-import IP
-import difflib
-import Variaveis_Globais
-from difflib import SequenceMatcher
-from PIL import Image
-
 
 '''
 --psm 0: Modo de segmentação automática com detecção de bloco.
@@ -53,7 +52,7 @@ from PIL import Image
 ## para funcionar corretametne o Tesseract tem que estar instalado a baixo tem links de ajuda
 ## https://stackoverflow.com/questions/50951955/pytesseract-tesseractnotfound-error-tesseract-is-not-installed-or-its-not-i?newreg=e845d9256ce84548ab80ff4b5f241429
 ## https://github.com/UB-Mannheim/tesseract/wiki
-#https://www.youtube.com/watch?v=Wx3SyNwZtsA&t=751s&ab_channel=HashtagPrograma%C3%A7%C3%A3o
+# https://www.youtube.com/watch?v=Wx3SyNwZtsA&t=751s&ab_channel=HashtagPrograma%C3%A7%C3%A3o
 # tem que coloar o arquivo "por.traineddata" de idioma de protugues no caminho C:\Program Files\Tesseract-OCR\tessdata
 # Caminho para o executável do Tesseract
 caminho_tesseract = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
@@ -63,8 +62,7 @@ if not os.path.isfile(caminho_tesseract):
     raise Exception("Caminho do executável do Tesseract inválido")
 
 
-def OCR_regiao (regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza):
-
+def OCR_regiao(regiao, config, inveter_cor=True, fator_ampliacao=1, contraste_pre=1, contraste_pos=1, esca_ciza=True):
     try:
         # captura a imagem da tela
         imagem = pyautogui.screenshot()
@@ -72,27 +70,30 @@ def OCR_regiao (regiao, config, inveter_cor, fator_ampliacao, contraste_pre, con
         # recorta a região de interesse da imagem
         imagem_recortada = imagem.crop(regiao)
 
+        # Redimensiona a imagem, se necessário
         if fator_ampliacao != 1:
-            imagem_recortada = imagem_recortada.resize((imagem_recortada.width * fator_ampliacao,
-                                                        imagem_recortada.height * fator_ampliacao))
+            imagem_recortada = imagem_recortada.resize((imagem_recortada.width * fator_ampliacao, imagem_recortada.height * fator_ampliacao))
 
-        # exive a imagem
+        # print('Imagem recortada')
         # imagem_recortada.show()
 
+        # Converte a imagem para um array numpy
         imagem_recortada = numpy.asarray(imagem_recortada)
 
+        # Ajusta o contraste antes da conversão para escala de cinza
         if contraste_pre != 1:  # Fator de aumento de contraste (pode ser ajustado conforme necessário)
             imagem_recortada = cv2.convertScaleAbs(imagem_recortada, alpha=contraste_pre, beta=0)
 
-        # converte a imagem para escala de cinza
+        # Converte a imagem para escala de cinza
         if esca_ciza:
             imagem_recortada = cv2.cvtColor(imagem_recortada, cv2.COLOR_BGR2GRAY)
 
-        # inverte as cores da imagem
+        # Inverte as cores da imagem
         if inveter_cor:
             imagem_recortada = cv2.bitwise_not(imagem_recortada)
 
-        if contraste_pos != 1:  # Fator de aumento de contraste (pode ser ajustado conforme necessário)
+        # Ajusta o contraste após a conversão para escala de cinza
+        if contraste_pos != 1:
             imagem_recortada = cv2.convertScaleAbs(imagem_recortada, alpha=contraste_pos, beta=0)
 
         # print("iamgem cor invertida pos contraste")
@@ -100,24 +101,18 @@ def OCR_regiao (regiao, config, inveter_cor, fator_ampliacao, contraste_pre, con
         # cv2.waitKey(0)
         # cv2.destroyAllWindows()
 
-        # passa o OCR na imagem recortada
+        # Passa o OCR na imagem recortada
         pytesseract.pytesseract.tesseract_cmd = caminho_tesseract
         texto = pytesseract.image_to_string(imagem_recortada, config=config, lang="por")
-        #colocar o arquivo de idioma "por.traineddata" no diretorio C:\Program Files\Tesseract-OCR\tessdata
-
-        # Imprime o texto encontrado pelo OCR
-        #print("texto encontrado pelo OCR: ",texto)
+        # obs: colocar o arquivo de idioma "por.traineddata" no diretorio C:\Program Files\Tesseract-OCR\tessdata
 
         # deleta a imagem recortada
         del imagem_recortada
         del imagem
 
-        if len(texto) > 0:
+        if texto.strip():
             # Remove os espaços em branco no início e no final do texto
-            texto = texto.strip()  # remove os espaços em branco (espaços, tabulações e quebras de linha) no início e no final da string
-            # print("___________________\n")
-            # print("OCR_tela. Texto encontrado pelo OCR: \n", texto)
-            # print("\n___________________")
+            texto = texto.strip()
             return texto
         else:
             print("Nenhum texto foi detectado.")
@@ -128,185 +123,167 @@ def OCR_regiao (regiao, config, inveter_cor, fator_ampliacao, contraste_pre, con
         return None
 
 
+def tratar_valor_numerico(texto):
+    """
+    Remove caracteres não numéricos e converte o texto para um número inteiro.
+
+    Parameters:
+    - texto (str): Texto a ser tratado.
+
+    Returns:
+    - int: Valor inteiro obtido a partir do texto, ou 0 se não for possível converter.
+    """
+    try:
+        texto = re.sub(r"\D+", "", texto)  # Remove caracteres não numéricos
+        return int(texto)
+    except ValueError:
+        print("Erro ao converter para inteiro.")
+        return 0
+
+
 def valor_fichas(x_origem, y_origem):
-    print('Lendo o valor das fichas ...')
-    # Define a região de interesse
+    """
+    Esta função realiza a leitura do valor das fichas em uma determinada região da tela.
+
+    Parameters:
+    - x_origem (int): Coordenada x da origem da região.
+    - y_origem (int): Coordenada y da origem da região.
+
+    Returns:
+    - int: O valor das fichas lido, ou 0 se nenhum valor válido for encontrado.
+    """
+    print('valor_fichas')
+
+    # Configurações para o processo OCR
     inveter_cor = True
     esca_ciza = False
-    #fator_ampliacao = 4
-    #contraste_pre = 1.37
-    #contraste_pos = 1.6
-
-    # fator_ampliacao = 4
-    # contraste_pre = 1.23
-    # contraste_pos = 2.5
-
     fator_ampliacao = 3
     contraste_pre = 1
     contraste_pos = 1.6
 
-    regiao_ficha = (x_origem + 43, y_origem + 9, x_origem + 105, y_origem + 21)  # Ficha
-    #regiao_ficha = (x_origem + 37, y_origem + 5, x_origem + 108, y_origem + 29)  # Ficha
-    #
-    #config = '--psm 7 --oem 1 -c tessedit_char_whitelist=0123456789.'config = '--psm 6 --oem 3 -c tessedit_char_whitelist=0123456789'
-    config = '--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789.'
+    # Define a região de interesse para a leitura do valor
+    regiao_ficha = (x_origem + 43, y_origem + 9, x_origem + 105, y_origem + 21)
 
-    lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
-    print(lido)
+    # Define a lista de configurações a serem testadas
+    configuracoes = [
+        '--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789.',
+        '--psm 7 --oem 1 -c tessedit_char_whitelist=0123456789.',
+        '--psm 3 --oem 0 -c tessedit_char_whitelist=0123456789.'
+    ]
 
-    if lido is not None:
-        lido = re.sub(r"\D+", "", lido)  # remove caracteres nao numericos
-        lido = lido.replace(" ", "").replace(".", "")
-        #print(lido)
-        try:
-            lido = int(lido)
-            if 500 < lido < 15000000:
-                print("valor das fichas: ", lido)
-                return lido
-        except ValueError:
-            # Lidar com a conversão falhada para um número inteiro
-            print("Erro ao converter para inteiro")
+    # Itera sobre cada configuração e realiza o OCR
+    for config in configuracoes:
+        # Realiza o OCR com a configuração atual
+        lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
+        print(lido)
 
-    #config = '--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789.'
-
-    print('segunda tentativa')
-
-    config = '--psm 7 --oem 1 -c tessedit_char_whitelist=0123456789.'
-    lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
-    print(lido)
-
-    if lido is not None:
-        lido = re.sub(r"\D+", "", lido)  # remove caracteres nao numericos
-        lido = lido.replace(" ", "").replace(".", "")
-        # print(lido)
-        try:
-            lido = int(lido)
-            if 500 < lido < 15000000:
-                print("valor das fichas: ", lido)
-                return lido
-        except ValueError:
-            # Lidar com a conversão falhada para um número inteiro
-            print("Erro ao converter para inteiro")
-
-    print('terceira tentativa')
-
-    #config = '--psm 6 -c tessedit_char_whitelist=0123456789.'
-    config = '--psm 3 --oem 0 -c tessedit_char_whitelist=0123456789.'
-
-    lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
-    print(lido)
-
-    if lido is not None:
-        lido = re.sub(r"\D+", "", lido)  # remove caracteres nao numericos
-        lido = lido.replace(" ", "").replace(".", "")
-        # print(lido)
-        try:
-            lido = int(lido)
-            if 500 < lido < 15000000:
-                print("valor das fichas: ", lido)
-                return lido
-        except ValueError:
-            # Lidar com a conversão falhada para um número inteiro
-            print("Erro ao converter para inteiro")
+        if lido is not None:
+            # Converte o valor lido para um formato numérico
+            valor = tratar_valor_numerico(lido)
+            # Verifica se o valor está dentro da faixa desejada
+            if 500 < valor < 15000000:
+                print(f"Valor das fichas: {valor}")
+                return valor
     return 0
 
 
 def tempo_roleta(x_origem, y_origem):
-    inveter_cor = True
-    esca_ciza = True
+    print('tempo_roleta')  # Imprime o nome da função
+    inverter_cor = True
+    escala_cinza = True
     fator_ampliacao = 1
     contraste_pre = 1
     contraste_pos = 1
     config = '--psm 7 --oem 3 -c tessedit_char_whitelist=0123456789:'
-    regiao =(x_origem + 662, y_origem + 44, x_origem + 711,y_origem + 56)
-    for i in range(4):
-        tempo = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)  # posição onde fica o tempo para a proxima roleta
-        #print(tempo)
+    regiao = (x_origem + 662, y_origem + 44, x_origem + 711, y_origem + 56)
+
+    for _ in range(4):  # Usar _ para indicar que a variável não é usada
+        tempo = OCR_regiao(regiao, config, inverter_cor, fator_ampliacao, contraste_pre, contraste_pos, escala_cinza)
+
         if tempo is not None:
-            tempo = re.sub(r"\D+", "", tempo)  # remove caracteres nao numericos
-            tempo = tempo.replace(" ", "").replace(":", "")
+            tempo = tratar_valor_numerico(tempo)
+            print("Tempo lido na roleta", tempo)
+            return tempo
 
-            tempo = int(tempo)  # muda o tipo de variavel de str para int
-            try:
-                print("tempo: ", tempo)
-                return tempo
-            except:
-                tempo = 0
-                # print("tepo: ", tempo)
-                return tempo
-        time.sleep(2)
-    tempo = 0
-    # print("tepo: ", tempo)
-    return tempo
+        time.sleep(5)
 
-
-valores = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200]
+    tempo_padrao = 0
+    return tempo_padrao
 
 
 def pontuacao_tarefas(x_origem, y_origem):
-    pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
+    """
+    Esta função realiza a obtenção da pontuação em tarefas diárias em uma determinada região da tela.
 
+    Parameters:
+    - x_origem (int): Coordenada x da origem da região.
+    - y_origem (int): Coordenada y da origem da região.
+
+    Returns:
+    - int: A pontuação obtida, ou 1 se nenhuma pontuação válida for encontrada.
+    """
+    print('pontuacao_tarefas')
+    # Clica duas vezes no ícone de tarefas diárias para abrir a janela
+    pyautogui.doubleClick(x_origem + 635, y_origem + 25)
+
+    # Configurações para o processo OCR
     inveter_cor = True
     esca_ciza = True
     fator_ampliacao = 4
     contraste_pre = 1
     contraste_pos = 1.4
+    # Define os valores possíveis de pontuação
+    valores_possiveis = set(range(10, 201, 10))
 
+    # Define a região de interesse para a leitura da pontuação
     regiao = (x_origem + 778, y_origem + 516, x_origem + 830, y_origem + 535)
-    # config = '--psm 6 --oem 1 -c tessedit_char_whitelist=0123456789/'
 
-    config = '--psm 6 --oem 1 -c tessedit_char_whitelist=0123456789/'
-    for i in range(4):
-        pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
-        # time.sleep(0.3)
-        pontuacao = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza) #pontuação
-        print('pontiuação: ', pontuacao)
+    # Lista de configurações
+    configuracoes = [
+        '--psm 6 --oem 1 -c tessedit_char_whitelist=0123456789/',
+        '--psm 6 -c tessedit_char_whitelist=0123456789/'
+    ]
 
-        if pontuacao is not None:
-            if "/200" in pontuacao:
-                pontuacao = pontuacao.split("/")[0]
-                pontuacao = re.sub(r"\D", "", pontuacao)  # pega apenas os numero
-                pontuacao = pontuacao.replace(" ", "")
-                try:
-                    pontuacao = int(pontuacao)
-                    if pontuacao in valores:
-                        print("pontuacao: ", pontuacao)
-                        return pontuacao
-                except:
-                    continue
-        pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
-        time.sleep(1)
+    # Itera sobre cada configuração e realiza o OCR
+    for config in configuracoes:
+        for _ in range(4):
+            # Clica duas vezes no ícone de tarefas diárias para abrir a janela
+            pyautogui.doubleClick(x_origem + 635, y_origem + 25)
 
-    config = '--psm 6 -c tessedit_char_whitelist=0123456789/'
-    for i in range(4):
-        pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
-        # time.sleep(0.3)
-        pontuacao = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)  # pontuação
-        print('pontiuação: ', pontuacao)
-        if pontuacao is not None:
-            if "/200" in pontuacao:
-                pontuacao = pontuacao.split("/")[0]
-                pontuacao = re.sub(r"\D", "", pontuacao)  # pega apenas os numero
-                pontuacao = pontuacao.replace(" ", "")
-                try:
-                    pontuacao = int(pontuacao)
-                    if pontuacao in valores:
-                        print("pontuacao: ", pontuacao)
-                        return pontuacao
-                except:
-                    continue
-        pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
-        time.sleep(1)
+            # Realiza o OCR com a configuração atual
+            pontuacao = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
+            print('pontuação:', pontuacao)
+
+            # Verifica se a pontuação foi obtida com sucesso
+            if pontuacao is not None and "/200" in pontuacao:
+                pontuacao = tratar_valor_numerico(pontuacao.split("/")[0])
+
+                # Verifica se a pontuação está entre os valores possíveis
+                if pontuacao in valores_possiveis:
+                    print("Pontuação obtida com sucesso:", pontuacao)
+                    return pontuacao
+            time.sleep(1)
 
     pontuacao = 1
-    # print("pontuacao: ", pontuacao)
     return pontuacao
 
 
 def tarefas_diaris_posicao1(x_origem, y_origem):
+    """
+    Esta função realiza a leitura das tarefas diárias em uma região específica da tela.
+
+    Parameters:
+    - x_origem (int): Coordenada x da origem da região.
+    - y_origem (int): Coordenada y da origem da região.
+
+    Returns:
+    - list: Uma lista de tarefas diárias lidas.
+    """
+    print('tarefas_diaris_posicao1')
+    # Lista para armazenar as tarefas
     lista = []
 
-    # Define a região de interesse
+    # Configurações para o OCR
     config = '--psm 6 --oem 1'
     inveter_cor = True
     esca_ciza = True
@@ -314,205 +291,216 @@ def tarefas_diaris_posicao1(x_origem, y_origem):
     contraste_pre = 1
     contraste_pos = 1
 
-    print('\n\n OCR tarefas diarias \n')
+    # Região de interesse para a leitura das tarefas diárias
     regiao = (x_origem + 274, y_origem + 267, x_origem + 589, y_origem + 551)
-    for i in range(1):
-        pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
-        time.sleep(0.2)
+
+    # Clica duas vezes no ícone de tarefas diárias para abrir a janela
+    pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
+    time.sleep(0.2)
+
+    # Executa o OCR na região de interesse
+    texto = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
+    # Verifica se o OCR retornou algum texto
+    if texto is not None:
+        lista = remover_termos(texto)
+        # Retorna a lista de tarefas
+        return lista
+    else:
+        # Se não foram encontradas tarefas, retorna uma lista vazia
+        return lista
+
+
+def tarefas_diaris_posicao2(x_origem, y_origem):
+    """
+    Esta função realiza a leitura das tarefas diárias em uma região específica da tela.
+    Caso haja uma barra de rolagem, a função rola para garantir a leitura completa.
+
+    Parameters:
+    - x_origem (int): Coordenada x da origem da região.
+    - y_origem (int): Coordenada y da origem da região.
+
+    Returns:
+    - list: Uma lista de tarefas diárias lidas.
+    """
+    print('tarefas_diaris_posicao2')
+    lista = []
+    # Verifica se há uma barra de rolagem na lista de tarefas
+    if pyautogui.pixelMatchesColor((x_origem + 707), (y_origem + 280), (87, 0, 176), tolerance=3):
+        # Itera para rolar e verificar se há mais tarefas
+        for _ in range(50):
+            pyautogui.doubleClick(708 + x_origem, 419 + y_origem)  # rola para ver se a tarefa esta na segunda parte
+            # Testa se há barra de rolagem na lista de tarefas
+            if pyautogui.pixelMatchesColor((x_origem + 707), (y_origem + 410), (87, 0, 176), tolerance=3):
+                break
+            time.sleep(0.1)
+
+        # Configurações para o OCR
+        config = '--psm 6 --oem 1'
+        inveter_cor = True
+        esca_ciza = True
+        fator_ampliacao = 1
+        contraste_pre = 1
+        contraste_pos = 1
+
+        # Região de interesse para a leitura das tarefas diárias
+        regiao = (x_origem + 274, y_origem + 267, x_origem + 589, y_origem + 551)
+
         # Executa o OCR na região de interesse
-        #print("chama o ocr a 1 vez \n")
         texto = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
         if texto is not None:
             lista = remover_termos(texto)
-            #print(lista)
+            # Retorna a lista de tarefas
+            return lista
+        else:
+            # Se não foram encontradas tarefas, retorna uma lista vazia
             return lista
     return lista
 
 
-def tarefas_diaris_posicao2(x_origem, y_origem):
-    lista = []
-    if pyautogui.pixelMatchesColor((x_origem + 707), (y_origem + 280), (87, 0, 176), tolerance=3):  # testa se tem barra de rolagem na lista de tarefas
-        # print('tem barra para rolar\n')
-        for i in range(50):
-            pyautogui.doubleClick(708 + x_origem, 419 + y_origem)  # rola para ver se a tarefa esta na segunda parte
-            if pyautogui.pixelMatchesColor((x_origem + 707), (y_origem + 410), (87, 0, 176), tolerance=3):  # testa se tem barra de rolagem na lista de tarefas
-                break
-            time.sleep(0.1)
-
-
-        # Define a região de interesse
-        config = '--psm 6 --oem 1'
-        inveter_cor = True
-        esca_ciza = True
-        fator_ampliacao = 1
-        contraste_pre = 1
-        contraste_pos = 1
-        print('\n\n OCR tarefas diarias \n')
-        regiao = (x_origem + 274, y_origem + 267, x_origem + 589, y_origem + 551)
-        for i in range(1):
-            # Executa o OCR na região de interesse
-            #print("chama o ocr a 1 vez \n")
-            texto = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
-            if texto is not None:
-                lista = remover_termos(texto)
-                #print(lista)
-                return lista
-        #print(lista)
-        return lista
-    return lista
-
-
-dicionario_tarefas_fazer = {#caça-níquel da mesa
-                            'Jogar o caca-niquel da mesa 150 vezes': 30,
-                            'Jogar o caca-niquel da mesa 70 vezes': 20,
-                            'Jogar o caca-niquel da mesa 10 vezes': 10,
-                            'Ganhar 100.000 fichas no caca niquel da mesa': 30,
-                            'Ganhar 30.000 fichas no caca niquel da mesa': 20,
-                            'Ganhar 10.000 fichas no caca niquel da mesa': 10,
-                            # Casino Genius
-                            'Jogar no Casino Genius Pro 100 vezes': 30,
-                            'Jogar no Casino Genius Pro 50 vezes': 20,
-                            'Jogar no Casino Genius Pro 10 vezes': 10,
-                            'Ganhar 100.000 fichas no Casino Genius Pro': 30,
-                            'Ganhar 30.000 fichas no Casino Genius Pro': 20,
-                            'Ganhar 4.000 fichas no Casino Genius Pro': 10,
-                            #Cartas Premiadas
-                            'Jogar 100 vezes nas Cartas Premiadas': 30,
-                            'Jogar 50 vezes nas Cartas Premiadas': 20,
-                            'Jogar 10 vezes nas Cartas Premiadas': 10,
-                            'Ganhar 100.000 fichas nas Cartas Premiadas': 30,
-                            'Ganhar 30.000 fichas nas Cartas Premiadas': 20,
-                            'Ganhar 4.000 fichas nas Cartas Premiadas': 10,
-                            #Poker Slot
-                            'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 150 vezes': 30,
-                            'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 70 vezes': 20,
-                            'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 10 vezes': 10,
-                            'Ganhar 100.000 fichas no caca niquel Slot Poker': 30,
-                            'Ganhar 30.000 fichas no caca niquel Slot Poker': 20,
-                            'Ganhar 10.000 fichas no caca niquel Slot Poker': 10}
-
-
 def tarefas_diaris(x_origem, y_origem):
+    """
+    Esta função realiza a leitura das tarefas diárias em uma região específica da tela.
 
+    Parameters:
+    - x_origem (int): Coordenada x da origem da região.
+    - y_origem (int): Coordenada y da origem da região.
+
+    Returns:
+    - list: Uma lista de tarefas diárias lidas.
+    """
+    print('tarefas_diaris')
     lista = []
     lista2 = []
-    # Define a região de interesse
+
+    # Configurações para o OCR
     config = '--psm 6 --oem 1'
     inveter_cor = True
     esca_ciza = True
     fator_ampliacao = 1
     contraste_pre = 1
     contraste_pos = 1
-    #config = None
-    print('\n\n OCR tarefas diarias \n')
-    regiao = (x_origem + 274, y_origem + 267, x_origem + 589, y_origem + 551)
-    for i in range(1):
-        pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
-        time.sleep(0.2)
-        # Executa o OCR na região de interesse
-        #print("chama o ocr a 1 vez \n")
-        texto = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
-        if texto is not None:
-            lista = remover_termos(texto)
-            #print('teste se tem que rolar\n')
-            if pyautogui.pixelMatchesColor((x_origem + 707), (y_origem + 280), (87, 0, 176), tolerance=3): # testa se tem barra de rolagem na lista de tarefas
-                #print('tem barra para rolar\n')
-                for i in range(50):
-                    pyautogui.doubleClick(708 + x_origem, 419 + y_origem)  # rola para ver se a tarefa esta na segunda parte
-                    if pyautogui.pixelMatchesColor((x_origem + 707), (y_origem + 410), (87, 0, 176), tolerance=3):  # testa se tem barra de rolagem na lista de tarefas
-                        break
-                    time.sleep(0.1)
 
-                for j in range(1):
-                    #print('tem coisa na lista 1')
-                    #print("chama o ocr a 2 vez\n")
-                    texto = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
-                    if texto is not None:
-                        lista2 = remover_termos(texto)
-                        if lista2:# testa se esta vazia
-                            for item in lista2:
-                                if item not in lista:
-                                    # inclui na lista o itens nao repitidos
-                                    lista.append(item)
-            time.sleep(2)
-    #print("tarefas_diaris")
-    #print(lista)
+    # Região de interesse para a leitura das tarefas diárias
+    regiao = (x_origem + 274, y_origem + 267, x_origem + 589, y_origem + 551)
+
+    # Clica duas vezes no ícone de tarefas diárias para abrir a janela
+    pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
+    time.sleep(0.2)
+
+    # Executa o OCR na região de interesse
+    texto = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
+
+    # Verifica se o OCR retornou algum texto
+    if texto is not None:
+        lista = remover_termos(texto)
+        # Testa se há barra de rolagem na lista de tarefas
+        if pyautogui.pixelMatchesColor((x_origem + 707), (y_origem + 280), (87, 0, 176), tolerance=3):
+            # Itera para rolar e verificar se há mais tarefas
+            for i in range(50):
+                pyautogui.doubleClick(708 + x_origem, 419 + y_origem)  # rola para ver se a tarefa esta na segunda parte
+                # Testa se há barra de rolagem na lista de tarefas
+                if pyautogui.pixelMatchesColor((x_origem + 707), (y_origem + 410), (87, 0, 176), tolerance=3):
+                    break
+                time.sleep(0.1)
+
+            # Executa o OCR na região de interesse novamente
+            texto = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
+
+            # Verifica se o OCR retornou algum texto
+            if texto is not None:
+                lista2 = remover_termos(texto)
+                # Testa se há tarefas na segunda parte e inclui na lista as não repetidas
+                if lista2:  # testa se esta vazia
+                    for item in lista2:
+                        if item not in lista:
+                            # inclui na lista o itens nao repitidos
+                            lista.append(item)
+        time.sleep(2)
+
     return lista
 
 
-para_trocar = ['Participe de um GIRE & GANHE/campeonato de eliminacao 1 vezes',
-               'Participe de um GIRE & GANHE/campeonato de eliminacao 2 vezes',
-               'Participe de um GIRE & GANHE/campeonato de eliminacao 3 vezes',
-               'Ganhar um premio em um GIRE & GANHE/torneio de eliminacao',
-               'Jogue 10 maos nas mesas OMAHA com blinds acima de 200',
-               'Jogue 20 maos nas mesas OMAHA com blinds acima de 200',
-               'Jogue 40 maos nas mesas OMAHA com blinds acima de 200',
-               'Ganhe 5 maos nas mesas OMAHA com blinds acima de 200',
-               'Ganhe 10 maos nas mesas OMAHA com blinds acima de 200',
-               'Ganhe 20 maos nas mesas OMAHA com blinds acima de 200',
-               'Ganhe 10.000 fichas nas mesas OMAHA',
-               'Ganhe 50.000 fichas nas mesas OMAHA',
-               'Ganhe 200.000 fichas nas mesas OMAHA',
-               'Jogue JACKS OR BETTER 10 vezes',
-               'Jogue JACKS OR BETTER 50 vezes',
-               'Jogue JACKS OR BETTER 100 vezes',
-               'Ganhe 10.000 fichas do JACKS OR BETTER',
-               'Ganhe 50.000 fichas do JACKS OR BETTER',
-               'Ganhe 200.000 fichas do JACKS OR BETTER',
-               'Consiga Flush ou qualquer mao superior nas mesas OMAHA',
-               'Ganhar 10 maos em uma mesa com blinds acima de 25',
-               'Jogar 20 mao em uma mesa com blinds acima de 25',
-               'Tirar Sequencia 1 vezes em mesas com blinds maiores que 25',
-               'Tirar trinca 1 vez em mesa com blinds maiores que 25',
-               'Tirar um flush ou quaquer maos superior 1 vez em mesas com blinds laiores que 25',
-               'Ganhar 10 maos em uma mesa com blinds acima de 50',
-               'Ganhar 20 maos em uma mesa com blinds acima de 50',
-               'Ganhar 30.000 fichas em mesas com blinds acima da 50',
-               'Jogar 20 mao em uma mesa com blinds acima de 50',
-               'Jogar 40 mao em uma mesa com blinds acima de 50',
-               'Tirar Flush ou qualquer mao superior 1 vez em mesas com blindes maiores que 25',
-               'Tirar Sequencia 1 vez em mesas com blinds maiores que 50',
-               'Tirar Sequencia 2 vezes em mesas com blinds maiores que 50',
-               'Tirar trinca 1 vez em mesas com blinds maiores que 50',
-               'Ganhar 20 maos em uma mesa com blinds acima de 100',
-               'Ganhar 100.000 fichas em mesas com blinds acima de 50',
-               'Ganhe 200.000 fichas em mesas com blinds acima de 100',
-               'Jogar 20 mao em uma mesa com blinds acima de 100',
-               'Jogar 40 mao em uma mesa com blinds acima de 100',
-               'Tirar Flush ou qualquer mao superior 1 vez em mesas com blindes maiores que 50',
-               'Tirar Flush ou qualquer mao superior 2 vezes em mesas com blinds maiores que 100',
-               'Tirar Sequencia 2 vezes em mesas com blinds maiores que 100',
-               'Tirar Trinca 2 vezes em mesas com blinds maiores que 100']
-
-
 def tarefas_diaris_trocar(x_origem, y_origem):
+    """
+       Esta função realiza a troca de tarefas diárias em uma região específica da tela.
+
+       Parameters:
+       - x_origem (int): Coordenada x da origem da região.
+       - y_origem (int): Coordenada y da origem da região.
+       """
+    print('tarefas_diaris_trocar')
+
     for i in range(2):
         pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
-        if not pyautogui.pixelMatchesColor((x_origem + 174), (y_origem + 278), (247, 230, 255), tolerance=5):  # testa se tem barra de rolagem na lista de tarefas
-            print('ja foi trocada a tarefa')
+        if not pyautogui.pixelMatchesColor((x_origem + 174), (y_origem + 278), (247, 230, 255), tolerance=5):
+            # testa se tem barra de rolagem na lista de tarefas
+            print('A tarefa já foi trocada anteriormente.')
             return
 
-        # Define a região de interesse
+        # Lista de tarefas para trocar
+        para_trocar = ['Participe de um GIRE & GANHE/campeonato de eliminacao 1 vezes',
+                       'Participe de um GIRE & GANHE/campeonato de eliminacao 2 vezes',
+                       'Participe de um GIRE & GANHE/campeonato de eliminacao 3 vezes',
+                       'Ganhar um premio em um GIRE & GANHE/torneio de eliminacao',
+                       'Jogue 10 maos nas mesas OMAHA com blinds acima de 200',
+                       'Jogue 20 maos nas mesas OMAHA com blinds acima de 200',
+                       'Jogue 40 maos nas mesas OMAHA com blinds acima de 200',
+                       'Ganhe 5 maos nas mesas OMAHA com blinds acima de 200',
+                       'Ganhe 10 maos nas mesas OMAHA com blinds acima de 200',
+                       'Ganhe 20 maos nas mesas OMAHA com blinds acima de 200',
+                       'Ganhe 10.000 fichas nas mesas OMAHA',
+                       'Ganhe 50.000 fichas nas mesas OMAHA',
+                       'Ganhe 200.000 fichas nas mesas OMAHA',
+                       'Jogue JACKS OR BETTER 10 vezes',
+                       'Jogue JACKS OR BETTER 50 vezes',
+                       'Jogue JACKS OR BETTER 100 vezes',
+                       'Ganhe 10.000 fichas do JACKS OR BETTER',
+                       'Ganhe 50.000 fichas do JACKS OR BETTER',
+                       'Ganhe 200.000 fichas do JACKS OR BETTER',
+                       'Consiga Flush ou qualquer mao superior nas mesas OMAHA',
+                       'Ganhar 10 maos em uma mesa com blinds acima de 25',
+                       'Jogar 20 mao em uma mesa com blinds acima de 25',
+                       'Tirar Sequencia 1 vezes em mesas com blinds maiores que 25',
+                       'Tirar trinca 1 vez em mesa com blinds maiores que 25',
+                       'Tirar um flush ou quaquer maos superior 1 vez em mesas com blinds laiores que 25',
+                       'Ganhar 10 maos em uma mesa com blinds acima de 50',
+                       'Ganhar 20 maos em uma mesa com blinds acima de 50',
+                       'Ganhar 30.000 fichas em mesas com blinds acima da 50',
+                       'Jogar 20 mao em uma mesa com blinds acima de 50',
+                       'Jogar 40 mao em uma mesa com blinds acima de 50',
+                       'Tirar Flush ou qualquer mao superior 1 vez em mesas com blindes maiores que 25',
+                       'Tirar Sequencia 1 vez em mesas com blinds maiores que 50',
+                       'Tirar Sequencia 2 vezes em mesas com blinds maiores que 50',
+                       'Tirar trinca 1 vez em mesas com blinds maiores que 50',
+                       'Ganhar 20 maos em uma mesa com blinds acima de 100',
+                       'Ganhar 100.000 fichas em mesas com blinds acima de 50',
+                       'Ganhe 200.000 fichas em mesas com blinds acima de 100',
+                       'Jogar 20 mao em uma mesa com blinds acima de 100',
+                       'Jogar 40 mao em uma mesa com blinds acima de 100',
+                       'Tirar Flush ou qualquer mao superior 1 vez em mesas com blindes maiores que 50',
+                       'Tirar Flush ou qualquer mao superior 2 vezes em mesas com blinds maiores que 100',
+                       'Tirar Sequencia 2 vezes em mesas com blinds maiores que 100',
+                       'Tirar Trinca 2 vezes em mesas com blinds maiores que 100']
+
+        # Configurações para o OCR
         config = '--psm 6 --oem 1'
         inveter_cor = True
         esca_ciza = True
         fator_ampliacao = 1
         contraste_pre = 1
         contraste_pos = 1
-        #config = None
-        #print('\n\n OCR tarefas diarias troca\n')
+
+        # Regiões de interesse para leitura das tarefas
         regiao0 = (x_origem + 274, y_origem + 268, x_origem + 591, y_origem + 310)
         regiao1 = (x_origem + 274, y_origem + 348, x_origem + 591, y_origem + 390)
         regiao2 = (x_origem + 274, y_origem + 428, x_origem + 591, y_origem + 470)
         regiao3 = (x_origem + 274, y_origem + 508, x_origem + 591, y_origem + 550)
 
-        regioes = [regiao0, regiao1, regiao2, regiao3, regiao1, regiao2, regiao3]
+        # Lista para armazenar as tarefas lidas
+        lista_trocar_tarefa = []
 
-        lista_trocar_tarefa = texto_lista = []
-
-        for i, regiao in enumerate(regioes):
-
-            #print(i)
+        # Loop para ler as tarefas em cada região
+        for i, regiao in enumerate([regiao0, regiao1, regiao2, regiao3, regiao1, regiao2, regiao3]):
 
             if i == 4:
                 pyautogui.doubleClick(708 + x_origem, 418 + y_origem)  # rola para ver se a tarefa esta na segunda parte
@@ -526,20 +514,20 @@ def tarefas_diaris_trocar(x_origem, y_origem):
                 print(texto)
                 lista_trocar_tarefa.append(texto)
 
-        #print(lista_trocar_tarefa)
-
+        # Loop para encontrar tarefas para trocar
         for item in para_trocar:
             matches = difflib.get_close_matches(item, lista_trocar_tarefa, n=1, cutoff=0.985)
             if matches:
                 posicao = lista_trocar_tarefa.index(matches[0])
-                #print(f'O item "{item}" da lista "para_trocar" é semelhante a "{matches[0]}" na posição {posicao} da lista "lista_trocar_tarefa".')
 
+                # Ajusta a janela
                 if posicao <= 3:
                     pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
                     time.sleep(0.2)
-                elif posicao > 3 :
+                elif posicao > 3:
                     pyautogui.doubleClick(708 + x_origem, 418 + y_origem)  # rola para ver se a tarefa esta na segunda parte
                     time.sleep(0.2)
+                # Clique na setinha correspondente à posiçã
                 if posicao == 0:
                     pyautogui.click(x_origem + 171, y_origem + 283)  # clica na setinha
                 elif posicao == 1 or posicao == 4:
@@ -547,21 +535,60 @@ def tarefas_diaris_trocar(x_origem, y_origem):
                 elif posicao == 2 or posicao == 5:
                     pyautogui.click(x_origem + 171, y_origem + 443)  # clica na setinha
                 elif posicao == 3 or posicao == 6:
-                    pyautogui.click(x_origem + 171, y_origem + 523) # clica na setinha
+                    pyautogui.click(x_origem + 171, y_origem + 523)  # clica na setinha
 
                 time.sleep(0.3)
                 pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
                 time.sleep(0.3)
                 pyautogui.click(x_origem + 545, y_origem + 401)  # clica no ok
-                print("tarefa tocada")
+                print("Tarefa trocada com sucesso.")
                 time.sleep(1)
                 break
-    print('nao tem tarefa na lista de troca')
+    print('Não há tarefa na lista de troca.')
 
 
 def remover_termos(texto):
+    """
+    Remove termos indesejados do texto, realiza formatações e retorna uma lista de itens.
+
+    Parameters:
+    - texto (str): Texto a ser processado.
+
+    Returns:
+    - list: Lista de itens processados.
+    """
+    print('remover_termos')
     if texto is None:
         return []
+
+    dicionario_tarefas_fazer = {  # caça-níquel da mesa
+        'Jogar o caca-niquel da mesa 150 vezes': 30,
+        'Jogar o caca-niquel da mesa 70 vezes': 20,
+        'Jogar o caca-niquel da mesa 10 vezes': 10,
+        'Ganhar 100.000 fichas no caca niquel da mesa': 30,
+        'Ganhar 30.000 fichas no caca niquel da mesa': 20,
+        'Ganhar 10.000 fichas no caca niquel da mesa': 10,
+        # Casino Genius
+        'Jogar no Casino Genius Pro 100 vezes': 30,
+        'Jogar no Casino Genius Pro 50 vezes': 20,
+        'Jogar no Casino Genius Pro 10 vezes': 10,
+        'Ganhar 100.000 fichas no Casino Genius Pro': 30,
+        'Ganhar 30.000 fichas no Casino Genius Pro': 20,
+        'Ganhar 4.000 fichas no Casino Genius Pro': 10,
+        # Cartas Premiadas
+        'Jogar 100 vezes nas Cartas Premiadas': 30,
+        'Jogar 50 vezes nas Cartas Premiadas': 20,
+        'Jogar 10 vezes nas Cartas Premiadas': 10,
+        'Ganhar 100.000 fichas nas Cartas Premiadas': 30,
+        'Ganhar 30.000 fichas nas Cartas Premiadas': 20,
+        'Ganhar 4.000 fichas nas Cartas Premiadas': 10,
+        # Poker Slot
+        'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 150 vezes': 30,
+        'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 70 vezes': 20,
+        'Apostar 20 fichas ou mais em 9 linhas do caca niquel Poker Slot 10 vezes': 10,
+        'Ganhar 100.000 fichas no caca niquel Slot Poker': 30,
+        'Ganhar 30.000 fichas no caca niquel Slot Poker': 20,
+        'Ganhar 10.000 fichas no caca niquel Slot Poker': 10}
 
     # Substituir caracteres especiais
     texto = texto + '\n'
@@ -571,182 +598,304 @@ def remover_termos(texto):
     texto = re.sub(r'caca\n\nniquel', 'caca niquel', texto)
     texto = re.sub(r'caca\nniquel', 'caca niquel', texto)
 
-    # print('Texto sem Ç, sem Í, sem .')
-    # print(texto)
-
+    # Dividir o texto em linhas
     linhas = texto.split('\n')
-    texto_formatado = '\n'.join([linha for linha in linhas if linha.strip() in dicionario_tarefas_fazer.keys() or linha.strip() == ''])
 
-    # print('Texto')
-    # print(texto_formatado)
+    # Filtrar linhas relevantes usando um dicionário ou condição específica
+    texto_formatado = '\n'.join([linha for linha in linhas if linha.strip() in dicionario_tarefas_fazer.keys() or linha.strip() == ''])
 
     # Extrair itens de texto formatado
     itens = texto_formatado.split('\n')
 
     # Remover caracteres indesejados e formar a lista final
-    #lista = [item.replace('\n', ' ').strip() for item in itens if len(item) > 34]
     lista = [re.sub(r'\s+', ' ', item.replace('\n', ' ').strip()) for item in itens if len(item) > 34]
 
-    # print('lista')
-    # print(lista)
     return lista
 
+
 def remover_caracteres_especiais(texto):
+    """
+    Remove caracteres especiais e espaços duplos do texto.
+
+    Parameters:
+    - texto (str): Texto a ser processado.
+
+    Returns:
+    - str: Texto sem caracteres especiais e espaços duplos.
+    """
     # Define a expressão regular para encontrar caracteres especiais
-    caracteres_especiais = r'[.,()=+*—/]'  # Ponto, parênteses, sinal de igual, mais, traço, barra
+    caracteres_especiais = r'[Í:;.,()=+*—/]'  # Ponto, parênteses, sinal de igual, mais, traço, barra
     texto_sem_especiais = re.sub(caracteres_especiais, '', texto)
+
+    # Remove a sequência "ms"
+    texto_sem_especiais = texto_sem_especiais.replace('ms', '').replace('md', '').replace('E', '').replace('-', '')
+
+    # Remove espaços duplos
+    texto_sem_especiais = re.sub(r'\s+', ' ', texto_sem_especiais)
+
     # Remove espaços no início e no final da string
     texto_limpo = texto_sem_especiais.strip()
     return texto_limpo
 
 
-tarefas_upando = ['Gire 10 vezes no caça-níqueis', 'Jogar 10 mãos em qualquer mesa',
-                  'Conclua suas tarefas atuais para desbloquear a próxima rodada']
+def remover_termos_upando(texto, metodo=1):
+    """
+    Remove termos indesejados do texto relacionados a tarefas de upando e realiza a comparação de strings.
 
+    Parameters:
+    - texto (str): Texto a ser processado.
+    - metodo (int): Método de comparação (1 para SequenceMatcher, 2 para fuzzywuzzy).
 
-def remover_termos_upando(texto):
+    Returns:
+    - list: Lista de itens em comum entre as tarefas de upando e o texto fornecido.
+    """
+    print('remover_termos_upando')
     if texto is None:
         return []
 
+    tarefas_upando = ['Gire 10 vezes no caça-níqueis', 'Jogar o Casino Poker Genius 5 vezes', 'Jogar no Casino Genius Pro 5 vezes',
+                      'Jogar 1 mão em qualquer mesa', 'Jogar 5 mãos em qualquer mesa', 'Jogar 10 mãos em qualquer mesa',
+                      'Conclua suas tarefas atuais para desbloquear a próxima rodada']
+
     lista_original = texto.split('\n')
-    # Remove itens com menos de 30 caracteres da lista original
+
+    # Remove itens com menos de 25 caracteres da lista original
     lista_original = [item for item in lista_original if len(item) >= 25]
 
     # Remove caracteres especiais de cada item na lista original
     lista_original = [remover_caracteres_especiais(item) for item in lista_original]
 
-    print('lista_original')
-    print(lista_original)
+    print('lista_original: ', lista_original)
 
     # Lista para armazenar os itens limpos
     itens_em_comum = []
 
-    # Defina a tolerância para a comparação
-    tolerancia = 0.8
+    if metodo == 1:
+        # Defina a tolerância para a comparação
+        tolerancia = 0.9
 
-    # Percorra a lista de tarefas limpas
-    for item in tarefas_upando:
-        # Verifique se o item está na lista original (comparação com tolerância)
-        for original_item in lista_original:
-            similarity_ratio = SequenceMatcher(None, item, original_item).ratio()
-            if similarity_ratio >= tolerancia:
-                itens_em_comum.append(item)
+        # Percorra a lista de tarefas limpas
+        for item in tarefas_upando:
+            # Verifique se o item está na lista original (comparação com tolerância)
+            for original_item in lista_original:
+                similarity_ratio = SequenceMatcher(None, item, original_item).ratio()
+                if similarity_ratio >= tolerancia and item not in itens_em_comum:
+                    itens_em_comum.append(item)
+    else:
+        # Defina a tolerância para a comparação
+        tolerancia = 95  # Valor de 0 a 100
+
+        # Percorra a lista de tarefas limpas
+        for item in tarefas_upando:
+            # Verifique se o item está na lista original (comparação com tolerância)
+            for original_item in lista_original:
+                similarity_ratio = fuzz.ratio(item, original_item)
+                if similarity_ratio >= tolerancia and item not in itens_em_comum:
+                    itens_em_comum.append(item)
 
     print('itens_em_comum')
     print(itens_em_comum)
     return itens_em_comum
 
 
+def limpa_abre_tarefa_2(x_origem, y_origem):  # abre o tarefas
+    print('limpa_abre_tarefa')
+    # testa se a tarefa diaria é de conta sem upar cadeado na cartas premidas
+    if (pyautogui.pixelMatchesColor((x_origem + 750), (y_origem + 38), (245, 218, 96), tolerance=10)
+            or pyautogui.pixelMatchesColor((x_origem + 802), (y_origem + 38), (245, 218, 96), tolerance=10)):
+        print("Tarefas diarias conta sem upar")
+        return False
+
+    elif (pyautogui.pixelMatchesColor((x_origem + 750), (y_origem + 38), (10, 54, 112), tolerance=10)
+          or pyautogui.pixelMatchesColor((x_origem + 802), (y_origem + 38), (10, 54, 112), tolerance=10)):
+        print("Tarefas diarias conta upada")
+
+        for _ in range(20):
+            pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
+            print("Limpa Tarefas diarias")
+            time.sleep(0.5)
+            pyautogui.doubleClick(x_origem + 193, y_origem + 172)  # clica dentro do tarefas diarias
+
+            # testa se tarefa diariaria esta aberta e limpa
+            if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 133), (48, 0, 96), tolerance=20):
+                print("Tarefas diarias pausa")
+                time.sleep(1.5)
+                if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 133), (48, 0, 96), tolerance=20):
+                    print("Tarefas diarias limpo...")
+                    return True
+            # testa se a tarefa diaria é de conta sem upar
+            elif pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 133), (1, 50, 254), tolerance=20):
+                # pyautogui.click(821 + x_origem, 138 + y_origem) #clique para fechar
+                print("Tarefas diarias conta sem upar")
+                return False
+
+        return True
+    else:
+        return True
+
+
 def tarefas_diaris_upando(x_origem, y_origem):
-    lista = []
-    # Define a região de interesse
+    """
+        Verifica se há tarefas diárias relacionadas ao upando e retorna a lista de tarefas.
+
+        Parameters:
+        - x_origem (int): Coordenada x da origem da janela.
+        - y_origem (int): Coordenada y da origem da janela.
+
+        Returns:
+        - tuple: Uma tupla contendo a lista de tarefas e uma mensagem indicando se há apenas a tarefa 'Gire 10 vezes no caça-níqueis'.
+        """
+    print('tarefas_diaris_upando')
+
+    lista_tarefas = []
+
+    # Configurações para o processo OCR
     config = '--psm 6 --oem 1'
     inveter_cor = True
     esca_ciza = True
     fator_ampliacao = 1
     contraste_pre = 1
     contraste_pos = 1
-    #config = None
-    # print('\n\n OCR tarefas diarias \n')
+
+    # Define a região de interesse para a leitura do valor
     regiao = (x_origem + 278, y_origem + 329, x_origem + 784, y_origem + 563)
-
-    for i in range(30):
-        pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias para abrir
-        print('Click para abrir os tarefas')
-        if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (73, 71, 76), tolerance=20):
-
-            if pyautogui.pixelMatchesColor((x_origem + 495), (y_origem + 125), (0, 51, 248), tolerance=10):  # testa se esta aberto a lista de tarefas
-                print('Tarefas abertas, conta sem Upar')
-                break
-        time.sleep(0.5)
-
-    #print("chama o ocr a 1 vez \n")
-    texto = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
-
-    pyautogui.click(x_origem + 816, y_origem + 142)  # clica para fechar as tarefas
-
-    # print(texto)
-
-    lista = remover_termos_upando(texto)
-
-    # Verifica se a lista contém exatamente dois itens e se um deles é 'Gire 10 vezes no caça-níqueis'
-    if len(lista) == 2 and 'Gire 10 vezes no caça-níqueis' in lista:
-        so_tem_gire = "tem apenas Slote"
+    # abre a tela do tarefa diarias e retrona se true se a conta esta upada e false se a conta esta sem upar
+    if limpa_abre_tarefa_2(x_origem, y_origem):
+        print('Conta upada')
+        pyautogui.click(x_origem + 816, y_origem + 142)  # clica para fechar as tarefas
+        return lista_tarefas
     else:
-        so_tem_gire = "continua"
-    # print("Tarefas upando")
-    # print(lista)
-    return lista, so_tem_gire
+        print('Conta sem upar')
+        # Realiza a leitura da região de tarefas diárias
+        texto = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
+
+        # Fecha a janela de tarefas diárias
+        pyautogui.click(x_origem + 816, y_origem + 142)  # clica para fechar as tarefas
+
+        # Obtém a lista de tarefas removendo termos indesejados
+        lista_tarefas = remover_termos_upando(texto)
+
+        # # Verifica se a lista contém exatamente dois itens e se um deles é 'Gire 10 vezes no caça-níqueis'
+        # if len(lista_tarefas) == 2 and 'Gire 10 vezes no caça-níqueis' in lista_tarefas:
+        #     so_tem_gire = "tem apenas Slote"
+        # else:
+        #     so_tem_gire = "continua"
+        return lista_tarefas
 
 
 def blind_sala(x_origem, y_origem):
-    blind = None
+    """
+        Obtém informações sobre as blinds de uma sala em um jogo.
+
+        Parameters:
+        - x_origem (int): Coordenada x da origem da janela.
+        - y_origem (int): Coordenada y da origem da janela.
+
+        Returns:
+        - str: Valor da blind da sala ou '0' se não for possível obter a informação.
+        """
+
+    # Configurações para o processo OCR
     inveter_cor = True
     esca_ciza = True
     fator_ampliacao = 3
     contraste_pre = 1
     contraste_pos = 1.5
     config = '--psm 7 --oem 3 -c tessedit_char_whitelist=/0123456789KM'
+
+    # Define a região onde a informação da blind está localizada
     regiao = (x_origem + 52, y_origem + 99, x_origem + 125, y_origem + 115)
-    blind = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza) #pontuação
+
+    # Realiza a leitura da região para obter a informação da blind
+    blind = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
 
     if blind is not None:
+        # Remove espaços em branco e barras para obter o valor da blind
         blind = blind.replace(' ', '')
         blind = blind.replace('/', '')
-        return blind
+        return str(blind)
     else:
         return '0'
 
 
 def numero_sala(x_origem, y_origem):
-    numero = None
+    """
+    Extrai e retorna o número da sala de uma aplicação gráfica.
+
+    Parameters:
+    - x_origem (int): Coordenada x da origem da janela.
+    - y_origem (int): Coordenada y da origem da janela.
+
+    Returns:
+    - str: Número da sala ou "0" se não for encontrado.
+    """
+    print('numero_sala')
+
+    # Configurações para o processo OCR
     inveter_cor = True
     esca_ciza = True
     fator_ampliacao = 4
     contraste_pre = 1.1
     contraste_pos = 1.3
-    config = '--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789 '
+    config = '--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789'
     regiao = (x_origem + 56, y_origem + 77, x_origem + 89, y_origem + 93)
-    for i in range(30):
+
+    # Aguarda o número da sala ficar visível clicando no anel
+    for _ in range(30):
         # printa se esta disponivel o numero
         if (pyautogui.pixelMatchesColor((x_origem + 86), (y_origem + 66), (43, 14, 10), tolerance=5)
                 or pyautogui.pixelMatchesColor((x_origem + 86), (y_origem + 66), (54, 27, 8), tolerance=5)):
             break
         time.sleep(1)
-        print('espera ficar visivel o numero da sala')
+        print('Esperando o número da sala ficar visível...')
         pyautogui.click(x_origem + 43, y_origem + 388)  # clica no anel
 
-    for i in range(5):
-        numero = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza) #pontuação
-        print('numero_sala: ', numero)
+    # Extrai o número da sala usando OCR
+    for _ in range(5):
+        numero = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)  # pontuação
+        print('Número da sala:', numero)
 
-        if numero:
-            numero = numero.split(" ")[0]
-            numero = numero.replace(' ', '')
-
-            print('numero_sala: ', numero)
+        if numero is not None:
+            numero = tratar_valor_numerico(numero)
             return str(numero)
+        else:
+            print("Valor fora da faixa desejada")
 
         time.sleep(1)
     return "0"
 
 
 def valor_apostar(x_origem, y_origem):
+    """
+    Extrai e retorna o valor da aposta de uma aplicação gráfica.
+
+    Parameters:
+    - x_origem (int): Coordenada x da origem da janela.
+    - y_origem (int): Coordenada y da origem da janela.
+
+    Returns:
+    - int: Valor da aposta ou 0 se não for encontrado.
+    """
+
+    # Configurações para o processo OCR
     inveter_cor = False
     esca_ciza = True
     fator_ampliacao = 1
     contraste_pre = 1
     contraste_pos = 1
-    config = '--psm 7 --oem 3 -c tessedit_char_whitelist=0123456789' #
+    config = '--psm 7 --oem 3 -c tessedit_char_whitelist=0123456789'  #
     regiao = (x_origem + 420, y_origem + 644, x_origem + 474, y_origem + 658)
-    valor = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza) #pontuação
+
+    # Extrai o valor da aposta usando OCR
+    valor = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
+
     if valor is not None:
-        print("pontuacao: ", valor)
+        print("Aposta: ", valor)
         valor = int(valor)
         return valor
     else:
         valor = 0
-        print("pontuacao: ", valor)
+        print("Apposta: ", valor)
         return valor
 
 
@@ -756,8 +905,8 @@ def aviso_do_sistema():
     Jocê já está logado no jogo em outra página, esta
     Sessão foi cancelada!'''
 
-    x_origem, y_origem = Origem_pg.x_y_aviso_sistema() # tenta encontar a origem quando tem aviso do sistema
-    if x_origem is not None: # se tem aviso do sistema
+    x_origem, y_origem = Origem_pg.x_y_aviso_sistema()  # tenta encontar a origem quando tem aviso do sistema
+    if x_origem is not None:  # se tem aviso do sistema
         inveter_cor = False
         esca_ciza = True
         fator_ampliacao = 1
@@ -813,7 +962,7 @@ def aviso_sistema(x_origem, y_origem):
                 print('foi encontrado um: Aviso do sistema')
                 if 'cancelada' in valor:
                     print("Mesagem: ", valor)
-                    Variaveis_Globais.alterar_global_aviso_sistema(True) # muda o valor da variavel global destinado a sair da conta
+                    Variaveis_Globais.alterar_global_aviso_sistema(True)  # muda o valor da variavel global destinado a sair da conta
                     resposta = "sair da conta"
                     print('tem que sair da conta')
                     return True, resposta
@@ -842,43 +991,118 @@ def aviso_sistema(x_origem, y_origem):
         return False, resposta
 
 
-def level_conta(x_origem, y_origem):
-    # Define a região de interesse
-    inveter_cor = True
+def valor_fichas_perfil(x_origem, y_origem):
+    """
+    Extrai e retorna o valor de fichas da conta.
+
+    Parameters:
+    - x_origem (int): Coordenada x da origem da janela.
+    - y_origem (int): Coordenada y da origem da janela.
+
+    Returns:
+    - int: valor de fichas da conta ou 0 se não for encontrado ou estiver fora da faixa desejada.
+    """
+    print('valor_fichas_perfil')
+
+    for _ in range(50):
+        # clica para abrir a tela do perfil
+        pyautogui.click(16 + x_origem, 24 + y_origem)
+        # testa se a tela do perfil esta aberta
+        if pyautogui.pixelMatchesColor((x_origem + 241), (y_origem + 170), (227, 18, 5), tolerance=2):
+            time.sleep(0.2)
+            break
+        time.sleep(0.2)
+
+    # Configurações para o processo OCR
+    inveter_cor = False
     esca_ciza = False
-    fator_ampliacao = 5
+    fator_ampliacao = 2
     contraste_pre = 1
-    contraste_pos = 1.6
-    regiao_ficha = (x_origem + 90, y_origem + 27, x_origem + 124, y_origem + 37)  # leval
-    config = '--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789'
+    contraste_pos = 1
+    regiao_ficha = (x_origem + 416, y_origem + 262, x_origem + 493, y_origem + 283)  # leval
+    config = '--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789.'
+
+    # Realiza a leitura do nível usando OCR
     lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
-    # print(lido)
+    print('lido ', lido)
     if lido is not None:
-        lido = re.sub(r"\D+", "", lido)  # remove caracteres nao numericos
-        lido = lido.replace(" ", "").replace(".", "")
-        # print(lido)
-        try:
-            lido = int(lido)
-            if 1 < lido < 10:
-                print("Leval da conta: ", lido)
-                return lido
-            else:
-                print("Valor fora da faixa desejada")
-                return 0
-        except ValueError:
-            # Lidar com a conversão falhada para um número inteiro
-            print("Erro ao converter para inteiro")
-            return 0
+        lido = tratar_valor_numerico(lido)
+        # Verifica se o valor está na faixa desejada
+        if 500 < lido < 15000000:
+            print("\n   Fichas da conta:", lido, '\n')
+        else:
+            print("Valor fora da faixa desejada")
+            lido = 0
+    else:
+        print("Valor fora da faixa desejada")
+        lido = 0
+    # if pyautogui.pixelMatchesColor((x_origem + 241), (y_origem + 170), (227, 18, 5), tolerance=20):
+    #     # clica para fechar a tela do perfil
+    #     pyautogui.click(771 + x_origem, 162 + y_origem)
+    return lido
+
+
+def level_conta(x_origem, y_origem):
+    """
+    Extrai e retorna o nível da conta de uma aplicação gráfica.
+
+    Parameters:
+    - x_origem (int): Coordenada x da origem da janela.
+    - y_origem (int): Coordenada y da origem da janela.
+
+    Returns:
+    - int: Nível da conta ou 0 se não for encontrado ou estiver fora da faixa desejada.
+    """
+    print('level_conta')
+
+    for _ in range(50):
+        # clica para abrir a tela do perfil
+        pyautogui.click(16 + x_origem, 24 + y_origem)
+        # testa se a tela do perfil esta aberta
+        if pyautogui.pixelMatchesColor((x_origem + 241), (y_origem + 170), (227, 18, 5), tolerance=2):
+            time.sleep(0.2)
+            break
+        time.sleep(0.2)
+
+    # Configurações para o processo OCR
+    inveter_cor = False
+    esca_ciza = False
+    fator_ampliacao = 2
+    contraste_pre = 1
+    contraste_pos = 1
+    regiao_ficha = (x_origem + 599, y_origem + 239, x_origem + 630, y_origem + 257)  # leval
+    config = '--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789'
+
+    # Realiza a leitura do nível usando OCR
+    lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
+    # print('\n\n\nlido ', lido, '\n\n\n')
+    if lido is not None:
+        lido = tratar_valor_numerico(lido)
+        # Verifica se o valor está na faixa desejada
+        if 1 < lido < 50:
+            print("\n   Nível da conta:", lido)
+        else:
+            print("Valor fora da faixa desejada")
+            lido = 0
+    else:
+        print("Valor fora da faixa desejada")
+        lido = 0
+    if pyautogui.pixelMatchesColor((x_origem + 241), (y_origem + 170), (227, 18, 5), tolerance=20):
+        # clica para fechar a tela do perfil
+        pyautogui.click(771 + x_origem, 162 + y_origem)
+    return lido
 
 # aviso_do_sistema()
-# x_origem, y_origem = Origem_pg.x_y()# # # # # # # # print(x_origem)
+# x_origem, y_origem = Origem_pg.x_y()
+# valor_fichas_perfil(x_origem, y_origem)
+# # tarefas_diaris_upando(x_origem, y_origem)
 # level_conta(x_origem, y_origem)
 # numero_sala(x_origem, y_origem)
 # tarefas_diaris_upando(x_origem, y_origem)
 # pontuacao_tarefas(x_origem, y_origem)
 # level_conta(x_origem, y_origem)
 # # # pontuacao_tarefas(x_origem, y_origem)
-# lido = valor_fichas(x_origem, y_origem)
+# valor_fichas(x_origem, y_origem)
 # tarefas_diaris_trocar(x_origem, y_origem)
 # tarefas_diaris(x_origem, y_origem)
 # print(y_origem)
@@ -893,4 +1117,3 @@ def level_conta(x_origem, y_origem):
 # pontuacao_tarefas(x_origem, y_origem)
 # def rola_tarefa_0():
 # pyautogui.click(708 + x_origem, 426 + y_origem, button='left')
-

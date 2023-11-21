@@ -1,16 +1,21 @@
-import Limpa
+import time
+
 import pyautogui
+
+import Limpa
+
 # Desabilitar o fail-safe
 pyautogui.FAILSAFE = False
 pyautogui.PAUSE = 0
-import time
-import Origem_pg
-import Limpa
+
+
 def recolhe_aneis(x_origem, y_origem):
     # testa se tem aneis para serem recolhidos
 
     for i in range(2):
-        if pyautogui.pixelMatchesColor((x_origem + 900), (y_origem + 288), (33, 145, 18), tolerance=30) or pyautogui.pixelMatchesColor((x_origem + 900), (y_origem + 288), (133, 232, 92), tolerance=30):#testa se esta dentro da mesa
+        if (pyautogui.pixelMatchesColor((x_origem + 900), (y_origem + 288), (33, 145, 18), tolerance=30)
+                or pyautogui.pixelMatchesColor((x_origem + 900), (y_origem + 288), (133, 232, 92), tolerance=30)):
+            # testa se esta dentro da mesa
             print("Tem aneis para recolhar")
             Limpa.limpa_total(x_origem, y_origem)
             for i in range(20):
@@ -20,19 +25,19 @@ def recolhe_aneis(x_origem, y_origem):
                     print('aneis aberto')
                     time.sleep(0.5)
                     # se esta aberto
-                    pyautogui.doubleClick((x_origem + 195), (y_origem + 307)) #1
-                    pyautogui.doubleClick((x_origem + 275), (y_origem + 307)) #2
-                    pyautogui.doubleClick((x_origem + 355), (y_origem + 307)) #3
+                    pyautogui.doubleClick((x_origem + 195), (y_origem + 307))  # 1
+                    pyautogui.doubleClick((x_origem + 275), (y_origem + 307))  # 2
+                    pyautogui.doubleClick((x_origem + 355), (y_origem + 307))  # 3
 
-                    pyautogui.doubleClick((x_origem + 235), (y_origem + 408)) #4
-                    pyautogui.doubleClick((x_origem + 315), (y_origem + 408)) #5
+                    pyautogui.doubleClick((x_origem + 235), (y_origem + 408))  # 4
+                    pyautogui.doubleClick((x_origem + 315), (y_origem + 408))  # 5
 
-                    pyautogui.doubleClick((x_origem + 630), (y_origem + 307)) #6
-                    pyautogui.doubleClick((x_origem + 710), (y_origem + 307)) #7
-                    pyautogui.doubleClick((x_origem + 788), (y_origem + 307)) #8
+                    pyautogui.doubleClick((x_origem + 630), (y_origem + 307))  # 6
+                    pyautogui.doubleClick((x_origem + 710), (y_origem + 307))  # 7
+                    pyautogui.doubleClick((x_origem + 788), (y_origem + 307))  # 8
 
-                    pyautogui.doubleClick((x_origem + 670), (y_origem + 408)) #9
-                    pyautogui.doubleClick((x_origem + 750), (y_origem + 408)) #10
+                    pyautogui.doubleClick((x_origem + 670), (y_origem + 408))  # 9
+                    pyautogui.doubleClick((x_origem + 750), (y_origem + 408))  # 10
 
                     time.sleep(3)
 

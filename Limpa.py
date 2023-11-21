@@ -1,11 +1,14 @@
 import time
+
 import pyautogui
+
+from IP import tem_internet, f5_quando_internete_ocila
+from OCR_tela import aviso_sistema as ocr_aviso_sistema
+from Seleniun import teste_logado
+
 # Desabilitar o fail-safe
 pyautogui.FAILSAFE = False
 pyautogui.PAUSE = 0
-import OCR_tela
-import IP
-import Seleniun
 
 
 def teste_limpo(x_origem, y_origem):
@@ -24,7 +27,7 @@ def ja_esta_logado(x_origem, y_origem):
     print('Testa aviso do sistema')
     # testa se tem as cores da caixa de mensagem de aviso do sistema
 
-    resultado_aviso_sistema = OCR_tela.aviso_sistema(x_origem, y_origem)
+    resultado_aviso_sistema = ocr_aviso_sistema(x_origem, y_origem)
     print(resultado_aviso_sistema)
     aviso_sistema, resposta = resultado_aviso_sistema
 
@@ -41,15 +44,15 @@ def limpa_jogando(x_origem, y_origem):
 
     if (not pyautogui.pixelMatchesColor((x_origem + 43), (y_origem + 388), (76, 37, 30), tolerance=10)
             and not pyautogui.pixelMatchesColor((x_origem + 43), (y_origem + 388), (64, 34, 8), tolerance=10)):
-        pyautogui.click(x_origem + 43, y_origem + 388) # clica no anel
+        pyautogui.click(x_origem + 43, y_origem + 388)  # clica no anel
 
     if (pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 117), (72, 71, 76), tolerance=5) or
             pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 117), (22, 21, 23), tolerance=5)):
         pyautogui.click(821 + x_origem, 138 + y_origem)  # clica no fechar tarefa
         print('fecha lista tarefas')
 
-    #voce ganhou 2500
-    elif pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 179), (71,0,148), tolerance=6):
+    # voce ganhou 2500
+    elif pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 179), (71, 0, 148), tolerance=6):
         pyautogui.click(x_origem + 490, y_origem + 480, button='left')
         print("Voce ganhou 2500")
 
@@ -66,7 +69,7 @@ def limpa_jogando(x_origem, y_origem):
 
     # Você avançou para broinse II e ganhou 100 fichas
     elif pyautogui.pixelMatchesColor((x_origem + 365), (y_origem + 235), (255, 237, 151), tolerance=20):
-        pyautogui.click(x_origem + 490, y_origem + 435, button='left') # continuar
+        pyautogui.click(x_origem + 490, y_origem + 435, button='left')  # continuar
         print("Você avançou para broinse II e ganhou 100 fichas")
 
     # nivel 2
@@ -104,7 +107,7 @@ def limpa_jogando(x_origem, y_origem):
 
 def limpa_pequeno(x_origem, y_origem):
     print('limpa_pequeno')
-    if ja_esta_logado(x_origem, y_origem) == "sair da conta" :
+    if ja_esta_logado(x_origem, y_origem) == "sair da conta":
         return "sair da conta"
 
     pyautogui.click(490 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
@@ -147,12 +150,13 @@ def limpa_pequeno(x_origem, y_origem):
         print("Você avançou para broinse II e ganhou 100 fichas")
 
     # aviso do sistema "tem certesa de que quer sair da mesa?" "vc so pode jogar depois de estar sentado""
-    elif pyautogui.pixelMatchesColor((x_origem + 455), (y_origem + 417), (25, 116, 184), tolerance=19):  # aviso do sistema "tem certesa de que quer sair da mesa?"
+    elif pyautogui.pixelMatchesColor((x_origem + 455), (y_origem + 417), (25, 116, 184), tolerance=19):
+        # aviso do sistema "tem certesa de que quer sair da mesa?"
         pyautogui.click(641 + x_origem, 278 + y_origem)  # clica no x do aviso do sistema "tem certesa de que quer sair da mesa?"
         print("aviso do sistema: limpa_pequeno")
         if pyautogui.pixelMatchesColor((x_origem + 491), (y_origem + 417), (25, 118, 188), tolerance=20):
             print('tem mensagem com atuializar')
-            aviso_sistema, resposta = OCR_tela.aviso_sistema(x_origem, y_origem)
+            aviso_sistema, resposta = ocr_aviso_sistema(x_origem, y_origem)
             if aviso_sistema:
                 if resposta == "sair da conta":
                     print("sair da conta")
@@ -163,15 +167,12 @@ def limpa_pequeno(x_origem, y_origem):
         pyautogui.click(x_origem + 164, y_origem + 161)
         print("Clica no Normal")
 
-    # # dispo nivel em acesso antecipado para jogadores VIP
-    # elif pyautogui.pixelMatchesColor((x_origem + 702), (y_origem + 104), (27, 53, 167), tolerance=10):
-    #     pyautogui.click(x_origem + 896, y_origem + 22)
-    #     print("dispo nivel em acesso antecipado para jogadores VIP")
 
-    ## Genius Muito tempo desde a sua unlima aposta
+    # Genius Muito tempo desde a sua unlima aposta
     elif pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 612), (80, 73, 76), tolerance=15):
-        if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 415), (25, 118, 188), tolerance=15) \
-                or pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 415), (29, 139, 200), tolerance=15):## Genius Muito tempo desde a sua unlima aposta
+        if (pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 415), (25, 118, 188), tolerance=15)
+                or pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 415), (29, 139, 200), tolerance=15)):
+            # Genius Muito tempo desde a sua unlima aposta
             pyautogui.mouseDown(x_origem + 490, y_origem + 415, button='left')
             print("Genius Muito tempo desde a sua unlima apostar")
             time.sleep(1)
@@ -185,10 +186,9 @@ def limpa_pequeno(x_origem, y_origem):
             print('print("Torneio semanal de forma errada no loby")')
             limpo = teste_limpo(x_origem, y_origem)
             if limpo:
-                IP.tem_internet()
+                tem_internet()
                 print("erro no torneio semanal, Da um F5")
                 pyautogui.press('f5')
-                # Seleniun.atualizar_pagina(navegador, url)
                 time.sleep(25)
 
     # voce esta convidado a participar de uma festa em las vegasuma surpresa esta esperando por vc
@@ -196,7 +196,7 @@ def limpa_pequeno(x_origem, y_origem):
         pyautogui.click(490 + x_origem, 485 + y_origem)
 
     elif pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 370), (224, 227, 229), tolerance=15):
-        aviso_sistema, resposta = OCR_tela.aviso_sistema(x_origem, y_origem)
+        aviso_sistema, resposta = ocr_aviso_sistema(x_origem, y_origem)
         if aviso_sistema:
             if resposta == "sair da conta":
                 print("sair da conta")
@@ -207,36 +207,46 @@ def limpa_pequeno(x_origem, y_origem):
         pyautogui.click(495 + x_origem, 400 + y_origem)
         print("o novo banco esta aberto")
 
-    #if not(teste_limpo(x_origem, y_origem)):  # se ta limpo nem entra
+    if not teste_limpo(x_origem, y_origem):  # se ta limpo nem entra
 
-    try:
-        if (pyautogui.pixelMatchesColor(215, 1000, (36, 37, 38), tolerance=5)  # mensagem do canto inferior esquedo " Você esta offiline no momento."
-                or pyautogui.pixelMatchesColor(700, 650, (32, 33, 36), tolerance=5)  # fundo cinza com o dinoçauro
-                or pyautogui.pixelMatchesColor(700, 650, (255, 255, 255), tolerance=2)  # retangulo branco no meio da tela quando esta sem internete
-                or pyautogui.pixelMatchesColor(700, 650, (221, 221, 221), tolerance=7)  # tela cinza clara com cara triste
-                or pyautogui.pixelMatchesColor(700, 650, (238, 238, 238), tolerance=7)):  # tela cinza clara com cara triste
-            print("aguarda 5 segundos e faz um novo teste se a pagina nao carregou")
-            time.sleep(5)
-            try:
-                if (pyautogui.pixelMatchesColor(215, 1000, (36, 37, 38), tolerance=5)  # mensagem do canto inferior esquedo " Você esta offiline no momento."
-                        or pyautogui.pixelMatchesColor(700, 650, (32, 33, 36), tolerance=5)  # fundo cinza com o dinoçauro
-                        or pyautogui.pixelMatchesColor(700, 650, (255, 255, 255), tolerance=2)  # retangulo branco no meio da tela quando esta sem internete
-                        or pyautogui.pixelMatchesColor(700, 650, (221, 221, 221), tolerance=7)  # tela cinza clara com cara triste
-                        or pyautogui.pixelMatchesColor(700, 650, (238, 238, 238), tolerance=7)):  # tela cinza clara com cara triste
-                    print("Falha na pagina e a tela esta branca, da um F5")
-                    IP.tem_internet()
-                    #navegador.get(url)
-                    pyautogui.press('f5')
-                    time.sleep(15)
-            except Exception as e:
-                # Lide com o erro aqui, por exemplo, exiba uma mensagem de erro ou registre-o em um arquivo de log
-                print(f'Erro: {e}')
-    except Exception as e:
-        # Lide com o erro aqui, por exemplo, exiba uma mensagem de erro ou registre-o em um arquivo de log
-        print(f'Erro: {e}')
+        try:
+            if (pyautogui.pixelMatchesColor(215, 1000, (36, 37, 38), tolerance=5)
+                    or pyautogui.pixelMatchesColor(700, 650, (32, 33, 36), tolerance=5)
+                    or pyautogui.pixelMatchesColor(700, 650, (255, 255, 255), tolerance=2)
+                    or pyautogui.pixelMatchesColor(700, 650, (221, 221, 221), tolerance=7)
+                    or pyautogui.pixelMatchesColor(700, 650, (238, 238, 238), tolerance=7)):
+                # mensagem do canto inferior esquedo " Você esta offiline no momento."
+                # fundo cinza com o dinoçauro
+                # retangulo branco no meio da tela quando esta sem internete
+                # tela cinza clara com cara triste
+                # tela cinza clara com cara triste
+                print("aguarda 5 segundos e faz um novo teste se a pagina nao carregou")
+                time.sleep(5)
+                try:
+                    if (pyautogui.pixelMatchesColor(215, 1000, (36, 37, 38), tolerance=5)
+                            or pyautogui.pixelMatchesColor(700, 650, (32, 33, 36), tolerance=5)
+                            or pyautogui.pixelMatchesColor(700, 650, (255, 255, 255), tolerance=2)
+                            or pyautogui.pixelMatchesColor(700, 650, (221, 221, 221), tolerance=7)
+                            or pyautogui.pixelMatchesColor(700, 650, (238, 238, 238), tolerance=7)):
+                        # mensagem do canto inferior esquedo " Você esta offiline no momento."
+                        # fundo cinza com o dinoçauro
+                        # retangulo branco no meio da tela quando esta sem internete
+                        # tela cinza clara com cara triste
+                        # tela cinza clara com cara triste
+                        print("Falha na pagina e a tela esta branca, da um F5")
+                        tem_internet()
+                        # navegador.get(url)
+                        pyautogui.press('f5')
+                        time.sleep(15)
+                except Exception as e:
+                    # Lide com o erro aqui, por exemplo, exiba uma mensagem de erro ou registre-o em um arquivo de log
+                    print(f'Erro: {e}')
+        except Exception as e:
+            # Lide com o erro aqui, por exemplo, exiba uma mensagem de erro ou registre-o em um arquivo de log
+            print(f'Erro: {e}')
 
 
-def limpa_tarefas(x_origem, y_origem): # fecha todas as tarefas que sao feitas
+def limpa_tarefas(x_origem, y_origem):  # fecha todas as tarefas que sao feitas
     print('limpa_tarefas')
 
     limpa_pequeno(x_origem, y_origem)
@@ -244,26 +254,28 @@ def limpa_tarefas(x_origem, y_origem): # fecha todas as tarefas que sao feitas
     # pyautogui.click(490 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
     # pyautogui.click(686 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
 
-    if teste_limpo(x_origem, y_origem): # se ta limpo nem entra
+    if teste_limpo(x_origem, y_origem):  # se ta limpo nem entra
         return
 
-    #Cartas premiadas
-    elif pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 213), (18,42,91), tolerance=19):
+    # Cartas premiadas
+    elif pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 213), (18, 42, 91), tolerance=19):
         pyautogui.click(763 + x_origem, 193 + y_origem, button='left')
         print("Cartas premiadas")
 
-    #Mesa
-    elif pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (27, 92, 155),  tolerance=19) \
-            or pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (19, 64, 109),  tolerance=19) :  # testa se esta dentro da mesa
+    # Mesa
+    elif (pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (27, 92, 155), tolerance=19)
+          or pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (19, 64, 109), tolerance=19)):
+        # testa se esta dentro da mesa
 
-        pyautogui.click(947 + x_origem, 78 + y_origem)#setinha
+        pyautogui.click(947 + x_origem, 78 + y_origem)  # setinha
         time.sleep(0.3)
-        pyautogui.click(925 + x_origem, 204 + y_origem)#Levantar
+        pyautogui.click(925 + x_origem, 204 + y_origem)  # Levantar
         time.sleep(0.2)
-        pyautogui.click(947 + x_origem, 78 + y_origem)#setinha
+        pyautogui.click(947 + x_origem, 78 + y_origem)  # setinha
         time.sleep(0.2)
-        pyautogui.click(925 + x_origem, 111 + y_origem)#Lobby
-        if pyautogui.pixelMatchesColor((x_origem + 455), (y_origem + 417), (25, 116, 184), tolerance=19):  # aviso do sistema "tem certesa de que quer sair da mesa?"
+        pyautogui.click(925 + x_origem, 111 + y_origem)  # Lobby
+        if pyautogui.pixelMatchesColor((x_origem + 455), (y_origem + 417), (25, 116, 184), tolerance=19):
+            # aviso do sistema "tem certesa de que quer sair da mesa?"
             pyautogui.click(641 + x_origem, 278 + y_origem)  # clica no x do aviso do sistema "tem certesa de que quer sair da mesa?"
             print("aviso do sistema")
             time.sleep(0.3)
@@ -277,24 +289,24 @@ def limpa_tarefas(x_origem, y_origem): # fecha todas as tarefas que sao feitas
 
         print("Sai da Mesa")
 
-    #Casino Genius
+    # Casino Genius
     elif pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 612), (111, 100, 105), tolerance=19):
         pyautogui.click(910 + x_origem, 80 + y_origem)
         print("Casino Genius")
 
-    #Slot Classico
-    elif pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 668), (46, 22, 9), tolerance=5) \
-            or pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 668), (18, 9, 4), tolerance=5):
+    # Slot Classico
+    elif (pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 668), (46, 22, 9), tolerance=5)
+          or pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 668), (18, 9, 4), tolerance=5)):
         pyautogui.click(910 + x_origem, 80 + y_origem)
         print("Slot Classico")
 
     fecha_tarefa(x_origem, y_origem)
 
 
-def fecha_tarefa(x_origem, y_origem): #fecha a lista de tarefas diarias
+def fecha_tarefa(x_origem, y_origem):  # fecha a lista de tarefas diarias
     print('fecha_tarefa')
-    #pyautogui.click(490 + x_origem, 70 + y_origem, button='left')  # clique bobo para passar alguma naimação
-    #Tarefas diarias
+    # pyautogui.click(490 + x_origem, 70 + y_origem, button='left')  # clique bobo para passar alguma naimação
+    # Tarefas diarias
     for i in range(20):
         if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 133), (47, 0, 90), tolerance=2):
             pyautogui.click(821 + x_origem, 138 + y_origem)  # fecha tarefa
@@ -319,15 +331,15 @@ def limpa_promocao(x_origem, y_origem):
     # pyautogui.click(490 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
     # pyautogui.click(686 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
 
-    #limpa_pequeno(x_origem, y_origem)
-    if ja_esta_logado(x_origem, y_origem) == "sair da conta" :
+    # limpa_pequeno(x_origem, y_origem)
+    if ja_esta_logado(x_origem, y_origem) == "sair da conta":
         return "sair da conta"
 
-    if teste_limpo(x_origem, y_origem): # se ta limpo nem entra
+    if teste_limpo(x_origem, y_origem):  # se ta limpo nem entra
         return None
 
     # amigos on line e opiçoes
-    if pyautogui.pixelMatchesColor((x_origem + 879), (y_origem + 190), (235,237,239), tolerance=19):
+    if pyautogui.pixelMatchesColor((x_origem + 879), (y_origem + 190), (235, 237, 239), tolerance=19):
         pyautogui.click(909 + x_origem, 84 + y_origem, button='left')
         print("amigos on line e opiçoes")
 
@@ -343,12 +355,12 @@ def limpa_promocao(x_origem, y_origem):
 
     # Valete ou mais
     if pyautogui.pixelMatchesColor((x_origem + 400), (y_origem + 70), (12, 6, 42), tolerance=10):
-        pyautogui.mouseDown(895 + x_origem, 82 + y_origem) # aperta e segura
+        pyautogui.mouseDown(895 + x_origem, 82 + y_origem)  # aperta e segura
         time.sleep(0.4)
         pyautogui.mouseUp(895 + x_origem, 82 + y_origem)  # aperta e segura
         print("Valete ou mais")
 
-    #Vip
+    # Vip
     if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 100), (46, 29, 21), tolerance=5):
         pyautogui.click(921 + x_origem, 89 + y_origem, button='left')
         print("vip")
@@ -390,7 +402,7 @@ def limpa_promocao(x_origem, y_origem):
         print("Banco do poker")
 
     # VS pegar a carta
-    if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (29,28,30), tolerance=8):
+    if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (29, 28, 30), tolerance=8):
         pyautogui.click(477 + x_origem, 500 + y_origem, button='left')
         print("VS pegar a carta")
 
@@ -405,14 +417,18 @@ def limpa_promocao(x_origem, y_origem):
         print("Roleta depois da roleta e Mega giro")
 
     # Laranja
-    if ((pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 165), (224, 9, 5), tolerance=20)) or
-            (pyautogui.pixelMatchesColor((x_origem + 240), (y_origem + 167), (228, 22, 5), tolerance=20))):
+    if (pyautogui.pixelMatchesColor((x_origem + 235), (y_origem + 158), (235, 52, 3), tolerance=20)
+            or pyautogui.pixelMatchesColor((x_origem + 238), (y_origem + 163), (227, 18, 5), tolerance=20)
+            or pyautogui.pixelMatchesColor((x_origem + 241), (y_origem + 159), (236, 55, 4), tolerance=20)):
+        # area dos campeoes
+        # comprar
+        # meus objetos
         pyautogui.click(771 + x_origem, 156 + y_origem, button='left')
         print("promoçao laranja")
 
     # raliacesses
-    if ((pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 167), (255, 204, 125), tolerance=19)) or
-            (pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 167), (74, 40, 12), tolerance=19))):  # aneis
+    if (pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 167), (255, 204, 125), tolerance=19) or
+            pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 167), (74, 40, 12), tolerance=19)):  # aneis
         pyautogui.click(811 + x_origem, 168 + y_origem, button='left')
         print("aneis")
 
@@ -423,7 +439,6 @@ def limpa_promocao(x_origem, y_origem):
 
 
 def limpa_total(x_origem, y_origem):
-
     print('limpa_total')
     cont_erro_limpa = 0
     for i in range(50):
@@ -444,10 +459,10 @@ def limpa_total(x_origem, y_origem):
         limpa_pequeno(x_origem, y_origem)
         if teste_limpo(x_origem, y_origem):  # se ta limpo nem entra
             return None
-        limpa_tarefas(x_origem, y_origem) # fecha as tarefas que sao feitas cartas genius slote mesa ...
+        limpa_tarefas(x_origem, y_origem)  # fecha as tarefas que sao feitas cartas genius slote mesa ...
         if teste_limpo(x_origem, y_origem):  # se ta limpo nem entra
             return None
-        fecha_tarefa(x_origem, y_origem) # fecha a lista de tarefas diarias
+        fecha_tarefa(x_origem, y_origem)  # fecha a lista de tarefas diarias
         if teste_limpo(x_origem, y_origem):  # se ta limpo nem entra
             return None
         limpa_promocao(x_origem, y_origem)
@@ -465,10 +480,10 @@ def limpa_total_fazendo_tarefa(x_origem, y_origem):
         return "sair da conta"
     limpa_pequeno(x_origem, y_origem)
     limpa_promocao(x_origem, y_origem)
-    #fecha_tarefa(x_origem, y_origem) # fecha a lista de tarefas diarias
+    # fecha_tarefa(x_origem, y_origem) # fecha a lista de tarefas diarias
 
 
-def limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador): #abre o tarefas
+def limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador):  # abre o tarefas
     print('limpa_abre_tarefa')
     # testa se a tarefa diaria é de conta sem upar cadeado na cartas premidas
     if (pyautogui.pixelMatchesColor((x_origem + 750), (y_origem + 38), (245, 218, 96), tolerance=10)
@@ -481,24 +496,27 @@ def limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador): #abre o ta
         print("Tarefas diarias conta upada")
 
         cont_limpa_tarefas = 0
-        for i in range(60):
-            for i in range(20):
-                IP.f5_quando_internete_ocila(id, senha, url, navegador)
-                pyautogui.doubleClick(x_origem + 635, y_origem + 25) #clica no tarefas diarias
+        for _ in range(60):
+            for _ in range(20):
+
+                f5_quando_internete_ocila(id, senha, url, navegador)
+
+                pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
                 print("Limpa Tarefas diarias")
                 time.sleep(0.5)
-                pyautogui.doubleClick(x_origem + 193, y_origem + 172) #clica dentro do tarefas diarias
+                pyautogui.doubleClick(x_origem + 193, y_origem + 172)  # clica dentro do tarefas diarias
                 limpa_pequeno(x_origem, y_origem)
-                #testa se tarefa diariaria esta aberta e limpa
+
+                # testa se tarefa diariaria esta aberta e limpa
                 if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 133), (48, 0, 96), tolerance=20):
                     print("Tarefas diarias pausa")
                     time.sleep(1.5)
                     if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 133), (48, 0, 96), tolerance=20):
                         print("Tarefas diarias limpo...")
                         return True
-                #testa se a tarefa diaria é de conta sem upar
-                if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 133), (1, 50, 254), tolerance=20):
-                    pyautogui.click(821 + x_origem, 138 + y_origem, button='left') #clique para fechar
+                # testa se a tarefa diaria é de conta sem upar
+                elif pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 133), (1, 50, 254), tolerance=20):
+                    pyautogui.click(821 + x_origem, 138 + y_origem)  # clique para fechar
                     print("Tarefas diarias conta sem upar")
                     return False
 
@@ -507,14 +525,13 @@ def limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador): #abre o ta
             cont_limpa_tarefas += 1
             if cont_limpa_tarefas >= 60:
                 cont_limpa_tarefas = 0
-                #da um F5
-                IP.tem_internet()
+                # da um F5
+                tem_internet()
                 print("limpa tarefa Da um F5")
                 # pyautogui.press('f5')
                 navegador.get(url)
-                # Seleniun.atualizar_pagina(navegador, url)
-                time.sleep(15)
-                entrou_corretamente, stataus = Seleniun.teste_logado(id, senha, url, navegador)
+                time.sleep(25)
+                entrou_corretamente, stataus = teste_logado(id, senha, url, navegador)
                 limpa_total(x_origem, y_origem)
 
             time.sleep(1)
@@ -547,20 +564,20 @@ def iniciantes(x_origem, y_origem):
         for i in range(10):
             print("Recompensa de logim para iniciantes")
             if pyautogui.pixelMatchesColor((x_origem + 310), (y_origem + 326), (234, 114, 32), tolerance=20):
-                pyautogui.click(310 + x_origem, 326 + y_origem) # pega o 2xp
+                pyautogui.click(310 + x_origem, 326 + y_origem)  # pega o 2xp
                 print("Primeiro dia, EXPX2")
                 time.sleep(2)
                 pyautogui.click(777 + x_origem, 173 + y_origem)  # clica no fechar
                 time.sleep(1)
 
             if pyautogui.pixelMatchesColor((x_origem + 424), (y_origem + 326), (234, 114, 32), tolerance=20):
-                pyautogui.click(424 + x_origem, 326 + y_origem) # pega o anel
+                pyautogui.click(424 + x_origem, 326 + y_origem)  # pega o anel
                 print("Segundo dia, anel")
                 time.sleep(2)
                 pyautogui.click(777 + x_origem, 173 + y_origem)  # clica no fechar
                 time.sleep(1)
             if pyautogui.pixelMatchesColor((x_origem + 534), (y_origem + 326), (234, 114, 32), tolerance=20):
-                pyautogui.click(534 + x_origem, 326 + y_origem) # pega o anel
+                pyautogui.click(534 + x_origem, 326 + y_origem)  # pega o anel
                 print("Terceiro  dia, 2.000")
                 time.sleep(2)
                 pyautogui.click(478 + x_origem, 529 + y_origem)  # clica no pegar
@@ -591,18 +608,18 @@ def iniciantes(x_origem, y_origem):
                 time.sleep(2)
                 pyautogui.click(478 + x_origem, 529 + y_origem)  # clica no pegar
                 time.sleep(2)
-            #time.sleep(1)
+            # time.sleep(1)
         pyautogui.click(777 + x_origem, 173 + y_origem)  # clica no fechar
 
 
-def faz_tutorial(x_origem,y_origem):
+def faz_tutorial(x_origem, y_origem):
     for i in range(100):
         print('Tutorial...')
-        #testa se esta aparecendo o 500 Fichas
+        # testa se esta aparecendo o 500 Fichas
         if pyautogui.pixelMatchesColor((x_origem + 545), (y_origem + 378), (251, 213, 3), tolerance=20):
             print("500 fichas, clica no OK")
-            pyautogui.click(x_origem + 550, y_origem + 500) # clica no ok
-            #time.sleep(1)
+            pyautogui.click(x_origem + 550, y_origem + 500)  # clica no ok
+            # time.sleep(1)
 
         if pyautogui.pixelMatchesColor((x_origem + 484), (y_origem + 325), (255, 254, 104), tolerance=10):
             print('Girar roleta gratis')
@@ -639,13 +656,14 @@ def faz_tutorial(x_origem,y_origem):
             break
 
 
-def premio_r1 (x_origem, y_origem):
+def premio_r1(x_origem, y_origem):
     print('premio_r1')
     fecha_tarefa(x_origem, y_origem)
     for i in range(100):
-        #print('espera...')
-        #Roleta 1 aberta esperando bater o premio
-        if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 611), (255, 196, 255), tolerance=20):  # testa de roleta 1 ta aberta
+        # print('espera...')
+        # Roleta 1 aberta esperando bater o premio
+        if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 611), (255, 196, 255), tolerance=20):
+            # testa de roleta 1 ta aberta
             print("terminou de rodar o R1 da um time")
             time.sleep(2)
             print("sai do R1")
@@ -661,10 +679,11 @@ def premio_r1 (x_origem, y_origem):
     return True
 
 
-def premio_r2 (x_origem, y_origem):
+def premio_r2(x_origem, y_origem):
     print('premio_r2')
     for i in range(100):
-        if pyautogui.pixelMatchesColor((x_origem + 365), (y_origem + 580), (22, 0, 100), tolerance=20):  # espera o premio sair
+        if pyautogui.pixelMatchesColor((x_origem + 365), (y_origem + 580), (22, 0, 100), tolerance=20):
+            # espera o premio sair
             print("roleta 2 aberta pegou o pemio pode sair")
             return True
         time.sleep(0.05)
@@ -679,15 +698,16 @@ def premio_r2 (x_origem, y_origem):
     return True
 
 
-def aviso_canto_lobby (x_origem, y_origem):
+def aviso_canto_lobby(x_origem, y_origem):
     '''Fecha propaganda'''
-    #fecha mnsagem no canto inferior da tela
+    # fecha mnsagem no canto inferior da tela
     if pyautogui.pixelMatchesColor((x_origem + 281), (y_origem + 561), (255, 255, 255), tolerance=5):
         pyautogui.click(x_origem + 281, y_origem + 561)
         print("fechou aviso canto da tela")
 
 
-def limpa_abre_tarefa2(x_origem, y_origem): #abre o tarefas
+def limpa_abre_tarefa2(x_origem, y_origem):
+    # abre o tarefas
     # pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
     # if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 133), (47, 0, 90), tolerance=20):
     #     print("Tarefas diarias ja esta limpo")
@@ -695,26 +715,24 @@ def limpa_abre_tarefa2(x_origem, y_origem): #abre o tarefas
 
     for i in range(6):
 
-        for i in range(20):
-            #IP.f5_quando_internete_ocila(id, senha, url, navegador)
-            #time.sleep(2)
-            pyautogui.doubleClick(x_origem + 635, y_origem + 25) # clica no tarefas diarias
+        for _ in range(20):
+            # f5_quando_internete_ocila(id, senha, url, navegador)
+            # time.sleep(2)
+            pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
             print("Limpa Tarefas diarias")
             time.sleep(0.5)
-            pyautogui.doubleClick(x_origem + 193, y_origem + 172) # clica dentro do tarefas diarias
-            # time.sleep(0.5)
-
+            pyautogui.doubleClick(x_origem + 193, y_origem + 172)  # clica dentro do tarefas diarias
             limpa_pequeno(x_origem, y_origem)
-            #testa se tarefa diariaria esta aberta e limpa
+            # testa se tarefa diariaria esta aberta e limpa
             if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 133), (47, 0, 90), tolerance=20):
                 print("Tarefas diarias pausa")
                 time.sleep(0.5)
                 if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 133), (47, 0, 90), tolerance=20):
                     print("Tarefas diarias limpo")
                     return True
-            #testa se a tarefa diaria é de conta sem upar
-            if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 133), (5,0,97), tolerance=20):
-                pyautogui.click(821 + x_origem, 138 + y_origem, button='left') #clique para fechar
+            # testa se a tarefa diaria é de conta sem upar
+            if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 133), (5, 0, 97), tolerance=20):
+                # pyautogui.click(821 + x_origem, 138 + y_origem) #clique para fechar
                 print("Tarefas diarias conta sem upar")
                 return False
 
@@ -734,5 +752,3 @@ def limpa_abre_tarefa2(x_origem, y_origem): #abre o tarefas
 # # # limpa_total(x_origem, y_origem)
 # # limpa_abre_tarefa2(x_origem, y_origem)
 # limpa_promocao(x_origem, y_origem)
-
-

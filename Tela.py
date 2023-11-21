@@ -1,8 +1,9 @@
 # Importe as bibliotecas necessárias
 import tkinter as tk
 from tkinter import scrolledtext
+
 import Firebase
-from Firebase import global_variables, teve_atualizacao
+from Firebase import global_variables
 
 dicionario_comandos = {0: 'Senta', 1: 'Levanta', 2: 'Joga', 3: 'Slot', 4: 'Genius', 5: 'Cartas', 6: 'Mesa1',
                        7: 'Mesa2', 8: '2Xp', 9: 'Limpa', 10: 'F5', 11: 'Sair', 12: '',
@@ -84,6 +85,7 @@ def create_button(parent, text):
     botao.pack(fill="both", expand=True)
     return botao
 
+
 # Função para criar uma área de texto com barra de rolagem
 def create_info_area(parent):
     # Crie uma barra de rolagem vertical
@@ -99,6 +101,7 @@ def create_info_area(parent):
     info_text.pack(side="top", fill="both", expand=True)
     scrollbar.pack(side="right", fill="y")
     return info_text
+
 
 # Função para adicionar uma nova informação ao histórico de um arranjo específico
 def add_info_to_history(info_text, text_widget):
@@ -154,7 +157,6 @@ add_info_to_history("Informação 1 do Arranjo 1", info_text_widgets[0])
 add_info_to_history("Informação 1 do Arranjo 2", info_text_widgets[1])
 add_info_to_history("Informação 1 do Arranjo 3", info_text_widgets[2])
 
-
 # # Função para atualizar as áreas de texto com base no dicionário global
 # def update_text_widgets_inicio():
 #
@@ -179,13 +181,12 @@ add_info_to_history("Informação 1 do Arranjo 3", info_text_widgets[2])
 # update_text_widgets_inicio()
 
 
-
 # Crie um dicionário para armazenar os valores anteriores dos grupos
 valores_anteriores = {group: dict(pc_data) for group, pc_data in global_variables.items()}
 
 
 def update_text_widgets():
-    #global valores_anteriores
+    # global valores_anteriores
 
     if Firebase.teve_atualizacao:
         print('tem atualizações')
@@ -212,7 +213,6 @@ def update_text_widgets():
 
 
 janela.after(500, update_text_widgets)
-
 
 # Inicie o loop principal da interface gráfica
 janela.mainloop()

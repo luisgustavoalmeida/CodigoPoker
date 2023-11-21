@@ -1,83 +1,7 @@
-# # Importa a biblioteca necessária
-# import pyrebase
-# import time
-#
-# # Configuração dos bancos de dados
-# config2 = {
-#     "apiKey": "AIzaSyDDzQMVxpKKqBZrDlhA9E4sInXB5toVRT8",
-#     "authDomain": "pokerdados-6884e.firebaseapp.com",
-#     "databaseURL": "https://pokerdados-6884e-default-rtdb.firebaseio.com",
-#     "projectId": "pokerdados-6884e",
-#     "storageBucket": "pokerdados-6884e.appspot.com",
-#     "messagingSenderId": "240019464920",
-#     "appId": "1:240019464920:web:a746cddaf41f43642aadad"
-# }
-#
-# config1 = {
-#     "apiKey": "AIzaSyBWJEh-hD6UIkpMz8J4V2Es4mP2AtuHx9k",
-#     "authDomain": "poker-dados.firebaseapp.com",
-#     "databaseURL": "https://poker-dados-default-rtdb.firebaseio.com",
-#     "projectId": "poker-dados",
-#     "storageBucket": "poker-dados.appspot.com",
-#     "messagingSenderId": "968238353891",
-#     "appId": "1:968238353891:web:b0026783a590efa99c24d6"
-# }
-#
-# # # Inicializa os bancos de dados
-# # firebase_origem = pyrebase.initialize_app(config2)
-# # firebase_destino = pyrebase.initialize_app(config1)
-# #
-# # # Obtém referências para os bancos de dados
-# # db_origem = firebase_origem.database()
-# # db_destino = firebase_destino.database()
-#
-# def unir_e_atualizar_dados():
-#     # Inicializa os bancos de dados
-#     firebase_origem = pyrebase.initialize_app(config2)
-#     firebase_destino = pyrebase.initialize_app(config1)
-#
-#     # Obtém referências para os bancos de dados
-#     db_origem = firebase_origem.database()
-#     db_destino = firebase_destino.database()
-#
-#     try:
-#         # Obtém os dados da referência 'ips' em ambos os bancos
-#         dados_origem = db_origem.child('ips').get().val()
-#         dados_destino = db_destino.child('ips').get().val()
-#
-#         # Se as listas de IPs estão vazias ou não existem, inicializa listas vazias
-#         if dados_origem is None:
-#             dados_origem = []
-#         if dados_destino is None:
-#             dados_destino = []
-#
-#         # Combina os dados de ambos os bancos
-#         dados_combinados = dados_origem + dados_destino
-#
-#         # Remove IPs duplicados
-#         dados_combinados = [dict(t) for t in {tuple(d.items()) for d in dados_combinados}]
-#
-#         # Remove IPs que estão na lista por mais de 24 horas
-#         dados_combinados = [ip_info for ip_info in dados_combinados if time.time() - ip_info['timestamp'] <= 20 * 3600]
-#
-#         # Atualiza a referência 'ips' nos dois bancos
-#         db_origem.child('ips').set(dados_combinados)
-#         db_destino.child('ips').set(dados_combinados)
-#
-#         print("Dados unidos, duplicatas removidas e IPs antigos removidos. Atualização concluída!")
-#
-#     except Exception as e:
-#         print(f"Erro ao unir e atualizar dados: {e}")
-#
-# # Chama a função para unir e atualizar os dados
-# unir_e_atualizar_dados()
-
-
-
 # Importa a biblioteca necessária
-import pyrebase
 import time
-import datetime  # Adicionado para manipulação de datas
+
+import pyrebase
 
 # Configuração dos bancos de dados
 config3 = {
@@ -89,7 +13,6 @@ config3 = {
     "messagingSenderId": "712512083103",
     "appId": "1:712512083103:web:6afab600554fdf1287beaa"
 }
-
 
 config2 = {
     "apiKey": "AIzaSyDDzQMVxpKKqBZrDlhA9E4sInXB5toVRT8",
@@ -110,6 +33,8 @@ config1 = {
     "messagingSenderId": "968238353891",
     "appId": "1:968238353891:web:b0026783a590efa99c24d6"
 }
+
+
 def unir_e_atualizar_dados():
     # Inicializa os bancos de dados
     firebase_3 = pyrebase.initialize_app(config3)
@@ -153,5 +78,6 @@ def unir_e_atualizar_dados():
 
     except Exception as e:
         print(f"Erro ao unir e atualizar dados: {e}")
+
 
 unir_e_atualizar_dados()

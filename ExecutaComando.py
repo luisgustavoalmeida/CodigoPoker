@@ -1,36 +1,30 @@
-
-import Aneis
-import Google
-import Seleniun
-import Origem_pg
-import OCR_tela
-import Limpa
-import IP
-import Tarefas
-import time
-import Mesa
-import pyautogui
 import datetime
 import os
 import socket
 import threading
-import xp2
+import time
+
+import pyautogui
+
 import Firebase
+import IP
+import Limpa
+import Mesa
+import OCR_tela
+import Origem_pg
+import Seleniun
+import Tarefas
 import Upar
-
-
-
-from Variaveis_Globais import aviso_sistema_global, alterar_global_aviso_sistema
+import xp2
+from Variaveis_Globais import alterar_global_aviso_sistema
 
 global aviso_sistema_global
-
 
 # Obter o nome de usuário
 nome_usuario = os.getlogin()
 # Obter o nome do computador
 nome_computador = socket.gethostname()
 LIMITE_IP = 6
-
 
 print("limite de troca de IP: ", LIMITE_IP)
 
@@ -54,6 +48,7 @@ continuar_tarefa = False
 iniciar_tarefa = threading.Semaphore(0)
 # Semaphore para a tarefa independente indicar que terminou e aguardar novo comando
 tarefa_concluida = threading.Semaphore(0)
+
 
 # Função que será executada na tarefa independente
 def tarefa_independente():
@@ -84,6 +79,7 @@ def tarefa_independente():
             # Indicar que a tarefa terminou de executar
             tarefa_concluida.release()
 
+
 # Iniciar a execução da tarefa independente
 tarefa = threading.Thread(target=tarefa_independente)
 tarefa.start()
@@ -110,11 +106,10 @@ while True:
     else:
         id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
 
-
-    #login
+    # login
     while True:
-        #parte deo codigo que faz loguin
-        #ip, com_internet = IP.meu_ip()  # obtem meu endereço de IP
+        # parte deo codigo que faz loguin
+        # ip, com_internet = IP.meu_ip()  # obtem meu endereço de IP
         ip = ""
         hora_que_rodou = 0
         valor_fichas = ""
@@ -128,7 +123,7 @@ while True:
         hora_fim_tarefa = False
 
         while roda:
-            #if cont_IP >= LIMITE_IP or cont_IP < 0:  # se a contagem de ip ta fora da faixa vai para a função
+            # if cont_IP >= LIMITE_IP or cont_IP < 0:  # se a contagem de ip ta fora da faixa vai para a função
             IP.ip(LIMITE_IP)  # testa se o numero de contas esta dentro do limite antes de trocar ip
 
             entrou_corretamente, stataus_facebook = Seleniun.fazer_login(id, senha, url, navegador)
@@ -140,7 +135,7 @@ while True:
 
             if entrou_corretamente is False:  # se nao entrou no face
                 print("conta nao entou no Facebook")
-                #Google.marca_caida(stataus_facebook, guia, linha)
+                # Google.marca_caida(stataus_facebook, guia, linha)
                 break
 
             while True:
@@ -154,11 +149,11 @@ while True:
                 entrou_corretamente, stataus_facebook = Seleniun.teste_logado(id, senha, url, navegador)
                 if entrou_corretamente is False:  # se nao entrou no face
                     print("conta nao entou no Facebook")
-                    #Google.marca_caida(stataus_facebook, guia, linha)
+                    # Google.marca_caida(stataus_facebook, guia, linha)
                     break
 
             if entrou_corretamente is False:  # se nao entrou no face
-                #Google.marca_caida(stataus_facebook, guia, linha)
+                # Google.marca_caida(stataus_facebook, guia, linha)
                 break
 
             ja_fez_tutorial = True
@@ -166,7 +161,7 @@ while True:
             if status_poker != 'Carregada':  # testa status da conta
                 if status_poker == 'Banida':  # se aconta esta banida
                     print("conta banida tem que marcar na plinilha")
-                    #Google.marca_banida("Banida", guia, linha)
+                    # Google.marca_banida("Banida", guia, linha)
                     break
 
                 elif status_poker == 'Tutorial':
@@ -174,7 +169,7 @@ while True:
                     print('vai fazer tutorial')
                     entrou_corretamente, stataus_facebook = Seleniun.teste_logado(id, senha, url, navegador)
                     if entrou_corretamente is False:  # se nao entrou no face
-                        #Google.marca_caida(stataus_facebook, guia, linha)
+                        # Google.marca_caida(stataus_facebook, guia, linha)
                         break
                     time.sleep(2)
                     if Limpa.limpa_pequeno(x_origem, y_origem) == "sair da conta":
@@ -188,7 +183,7 @@ while True:
 
             entrou_corretamente, stataus_facebook = Seleniun.teste_logado(id, senha, url, navegador)
             if entrou_corretamente is False:  # se nao entrou no face
-                #Google.marca_caida(stataus_facebook, guia, linha)
+                # Google.marca_caida(stataus_facebook, guia, linha)
                 break
 
             if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
@@ -234,12 +229,12 @@ while True:
                 comando = None
                 while True:
                     time.sleep(1)
-                    #Limpa.limpa_total(x_origem, y_origem)
+                    # Limpa.limpa_total(x_origem, y_origem)
 
                     recebido1 = Firebase.comando_escravo
                     if recebido1 != recebido2:
                         recebido2 = recebido1
-                        comando = recebido1.strip().title() # remove espaços vasiao e coloca a primeira letra amiusculo
+                        comando = recebido1.strip().title()  # remove espaços vasiao e coloca a primeira letra amiusculo
                     print('comando :', comando)
 
                     Tarefas.recolher_tarefa_upando(x_origem, y_origem)
@@ -313,7 +308,6 @@ while True:
                     Firebase.confirmacao_comando_resposta(status_comando)
 
                 Firebase.confirmacao_comando_resposta('Entrendo em uma nova conta')
-
 
                 valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem)
                 hora_que_rodou = datetime.datetime.now().strftime('%H:%M:%S')

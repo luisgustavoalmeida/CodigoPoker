@@ -1,33 +1,26 @@
+import datetime
 import os
 import socket
 import time
-import IP
-import Google
-import datetime
 
+import pyautogui
 from selenium import webdriver
-from bs4 import BeautifulSoup
-
-import selenium.common.exceptions as sel_exceptions
-import undetected_chromedriver as uc
+from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import TimeoutException
-
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.action_chains import ActionChains
-
-from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
-import pyautogui
+
+import Google
+import IP
+
 # Desabilitar o fail-safe
 pyautogui.FAILSAFE = False
 
-#def criar_drive():
+# def criar_drive():
 servico = Service(ChromeDriverManager().install())  # criar um objeto Service com o caminho do webdriver
 nome_computador = socket.gethostname()
 nome_usuario = os.getlogin()
@@ -36,8 +29,8 @@ pasta_cookies = os.path.join(os.getcwd(), fr'C:\Cookie\{nome_usuario}')
 options = Options()  # Criar um objeto 'Options' para definir as opções do Chrome
 # options.add_argument("user-data-dir=C:\\Users\\lgagu\\AppData\\Local\\Google\\Chrome\\User Data\\Profile 1") # Você pode encontrar o caminho digitando "chrome://version/" na barra de endereço do Google Chrome e procurando o valo
 options.add_argument('--disable-blink-features=AutomationControlled')  # desabilitam a detecção de automação no Chrome
-options.add_argument("--disable-save-password-bubble")  #desabilitará a caixa de diálogo para salvar senhas do navegador
-#options.add_argument("--disable-extensions")  # Desabilitar as extensões do Chrome
+options.add_argument("--disable-save-password-bubble")  # desabilitará a caixa de diálogo para salvar senhas do navegador
+# options.add_argument("--disable-extensions")  # Desabilitar as extensões do Chrome
 options.add_argument("--disable-infobars")  # Desabilitar a barra de informações do Chrome
 options.add_argument("--disable-notifications")  # Desabilitar as notificações do Chrome
 options.add_argument("--disable-save-password-bubble")  # Desabilitar a caixa de diálogo para salvar senhas
@@ -46,28 +39,29 @@ options.add_argument("--disable-password-generation")  # desabilita a geração 
 # options.add_argument('--disable-first-party-cookies')  # Desativa o uso de cookies de primeira parte.
 # options.add_argument('--disable-third-party-cookies') # Desativa o uso de cookies de terceiros.
 # options.add_argument('--block-new-cookie-requests') # Bloqueia solicitações de criação de novos cookies.
-#options.add_argument("--enable-cookies") # abilita o envio de cookies durante a navegação.
+# options.add_argument("--enable-cookies") # abilita o envio de cookies durante a navegação.
 options.add_argument(f"--user-data-dir={pasta_cookies}")
-#options.add_argument("--user-data-dir=/path/to/empty/folder") # Especifica um diretório vazio para a coleta de cookies. Isso permite que você utilize cookies pré-existentes ou salve os cookies gerados durante a execução do script.
+# options.add_argument("--user-data-dir=/path/to/empty/folder") # Especifica um diretório vazio para a coleta de cookies. Isso permite que você utilize cookies pré-existentes ou salve os cookies gerados durante a execução do script.
 options.add_argument("--disable-autofill")  # desabilitará o recurso de preenchimento automático de formulários do navegador.
 options.add_argument("--disable-geolocation")  # desativar a funcionalidade de localização do navegador durante a execução do script Selenium
-options.add_argument("--window-size=1380,1050")# Definir o tamanho da janela # largura altura options.add_argument("--window-size=1440,1045")
-options.add_argument("--window-position=-8,-5")# Mover a janela para a posição (0,0) da tela
-options.add_argument("--mute-audio") # desativar o áudio
-#options.add_argument("--disable-gpu") # Desabilita o uso da GPU pelo navegador.
-#options.add_argument("--disable-translate") # Desabilita a tradução automática de páginas pelo navegador
+options.add_argument("--window-size=1380,1050")  # Definir o tamanho da janela # largura altura options.add_argument("--window-size=1440,1045")
+options.add_argument("--window-position=-8,-5")  # Mover a janela para a posição (0,0) da tela
+options.add_argument("--mute-audio")  # desativar o áudio
+# options.add_argument("--disable-gpu") # Desabilita o uso da GPU pelo navegador.
+# options.add_argument("--disable-translate") # Desabilita a tradução automática de páginas pelo navegador
 
-#options.add_argument("--disable-local-storage") # Desabilita o uso de armazenamento local pelo navegador. Isso inclui o armazenamento de dados em cache e outros recursos relacionados a cookies.
-#options.add_argument("--disable-session-storage") # Desabilita o uso de armazenamento de sessão pelo navegador. Isso inclui o armazenamento temporário de dados relacionados a sessões de navegação.
+# options.add_argument("--disable-local-storage") # Desabilita o uso de armazenamento local pelo navegador. Isso inclui o armazenamento de dados em cache e outros recursos relacionados a cookies.
+# options.add_argument("--disable-session-storage") # Desabilita o uso de armazenamento de sessão pelo navegador. Isso inclui o armazenamento temporário de dados relacionados a sessões de navegação.
 
-options.add_experimental_option("detach", True) # para manter o navegador aberto
+options.add_experimental_option("detach", True)  # para manter o navegador aberto
 
-#options.add_argument("--headless")# faz com que o browser não abra durante o processo
+
+# options.add_argument("--headless")# faz com que o browser não abra durante o processo
 # options.add_argument("--disable-popup-blocking")                            #desabilitar o bloqueio de pop-ups no Chrome. Quando o Selenium abre o navegador, por padrão, o bloqueio de pop-ups é habilitado
-#options.add_experimental_option("excludeSwitches", ["enable-automation"])   # Adicionar uma opção experimental para desabilitar a mensagem "O Chrome está sendo controlado por um software de teste automatizado."
+# options.add_experimental_option("excludeSwitches", ["enable-automation"])   # Adicionar uma opção experimental para desabilitar a mensagem "O Chrome está sendo controlado por um software de teste automatizado."
 # options.add_experimental_option('useAutomationExtension', False)            # Adicionar uma opção experimental para desabilitar a extensão do WebDriver
 
-#navegador = webdriver.Chrome(service=servico, options=options)  # Inicializar o driver do navegador
+# navegador = webdriver.Chrome(service=servico, options=options)  # Inicializar o driver do navegador
 # print(navegador)
 
 
@@ -116,7 +110,6 @@ def se_esta_lagado(navegador):
 
     print("Não está logado no Facebook.")
     return False
-
 
     # if navegador.get_cookie("c_user"):
     #     print("Está logado no Facebook.")
@@ -278,7 +271,7 @@ def fazer_login(id, senha, url, navegador):
                             print("A conta termos de privacidade")
                             time.sleep(5)
                             lista_face = ['bloqueado temporariamente', 'concorde', 'temporariamente']
-                            for item in lista_face: # percorre os textos que tem quando tem conta caida para o face
+                            for item in lista_face:  # percorre os textos que tem quando tem conta caida para o face
                                 try:
                                     elemento = navegador.find_element(By.XPATH, f"//span[contains(text(), '{item}')]")
 
@@ -309,7 +302,7 @@ def fazer_login(id, senha, url, navegador):
                                         time.sleep(4)
                                     except Exception as e:  # Corrigido o erro aqui, "as e" ao invés de "e Exception:"
                                         print("Elememto para clicar não encontrado: ", elemento)
-                                        #print(e)
+                                        # print(e)
                                         continue
 
                                     # Construir a expressão XPath para o elemento atual na lista
@@ -325,9 +318,8 @@ def fazer_login(id, senha, url, navegador):
                                         time.sleep(4)
                                     except Exception as e:
                                         print(f"Elemento para clicar não encontrado: {elemento}")
-                                        #print(e)
+                                        # print(e)
                                         continue
-
 
                             # # Lista de elementos para clicar
                             # #elementos_para_clicar = ["Usar gratuitamente", 'Concordo']
@@ -451,7 +443,7 @@ def sair_face(url, navegador):
 
 def atualizar_pagina(navegador, url):
     while True:
-        IP.tem_internet()# testa se tem internete enste de atualizar a pagina
+        IP.tem_internet()  # testa se tem internete enste de atualizar a pagina
         try:
             navegador.get(url)
             return
@@ -465,19 +457,17 @@ def atualizar_pagina(navegador, url):
 def busca_link(navegador):
     print('busca_link')
 
-
-
-    if nome_usuario == "PokerIP": #and (nome_computador == "PC-I5-8600K"):
+    if nome_usuario == "PokerIP":  # and (nome_computador == "PC-I5-8600K"):
         id = "Luis.gustavo.almeida88"
         senha = "020996Pa"
         endereco_falha = 'F2'
 
-    elif nome_usuario == "lgagu": #and (nome_computador == "PC-I7-9700KF"):
+    elif nome_usuario == "lgagu":  # and (nome_computador == "PC-I7-9700KF"):
         id = "stefaniaalmeida.jf"
         senha = "$TE20091992te"
         endereco_falha = 'F3'
 
-    else: # nome_usuario == "PokerIP": #and (nome_computador == "PC-i3-8145U"):
+    else:  # nome_usuario == "PokerIP": #and (nome_computador == "PC-i3-8145U"):
         id = "Luis.gustavo.almeida88"
         senha = "020996Pa"
         endereco_falha = 'F4'
@@ -549,10 +539,10 @@ def busca_link(navegador):
 
     if not teste_url:
         print('url fora do padrao ou nao encontrada')
-        #Google.escrever_celula('url fora do padrao ou nao encontrada', 'Dados', endereco_falha)
+        # Google.escrever_celula('url fora do padrao ou nao encontrada', 'Dados', endereco_falha)
         pyautogui.click(670, 730)
         print('clique burro para tentar achar a imagem')
-        #return
+        # return
 
     time.sleep(5)
 
@@ -617,11 +607,8 @@ def busca_link(navegador):
         Google.escrever_celula("link fanpag fora do padrão", 'Dados', endereco_falha)
         print("link fanpag fora do padrão")
 
-
 ######################################################################################################################
 # # para abrir o navegador e deixar abero. Descomentar as duas linhas abaixo
 # navegador = cria_nevegador()
-# busca_link(navegador)
+# # # busca_link(navegador)
 # time.sleep(10000)
-
-

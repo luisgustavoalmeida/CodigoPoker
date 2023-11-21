@@ -1,23 +1,22 @@
 import time
-import IP
 import pyautogui
+import HoraT
+import IP
+import Limpa
+import Tarefas
+
 # Desabilitar o fail-safe
 pyautogui.FAILSAFE = False
 pyautogui.PAUSE = 0
-import Origem_pg
-import Limpa
-import Tarefas
-import HoraT
-import OCR_tela
 
 
-def abre_cartas_premidas(x_origem, y_origem ):
+def abre_cartas_premidas(x_origem, y_origem):
     for i in range(30):
         # testa se ta aberto o trofel azul claro do cartas pemidas
         if pyautogui.pixelMatchesColor((x_origem + 686), (y_origem + 222), (73, 124, 181), tolerance=5):
             # testa se  o valor escolhido é o 200
             if pyautogui.pixelMatchesColor((x_origem + 379), (y_origem + 481), (217, 28, 18), tolerance=5):
-                pyautogui.doubleClick(x_origem + 270, y_origem + 425)#clica no limpar
+                pyautogui.doubleClick(x_origem + 270, y_origem + 425)  # clica no limpar
                 return True
             else:
                 pyautogui.click(x_origem + 346, y_origem + 472)  # setinha para cima
@@ -27,6 +26,7 @@ def abre_cartas_premidas(x_origem, y_origem ):
         pyautogui.doubleClick(x_origem + 737, y_origem + 22)  # abre o cartas premidas
         time.sleep(0.2)
 
+
 def cartas_premidas_joga_vezes(x_origem, y_origem, id, senha, url, navegador):
     tarefas_fazer = ('Jogar 100 vezes nas Cartas Premiadas',
                      'Jogar 50 vezes nas Cartas Premiadas',
@@ -35,24 +35,13 @@ def cartas_premidas_joga_vezes(x_origem, y_origem, id, senha, url, navegador):
     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
         return "sair da conta"
 
-    # for i in range(2):
-    #     # lipa tudo antes de começar vai para o lobby
-    #     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-    #         return "sair da conta"
-    #     Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
-    #     continua_jogando, tarefa = Tarefas.comparar_listas_fazendo_tarefa(tarefas_fazer, x_origem, y_origem)
-    #     print("tarefa que tem: \n",tarefa)
-    #     Limpa.fecha_tarefa(x_origem, y_origem)  # fecha a lista de tarefas diarias
-    #     if continua_jogando:
-    #         break
-
     abre_cartas_premidas(x_origem, y_origem)
 
     continua_jogando = True
 
     cont_jogadas_troca_ip = 0
 
-    while continua_jogando == True: # permanece joghando cartas premiadas ate nao ter mais a mição jogar x vezes
+    while continua_jogando:  # permanece joghando cartas premiadas ate nao ter mais a mição jogar x vezes
 
         if Limpa.limpa_total_fazendo_tarefa(x_origem, y_origem) == "sair da conta":
             return "sair da conta"
@@ -70,15 +59,15 @@ def cartas_premidas_joga_vezes(x_origem, y_origem, id, senha, url, navegador):
             print("tem cartas vezes")
             for i in range(100):
                 print('espera as cartas virado para baixo')
-                #espera ter as cartas virado para baixo lado marrom para cima
+                # espera ter as cartas virado para baixo lado marrom para cima
                 if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 239), (111, 26, 37), tolerance=10):
                     print("ta com as cartas viradas para baixo")
-                    pyautogui.click(x_origem + 658, y_origem + 341) # clica nas cartas vermelhas
+                    pyautogui.click(x_origem + 658, y_origem + 341)  # clica nas cartas vermelhas
                     for i in range(100):
-                        #testa se tem a ficha de 200 verde na posição correta
+                        # testa se tem a ficha de 200 verde na posição correta
                         if pyautogui.pixelMatchesColor((x_origem + 641), (y_origem + 344), (193, 46, 47), tolerance=5):
                             print('200 fichas no lugar')
-                            pyautogui.doubleClick(x_origem + 711, y_origem + 422)  #clica em comfirmar
+                            pyautogui.doubleClick(x_origem + 711, y_origem + 422)  # clica em comfirmar
                             confirmar = True
                             break
 
@@ -86,27 +75,27 @@ def cartas_premidas_joga_vezes(x_origem, y_origem, id, senha, url, navegador):
                     break
 
                 time.sleep(0.3)
-        #time.sleep(3)
+        # time.sleep(3)
         # espera ate as cartas virartem para cima, ficar brancas
         for i in range(20):
             if pyautogui.pixelMatchesColor((x_origem + 440), (y_origem + 200), (252, 253, 253), tolerance=5):
                 break
             time.sleep(0.3)
         # se nao virou as cartas da um limpa todal para desagarrar possivel falhar na hora de trocar ip
-        if not(pyautogui.pixelMatchesColor((x_origem + 440), (y_origem + 200), (252, 253, 253), tolerance=5)):
+        if not (pyautogui.pixelMatchesColor((x_origem + 440), (y_origem + 200), (252, 253, 253), tolerance=5)):
             if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
                 return "sair da conta"
 
-        #Limpa.limpa_abre_tarefa2(x_origem, y_origem)
+        # Limpa.limpa_abre_tarefa2(x_origem, y_origem)
         Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
         Tarefas.recolher_tarefa(x_origem, y_origem)
         meta_atigida, pontos = Tarefas.meta_tarefas(x_origem, y_origem)
 
-        continua_jogando, tarefa = Tarefas.comparar_listas_fazendo_tarefa(tarefas_fazer, x_origem, y_origem) # procura com ocr
+        continua_jogando, tarefa = Tarefas.comparar_listas_fazendo_tarefa(tarefas_fazer, x_origem, y_origem)  # procura com ocr
 
         if (not continua_jogando) or (meta_atigida):
             time.sleep(0.5)
-            #Limpa.limpa_abre_tarefa2(x_origem, y_origem)
+            # Limpa.limpa_abre_tarefa2(x_origem, y_origem)
             Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
             continua_jogando, tarefa = Tarefas.comparar_listas_fazendo_tarefa(tarefas_fazer, x_origem, y_origem)  # procura com ocr
             meta_atigida, pontos = Tarefas.meta_tarefas(x_origem, y_origem)
@@ -115,14 +104,13 @@ def cartas_premidas_joga_vezes(x_origem, y_origem, id, senha, url, navegador):
                 if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
                     return "sair da conta"
                 return
-        #cartas_vezes = True
+        # cartas_vezes = True
         Limpa.fecha_tarefa(x_origem, y_origem)  # fecha a lista de tarefas diarias
         abre_cartas_premidas(x_origem, y_origem)
     return
 
 
 def cartas_premidas_joga_valor(x_origem, y_origem, id, senha, url, navegador, lista_tarefas_disponivel, valor_fichas):
-
     tarefas_fazer = ('Ganhar 100.000 fichas nas Cartas Premiadas',
                      'Ganhar 30.000 fichas nas Cartas Premiadas',
                      'Ganhar 4.000 fichas nas Cartas Premiadas')
@@ -147,7 +135,7 @@ def cartas_premidas_joga_valor(x_origem, y_origem, id, senha, url, navegador, li
     abre_cartas_premidas(x_origem, y_origem)
     cont_jogadas_troca_ip = 0
 
-    while continua_jogando: #permanece joghando cartas premiadas ate nao ter mais a mição jogar x vezes
+    while continua_jogando:  # permanece joghando cartas premiadas ate nao ter mais a mição jogar x vezes
         if Limpa.limpa_total_fazendo_tarefa(x_origem, y_origem) == "sair da conta":
             return "sair da conta"
         if HoraT.fim_tempo_tarefa():
@@ -164,12 +152,12 @@ def cartas_premidas_joga_valor(x_origem, y_origem, id, senha, url, navegador, li
             print("tem cartas vezes")
             for i in range(100):
                 print('espera as cartas virado para baixo')
-                #espera ter as cartas virado para baixo lado marrom para cima
+                # espera ter as cartas virado para baixo lado marrom para cima
                 if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 239), (111, 26, 37), tolerance=10):
                     print("ta com as cartas viradas para baixo")
                     if tarefa == 'Ganhar 100.000 fichas nas Cartas Premiadas':
                         print('cartas 100k')
-                        #valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem)
+                        # valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem)
                         if valor_fichas > 110000:
                             for i in range(264):
                                 pyautogui.click(x_origem + 658, y_origem + 341)  # clica nas cartas vermelhas
@@ -181,7 +169,7 @@ def cartas_premidas_joga_valor(x_origem, y_origem, id, senha, url, navegador, li
                             pyautogui.doubleClick(x_origem + 711, y_origem + 422)  # clica em comfirmar
                             break
 
-                        else: # quando nao tem ficha par ajogar de uma so vez
+                        else:  # quando nao tem ficha par ajogar de uma so vez
                             for i in range(90):
                                 pyautogui.click(x_origem + 658, y_origem + 341)  # clica nas cartas vermelhas
                                 time.sleep(0.01)
@@ -228,7 +216,7 @@ def cartas_premidas_joga_valor(x_origem, y_origem, id, senha, url, navegador, li
             if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
                 return "sair da conta"
 
-        #Limpa.limpa_abre_tarefa2(x_origem, y_origem)
+        # Limpa.limpa_abre_tarefa2(x_origem, y_origem)
         Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
         Tarefas.recolher_tarefa(x_origem, y_origem)
         meta_atigida, pontos = Tarefas.meta_tarefas(x_origem, y_origem)
@@ -237,7 +225,7 @@ def cartas_premidas_joga_valor(x_origem, y_origem, id, senha, url, navegador, li
 
         if (not continua_jogando) or (meta_atigida):
             time.sleep(0.5)
-            #Limpa.limpa_abre_tarefa2(x_origem, y_origem)
+            # Limpa.limpa_abre_tarefa2(x_origem, y_origem)
             Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
             continua_jogando, tarefa = Tarefas.comparar_listas_fazendo_tarefa(tarefas_fazer, x_origem, y_origem)  # procura com ocr
             meta_atigida, pontos = Tarefas.meta_tarefas(x_origem, y_origem)
@@ -252,9 +240,7 @@ def cartas_premidas_joga_valor(x_origem, y_origem, id, senha, url, navegador, li
     return
 
 
-
 def cartas_premidas_joga_vezes_upando(x_origem, y_origem):
-
     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
         return "sair da conta"
 
@@ -262,7 +248,7 @@ def cartas_premidas_joga_vezes_upando(x_origem, y_origem):
 
     continua_jogando = True
 
-    while continua_jogando: # permanece joghando cartas premiadas ate nao ter mais a mição jogar x vezes
+    while continua_jogando:  # permanece joghando cartas premiadas ate nao ter mais a mição jogar x vezes
         cartas_aberto = abre_cartas_premidas(x_origem, y_origem)  # abre o cartas premidas
         confirmar = False
         if cartas_aberto:
@@ -270,20 +256,21 @@ def cartas_premidas_joga_vezes_upando(x_origem, y_origem):
             print("tem cartas vezes")
             for i in range(100):
                 print('espera as cartas virado para baixo')
-                #espera ter as cartas virado para baixo lado marrom para cima
+                # espera ter as cartas virado para baixo lado marrom para cima
                 if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 239), (111, 26, 37), tolerance=10):
                     print("ta com as cartas viradas para baixo")
-                    if pyautogui.pixelMatchesColor((x_origem + 394), (y_origem + 483), (239, 231, 212), tolerance=10): # Teste se tem 1000 fichas gratis
+                    if pyautogui.pixelMatchesColor((x_origem + 394), (y_origem + 483), (239, 231, 212), tolerance=10):
+                        # Teste se tem 1000 fichas gratis
                         for i in range(10):
                             pyautogui.click(x_origem + 658, y_origem + 341)  # clica nas cartas vermelhas
                             time.sleep(0.1)
 
-                    pyautogui.click(x_origem + 658, y_origem + 341) # clica nas cartas vermelhas
+                    pyautogui.click(x_origem + 658, y_origem + 341)  # clica nas cartas vermelhas
                     for i in range(100):
-                        #testa se tem a ficha de 200 verde na posição correta
+                        # testa se tem a ficha de 200 verde na posição correta
                         if pyautogui.pixelMatchesColor((x_origem + 641), (y_origem + 344), (193, 46, 47), tolerance=5):
                             print('200 fichas no lugar')
-                            pyautogui.doubleClick(x_origem + 711, y_origem + 422)  #clica em comfirmar
+                            pyautogui.doubleClick(x_origem + 711, y_origem + 422)  # clica em comfirmar
                             confirmar = True
                             break
 
@@ -298,7 +285,7 @@ def cartas_premidas_joga_vezes_upando(x_origem, y_origem):
                 break
             time.sleep(0.3)
         # se nao virou as cartas da um limpa todal para desagarrar possivel falhar na hora de trocar ip
-        if not(pyautogui.pixelMatchesColor((x_origem + 440), (y_origem + 200), (252, 253, 253), tolerance=5)):
+        if not (pyautogui.pixelMatchesColor((x_origem + 440), (y_origem + 200), (252, 253, 253), tolerance=5)):
             if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
                 return "sair da conta"
 
@@ -324,4 +311,4 @@ def cartas_premidas_joga_vezes_upando(x_origem, y_origem):
 # #
 # cartas_premidas_joga_vezes(x_origem, y_origem)
 
-#cartas_premidas_joga_valor(x_origem, y_origem)
+# cartas_premidas_joga_valor(x_origem, y_origem)

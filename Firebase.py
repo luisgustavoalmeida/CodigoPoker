@@ -1,22 +1,24 @@
 # pip install pyrebase5
-import time
-import socket
 import os
-import pyrebase
 import re
+import socket
+import time
+
+import pyrebase
 import requests
 from requests.exceptions import ConnectionError
+
 # importa o dicionário com os nomes dos computadores e o námero referete a cada um
 from Parametros import dicionari_token_credencial_n
 
 config = {
-  "apiKey": "AIzaSyDDzQMVxpKKqBZrDlhA9E4sInXB5toVRT8",
-  "authDomain": "pokerdados-6884e.firebaseapp.com",
-  "databaseURL": "https://pokerdados-6884e-default-rtdb.firebaseio.com",
-  "projectId": "pokerdados-6884e",
-  "storageBucket": "pokerdados-6884e.appspot.com",
-  "messagingSenderId": "240019464920",
-  "appId": "1:240019464920:web:a746cddaf41f43642aadad"
+    "apiKey": "AIzaSyDDzQMVxpKKqBZrDlhA9E4sInXB5toVRT8",
+    "authDomain": "pokerdados-6884e.firebaseapp.com",
+    "databaseURL": "https://pokerdados-6884e-default-rtdb.firebaseio.com",
+    "projectId": "pokerdados-6884e",
+    "storageBucket": "pokerdados-6884e.appspot.com",
+    "messagingSenderId": "240019464920",
+    "appId": "1:240019464920:web:a746cddaf41f43642aadad"
 }
 
 # Dicionário global para armazenar as variáveis com seus respectivos valores
@@ -69,16 +71,16 @@ def cria_caminho_resposta_fb():
                 grupo_modificado = re.sub(r'group', r'Comandos', grupo)
                 print(f"{conteudo} está no grupo {grupo_modificado} ({numero_grupo})")
                 caminho_resposta = f'{grupo_modificado}/{conteudo}'
-                print("caminho_resposta :",caminho_resposta)  # Comandos2/PC23
+                print("caminho_resposta :", caminho_resposta)  # Comandos2/PC23
                 caminho_resposta1 = f'Resposta1/{conteudo}'
                 print("caminho_resposta1 :", caminho_resposta1)  # Comandos2/PC23
 
-
-                return caminho_resposta , caminho_resposta1
+                return caminho_resposta, caminho_resposta1
         else:
             print(f"{conteudo} não está em nenhum dos grupos")
     else:
         print(f"{nome_completo} não encontrado no dicionário")
+
 
 if nome_computador in lista_PC_meste:
     print(f"O nome do computador ({nome_computador}) está na lista de PCs mestres.")
@@ -116,8 +118,8 @@ def inicializar_firebase():
             print('firebase sem internete')
             time.sleep(5)
 
-def enviar_comando_coletivo(arranjo, comando):
 
+def enviar_comando_coletivo(arranjo, comando):
     """Envie nesta fonção dois parametros que pode ser a tiplae dos arranjos dos conputadores "arranjo3_pc" ou
     uma lista do com um unico itêm "['Comandos3/PC03']" que contenha o caminho e nome do computado a ser atualizado.
     O segundo paremetro a ser recebido deve ser o comando que deve ser executado pelo arranjo de computadores ou pelo
@@ -128,7 +130,7 @@ def enviar_comando_coletivo(arranjo, comando):
         # Define a chave do dicionário como o caminho e o valor como o comando
         atualizacoes[caminho] = comando
     try:
-        db.update(atualizacoes) # responsável por atualizar os dados no banco de dados Firebase
+        db.update(atualizacoes)  # responsável por atualizar os dados no banco de dados Firebase
         print("Comando coletivo executado")
     except Exception as e:
         print("Erro ao processar atualização:", e)
@@ -202,7 +204,7 @@ def alterar_dado_global(nome_variavel, valor):
         if grupo is not None:
             grupo[nome_variavel] = valor
             teve_atualizacao = True
-            #print(global_variables)
+            # print(global_variables)
         else:
             print(f"A variável '{nome_variavel}' não corresponde a nenhum grupo existente.")
     else:
@@ -230,6 +232,7 @@ def atualizar_dados_globais():
         print("Erro ao buscar dados do Firebase:", e)
 
     # print(f"Atualizado: {chave} -> {valor}")
+
 
 # Chame a função para atualizar os dados globais com os dados do Firebase
 atualizar_dados_globais()
@@ -295,11 +298,11 @@ def confirmacao_comando_resposta(resposta_escravo):
     else:
         return
 
-def comando_coleetivo_escravo_escravo(comando):
 
+def comando_coleetivo_escravo_escravo(comando):
     ''''quando um escravo precisa comandar os outro escravos de forma automatica'''
     if nome_usuario == "PokerIP":
-        print(nome_usuario )
+        print(nome_usuario)
         enviar_comando_coletivo(arranjo1_pc, comando)
     elif nome_usuario == "lgagu":
         print(nome_usuario)
@@ -309,10 +312,6 @@ def comando_coleetivo_escravo_escravo(comando):
         enviar_comando_coletivo(arranjo3_pc, comando)
     else:
         print("nome de usuario não configurado")
-
-
-
-
 
 # caminho = "Resposta1/PC01"
 #
@@ -334,7 +333,7 @@ def comando_coleetivo_escravo_escravo(comando):
 #         escrever_informacoes_aleatorias()
 
 
-#loop_infinito()
+# loop_infinito()
 
 
 # Mantenha o programa em execução para continuar recebendo as atualizações
@@ -352,5 +351,3 @@ def comando_coleetivo_escravo_escravo(comando):
 
 # confirmacao_escravo("funciona")
 # escreve_resposta_escravo("funciona")
-
-

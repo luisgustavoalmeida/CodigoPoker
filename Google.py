@@ -3,31 +3,28 @@
 
 from __future__ import print_function
 
+import datetime
 import os
 import os.path
-#import pickle
-import socket
-#import httplib2
-#from httplib2 import ServerNotFoundError
-#from google.auth.exceptions import TransportError
 import re
+import socket
 import time
-import datetime
-import IP
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
-#from googleapiclient.errors import HttpError
+
+import IP
+
+# from googleapiclient.errors import HttpError
 
 
 # Define o escopo, desta forma tem permição total a plania e ao google drive
-SCOPES = ['https://www.googleapis.com/auth/spreadsheets'] # permite que a aplicação tenha acesso de leitura e escrita a planilhas do Google Sheets.
+SCOPES = ['https://www.googleapis.com/auth/spreadsheets']  # permite que a aplicação tenha acesso de leitura e escrita a planilhas do Google Sheets.
 
 # ID da planilha
 planilha_id = '1cEeMrBRVLnw7qtjiA63dK5q_HNvmJaCC5kNudzDjLgM'
-
 
 # Obter o nome do computador
 nome_computador = socket.gethostname()
@@ -40,7 +37,7 @@ nome_completo = socket.gethostname() + "_" + os.getlogin()
 # crendencial 0 : lga.gustavo.a@gmail.com senha: LGlg32379089@
 # crendencial 1 : gayaluisaalmeida@gmail.com senha: Lg1405lG
 # crendencial 2 : luis.gustavo@engenharia.ufjf.br senha: LGlg32379089@#
-#cria um dicionario para separar as credenciais, ou seja uma credencial APi para cada computador
+# cria um dicionario para separar as credenciais, ou seja uma credencial APi para cada computador
 
 # if (nome_computador == "PC-I5-8600K" or nome_computador == "PC-I5-9400A" or nome_computador == "PC-I5-9400B"
 #         or nome_computador == "PC-I5-9400C"):
@@ -49,57 +46,56 @@ nome_completo = socket.gethostname() + "_" + os.getlogin()
 #     planilha_id = '1AKaDbSnqJroq_CucIkvhKHsxRzOkQE6mcDALc8q8Q2A'
 
 
-dicionari_token_credencial_n = {'PC-I5-8600K_PokerIP':  ("token1.json", "credentials0.json", 1),
-                                'PC-I5-8600K_lgagu':    ("token2.json", "credentials0.json", 2),
-                                'PC-I5-8600K_Poker':    ("token3.json", "credentials0.json", 3),
+dicionari_token_credencial_n = {'PC-I5-8600K_PokerIP': ("token1.json", "credentials0.json", 1),
+                                'PC-I5-8600K_lgagu': ("token2.json", "credentials0.json", 2),
+                                'PC-I5-8600K_Poker': ("token3.json", "credentials0.json", 3),
 
-                                'PC-I5-9400A_PokerIP':  ("token4.json", "credentials1.json", 4),
-                                'PC-I5-9400A_lgagu':    ("token5.json", "credentials1.json", 5),
-                                'PC-I5-9400A_Poker':    ("token6.json", "credentials1.json", 6),
+                                'PC-I5-9400A_PokerIP': ("token4.json", "credentials1.json", 4),
+                                'PC-I5-9400A_lgagu': ("token5.json", "credentials1.json", 5),
+                                'PC-I5-9400A_Poker': ("token6.json", "credentials1.json", 6),
 
-                                'PC-I5-9400B_PokerIP':  ("token7.json", "credentials2.json", 7),
-                                'PC-I5-9400B_lgagu':    ("token8.json", "credentials2.json", 8),
-                                'PC-I5-9400B_Poker':    ("token9.json", "credentials2.json", 9),
+                                'PC-I5-9400B_PokerIP': ("token7.json", "credentials2.json", 7),
+                                'PC-I5-9400B_lgagu': ("token8.json", "credentials2.json", 8),
+                                'PC-I5-9400B_Poker': ("token9.json", "credentials2.json", 9),
 
-                                'PC-I5-9400C_PokerIP':  ("token10.json", "credentials3.json", 10),
-                                'PC-I5-9400C_lgagu':    ("token11.json", "credentials3.json", 11),
-                                'PC-I5-9400C_Poker':    ("token12.json", "credentials3.json", 12),
+                                'PC-I5-9400C_PokerIP': ("token10.json", "credentials3.json", 10),
+                                'PC-I5-9400C_lgagu': ("token11.json", "credentials3.json", 11),
+                                'PC-I5-9400C_Poker': ("token12.json", "credentials3.json", 12),
 
-                                'PC-R5-7600A_PokerIP':  ("token13.json", "credentials4.json", 13),
-                                'PC-R5-7600A_lgagu':    ("token14.json", "credentials4.json", 14),
-                                'PC-R5-7600A_Poker':    ("token15.json", "credentials4.json", 15),
+                                'PC-R5-7600A_PokerIP': ("token13.json", "credentials4.json", 13),
+                                'PC-R5-7600A_lgagu': ("token14.json", "credentials4.json", 14),
+                                'PC-R5-7600A_Poker': ("token15.json", "credentials4.json", 15),
 
                                 'PC-I5-13400A_PokerIP': ("token16.json", "credentials5.json", 16),
-                                'PC-I5-13400A_lgagu':   ("token17.json", "credentials5.json", 17),
-                                'PC-I5-13400A_Poker':   ("token18.json", "credentials5.json", 18),
+                                'PC-I5-13400A_lgagu': ("token17.json", "credentials5.json", 17),
+                                'PC-I5-13400A_Poker': ("token18.json", "credentials5.json", 18),
 
                                 'PC-I5-13400B_PokerIP': ("token19.json", "credentials0.json", 19),
-                                'PC-I5-13400B_lgagu':   ("token20.json", "credentials0.json", 20),
-                                'PC-I5-13400B_Poker':   ("token21.json", "credentials0.json", 21),
+                                'PC-I5-13400B_lgagu': ("token20.json", "credentials0.json", 20),
+                                'PC-I5-13400B_Poker': ("token21.json", "credentials0.json", 21),
 
                                 'PC-I5-13400C_PokerIP': ("token22.json", "credentials1.json", 22),
-                                'PC-I5-13400C_lgagu':   ("token23.json", "credentials1.json", 23),
-                                'PC-I5-13400C_Poker':   ("token24.json", "credentials1.json", 24),
+                                'PC-I5-13400C_lgagu': ("token23.json", "credentials1.json", 23),
+                                'PC-I5-13400C_Poker': ("token24.json", "credentials1.json", 24),
 
                                 'PC-I5-13400D_PokerIP': ("token25.json", "credentials2.json", 25),
-                                'PC-I5-13400D_lgagu':   ("token26.json", "credentials2.json", 26),
-                                'PC-I5-13400D_Poker':   ("token27.json", "credentials2.json", 27),
+                                'PC-I5-13400D_lgagu': ("token26.json", "credentials2.json", 26),
+                                'PC-I5-13400D_Poker': ("token27.json", "credentials2.json", 27),
 
-                                'PC-R5-5600G_PokerIP':  ("token28.json", "credentials3.json", 28),
-                                'PC-R5-5600G_lgagu':    ("token29.json", "credentials3.json", 29),
-                                'PC-R5-5600G_Poker':    ("token30.json", "credentials3.json", 30),
+                                'PC-R5-5600G_PokerIP': ("token28.json", "credentials3.json", 28),
+                                'PC-R5-5600G_lgagu': ("token29.json", "credentials3.json", 29),
+                                'PC-R5-5600G_Poker': ("token30.json", "credentials3.json", 30),
 
                                 'PC-I7-11850H_PokerIP': ("token31.json", "credentials4.json", 31),
-                                'PC-I7-11850H_lgagu':   ("token32.json", "credentials4.json", 32),
-                                'PC-I7-11850H_Poker':   ("token33.json", "credentials4.json", 33),
+                                'PC-I7-11850H_lgagu': ("token32.json", "credentials4.json", 32),
+                                'PC-I7-11850H_Poker': ("token33.json", "credentials4.json", 33),
 
                                 'PC-I7-9700KF_PokerIP': ("token34.json", "credentials5.json", 34),
-                                'PC-I7-9700KF_lgagu':   ("token35.json", "credentials5.json", 35),
-                                'PC-I7-9700KF_Poker':   ("token36.json", "credentials5.json", 36),
+                                'PC-I7-9700KF_lgagu': ("token35.json", "credentials5.json", 35),
+                                'PC-I7-9700KF_Poker': ("token36.json", "credentials5.json", 36),
 
-                                'PC-i3-8145U_PokerIP':  ("token37.json", "credentials5.json", 37)
+                                'PC-i3-8145U_PokerIP': ("token37.json", "credentials5.json", 37)
                                 }
-
 
 dicionari_PC_IP = {'PC-I5-8600K': "IP!F3",
                    'PC-I5-9400A': "IP!F6",
@@ -115,15 +111,14 @@ dicionari_PC_IP = {'PC-I5-8600K': "IP!F3",
                    'PC-I7-9700KF': "IP!F36",
                    'PC-i3-8145U': "IP!F39"}
 
-
 valor_dicionario = dicionari_token_credencial_n[nome_completo]
-valor_pc = valor_dicionario[2] # numero do computador
+valor_pc = valor_dicionario[2]  # numero do computador
 token = valor_dicionario[0]  # pega o primeiro item da tupla
 credentials = valor_dicionario[1]  # pega o segundo item da tuplas
 
 
 def credencial():
-    #IP.tem_internet()
+    # IP.tem_internet()
     """Mostra o uso básico da Sheets API.
     Imprime valores de uma planilha de amostra.
     """
@@ -133,7 +128,7 @@ def credencial():
     # credentials = valor_dicionario[1]  # pega o segundo item da tuplas
     # return token, credentials
     creds = None
-    #token, credentials = token_credential()
+    # token, credentials = token_credential()
 
     # O arquivo token.json armazena os tokens de acesso e atualização do usuário
     # e é criado automaticamente quando o fluxo de autorização é concluído pela
@@ -155,11 +150,12 @@ def credencial():
 
     return creds
 
+
 cred = credencial()
 service = build('sheets', 'v4', credentials=cred)
 
-def primeira_celula_vazia3(guia):
 
+def primeira_celula_vazia3(guia):
     print('primeira celula vazia')
     global cred
     global service
@@ -178,10 +174,10 @@ def primeira_celula_vazia3(guia):
 
             try:
                 i = values.index("")
-                return f"D{i+1}"
+                return f"D{i + 1}"
             except ValueError:
                 i = len(values)
-                return f"D{i+1}"
+                return f"D{i + 1}"
         except Exception as error:
             print(f"Ocorreu um erro ao obter o valor da célula:")
             print(f"Erro: {str(error)}")
@@ -220,12 +216,12 @@ def primeira_celula_vazia(guia):
                 valueRenderOption="UNFORMATTED_VALUE"
             ).execute()
             values = result.get('values', [[]])[0]
-            #print(values)
+            # print(values)
 
             # Montar uma lista com os 50 valores do intervalo
             try:
                 i = values.index("")
-                #print(i)
+                # print(i)
                 linha_vazia_anterior += i  # Atualiza a variável global com a próxima linha vazia
                 print('linha encontrada: ', linha_vazia_anterior)
                 endereco = f"D{linha_vazia_anterior}"
@@ -234,7 +230,7 @@ def primeira_celula_vazia(guia):
 
             except ValueError:
                 i = len(values)
-                #print(i)
+                # print(i)
                 if i < intervalo_de_busca + 1:
                     linha_vazia_anterior += i  # Atualiza a variável global com a próxima linha vazia
                     print('linha encontrada: ', linha_vazia_anterior)
@@ -248,7 +244,7 @@ def primeira_celula_vazia(guia):
         except Exception as e:
             print(f"primeira_celula_vazia Ocorreu um erro ao obter o valor da célula:", e)
             print("Erro primeira_celula_vazia. Tentando novamente em 5 segundos...")
-            #time.sleep(5)
+            # time.sleep(5)
             IP.tem_internet()
             cred = credencial()
             service = build('sheets', 'v4', credentials=cred)
@@ -271,19 +267,20 @@ def escrever_celula(valor, guia, endereco):
                 valueInputOption=value_input_option,
                 body=data).execute()
             break
-            #print('{0} células atualizadas.'.format(result.get('updatedCells')))
-        #except (socket.gaierror, TransportError, ServerNotFoundError) as error:
+            # print('{0} células atualizadas.'.format(result.get('updatedCells')))
+        # except (socket.gaierror, TransportError, ServerNotFoundError) as error:
         except Exception as error:
             print(f"escrever_celula Ocorreu um erro ao obter o valor da célula:")
             print(f"Erro: {str(error)}")
-            #time.sleep(5)
+            # time.sleep(5)
             IP.tem_internet()
             cred = credencial()
             service = build('sheets', 'v4', credentials=cred)
 
+
 def escrever_valores(valores, guia, endereco):
-    #recebe uma lista de valores como argumento valores. Essa lista será usada para preencher três células adjacentes.
-    #Os valores serão escritos nas células adjacentes começando pela célula especificada em endereco.
+    # recebe uma lista de valores como argumento valores. Essa lista será usada para preencher três células adjacentes.
+    # Os valores serão escritos nas células adjacentes começando pela célula especificada em endereco.
 
     global cred
     global service
@@ -300,12 +297,12 @@ def escrever_valores(valores, guia, endereco):
                 valueInputOption=value_input_option,
                 body=data).execute()
             break
-            #print('{0} células atualizadas.'.format(result.get('updatedCells')))
+            # print('{0} células atualizadas.'.format(result.get('updatedCells')))
         # except (socket.gaierror, TransportError, ServerNotFoundError) as error:
         except Exception as error:
             print(f"escrever_valores Ocorreu um erro ao obter o valor da célula:")
             print(f"Erro: {str(error)}")
-            #time.sleep(5)
+            # time.sleep(5)
             IP.tem_internet()
             cred = credencial()
             service = build('sheets', 'v4', credentials=cred)
@@ -314,7 +311,7 @@ def escrever_valores(valores, guia, endereco):
 def escrever_valores_lote(valores, guia, linha):
     global cred
     global service
-    range_start = f"{guia}!E{linha}:H{linha}"
+    range_start = f"{guia}!E{linha}:I{linha}"
     data = {
         'range': range_start,
         'majorDimension': 'ROWS',
@@ -335,10 +332,11 @@ def escrever_valores_lote(valores, guia, linha):
         except Exception as error:
             print(f" escrever_valores_lote Ocorreu um erro ao obter o valor da célula:")
             print(f"Erro: {str(error)}")
-            #time.sleep(5)
+            # time.sleep(5)
             IP.tem_internet()
             cred = credencial()
             service = build('sheets', 'v4', credentials=cred)
+
 
 def reservar_linha(guia, endereco):
     print("reservar_linha")
@@ -349,12 +347,12 @@ def reservar_linha(guia, endereco):
     senha = ""
     linha = ""
     contagem_ip = ""
-    #print(valor)
+    # print(valor)
     if valor_pc is not None:
 
         escrever_celula(valor_pc, guia, endereco)
         linha = endereco[1:]
-        time.sleep(5) # tempo entre pegar o id e testa se nao teve concorrencia
+        time.sleep(5)  # tempo entre pegar o id e testa se nao teve concorrencia
         values, id, senha, contagem_ip = lote_valor(guia, linha)
         try:
             values = int(values)
@@ -365,7 +363,7 @@ def reservar_linha(guia, endereco):
                 print("Pego por outro computador")
                 linha_vazia_anterior += 40
                 return False, id, senha, linha, contagem_ip
-            #print("values :",values)
+            # print("values :",values)
         except:
             linha_vazia_anterior += 40
             return False, id, senha, linha, contagem_ip
@@ -375,16 +373,15 @@ def reservar_linha(guia, endereco):
 
 
 def lote_valor(guia, linha):
-
     global cred
     global service
-    regiao1 = f"{guia}!B{linha}:D{linha}" # regiao com a informação id senha e numero computador
-    #print(regiao1)
-    regiao2 = f"{dicionari_PC_IP[nome_computador]}" # pega a contagem de ip
-    #print(regiao2)
+    regiao1 = f"{guia}!B{linha}:D{linha}"  # regiao com a informação id senha e numero computador
+    # print(regiao1)
+    regiao2 = f"{dicionari_PC_IP[nome_computador]}"  # pega a contagem de ip
+    # print(regiao2)
     regiao = [regiao1, regiao2]
 
-    #print(regiao)
+    # print(regiao)
 
     while True:
 
@@ -409,7 +406,7 @@ def lote_valor(guia, linha):
                 senha = values[1]
                 valor = values[2]
                 cont_IP = values[3]
-                #print(cont_IP)
+                # print(cont_IP)
                 return valor, id, senha, cont_IP
 
         except Exception as error:
@@ -419,6 +416,7 @@ def lote_valor(guia, linha):
             IP.tem_internet()
             cred = credencial()
             service = build('sheets', 'v4', credentials=cred)
+
 
 def pega_valor(guia, endereco):
     print('pega_valor')
@@ -441,7 +439,7 @@ def pega_valor(guia, endereco):
             print(f"pega_valor Ocorreu um erro ao obter o valor da célula:")
             print(f"Erro: {str(error)}")
             IP.tem_internet()
-            #return None
+            # return None
             cred = credencial()
             service = build('sheets', 'v4', credentials=cred)
 
@@ -557,15 +555,16 @@ def zera_cont_IP(endereco):
         except Exception as error:
             print(f"zera_cont_IP Ocorreu um erro ao obter o valor da célula:")
             print(f"Erro: {str(error)}")
-            #time.sleep(5)
+            # time.sleep(5)
             IP.tem_internet()
             cred = credencial()
             service = build('sheets', 'v4', credentials=cred)
 
+
 def pega_ID_senha(guia, endereco):
     global cred
     global service
-    linha = re.sub("[^0-9]", "", endereco)# pega a linha
+    linha = re.sub("[^0-9]", "", endereco)  # pega a linha
     regiao = f"{guia}!B{linha}:C{linha}"  # 'R1!B2:C2'
     while True:
         try:
@@ -575,7 +574,7 @@ def pega_ID_senha(guia, endereco):
                 range=regiao).execute()
             # Extrai os valores das células B2 e C2
             values = result.get('values', [])
-            print("O ID e senhas são :",values)
+            print("O ID e senhas são :", values)
             if len(values) == 1:
                 id = values[0][0]
                 senha = values[0][1]
@@ -590,8 +589,8 @@ def pega_ID_senha(guia, endereco):
             cred = credencial()
             service = build('sheets', 'v4', credentials=cred)
 
-def escrever_IP_banido():
 
+def escrever_IP_banido():
     ip, com_internet = IP.meu_ip()
 
     # nome_computador = socket.gethostname()
@@ -604,7 +603,8 @@ def escrever_IP_banido():
     time.sleep(30)
     print('continua')
 
-    if (nome_usuario == "PokerIP") or ((nome_usuario == "lgagu") and (nome_computador == "PC-I7-9700KF")):  # teste se o usuario do computador é o que troca IP se nao for fica esperando esta livre
+    if (nome_usuario == "PokerIP") or ((nome_usuario == "lgagu") and (
+            nome_computador == "PC-I7-9700KF")):  # teste se o usuario do computador é o que troca IP se nao for fica esperando esta livre
         print('computador principarl vai marcar o IP banido')
     else:
         print('Não é um computador prncipal, apenas espera liberar um novo ip')
@@ -655,6 +655,7 @@ def escrever_IP_banido():
             cred = credencial()
             service = build('sheets', 'v4', credentials=cred)
 
+
 def lista_ip_banidos():
     global cred
     global service
@@ -691,11 +692,12 @@ def lista_ip_banidos():
             cred = credencial()
             service = build('sheets', 'v4', credentials=cred)
 
+
 def credenciais(guia):
     print("credenciais")
     reservado = False
 
-    while True:# pega a peimira celula vazia e pega as credenciais para entrar
+    while True:  # pega a peimira celula vazia e pega as credenciais para entrar
 
         endereco = primeira_celula_vazia(guia)
 
@@ -716,13 +718,15 @@ def credenciais(guia):
 def marca_horario(guia, linha):
     endereco = f"G{linha}"
     hora_atual = datetime.datetime.now().strftime('%H:%M:%S')
-    escrever_celula(hora_atual,guia,endereco)
+    escrever_celula(hora_atual, guia, endereco)
+
 
 def marca_banida(status, guia, linha):
     endereco = f"G{linha}"
     escrever_celula(status, guia, endereco)
     endereco = f"L{linha}"
     escrever_celula(status, guia, endereco)
+
 
 def marca_caida(status, guia, linha):
     if status != 'Banida':
@@ -739,24 +743,27 @@ def marca_ip(guia, linha):
     ip, com_internete = IP.tem_internet()
     escrever_celula(ip, guia, endereco)
 
+
 def marca_ficha(guia, linha, valor_fichas):
     endereco = f"E{linha}"
     escrever_celula(valor_fichas, guia, endereco)
+
 
 def marca_pontuacao(guia, linha, pontuacao_tarefas):
     endereco = f"F{linha}"
     escrever_celula(pontuacao_tarefas, guia, endereco)
 
+
 def marca_informacoes(valores, guia, linha):
     endereco = f"E{linha}"
     escrever_valores(valores, guia, endereco)
+
 
 def apagar_numerodo_pc(valores, guia, linha):
     endereco = f"D{linha}"
     escrever_valores(valores, guia, endereco)
 
-
-#credencial()
+# credencial()
 
 
 # guia = "R1"
@@ -767,13 +774,13 @@ def apagar_numerodo_pc(valores, guia, linha):
 
 #
 
-#creds = credencial()
-#escrever_celula("14", "R1", "G8") # conteudo, guia , endereço B150
+# creds = credencial()
+# escrever_celula("14", "R1", "G8") # conteudo, guia , endereço B150
 
-#zera_cont_IP("F15")
+# zera_cont_IP("F15")
 
-#credenciais('R4')
-#testa_valor("R4", 'D2')
+# credenciais('R4')
+# testa_valor("R4", 'D2')
 
 # guia = "IP"
 # endereco = "F1"

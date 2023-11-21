@@ -5,17 +5,17 @@ import pyautogui
 import Origem_pg
 
 # Exemplo de uso
-x_origem = 4
-y_origem = 266
+x_origem = 9
+y_origem = 227
 
 x_origem, y_origem = Origem_pg.x_y()
 print(x_origem, y_origem)
-#x_origem, y_origem = Origem_pg.x_y_aviso_sistema()
+# x_origem, y_origem = Origem_pg.x_y_aviso_sistema()
 
-#pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 580), (47, 136, 196), tolerance=19)
+# pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 580), (47, 136, 196), tolerance=19)
 
-x = (x_origem + 86)
-y = (y_origem + 66)
+x = (x_origem + 241)
+y = (y_origem + 170)
 
 tolerancia = 0
 pyautogui.moveTo(x, y)
@@ -24,7 +24,7 @@ for i in range(100):
     cor = pyautogui.pixel(x, y)
     print(f"A cor RGB do pixel em ({x}, {y}) é {cor}")
 
-    if pyautogui.pixelMatchesColor(x, y, (64, 37, 165), tolerance=tolerancia):
+    if pyautogui.pixelMatchesColor(x, y, (236, 55, 4), tolerance=tolerancia):
         print('tem a cor, tolerancia :', tolerancia)
 
     tolerancia = tolerancia + 1
@@ -38,9 +38,7 @@ for i in range(100):
     # Aguarde por um curto período de tempo antes de verificar o próximo pixel
     time.sleep(0.1)
 
-
 # Encontre a cor que mais ocorreu
 cor_mais_comum = max(cores_contagem, key=cores_contagem.get)
 
 print(f"A cor que mais ocorreu foi: {cor_mais_comum} com {cores_contagem[cor_mais_comum]} ocorrências.")
-

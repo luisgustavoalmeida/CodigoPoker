@@ -1,13 +1,16 @@
-import HoraT
 import time
-import IP
-import Tarefas
-import Limpa
+
 import pyautogui
-import Origem_pg
+
+import HoraT
+import IP
+import Limpa
+import Tarefas
+
 # Desabilitar o fail-safe
 pyautogui.FAILSAFE = False
 pyautogui.PAUSE = 0
+
 
 def localizar_imagem(imagem, regiao, precisao):
     try:
@@ -50,6 +53,7 @@ def abre_slot(x_origem, y_origem, joga_vezes=True):
         if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
             return "sair da conta"
 
+
 def testa_slot_lipo(x_origem, y_origem):
     print('testa_slot_lipo')
     cont_erro = 0
@@ -65,7 +69,8 @@ def testa_slot_lipo(x_origem, y_origem):
             return False
         else:
             print("slote NÂO limpo")
-            if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 668), (18, 9, 4), tolerance=5): # esta com alguma mensagem de bonus, fica mais escuro com foco na mensagem
+            if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 668), (18, 9, 4),
+                                           tolerance=5):  # esta com alguma mensagem de bonus, fica mais escuro com foco na mensagem
                 pyautogui.click(x_origem + 684, y_origem + 258)  # rodada bonus
                 pyautogui.click(x_origem + 716, y_origem + 256)  # mega win
                 pyautogui.click(x_origem + 681, y_origem + 199)  # outra mensagem nao sei qual é nesse lugar
@@ -78,12 +83,13 @@ def testa_slot_lipo(x_origem, y_origem):
                 print('continua')
                 return True
 
-            elif not (pyautogui.pixelMatchesColor((x_origem + 624), (y_origem + 336), (0, 0, 0), tolerance=5)): # testa se tem a lista preta de divisão das colunas
+            elif not (pyautogui.pixelMatchesColor((x_origem + 624), (y_origem + 336), (0, 0, 0),
+                                                  tolerance=5)):  # testa se tem a lista preta de divisão das colunas
                 Limpa.limpa_pequeno(x_origem, y_origem)
                 Limpa.limpa_promocao(x_origem, y_origem)
-                pyautogui.click(x_origem + 684, y_origem + 258) # rodada bonus
-                pyautogui.click(x_origem + 716, y_origem + 256) # mega win
-                pyautogui.click(x_origem + 681, y_origem + 199) # outra mensagem nao sei qual é nesse lugar
+                pyautogui.click(x_origem + 684, y_origem + 258)  # rodada bonus
+                pyautogui.click(x_origem + 716, y_origem + 256)  # mega win
+                pyautogui.click(x_origem + 681, y_origem + 199)  # outra mensagem nao sei qual é nesse lugar
 
         cont_erro += 1
         if cont_erro > 50:
@@ -151,7 +157,7 @@ def solot_joga_vezes(x_origem, y_origem, id, senha, url, navegador, joga_vezes):
     abre_slot(x_origem, y_origem, joga_vezes)
     cont_jogadas_troca_ip = 0
 
-    while continua_jogando: # permanece joghando cartas premiadas ate nao ter mais a mição jogar x vezes
+    while continua_jogando:  # permanece joghando cartas premiadas ate nao ter mais a mição jogar x vezes
         if HoraT.fim_tempo_tarefa():
             return
         if Limpa.limpa_total_fazendo_tarefa(x_origem, y_origem) == "sair da conta":
@@ -164,22 +170,22 @@ def solot_joga_vezes(x_origem, y_origem, id, senha, url, navegador, joga_vezes):
         if slot_aberto == True:
             print('espera girar na cor certa')
             for i in range(20):
-                #espera poder clicar no girar
+                # espera poder clicar no girar
                 if pyautogui.pixelMatchesColor((x_origem + 922), (y_origem + 609), (216, 17, 2), tolerance=5):
                     print("clicar no girar")
                     pyautogui.doubleClick(x_origem + 922, y_origem + 609)  # clica em girar
                     break
                 time.sleep(0.3)
 
-        #Limpa.limpa_abre_tarefa2(x_origem, y_origem)
+        # Limpa.limpa_abre_tarefa2(x_origem, y_origem)
         Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
         Tarefas.recolher_tarefa(x_origem, y_origem)
         meta_atigida, pontos = Tarefas.meta_tarefas(x_origem, y_origem)
-        continua_jogando, tarefa = Tarefas.comparar_listas_fazendo_tarefa(tarefas_fazer, x_origem, y_origem) # procura com ocr
+        continua_jogando, tarefa = Tarefas.comparar_listas_fazendo_tarefa(tarefas_fazer, x_origem, y_origem)  # procura com ocr
 
         if (not continua_jogando) or (meta_atigida):
             time.sleep(0.5)
-            #Limpa.limpa_abre_tarefa2(x_origem, y_origem)
+            # Limpa.limpa_abre_tarefa2(x_origem, y_origem)
             Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
             continua_jogando, tarefa = Tarefas.comparar_listas_fazendo_tarefa(tarefas_fazer, x_origem, y_origem)  # procura com ocr
             meta_atigida, pontos = Tarefas.meta_tarefas(x_origem, y_origem)
@@ -188,7 +194,7 @@ def solot_joga_vezes(x_origem, y_origem, id, senha, url, navegador, joga_vezes):
                 if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
                     return "sair da conta"
                 return
-        #cartas_vezes = True
+        # cartas_vezes = True
         Limpa.fecha_tarefa(x_origem, y_origem)  # fecha a lista de tarefas diarias
         abre_slot(x_origem, y_origem, joga_vezes)
     return
@@ -232,7 +238,7 @@ def solot_joga_vezes(x_origem, y_origem, id, senha, url, navegador, joga_vezes):
 #     return
 
 
-#solot_joga_vezes_upando(x_origem, y_origem)
+# solot_joga_vezes_upando(x_origem, y_origem)
 # # #solot_joga_vezes(x_origem, y_origem)
 # #abre_slot(x_origem, y_origem, False)
 # ajustar_valor(x_origem, y_origem, False)

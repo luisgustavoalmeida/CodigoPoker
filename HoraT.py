@@ -1,10 +1,11 @@
 import datetime
 import time
-import IP
-import pyautogui
 
-hora_roleta = 3  # defina o tempo disponivel para a roleta em horas
-minutos_roleta = 59  # defina o tempo disponivel para a roleta em minutos
+import IP
+
+hora_roleta = 5  # defina o tempo disponivel para a roleta em horas
+
+minutos_roleta = 0  # defina o tempo disponivel para a roleta em minutos
 
 tempo_roletas = (hora_roleta * 3600) + (minutos_roleta * 60)  # 4h
 
@@ -20,6 +21,7 @@ faixa_tempo = 700  # janela de tempo para sair das contas no tarefas
 
 guias = ["R1", "R2", "R3", "R4", "R5"]
 
+
 def mudar_guia(id, guia):
     print('mudar_guia')
     hora_atual = datetime.datetime.now().time()
@@ -27,14 +29,14 @@ def mudar_guia(id, guia):
     tempo_atual = (hora_atual.hour * 3600) + (hora_atual.minute * 60) + hora_atual.second
     print('tempo_atual :', tempo_atual)
 
-    while tempo_atual > 86100: # se maior que 23:55:00
+    while tempo_atual > 86100:  # se maior que 23:55:00
         print('espera virar 0h')
         time.sleep(15)
         hora_atual = datetime.datetime.now().time()
         tempo_atual = (hora_atual.hour * 3600) + (hora_atual.minute * 60) + hora_atual.second
 
     if (guia == "R1") or (guia == "R2") or (guia == "R3") or (guia == "R4") or (guia == "R5"):
-        if id == "": # se a cabou o R vai para tarefa
+        if id == "":  # se a cabou o R vai para tarefa
             if tempo_tarefa > 0:  # se tem algim tempo destinado as tarefas
                 print('Fim do R, vai para as tarefas')
                 # T1
@@ -119,10 +121,11 @@ def mudar_guia(id, guia):
         print('vai para a guia', guia_atual)
         return guia_atual
 
+
 def fim_tempo_tarefa():
     print("Testa se esta na hora de parar o tarefas")
     hora_atual = datetime.datetime.now().time()
-    #print("hora_atual: ", hora_atual)
+    # print("hora_atual: ", hora_atual)
     tempo_atual = (hora_atual.hour * 3600) + (hora_atual.minute * 60) + hora_atual.second  # hora atual em segundos
     print("tempo_atual: ", tempo_atual)
 
@@ -134,7 +137,7 @@ def fim_tempo_tarefa():
         return False
 
     for i in range(1, 5):
-        #print(i)
+        # print(i)
         # hora_comecar_tarefas = ((tempo_total * i) - tempo_tarefa)  # 4 9 14 19
         # hora_terminar_tarefas = (((tempo_total * i) - tempo_tarefa) + tempo_tarefa)
         # # print("hora_comecar_tarefas", hora_comecar_tarefas)
@@ -157,8 +160,6 @@ def fim_tempo_tarefa():
     print("outro, Continua fazendo tarefas")
     return False
 
-
-
 # guia = "T1"
 # id = "32136546"
 # # #
@@ -166,5 +167,3 @@ def fim_tempo_tarefa():
 # print("vai para a gua: ", guia)
 
 # fim_tempo_tarefa()
-
-
