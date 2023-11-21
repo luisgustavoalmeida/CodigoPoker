@@ -1003,7 +1003,7 @@ def valor_fichas_perfil(x_origem, y_origem):
     - int: valor de fichas da conta ou 0 se não for encontrado ou estiver fora da faixa desejada.
     """
     print('valor_fichas_perfil')
-
+    lido = 0
     for _ in range(50):
         # clica para abrir a tela do perfil
         pyautogui.click(16 + x_origem, 24 + y_origem)
@@ -1021,12 +1021,19 @@ def valor_fichas_perfil(x_origem, y_origem):
     contraste_pre = 1
     contraste_pos = 1
     regiao_ficha = (x_origem + 416, y_origem + 262, x_origem + 493, y_origem + 283)  # leval
-    config = '--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789.'
 
-    for _ in range(3):
-        # Realiza a leitura do nível usando OCR
+    # Define a lista de configurações a serem testadas
+    configuracoes = [
+        '--psm 7 --oem 1 -c tessedit_char_whitelist=0123456789.',
+        '--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789.',
+        '--psm 3 --oem 0 -c tessedit_char_whitelist=0123456789.'
+    ]
+
+    # Itera sobre cada configuração e realiza o OCR
+    for config in configuracoes:
+        # Realiza o OCR com a configuração atual
         lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
-        print('lido ', lido)
+        print(lido)
         if lido is not None:
             lido = tratar_valor_numerico(lido)
             # Verifica se o valor está na faixa desejada
@@ -1040,9 +1047,10 @@ def valor_fichas_perfil(x_origem, y_origem):
             print("Erro na leitura do OCR")
             lido = 0
         time.sleep(0.2)
-    # if pyautogui.pixelMatchesColor((x_origem + 241), (y_origem + 170), (227, 18, 5), tolerance=20):
-    #     # clica para fechar a tela do perfil
-    #     pyautogui.click(771 + x_origem, 162 + y_origem)
+
+    if lido == 0:
+        lido = valor_fichas(x_origem, y_origem)
+
     return lido
 
 
