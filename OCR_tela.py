@@ -1049,6 +1049,7 @@ def valor_fichas_perfil(x_origem, y_origem):
         time.sleep(0.2)
 
     if lido == 0:
+        # se nao foi possivel ler o valor tenta outra tecnica
         lido = valor_fichas(x_origem, y_origem)
 
     return lido
