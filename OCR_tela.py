@@ -1008,8 +1008,9 @@ def valor_fichas_perfil(x_origem, y_origem):
         # clica para abrir a tela do perfil
         pyautogui.click(16 + x_origem, 24 + y_origem)
         # testa se a tela do perfil esta aberta
-        if pyautogui.pixelMatchesColor((x_origem + 241), (y_origem + 170), (227, 18, 5), tolerance=2):
-            time.sleep(0.2)
+        if (pyautogui.pixelMatchesColor((x_origem + 241), (y_origem + 170), (227, 18, 5), tolerance=1)
+                and pyautogui.pixelMatchesColor((x_origem + 449), (y_origem + 292), (239, 247, 252), tolerance=1)):
+            time.sleep(0.5)
             break
         time.sleep(0.2)
 
@@ -1022,20 +1023,22 @@ def valor_fichas_perfil(x_origem, y_origem):
     regiao_ficha = (x_origem + 416, y_origem + 262, x_origem + 493, y_origem + 283)  # leval
     config = '--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789.'
 
-    # Realiza a leitura do nível usando OCR
-    lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
-    print('lido ', lido)
-    if lido is not None:
-        lido = tratar_valor_numerico(lido)
-        # Verifica se o valor está na faixa desejada
-        if 500 < lido < 15000000:
-            print("\n   Fichas da conta:", lido, '\n')
+    for _ in range(3):
+        # Realiza a leitura do nível usando OCR
+        lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
+        print('lido ', lido)
+        if lido is not None:
+            lido = tratar_valor_numerico(lido)
+            # Verifica se o valor está na faixa desejada
+            if 500 < lido < 15000000:
+                print("\n   Fichas da conta:", lido, '\n')
+                break
+            else:
+                print("Valor fora da faixa desejada")
+                lido = 0
         else:
-            print("Valor fora da faixa desejada")
+            print("Erro na leitura do OCR")
             lido = 0
-    else:
-        print("Valor fora da faixa desejada")
-        lido = 0
     # if pyautogui.pixelMatchesColor((x_origem + 241), (y_origem + 170), (227, 18, 5), tolerance=20):
     #     # clica para fechar a tela do perfil
     #     pyautogui.click(771 + x_origem, 162 + y_origem)
@@ -1059,7 +1062,8 @@ def level_conta(x_origem, y_origem):
         # clica para abrir a tela do perfil
         pyautogui.click(16 + x_origem, 24 + y_origem)
         # testa se a tela do perfil esta aberta
-        if pyautogui.pixelMatchesColor((x_origem + 241), (y_origem + 170), (227, 18, 5), tolerance=2):
+        if (pyautogui.pixelMatchesColor((x_origem + 241), (y_origem + 170), (227, 18, 5), tolerance=1)
+                and pyautogui.pixelMatchesColor((x_origem + 449), (y_origem + 292), (239, 247, 252), tolerance=1)):
             time.sleep(0.2)
             break
         time.sleep(0.2)
@@ -1073,21 +1077,23 @@ def level_conta(x_origem, y_origem):
     regiao_ficha = (x_origem + 599, y_origem + 239, x_origem + 630, y_origem + 257)  # leval
     config = '--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789'
 
-    # Realiza a leitura do nível usando OCR
-    lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
-    # print('\n\n\nlido ', lido, '\n\n\n')
-    if lido is not None:
-        lido = tratar_valor_numerico(lido)
-        # Verifica se o valor está na faixa desejada
-        if 1 < lido < 50:
-            print("\n   Nível da conta:", lido)
+    for _ in range(3):
+        # Realiza a leitura do nível usando OCR
+        lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
+        # print('\n\n\nlido ', lido, '\n\n\n')
+        if lido is not None:
+            lido = tratar_valor_numerico(lido)
+            # Verifica se o valor está na faixa desejada
+            if 1 < lido < 50:
+                print("\n   Nível da conta:", lido)
+                break
+            else:
+                print("Valor fora da faixa desejada")
+                lido = 0
         else:
-            print("Valor fora da faixa desejada")
+            print("Erro na leitura do OCR")
             lido = 0
-    else:
-        print("Valor fora da faixa desejada")
-        lido = 0
-    if pyautogui.pixelMatchesColor((x_origem + 241), (y_origem + 170), (227, 18, 5), tolerance=20):
+    if pyautogui.pixelMatchesColor((x_origem + 241), (y_origem + 170), (227, 18, 5), tolerance=2):
         # clica para fechar a tela do perfil
         pyautogui.click(771 + x_origem, 162 + y_origem)
     return lido
