@@ -29,7 +29,7 @@ def upar(x_origem, y_origem):
             print('Tem tarefas de UPAR para fazer')
         else:
             print('Não tem tarefas de UPAR para fazer')
-            return 'Conta upada'
+            # return 'Conta upada'
 
         if 'Jogar 1 mãos em qualquer mesa' in lista_tarefa_upar:
             print("\n\n Jogar 10 mãos em qualquer mesa \n\n")
