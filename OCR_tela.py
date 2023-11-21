@@ -97,9 +97,9 @@ def OCR_regiao(regiao, config, inveter_cor=True, fator_ampliacao=1, contraste_pr
             imagem_recortada = cv2.convertScaleAbs(imagem_recortada, alpha=contraste_pos, beta=0)
 
         # print("iamgem cor invertida pos contraste")
-        cv2.imshow("Imagem", imagem_recortada)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+        # cv2.imshow("Imagem", imagem_recortada)
+        # cv2.waitKey(0)
+        # cv2.destroyAllWindows()
 
         # Passa o OCR na imagem recortada
         pytesseract.pytesseract.tesseract_cmd = caminho_tesseract
@@ -1100,8 +1100,8 @@ def level_conta(x_origem, y_origem):
     return lido
 
 # aviso_do_sistema()
-x_origem, y_origem = Origem_pg.x_y()
-valor_fichas_perfil(x_origem, y_origem)
+# x_origem, y_origem = Origem_pg.x_y()
+# valor_fichas_perfil(x_origem, y_origem)
 # # tarefas_diaris_upando(x_origem, y_origem)
 # level_conta(x_origem, y_origem)
 # numero_sala(x_origem, y_origem)
