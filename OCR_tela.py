@@ -97,9 +97,9 @@ def OCR_regiao(regiao, config, inveter_cor=True, fator_ampliacao=1, contraste_pr
             imagem_recortada = cv2.convertScaleAbs(imagem_recortada, alpha=contraste_pos, beta=0)
 
         # print("iamgem cor invertida pos contraste")
-        # cv2.imshow("Imagem", imagem_recortada)
-        # cv2.waitKey(0)
-        # cv2.destroyAllWindows()
+        cv2.imshow("Imagem", imagem_recortada)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
         # Passa o OCR na imagem recortada
         pytesseract.pytesseract.tesseract_cmd = caminho_tesseract
@@ -1016,8 +1016,8 @@ def valor_fichas_perfil(x_origem, y_origem):
 
     # Configurações para o processo OCR
     inveter_cor = False
-    esca_ciza = False
-    fator_ampliacao = 2
+    esca_ciza = True
+    fator_ampliacao = 1
     contraste_pre = 1
     contraste_pos = 1
     regiao_ficha = (x_origem + 416, y_origem + 262, x_origem + 493, y_origem + 283)  # leval
@@ -1039,6 +1039,7 @@ def valor_fichas_perfil(x_origem, y_origem):
         else:
             print("Erro na leitura do OCR")
             lido = 0
+        time.sleep(0.2)
     # if pyautogui.pixelMatchesColor((x_origem + 241), (y_origem + 170), (227, 18, 5), tolerance=20):
     #     # clica para fechar a tela do perfil
     #     pyautogui.click(771 + x_origem, 162 + y_origem)
@@ -1099,8 +1100,8 @@ def level_conta(x_origem, y_origem):
     return lido
 
 # aviso_do_sistema()
-# x_origem, y_origem = Origem_pg.x_y()
-# valor_fichas_perfil(x_origem, y_origem)
+x_origem, y_origem = Origem_pg.x_y()
+valor_fichas_perfil(x_origem, y_origem)
 # # tarefas_diaris_upando(x_origem, y_origem)
 # level_conta(x_origem, y_origem)
 # numero_sala(x_origem, y_origem)
