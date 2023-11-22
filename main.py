@@ -272,7 +272,7 @@ while True:
                             break
                         time.sleep(0.3)
 
-                # Tarefas.recolher_tarefa_upando(x_origem, y_origem)
+                Tarefas.recolher_tarefa_upando(x_origem, y_origem)
                 # testa se vai upar automatico
                 # if roleta == 'roleta_1' and not conta_upada:
                 conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)  # retorna se a conta ta upada ou nao
