@@ -125,6 +125,7 @@ while True:
         valor_fichas = ""
         pontuacao_tarefas = ""
         level_conta = ""
+        roleta = 'roleta_1'
         conta_upada = True
         hora_atual = ""
         status_poker = None
