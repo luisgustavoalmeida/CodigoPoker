@@ -517,7 +517,7 @@ def limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador):  # abre o 
                         print("Tarefas diarias limpo...")
                         return True
                 # testa se a tarefa diaria é de conta sem upar
-                elif pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 133), (1, 50, 254), tolerance=10):
+                elif pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 133), (1, 49, 243), tolerance=20):
                     pyautogui.click(821 + x_origem, 138 + y_origem)  # clique para fechar
                     print("Tarefas diarias conta sem upar")
                     return False
