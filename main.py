@@ -123,8 +123,9 @@ while True:
         ip = ""
         hora_que_rodou = 0
         valor_fichas = ""
-        pontuacao_tarefas = 0
-        level_conta = 0
+        pontuacao_tarefas = ""
+        level_conta = ""
+        conta_upada = True
         hora_atual = ""
         status_poker = None
         valores = [""]
