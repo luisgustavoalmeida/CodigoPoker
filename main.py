@@ -273,11 +273,12 @@ while True:
                         time.sleep(0.3)
 
                 Tarefas.recolher_tarefa_upando(x_origem, y_origem)
+                upar(x_origem, y_origem)
 
-                # testa se vai upar automatico
-                if roleta == 'roleta_1' and not conta_upada:
-                    # chama o modulo de UparAutomatico
-                    upar(x_origem, y_origem)
+                # # testa se vai upar automatico
+                # if roleta == 'roleta_1' and not conta_upada:
+                #     # chama o modulo de UparAutomatico
+                #     upar(x_origem, y_origem)
                 # valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
                 roda = False
                 break
