@@ -288,9 +288,9 @@ while True:
                                 break
                             time.sleep(1)
                             pyautogui.doubleClick(x_origem + 683, y_origem + 14)  # clica no icone roleta, ja roda sozinho
-                    Limpa.limpa_total()
+                    Limpa.limpa_total(x_origem, y_origem)
                     Tarefas.recolher_tarefa_upando(x_origem, y_origem)
-                    Limpa.limpa_total()
+                    Limpa.limpa_total(x_origem, y_origem)
                     # chama o modulo de UparAutomatico
                     upar(x_origem, y_origem)
                 # valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
