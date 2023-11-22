@@ -1009,7 +1009,7 @@ def valor_fichas_perfil(x_origem, y_origem):
         pyautogui.click(16 + x_origem, 24 + y_origem)
         # testa se a tela do perfil esta aberta
         if (pyautogui.pixelMatchesColor((x_origem + 241), (y_origem + 170), (227, 18, 5), tolerance=1)
-                and pyautogui.pixelMatchesColor((x_origem + 449), (y_origem + 292), (116, 130, 139), tolerance=1)):
+                and pyautogui.pixelMatchesColor((x_origem + 406), (y_origem + 273), (116, 130, 139), tolerance=1)):
             time.sleep(1)
             break
         time.sleep(0.2)
@@ -1073,8 +1073,8 @@ def level_conta(x_origem, y_origem):
         pyautogui.click(16 + x_origem, 24 + y_origem)
         # testa se a tela do perfil esta aberta
         if (pyautogui.pixelMatchesColor((x_origem + 241), (y_origem + 170), (227, 18, 5), tolerance=1)
-                and pyautogui.pixelMatchesColor((x_origem + 449), (y_origem + 292), (239, 247, 252), tolerance=1)):
-            time.sleep(0.2)
+                and pyautogui.pixelMatchesColor((x_origem + 406), (y_origem + 273), (116, 130, 139), tolerance=1)):
+            time.sleep(1)
             break
         time.sleep(0.2)
 
