@@ -272,13 +272,27 @@ while True:
                             break
                         time.sleep(0.3)
 
-                Tarefas.recolher_tarefa_upando(x_origem, y_origem)
-                upar(x_origem, y_origem)
-
-                # # testa se vai upar automatico
+                # Tarefas.recolher_tarefa_upando(x_origem, y_origem)
+                # testa se vai upar automatico
                 # if roleta == 'roleta_1' and not conta_upada:
-                #     # chama o modulo de UparAutomatico
-                #     upar(x_origem, y_origem)
+                conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)  # retorna se a conta ta upada ou nao
+                print('Conta upada: ', conta_upada)
+                if not conta_upada:
+                    if roleta == 'roleta_2':
+                        for i in range(20):
+                            time_sair = time.perf_counter()
+                            tempo_total = time_sair - time_rodou
+                            print('tempo que ja clicou no rodou', tempo_total)
+                            if tempo_total > 18:
+                                print('ja pode sair do r2')
+                                break
+                            time.sleep(1)
+                            pyautogui.doubleClick(x_origem + 683, y_origem + 14)  # clica no icone roleta, ja roda sozinho
+                    Limpa.limpa_total()
+                    Tarefas.recolher_tarefa_upando(x_origem, y_origem)
+                    Limpa.limpa_total()
+                    # chama o modulo de UparAutomatico
+                    upar(x_origem, y_origem)
                 # valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
                 roda = False
                 break
