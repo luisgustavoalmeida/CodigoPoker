@@ -1,14 +1,12 @@
 import time
-
 import pyautogui
-
 import Origem_pg
 
 # Exemplo de uso
 x_origem = 9
 y_origem = 227
 
-x_origem, y_origem = Origem_pg.x_y()
+# x_origem, y_origem = Origem_pg.x_y()
 print(x_origem, y_origem)
 # x_origem, y_origem = Origem_pg.x_y_aviso_sistema()
 
@@ -27,7 +25,7 @@ for i in range(100):
     if pyautogui.pixelMatchesColor(x, y, (236, 55, 4), tolerance=tolerancia):
         print('tem a cor, tolerancia :', tolerancia)
 
-    tolerancia = tolerancia + 1
+    tolerancia += 1
 
     # Adicione a cor ao dicionário e atualize a contagem
     if cor in cores_contagem:
@@ -40,5 +38,15 @@ for i in range(100):
 
 # Encontre a cor que mais ocorreu
 cor_mais_comum = max(cores_contagem, key=cores_contagem.get)
+ocorrencias_mais_comum = cores_contagem[cor_mais_comum]
 
-print(f"A cor que mais ocorreu foi: {cor_mais_comum} com {cores_contagem[cor_mais_comum]} ocorrências.")
+# Encontre a cor menos comum
+cor_menos_comum = min(cores_contagem, key=cores_contagem.get)
+ocorrencias_menos_comum = cores_contagem[cor_menos_comum]
+
+print(f"A cor que mais ocorreu foi: {cor_mais_comum} com {ocorrencias_mais_comum} ocorrências.")
+print(f"A cor menos comum foi: {cor_menos_comum} com {ocorrencias_menos_comum} ocorrências.")
+
+# Realize uma busca exaustiva para encontrar a melhor tolerância
+melhor_tolerancia = None
+max_ocorrencias = 0

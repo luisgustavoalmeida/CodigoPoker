@@ -11,7 +11,6 @@ import pytesseract
 from fuzzywuzzy import fuzz
 
 import IP
-import Origem_pg
 import Variaveis_Globais
 
 # Desabilitar o fail-safe
@@ -46,6 +45,207 @@ pyautogui.FAILSAFE = False
 -c tessedit_create_hocr=1: Gera um arquivo HOCR (HTML OCR) contendo o texto extraído com informações de layout e formatação.
 -c hocr_font_info=1: Inclui informações sobre a fonte no arquivo HOCR gerado.
 -c hocr_char_boxes=1: Inclui informações sobre os limites de cada caractere no arquivo HOCR gerado.
+
+0 (Orientação e Detecção de Blocos de Texto (OSD) somente):
+
+Descrição: Tesseract tenta determinar a orientação e a detecção de blocos de texto sem executar a OCR.
+Observações: Pode ser útil quando você deseja apenas obter informações sobre a orientação e a localização dos blocos de texto.
+python
+Copy code
+custom_config = r'--psm 0'
+1 (Auto-segmentação de Página com OSD):
+
+Descrição: Tesseract tenta automaticamente segmentar a página, incluindo a detecção de orientação e detecção de blocos de texto.
+Observações: É a opção padrão para segmentação de páginas.
+python
+Copy code
+custom_config = r'--psm 1'
+2 (Auto-segmentação de Página, mas sem OSD ou OCR):
+
+Descrição: Tesseract tenta automaticamente segmentar a página sem realizar a detecção de orientação ou OCR.
+Observações: Pode ser útil quando você deseja apenas a segmentação da página, sem processamento adicional.
+python
+Copy code
+custom_config = r'--psm 2'
+3 (Totalmente Automático, mas sem OSD ou OCR):
+
+Descrição: Tesseract tenta realizar a segmentação de página totalmente automaticamente sem executar a detecção de orientação ou OCR.
+Observações: Adequado para casos em que a segmentação automática é a principal prioridade.
+python
+Copy code
+custom_config = r'--psm 3'
+4 (Assumir uma única coluna de texto de uma imagem):
+
+Descrição: Tesseract assume que há uma única coluna de texto na imagem.
+Observações: Pode ser útil quando você está lidando com uma imagem que contém apenas uma coluna de texto.
+python
+Copy code
+custom_config = r'--psm 4'
+5 (Assumir uma única coluna de texto de uma imagem com OCR):
+
+Descrição: Similar ao modo 4, mas também executa a OCR.
+Observações: Útil quando você deseja obter texto de uma única coluna de texto.
+python
+Copy code
+custom_config = r'--psm 5'
+
+6 (Assumir uma única linha de texto de uma imagem):
+
+Descrição: Tesseract assume que há uma única linha de texto na imagem.
+Observações: Útil quando a imagem contém uma única linha de texto.
+python
+Copy code
+custom_config = r'--psm 6'
+7 (Assumir uma única palavra de texto de uma imagem):
+
+Descrição: Tesseract assume que há uma única palavra de texto na imagem.
+Observações: Pode ser útil para segmentar e reconhecer palavras isoladas.
+python
+Copy code
+custom_config = r'--psm 7'
+8 (Assumir uma única palavra de texto de uma imagem com OCR):
+
+Descrição: Similar ao modo 7, mas também executa a OCR.
+Observações: Útil quando você deseja reconhecer uma única palavra em uma imagem.
+python
+Copy code
+custom_config = r'--psm 8'
+9 (Assumir uma única palavra de texto de uma imagem, tentando encontrar uma coleção de caracteres):
+
+Descrição: Tesseract tenta encontrar uma coleção de caracteres correspondentes a uma palavra.
+Observações: Pode ser útil em situações em que as palavras não estão completamente separadas.
+python
+Copy code
+custom_config = r'--psm 9'
+10 (Assumir um único caractere):
+
+Descrição: Tesseract assume que há um único caractere na imagem.
+Observações: Pode ser usado para segmentar e reconhecer caracteres individuais.
+python
+Copy code
+custom_config = r'--psm 10'
+11 (Sparse text. Encontrar todos os pequenos componentes de texto):
+
+Descrição: Tesseract tenta encontrar todos os pequenos componentes de texto na imagem.
+Observações: Útil quando há texto esparsamente distribuído na imagem.
+python
+Copy code
+custom_config = r'--psm 11'
+12 (Sparse text with OSD):
+
+Descrição: Similar ao modo 11, mas inclui a detecção de orientação e detecção de blocos de texto.
+Observações: Adequado quando há texto esparsamente distribuído, e você precisa de informações sobre orientação e blocos de texto.
+python
+Copy code
+custom_config = r'--psm 12'
+13 (Raw line. Tratar a imagem como uma única linha de texto):
+
+Descrição: Trata a imagem como uma única linha de texto, sem realizar a segmentação de palavras.
+Observações: Útil quando o texto na imagem é uma única linha contínua.
+python
+Copy code
+custom_config = r'--psm 13'
+14 (Raw line with OSD):
+
+Descrição: Similar ao modo 13, mas inclui a detecção de orientação e detecção de blocos de texto.
+Observações: Adequado quando o texto na imagem é uma única linha contínua e você precisa de informações sobre orientação e blocos de texto.
+python
+Copy code
+custom_config = r'--psm 14'
+
+15 (Assumir um único bloco de texto vertical de uma imagem):
+
+Descrição: Tesseract assume que há um único bloco de texto vertical na imagem.
+Observações: Útil quando o texto está disposto verticalmente.
+python
+Copy code
+custom_config = r'--psm 15'
+16 (Assumir um único bloco de texto vertical de uma imagem com OCR):
+
+Descrição: Similar ao modo 15, mas também executa a OCR.
+Observações: Adequado quando você deseja reconhecer um único bloco de texto vertical.
+python
+Copy code
+custom_config = r'--psm 16'
+17 (Assumir um único bloco de texto de uma imagem):
+
+Descrição: Tesseract assume que há um único bloco de texto na imagem.
+Observações: Útil quando há uma única região contendo texto na imagem.
+python
+Copy code
+custom_config = r'--psm 17'
+18 (Assumir um único bloco de texto de uma imagem com OCR):
+
+Descrição: Similar ao modo 17, mas também executa a OCR.
+Observações: Adequado quando você deseja reconhecer um único bloco de texto na imagem.
+python
+Copy code
+custom_config = r'--psm 18'
+19 (Assumir um único bloco de texto de uma imagem, tentando encontrar uma coleção de caracteres):
+
+Descrição: Tesseract tenta encontrar uma coleção de caracteres correspondentes a um bloco de texto.
+Observações: Pode ser útil quando os caracteres estão próximos, mas não totalmente conectados.
+python
+Copy code
+custom_config = r'--psm 19'
+20 (Assumir uma única palavra de texto de uma imagem, mas com análise automática de layout):
+
+Descrição: Similar ao modo 8, mas com análise automática de layout.
+Observações: Adequado quando a imagem contém uma única palavra e a análise do layout é importante.
+python
+Copy code
+custom_config = r'--psm 20'
+21 (Assumir um único bloco de texto de uma imagem, mas com análise automática de layout):
+
+Descrição: Similar ao modo 18, mas com análise automática de layout.
+Observações: Útil quando há um único bloco de texto na imagem e a análise do layout é importante.
+python
+Copy code
+custom_config = r'--psm 21'
+
+22 (Assumir um único bloco de texto de uma imagem, mas com análise automática de layout e OCR):
+
+Descrição: Similar ao modo 21, mas também executa a OCR.
+Observações: Adequado quando há um único bloco de texto na imagem, a análise do layout é importante, e você deseja realizar a OCR.
+python
+Copy code
+custom_config = r'--psm 22'
+23 (Assumir um único bloco de texto vertical de uma imagem, mas com análise automática de layout):
+
+Descrição: Similar ao modo 15, mas com análise automática de layout.
+Observações: Adequado quando o texto está disposto verticalmente, e a análise do layout é importante.
+python
+Copy code
+custom_config = r'--psm 23'
+24 (Assumir um único bloco de texto vertical de uma imagem, mas com análise automática de layout e OCR):
+
+Descrição: Similar ao modo 23, mas também executa a OCR.
+Observações: Adequado quando o texto está disposto verticalmente, a análise do layout é importante, e você deseja realizar a OCR.
+python
+Copy code
+custom_config = r'--psm 24'
+25 (Assumir um script totalmente não estruturado de uma imagem):
+
+Descrição: Tesseract tenta reconhecer um script totalmente não estruturado.
+Observações: Útil quando o texto não segue uma estrutura definida.
+python
+Copy code
+custom_config = r'--psm 25'
+26 (Assumir um script totalmente não estruturado de uma imagem com OCR):
+
+Descrição: Similar ao modo 25, mas também executa a OCR.
+Observações: Adequado quando o texto não segue uma estrutura definida, e você deseja realizar a OCR.
+python
+Copy code
+custom_config = r'--psm 26'
+27 (Assumir um único bloco de texto vertical de uma imagem com análise automática de layout e OCR):
+
+Descrição: Combina o modo 24 com a análise automática de layout.
+Observações: Adequado quando o texto está disposto verticalmente, a análise do layout é importante, e você deseja realizar a OCR.
+python
+Copy code
+custom_config = r'--psm 27'
+
 '''
 
 ## caminho do tesseract # C:\Program Files\Tesseract-OCR
@@ -166,16 +366,18 @@ def valor_fichas(x_origem, y_origem):
 
     # Define a lista de configurações a serem testadas
     configuracoes = [
-        '--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789.',
-        '--psm 7 --oem 1 -c tessedit_char_whitelist=0123456789.',
-        '--psm 3 --oem 0 -c tessedit_char_whitelist=0123456789.'
+        r'--oem 3 --psm 6 outputbase digits',
+        r'--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789.',
+        r'--psm 7 --oem 1 -c tessedit_char_whitelist=0123456789.',
+        r'--psm 8 --oem 0 -c tessedit_char_whitelist=0123456789.'
     ]
 
     # Itera sobre cada configuração e realiza o OCR
     for config in configuracoes:
+        # print(config)
         # Realiza o OCR com a configuração atual
         lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
-        print(lido)
+        # print(lido)
 
         if lido is not None:
             # Converte o valor lido para um formato numérico
@@ -183,8 +385,14 @@ def valor_fichas(x_origem, y_origem):
             # Verifica se o valor está dentro da faixa desejada
             if 500 < valor < 15000000:
                 print(f"Valor das fichas: {valor}")
-                return valor
-    return 0
+                # return valor
+            else:
+                print('Valor fora sa feixa esperado')
+                valor = 0
+        else:
+            print('OCR nao recolheceu a imagem')
+            valor = 0
+    return valor
 
 
 def tempo_roleta(x_origem, y_origem):
@@ -194,21 +402,28 @@ def tempo_roleta(x_origem, y_origem):
     fator_ampliacao = 1
     contraste_pre = 1
     contraste_pos = 1
-    config = '--psm 7 --oem 3 -c tessedit_char_whitelist=0123456789:'
+    # config = '--psm 7 --oem 3 -c tessedit_char_whitelist=0123456789:'
     regiao = (x_origem + 662, y_origem + 44, x_origem + 711, y_origem + 56)
 
-    for _ in range(4):  # Usar _ para indicar que a variável não é usada
-        tempo = OCR_regiao(regiao, config, inverter_cor, fator_ampliacao, contraste_pre, contraste_pos, escala_cinza)
+    configuracoes = [
+        r'--oem 3 --psm 6 outputbase digits',
+        r'--psm 7 --oem 3 -c tessedit_char_whitelist=0123456789:'
+        r'--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789:',
+        r'--psm 7 --oem 1 -c tessedit_char_whitelist=0123456789:',
+        r'--psm 8 --oem 0 -c tessedit_char_whitelist=0123456789:'
+    ]
 
+    for config in configuracoes:
+        print(config)
+        tempo = OCR_regiao(regiao, config, inverter_cor, fator_ampliacao, contraste_pre, contraste_pos, escala_cinza)
+        print(tempo)
         if tempo is not None:
             tempo = tratar_valor_numerico(tempo)
             print("Tempo lido na roleta", tempo)
             return tempo
-
-        time.sleep(5)
-
-    tempo_padrao = 0
-    return tempo_padrao
+        else:
+            print('OCR não reconheceu a imagem')
+    return 0
 
 
 def pontuacao_tarefas(x_origem, y_origem):
@@ -240,28 +455,38 @@ def pontuacao_tarefas(x_origem, y_origem):
 
     # Lista de configurações
     configuracoes = [
-        '--psm 6 --oem 1 -c tessedit_char_whitelist=0123456789/',
-        '--psm 6 -c tessedit_char_whitelist=0123456789/'
+        r'--oem 3 --psm 6 outputbase digits',
+        r'--psm 6 --oem 3 -c tessedit_char_whitelist=0123456789/',
+        r'--psm 6 --oem 1 -c tessedit_char_whitelist=0123456789/',
+        r'--psm 6 -c tessedit_char_whitelist=0123456789/',
     ]
 
     # Itera sobre cada configuração e realiza o OCR
     for config in configuracoes:
+        # print(config)
         for _ in range(4):
             # Clica duas vezes no ícone de tarefas diárias para abrir a janela
             pyautogui.doubleClick(x_origem + 635, y_origem + 25)
 
             # Realiza o OCR com a configuração atual
             pontuacao = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
-            print('pontuação:', pontuacao)
+            # print('pontuação:', pontuacao)
 
             # Verifica se a pontuação foi obtida com sucesso
-            if pontuacao is not None and "/200" in pontuacao:
-                pontuacao = tratar_valor_numerico(pontuacao.split("/")[0])
-
+            if pontuacao is not None and "200" in str(pontuacao) and len(str(pontuacao)) >= 5:
+                pontuacao = tratar_valor_numerico(str(pontuacao)[:-3])
                 # Verifica se a pontuação está entre os valores possíveis
                 if pontuacao in valores_possiveis:
                     print("Pontuação obtida com sucesso:", pontuacao)
                     return pontuacao
+            elif pontuacao is not None and "/200" in pontuacao:
+                pontuacao = tratar_valor_numerico(pontuacao.split("/")[0])
+                # Verifica se a pontuação está entre os valores possíveis
+                if pontuacao in valores_possiveis:
+                    print("Pontuação obtida com sucesso:", pontuacao)
+                    return pontuacao
+            else:
+                print('Informação OCR fora do padrao')
             time.sleep(1)
 
     pontuacao = 1
@@ -813,6 +1038,7 @@ def blind_sala(x_origem, y_origem):
         # Remove espaços em branco e barras para obter o valor da blind
         blind = blind.replace(' ', '')
         blind = blind.replace('/', '')
+        print('O valor de blind da mesa : ', blind)
         return str(blind)
     else:
         return '0'
@@ -899,33 +1125,33 @@ def valor_apostar(x_origem, y_origem):
         return valor
 
 
-def aviso_do_sistema():
-    '''Retona True se caso tivert aviso do sistema :
-    Aviso do sistema
-    Jocê já está logado no jogo em outra página, esta
-    Sessão foi cancelada!'''
-
-    x_origem, y_origem = Origem_pg.x_y_aviso_sistema()  # tenta encontar a origem quando tem aviso do sistema
-    if x_origem is not None:  # se tem aviso do sistema
-        inveter_cor = False
-        esca_ciza = True
-        fator_ampliacao = 1
-        contraste_pre = 1
-        contraste_pos = 1
-        config = '--psm 3'
-        regiao = (x_origem + 321, y_origem + 268, x_origem + 658, y_origem + 433)
-        valor = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
-        if valor is not None:
-            if 'Aviso do sistema' in valor:
-                print('foi encontrado um: Aviso do sistema')
-                if 'cancelada' in valor:
-                    print("Mesagem: ", valor)
-                    Variaveis_Globais.alterar_global_aviso_sistema(True)  # muda o valor da variavel global destinado a sair da cont
-                    return True
-        else:
-            return False
-    else:
-        return False
+# def aviso_do_sistema():
+#     '''Retona True se caso tivert aviso do sistema :
+#     Aviso do sistema
+#     Jocê já está logado no jogo em outra página, esta
+#     Sessão foi cancelada!'''
+#
+#     x_origem, y_origem = Origem_pg.x_y_aviso_sistema()  # tenta encontar a origem quando tem aviso do sistema
+#     if x_origem is not None:  # se tem aviso do sistema
+#         inveter_cor = False
+#         esca_ciza = True
+#         fator_ampliacao = 1
+#         contraste_pre = 1
+#         contraste_pos = 1
+#         config = '--psm 3'
+#         regiao = (x_origem + 321, y_origem + 268, x_origem + 658, y_origem + 433)
+#         valor = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
+#         if valor is not None:
+#             if 'Aviso do sistema' in valor:
+#                 print('foi encontrado um: Aviso do sistema')
+#                 if 'cancelada' in valor:
+#                     print("Mesagem: ", valor)
+#                     Variaveis_Globais.alterar_global_aviso_sistema(True)  # muda o valor da variavel global destinado a sair da cont
+#                     return True
+#         else:
+#             return False
+#     else:
+#         return False
 
 
 def aviso_sistema(x_origem, y_origem):
@@ -1024,29 +1250,32 @@ def valor_fichas_perfil(x_origem, y_origem):
 
     # Define a lista de configurações a serem testadas
     configuracoes = [
-        '--psm 7 --oem 1 -c tessedit_char_whitelist=0123456789.',
-        '--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789.',
-        '--psm 3 --oem 0 -c tessedit_char_whitelist=0123456789.'
+        r'--psm 6 --oem 3  outputbase digits',
+        r'--psm 7 --oem 1 -c tessedit_char_whitelist=0123456789.',
+        r'--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789.',
+        r'--psm 3 --oem 0 -c tessedit_char_whitelist=0123456789.',
+        r'--psm 8 --oem 0 -c tessedit_char_whitelist=0123456789.',
     ]
 
     # Itera sobre cada configuração e realiza o OCR
     for config in configuracoes:
+        # print(config)
         # Realiza o OCR com a configuração atual
         lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
-        print(lido)
+        # print(lido)
         if lido is not None:
             lido = tratar_valor_numerico(lido)
             # Verifica se o valor está na faixa desejada
             if 500 < lido < 15000000:
                 print("\n   Fichas da conta:", lido, '\n')
-                break
+                return lido
+                # break
             else:
                 print("Valor fora da faixa desejada")
                 lido = 0
         else:
             print("Erro na leitura do OCR")
             lido = 0
-        time.sleep(0.2)
 
     if lido == 0:
         # se nao foi possivel ler o valor tenta outra tecnica
@@ -1080,50 +1309,54 @@ def level_conta(x_origem, y_origem):
 
     # Configurações para o processo OCR
     inveter_cor = False
-    esca_ciza = False
+    esca_ciza = True
     fator_ampliacao = 2
     contraste_pre = 1
     contraste_pos = 1
     regiao_ficha = (x_origem + 599, y_origem + 239, x_origem + 630, y_origem + 257)  # leval
-    config = '--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789'
-
-    for _ in range(3):
+    configuracoes = [
+        r'--oem 3 --psm 6 outputbase digits',
+        r'--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789',
+        r'--psm 7 --oem 1 -c tessedit_char_whitelist=0123456789',
+        r'--psm 8 --oem 0 -c tessedit_char_whitelist=0123456789'
+    ]
+    for config in configuracoes:
+        # print(config)
         # Realiza a leitura do nível usando OCR
         lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
-        # print('\n\n\nlido ', lido, '\n\n\n')
+        # print('lido ', lido)
         if lido is not None:
             lido = tratar_valor_numerico(lido)
             # Verifica se o valor está na faixa desejada
             if 1 < lido < 50:
                 print("\n   Nível da conta:", lido)
-                break
+                if pyautogui.pixelMatchesColor((x_origem + 241), (y_origem + 170), (227, 18, 5), tolerance=2):
+                    pyautogui.click(771 + x_origem, 162 + y_origem)  # clica para fechar a tela do perfil
+                return lido
             else:
                 print("Valor fora da faixa desejada")
                 lido = 0
         else:
             print("Erro na leitura do OCR")
             lido = 0
-    if pyautogui.pixelMatchesColor((x_origem + 241), (y_origem + 170), (227, 18, 5), tolerance=2):
-        # clica para fechar a tela do perfil
-        pyautogui.click(771 + x_origem, 162 + y_origem)
     return lido
 
 # aviso_do_sistema()
 # x_origem, y_origem = Origem_pg.x_y()
 # valor_fichas_perfil(x_origem, y_origem)
-# # tarefas_diaris_upando(x_origem, y_origem)
+# tarefas_diaris_upando(x_origem, y_origem)
 # level_conta(x_origem, y_origem)
 # numero_sala(x_origem, y_origem)
 # tarefas_diaris_upando(x_origem, y_origem)
 # pontuacao_tarefas(x_origem, y_origem)
 # level_conta(x_origem, y_origem)
-# # # pontuacao_tarefas(x_origem, y_origem)
+# pontuacao_tarefas(x_origem, y_origem)
 # valor_fichas(x_origem, y_origem)
 # tarefas_diaris_trocar(x_origem, y_origem)
 # tarefas_diaris(x_origem, y_origem)
 # print(y_origem)
 # valor_apostar(x_origem, y_origem)
-# valor = blind_sala(x_origem, y_origem)
+# blind_sala(x_origem, y_origem)
 # print(valor)
 # lista_tarefas_disponivel = tarefas_diaris(x_origem, y_origem)
 # print(lista_tarefas_disponivel)
