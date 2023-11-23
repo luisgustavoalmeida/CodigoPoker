@@ -150,7 +150,7 @@ def teste_logado(id, senha, url, navegador):
         return entrou, status
 
 
-def fazer_login(id, senha, url, navegador):
+def fazer_login(id, senha, url, navegador, loga_pk=True):
     while True:
         if se_esta_lagado(navegador) is True:
             sair_face(url, navegador)
@@ -160,8 +160,10 @@ def fazer_login(id, senha, url, navegador):
         print('continua login')
         url_atual = pega_url(navegador, url)
 
-        if "/login/" in url_atual:
+        print(url_atual)
 
+        if (("/login/" in url_atual) and loga_pk) or (not loga_pk and ("facebook.com" in url_atual)):
+            print('Padrao de URL poker')
             try:
                 email_field = WebDriverWait(navegador, 10).until(EC.presence_of_element_located((By.NAME, 'email')))
                 email_field.clear()
@@ -175,13 +177,73 @@ def fazer_login(id, senha, url, navegador):
                 for i in range(20):
                     time.sleep(1)
                     url_atual = pega_url(navegador, url)
-                    #  print(url_atual)
+                    print(url_atual)
                     if "/login/" not in url_atual:
                         if ("/pokerbrasil?" in url_atual) or ("/rallyacespoker" in url_atual):
                             # https://apps.facebook.com/pokerbrasil?vtype&amfmethod=appLinkFanPageAward&SignedParams=JrLALkSch1wuQxrULK6SWLAcpjTOb9Pmi5QvavvikU0.eyJhY3QiOiJmcCIsImZwX2FpZCI6IjU5ODUifQ&fbclid=IwAR252AFFL560939epg6Ki4tzNtLvgQJiZISVIZXFPjjBpBp5TNLBNX6TFXk
                             print("A conta está certa.")
                             entrou = True
                             status = 'Carregada'
+                            return entrou, status
+
+                        elif "/settings?" in url_atual:
+                            # https://www.facebook.com/settings?tab=applications&ref=settings
+
+                            print("A conta está com a pagina carregada diponivel para remover o poker")
+                            entrou = True
+                            status = 'Remover Poker não ok'
+
+                            # Aguarda até que o texto seja visível na página
+                            texto_a_procurar = ["Você não tem nenhum app ou site para analisar", 'Não tens apps ou sites para rever']
+
+                            for i in range(5):
+                                pyautogui.click(914, 368)  # clique bobo, agora na central de contas
+                                print("Tentativa: ", i)
+                                for texto in texto_a_procurar:
+                                    try:
+                                        WebDriverWait(navegador, 5).until(
+                                            EC.text_to_be_present_in_element((By.XPATH, '//*[contains(text(), "{}")]'.format(texto)), texto)
+                                        )
+                                        print(f'O texto "{texto_a_procurar}" está visível na página.')
+                                        status = 'Remover Poker ok'
+                                        print('Terminou de remover')
+                                        return entrou, status
+                                    except TimeoutException:
+                                        print(f'O texto "{texto_a_procurar}" não está visível na página.')
+
+                                clicou_no_segundo = False
+
+                                for _ in range(15):
+                                    print('procurando 1')
+
+                                    if (pyautogui.pixelMatchesColor(1207, 609, (235, 245, 255), tolerance=10)
+                                            or pyautogui.pixelMatchesColor(1207, 609, (223, 233, 242), tolerance=10)):
+                                        # testa se esta visivel o segundo botao azul de removert
+                                        pyautogui.click(1207, 609)  # clique no segundo remover
+                                        print('Clicou no primeiro remover')
+
+                                        for _ in range(15):
+                                            print('procurando 2')
+                                            if (pyautogui.pixelMatchesColor(853, 730, (8, 102, 255), tolerance=10)
+                                                    or pyautogui.pixelMatchesColor(853, 730, (8, 94, 242), tolerance=10)):
+                                                # testa se esta visivel o segundo botao azul de removert
+                                                pyautogui.click(853, 730)  # clique no segundo remover
+                                                print('Clicou no segundo remover')
+                                                clicou_no_segundo = True
+                                                break
+                                            elif (pyautogui.pixelMatchesColor(853, 741, (8, 102, 255), tolerance=10)
+                                                  or pyautogui.pixelMatchesColor(853, 741, (8, 94, 242), tolerance=10)):
+                                                # testa se esta visivel o segundo botao azul de removert
+                                                pyautogui.click(853, 741)  # clique no segundo remover
+                                                print('Clicou no segundo remover')
+                                                clicou_no_segundo = True
+                                                break
+                                            time.sleep(1)
+                                    if clicou_no_segundo:
+                                        break
+                                    time.sleep(1)
+
+                            print('Terminou de remover')
                             return entrou, status
 
                         elif "/checkpoint/" in url_atual:
@@ -321,31 +383,6 @@ def fazer_login(id, senha, url, navegador):
                                         # print(e)
                                         continue
 
-                            # # Lista de elementos para clicar
-                            # #elementos_para_clicar = ["Usar gratuitamente", 'Concordo']
-                            #
-                            # for i in range(2):
-                            #     for elemento_texto in elementos_para_clicar:
-                            #         # Construir a expressão XPath para o elemento atual na lista
-                            #         xpath_expression = f"//span[text()='{elemento_texto}']"
-                            #         print("procura: ", elemento)
-                            #
-                            #         try:
-                            #             # Esperar até que o elemento seja clicável (nesse caso, esperaremos até 10 segundos)
-                            #             elemento = WebDriverWait(navegador, 1).until(EC.element_to_be_clickable((By.XPATH, xpath_expression)))
-                            #
-                            #             # Clicar no elemento
-                            #             elemento.click()
-                            #             print('cicou no elemento :', elemento)
-                            #             elemento_clicavel_encontrado = True
-                            #             time.sleep(4)
-                            #
-                            #             # Após clicar, você pode realizar outras operações na nova página ou continuar com o seu script
-                            #
-                            #         except Exception as e:
-                            #             print(f"Elemento para clicar não encontrado: {elemento_texto}")
-                            #             #print(e)
-
                             if not elemento_clicavel_encontrado:
                                 print("Nenhum elemento para clicar foi encontrado.")
                                 status = 'Nova interação'
@@ -389,6 +426,9 @@ def fazer_login(id, senha, url, navegador):
                 print(e)
                 sair_face(url, navegador)
                 continue
+
+        else:
+            print('Padrao de URL não esperado')
 
         abrir_navegador(url, navegador)
 

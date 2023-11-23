@@ -3,9 +3,8 @@ import os
 import socket
 import threading
 import time
-
 import pyautogui
-
+import Google
 import Firebase
 import IP
 import Limpa
@@ -127,11 +126,6 @@ while True:
             IP.ip(LIMITE_IP)  # testa se o numero de contas esta dentro do limite antes de trocar ip
 
             entrou_corretamente, stataus_facebook = Seleniun.fazer_login(id, senha, url, navegador)
-
-            # print('____________________ manda iniciar a tarefa independete_________________')
-            # # Comando para iniciar a tarefa independente
-            # continuar_tarefa = True
-            # iniciar_tarefa.release()
 
             if entrou_corretamente is False:  # se nao entrou no face
                 print("conta nao entou no Facebook")
