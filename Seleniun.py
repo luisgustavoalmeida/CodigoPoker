@@ -224,15 +224,15 @@ def fazer_login(id, senha, url, navegador, loga_pk=True):
 
                                         for _ in range(15):
                                             print('procurando 2')
-                                            if (pyautogui.pixelMatchesColor(853, 730, (8, 102, 255), tolerance=10)
-                                                    or pyautogui.pixelMatchesColor(853, 730, (8, 94, 242), tolerance=10)):
+                                            if (pyautogui.pixelMatchesColor(805, 730, (8, 102, 255), tolerance=10)
+                                                    or pyautogui.pixelMatchesColor(805, 730, (8, 94, 242), tolerance=10)):
                                                 # testa se esta visivel o segundo botao azul de removert
                                                 pyautogui.click(853, 730)  # clique no segundo remover
                                                 print('Clicou no segundo remover')
                                                 clicou_no_segundo = True
                                                 break
-                                            elif (pyautogui.pixelMatchesColor(853, 741, (8, 102, 255), tolerance=10)
-                                                  or pyautogui.pixelMatchesColor(853, 741, (8, 94, 242), tolerance=10)):
+                                            elif (pyautogui.pixelMatchesColor(805, 741, (8, 102, 255), tolerance=10)
+                                                  or pyautogui.pixelMatchesColor(805, 741, (8, 94, 242), tolerance=10)):
                                                 # testa se esta visivel o segundo botao azul de removert
                                                 pyautogui.click(853, 741)  # clique no segundo remover
                                                 print('Clicou no segundo remover')
