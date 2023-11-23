@@ -8,13 +8,10 @@ import pyautogui
 import Google
 import IP
 import Limpa
-import Mesa
 import OCR_tela
 import Origem_pg
 import Roletas
 import Seleniun
-import Tarefas
-from UparAuto import upar
 from Variaveis_Globais import alterar_global_aviso_sistema
 
 global aviso_sistema_global
