@@ -923,40 +923,46 @@ def remover_termos_upando(texto, metodo=1):
     return itens_em_comum
 
 
-def limpa_abre_tarefa_2(x_origem, y_origem):  # abre o tarefas
-    print('limpa_abre_tarefa')
+def limpa_abre_tarefa_3(x_origem, y_origem):  # abre o tarefas
+    print('limpa_abre_tarefa_3')
     # testa se a tarefa diaria é de conta sem upar cadeado na cartas premidas
-    if (pyautogui.pixelMatchesColor((x_origem + 750), (y_origem + 38), (245, 218, 96), tolerance=10)
-            or pyautogui.pixelMatchesColor((x_origem + 802), (y_origem + 38), (245, 218, 96), tolerance=10)):
-        print("Tarefas diarias conta sem upar")
-        return False
-
-    elif (pyautogui.pixelMatchesColor((x_origem + 750), (y_origem + 38), (10, 54, 112), tolerance=10)
-          or pyautogui.pixelMatchesColor((x_origem + 802), (y_origem + 38), (10, 54, 112), tolerance=10)):
-        print("Tarefas diarias conta upada")
-
-        for _ in range(20):
-            pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
-            print("Limpa Tarefas diarias")
-            time.sleep(0.5)
-            pyautogui.doubleClick(x_origem + 193, y_origem + 172)  # clica dentro do tarefas diarias
-
-            # testa se tarefa diariaria esta aberta e limpa
-            if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 133), (48, 0, 96), tolerance=20):
-                print("Tarefas diarias pausa")
-                time.sleep(1.5)
-                if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 133), (48, 0, 96), tolerance=20):
-                    print("Tarefas diarias limpo...")
-                    return True
-            # testa se a tarefa diaria é de conta sem upar
-            elif pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 133), (1, 50, 254), tolerance=20):
-                # pyautogui.click(821 + x_origem, 138 + y_origem) #clique para fechar
-                print("Tarefas diarias conta sem upar")
+    for _ in range(20):
+        pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
+        if (pyautogui.pixelMatchesColor((x_origem + 750), (y_origem + 38), (245, 218, 96), tolerance=10)
+                or pyautogui.pixelMatchesColor((x_origem + 802), (y_origem + 38), (245, 218, 96), tolerance=10)):
+            print("Tarefas diarias conta level menor que 4 com cadeado")
+            # testa se a tarefa diaria é de conta sem upar ( cadeado )
+            if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 133), (1, 50, 254), tolerance=20):
+                print("Tarefas diarias conta missoes iniciais")
                 return False
+            elif pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 133), (48, 0, 96), tolerance=20):
+                print("Tarefas diarias limpo conta upada, missoes padroes")
+                return True
 
-        return True
-    else:
-        return True
+        elif (pyautogui.pixelMatchesColor((x_origem + 750), (y_origem + 38), (10, 54, 112), tolerance=10)
+              or pyautogui.pixelMatchesColor((x_origem + 802), (y_origem + 38), (10, 54, 112), tolerance=10)):
+            print("Tarefas diarias conta upada sem o cadeado level maior que 4")
+
+            for _ in range(20):
+                pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
+                print("Limpa Tarefas diarias")
+                time.sleep(0.5)
+                pyautogui.doubleClick(x_origem + 193, y_origem + 172)  # clica dentro do tarefas diarias
+
+                # testa se tarefa diariaria esta aberta e limpa
+                if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 133), (48, 0, 96), tolerance=20):
+                    print("Tarefas diarias pausa")
+                    time.sleep(1.5)
+                    if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 133), (48, 0, 96), tolerance=20):
+                        print("Tarefas diarias limpo conta upada, missoes padroes")
+                        return True
+                # testa se a tarefa diaria é de conta sem upar
+                elif pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 133), (1, 50, 254), tolerance=20):
+                    # pyautogui.click(821 + x_origem, 138 + y_origem) #clique para fechar
+                    print("Tarefas diarias, missoes iniciais")
+                    return False
+            return True
+        time.sleep(0.5)
 
 
 def tarefas_diaris_upando(x_origem, y_origem):
@@ -985,9 +991,10 @@ def tarefas_diaris_upando(x_origem, y_origem):
     # Define a região de interesse para a leitura do valor
     regiao = (x_origem + 278, y_origem + 329, x_origem + 784, y_origem + 563)
     # abre a tela do tarefa diarias e retrona se true se a conta esta upada e false se a conta esta sem upar
-    if limpa_abre_tarefa_2(x_origem, y_origem):
+    if limpa_abre_tarefa_3(x_origem, y_origem):
         print('Conta upada')
         pyautogui.click(x_origem + 816, y_origem + 142)  # clica para fechar as tarefas
+        lista_tarefas = ['Missões padrão']
         return lista_tarefas
     else:
         print('Conta sem upar')
@@ -1000,11 +1007,6 @@ def tarefas_diaris_upando(x_origem, y_origem):
         # Obtém a lista de tarefas removendo termos indesejados
         lista_tarefas = remover_termos_upando(texto)
 
-        # # Verifica se a lista contém exatamente dois itens e se um deles é 'Gire 10 vezes no caça-níqueis'
-        # if len(lista_tarefas) == 2 and 'Gire 10 vezes no caça-níqueis' in lista_tarefas:
-        #     so_tem_gire = "tem apenas Slote"
-        # else:
-        #     so_tem_gire = "continua"
         return lista_tarefas
 
 

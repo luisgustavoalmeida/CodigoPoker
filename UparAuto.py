@@ -22,14 +22,10 @@ def upar(x_origem, y_origem):
     for _ in range(5):
         recolher_tarefa_upando(x_origem, y_origem)
         time.sleep(2)
-        recolher_tarefa_upando(x_origem, y_origem)
-        time.sleep(2)
         lista_tarefa_upar = tarefas_diaris_upando(x_origem, y_origem)
-        if lista_tarefa_upar:
-            print('Tem tarefas de UPAR para fazer')
-        else:
-            print('Não tem tarefas de UPAR para fazer')
-            # return 'Conta upada'
+
+        if 'Missões padrão' in lista_tarefa_upar:
+            return 'Conta upada'
 
         if 'Jogar 1 mãos em qualquer mesa' in lista_tarefa_upar:
             print("\n\n Jogar 10 mãos em qualquer mesa \n\n")
@@ -37,14 +33,14 @@ def upar(x_origem, y_origem):
             recolher_tarefa_upando(x_origem, y_origem)
             lista_tarefa_upar = tarefas_diaris_upando(x_origem, y_origem)
 
-        if 'Jogar 5 mãos em qualquer mesa' in lista_tarefa_upar:
+        elif 'Jogar 5 mãos em qualquer mesa' in lista_tarefa_upar:
             print("\n\n Jogar 10 mãos em qualquer mesa \n\n")
             Mesa.joga_uma_vez(x_origem, y_origem, 10)
             recolher_tarefa_upando(x_origem, y_origem)
             time.sleep(2)
             lista_tarefa_upar = tarefas_diaris_upando(x_origem, y_origem)
 
-        if 'Jogar 10 mãos em qualquer mesa' in lista_tarefa_upar:
+        elif 'Jogar 10 mãos em qualquer mesa' in lista_tarefa_upar:
             print("\n\n Jogar 10 mãos em qualquer mesa \n\n")
             Mesa.joga_uma_vez(x_origem, y_origem, 10)
             recolher_tarefa_upando(x_origem, y_origem)
@@ -70,6 +66,7 @@ def upar(x_origem, y_origem):
             recolher_tarefa_upando(x_origem, y_origem)
             time.sleep(2)
             lista_tarefa_upar = tarefas_diaris_upando(x_origem, y_origem)
+
     return 'Conta upada'
 
 # import Origem_pg

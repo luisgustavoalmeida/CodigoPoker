@@ -259,7 +259,14 @@ while True:
                             pyautogui.doubleClick(x_origem + 492, y_origem + 383)  # clica no meio da roleta para rodar
 
                     level_conta = OCR_tela.level_conta(x_origem, y_origem)
-                    Mesa.dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, level_conta, time_rodou, roleta)
+                    Mesa.dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, time_rodou, roleta, level_conta)
+                    
+                    if not conta_upada:
+                        Limpa.limpa_total(x_origem, y_origem)
+                        Tarefas.recolher_tarefa_upando(x_origem, y_origem)
+                        Limpa.limpa_total(x_origem, y_origem)
+                        # chama o modulo de UparAutomatico
+                        upar(x_origem, y_origem)
 
                 elif roleta == 'roleta_2':
                     for i in range(20):
@@ -273,26 +280,7 @@ while True:
                         time.sleep(0.3)
 
                 Tarefas.recolher_tarefa_upando(x_origem, y_origem)
-                # testa se vai upar automatico
-                # if roleta == 'roleta_1' and not conta_upada:
-                conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)  # retorna se a conta ta upada ou nao
-                print('Conta upada: ', conta_upada)
-                if not conta_upada:
-                    if roleta == 'roleta_2':
-                        for i in range(20):
-                            time_sair = time.perf_counter()
-                            tempo_total = time_sair - time_rodou
-                            print('tempo que ja clicou no rodou', tempo_total)
-                            if tempo_total > 18:
-                                print('ja pode sair do r2')
-                                break
-                            time.sleep(1)
-                            pyautogui.doubleClick(x_origem + 683, y_origem + 14)  # clica no icone roleta, ja roda sozinho
-                    Limpa.limpa_total(x_origem, y_origem)
-                    Tarefas.recolher_tarefa_upando(x_origem, y_origem)
-                    Limpa.limpa_total(x_origem, y_origem)
-                    # chama o modulo de UparAutomatico
-                    upar(x_origem, y_origem)
+
                 # valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
                 roda = False
                 break
