@@ -357,7 +357,7 @@ def recolher_tarefa_upando(x_origem, y_origem):
         status_tarefas = "Recolhido"
         time.sleep(4)
 
-        for i in range(30):
+        for i in range(10):
             pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias para abrir
             print('Click para abrir o tarefas')
 
@@ -369,24 +369,30 @@ def recolher_tarefa_upando(x_origem, y_origem):
                 if pyautogui.pixelMatchesColor((x_origem + 495), (y_origem + 125), (0, 51, 248), tolerance=10):
                     # testa se esta aberto a lista de tarefas
                     print('Tarefas abertas, conta sem Upar')
+
                     posicao_recolher_tarefa_y = (361, 457, 553)
+
                     clique_recolher = []
 
                     for recolher_y in posicao_recolher_tarefa_y:
                         # print(recolher_y)
-                        if pyautogui.pixelMatchesColor((x_origem + 767), (y_origem + recolher_y), (240, 249, 240), tolerance=10):
+                        if pyautogui.pixelMatchesColor((x_origem + 767), (y_origem + recolher_y), (240, 249, 240), tolerance=25):
                             # testa se tem "Retirar" em braco
                             clique_recolher.append(recolher_y)  # adiciona as coordenada de y que deve ser clicadas
 
                     if len(clique_recolher) > 0:
                         for recolhe in clique_recolher:
                             pyautogui.click(x_origem + 767, y_origem + recolhe)  # clica no recolher
+                        print("Recoulheu as missões")
                         time.sleep(4)
+                    else:
+                        print('Não conseguiu reconhecer o recolhecer escrito em branco')
 
                     posicao_recolher_presentes = (215, 400, 585, 770)
 
                     for recolhe in posicao_recolher_presentes:
                         pyautogui.click(x_origem + recolhe, y_origem + 246)  # clica nos presentes
+                    print('Cricou no presentes')
                     time.sleep(2)
 
                     if (not pyautogui.pixelMatchesColor((x_origem + 627), (y_origem + 35), (228, 194, 31), tolerance=5)
