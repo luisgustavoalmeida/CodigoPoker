@@ -1322,25 +1322,27 @@ def level_conta(x_origem, y_origem):
         r'--psm 7 --oem 1 -c tessedit_char_whitelist=0123456789',
         r'--psm 8 --oem 0 -c tessedit_char_whitelist=0123456789'
     ]
-    for config in configuracoes:
-        # print(config)
-        # Realiza a leitura do nível usando OCR
-        lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
-        # print('lido ', lido)
-        if lido is not None:
-            lido = tratar_valor_numerico(lido)
-            # Verifica se o valor está na faixa desejada
-            if 1 < lido < 50:
-                print("\n   Nível da conta:", lido)
-                if pyautogui.pixelMatchesColor((x_origem + 241), (y_origem + 170), (227, 18, 5), tolerance=2):
-                    pyautogui.click(771 + x_origem, 162 + y_origem)  # clica para fechar a tela do perfil
-                return lido
+    for _ in range(3):
+        for config in configuracoes:
+            pyautogui.click(16 + x_origem, 24 + y_origem)
+            # print(config)
+            # Realiza a leitura do nível usando OCR
+            lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
+            # print('lido ', lido)
+            if lido is not None:
+                lido = tratar_valor_numerico(lido)
+                # Verifica se o valor está na faixa desejada
+                if 1 <= lido < 50:
+                    print("\n   Nível da conta:", lido)
+                    if pyautogui.pixelMatchesColor((x_origem + 241), (y_origem + 170), (227, 18, 5), tolerance=2):
+                        pyautogui.click(771 + x_origem, 162 + y_origem)  # clica para fechar a tela do perfil
+                    return lido
+                else:
+                    print("Valor fora da faixa desejada")
+                    lido = 0
             else:
-                print("Valor fora da faixa desejada")
+                print("Erro na leitura do OCR")
                 lido = 0
-        else:
-            print("Erro na leitura do OCR")
-            lido = 0
     return lido
 
 # aviso_do_sistema()

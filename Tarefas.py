@@ -366,16 +366,16 @@ def recolher_tarefa_upando(x_origem, y_origem):
                 # testa se ja abriu a janela bora cinza da janela
                 time.sleep(3)
 
-                if pyautogui.pixelMatchesColor((x_origem + 495), (y_origem + 125), (0, 51, 248),
-                                               tolerance=10):  # testa se esta aberto a lista de tarefas
+                if pyautogui.pixelMatchesColor((x_origem + 495), (y_origem + 125), (0, 51, 248), tolerance=10):
+                    # testa se esta aberto a lista de tarefas
                     print('Tarefas abertas, conta sem Upar')
                     posicao_recolher_tarefa_y = (361, 457, 553)
                     clique_recolher = []
 
                     for recolher_y in posicao_recolher_tarefa_y:
                         # print(recolher_y)
-                        if pyautogui.pixelMatchesColor((x_origem + 767), (y_origem + recolher_y), (240, 249, 240),
-                                                       tolerance=10):  # testa se tem "Retirar" em braco
+                        if pyautogui.pixelMatchesColor((x_origem + 767), (y_origem + recolher_y), (240, 249, 240), tolerance=10):
+                            # testa se tem "Retirar" em braco
                             clique_recolher.append(recolher_y)  # adiciona as coordenada de y que deve ser clicadas
 
                     if len(clique_recolher) > 0:
@@ -392,7 +392,6 @@ def recolher_tarefa_upando(x_origem, y_origem):
                     if (not pyautogui.pixelMatchesColor((x_origem + 627), (y_origem + 35), (228, 194, 31), tolerance=5)
                             and pyautogui.pixelMatchesColor((x_origem + 627), (y_origem + 35), (119, 168, 219), tolerance=5)):
                         # testa se NÂO tem que recolher icone das tarefas amarelo
-
                         pyautogui.click(821 + x_origem, 138 + y_origem)  # fecha tarefa
                         status_tarefas = "Recolhido"
                         time.sleep(1)
