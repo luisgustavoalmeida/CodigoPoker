@@ -907,15 +907,15 @@ def dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, time_rodou, roleta, lev
                 time.sleep(1)
                 pyautogui.doubleClick(x_origem + 683, y_origem + 14)  # clica no icone roleta, ja roda sozinho
 
-            Limpa.fecha_tarefa(x_origem, y_origem)
-            Limpa.limpa_promocao(x_origem, y_origem)
-            time.sleep(2)
-            Limpa.limpa_total(x_origem, y_origem)
-            print('Joga uma vez')
-            joga_uma_vez(x_origem, y_origem, 5)
-            time.sleep(1)
-            Limpa.iniciantes(x_origem, y_origem)
-            Limpa.limpa_total(x_origem, y_origem)
+        Limpa.fecha_tarefa(x_origem, y_origem)
+        Limpa.limpa_promocao(x_origem, y_origem)
+        time.sleep(2)
+        Limpa.limpa_total(x_origem, y_origem)
+        print('Joga uma vez')
+        joga_uma_vez(x_origem, y_origem, 5)
+        time.sleep(1)
+        Limpa.iniciantes(x_origem, y_origem)
+        Limpa.limpa_total(x_origem, y_origem)
     return
 
 # def levantar_mesa(x_origem, y_origem):
