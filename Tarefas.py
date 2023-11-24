@@ -414,7 +414,7 @@ def recolher_tarefa_upando(x_origem, y_origem):
                     status_tarefas = "Recolhido"
                     return status_tarefas
 
-            time.sleep(0.2)
+            time.sleep(1)
     else:
         # print(status_tarefas)
         # pyautogui.click(821 + x_origem, 138 + y_origem)  # fecha tarefa
