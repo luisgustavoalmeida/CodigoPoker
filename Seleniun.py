@@ -261,6 +261,7 @@ def fazer_login(id, senha, url, navegador, loga_pk=True):
                                                  'Insira o número de celular',
                                                  'Insere o número de telemóvel',
                                                  'Carregue uma foto sua',
+                                                 'Carrega uma foto tua',
                                                  'Sua conta foi desativada',
                                                  'Sua conta foi suspensa',
                                                  'sua conta foi bloqueada',
@@ -652,5 +653,5 @@ def busca_link(navegador):
 ######################################################################################################################
 # # para abrir o navegador e deixar abero. Descomentar as duas linhas abaixo
 # navegador = cria_nevegador()
-# # # busca_link(navegador)
+# busca_link(navegador)
 # time.sleep(10000)
