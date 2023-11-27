@@ -12,6 +12,7 @@ from fuzzywuzzy import fuzz
 
 import IP
 import Variaveis_Globais
+import Origem_pg
 
 # Desabilitar o fail-safe
 pyautogui.FAILSAFE = False
@@ -1332,7 +1333,7 @@ def level_conta(x_origem, y_origem):
             if lido is not None:
                 lido = tratar_valor_numerico(lido)
                 # Verifica se o valor está na faixa desejada
-                if 1 <= lido < 50:
+                if 1 <= lido < 30:
                     print("\n   Nível da conta:", lido)
                     if pyautogui.pixelMatchesColor((x_origem + 241), (y_origem + 170), (227, 18, 5), tolerance=2):
                         pyautogui.click(771 + x_origem, 162 + y_origem)  # clica para fechar a tela do perfil
