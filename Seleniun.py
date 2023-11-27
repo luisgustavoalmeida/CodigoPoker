@@ -262,6 +262,7 @@ def fazer_login(id, senha, url, navegador, loga_pk=True):
                                                  'Insere o número de telemóvel',
                                                  'Carregue uma foto sua',
                                                  'Carrega uma foto tua',
+                                                 'Carregar uma selfie',
                                                  'Sua conta foi desativada',
                                                  'Sua conta foi suspensa',
                                                  'sua conta foi bloqueada',
