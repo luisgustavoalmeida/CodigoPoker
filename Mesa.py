@@ -209,9 +209,6 @@ def sentar_mesa(x_origem, y_origem, senta_com_maximo, blind='2040'):
             blind_sala = OCR_tela.blind_sala(x_origem, y_origem)
             blind = blind.replace("/", "")
 
-            # print("blind_sala :", blind_sala)
-            # print("blind :", blind)
-
             if blind == blind_sala:
                 print("Sentar mesa: Está na sala certa")
             else:
@@ -518,6 +515,7 @@ def sala_minima_niquel(x_origem, y_origem, num_mesa, blind_mesa):
         pyautogui.doubleClick(280 + x_origem, 200 + y_origem)  # clica na lista de aprendizes
         # if not pyautogui.pixelMatchesColor((x_origem + 280), (y_origem + 210), (73, 177, 9), tolerance=5):
     #     pyautogui.click(280 + x_origem, 200 + y_origem)  # clica na lista de aprendizes
+
     time.sleep(0.3)
     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
         return "sair da conta"
@@ -538,13 +536,19 @@ def sala_minima_niquel(x_origem, y_origem, num_mesa, blind_mesa):
     blind_sala = None
     for j in range(20):
         print(j)
-        if pyautogui.pixelMatchesColor((x_origem + 435), (y_origem + 264), (26, 29, 33),
-                                       tolerance=5):  # testa se tem sala com pelo menos um lugar vazio, olha se tem preto no fim da barra de ocupação
+        if pyautogui.pixelMatchesColor((x_origem + 310), (y_origem + 264), (95, 106, 122), tolerance=5):
+            # erro ao buscar sala, fica uma faixa cinza na linha da sala
+            print('Erro ao buscar sala, vai ser dado um F5')
+            pyautogui.press('f5')
+            break
+
+        if pyautogui.pixelMatchesColor((x_origem + 435), (y_origem + 264), (26, 29, 33), tolerance=5):
+            # testa se tem sala com pelo menos um lugar vazio, olha se tem preto no fim da barra de ocupação
             pyautogui.doubleClick(490 + x_origem, 263 + y_origem)  # clica para entar na sala vazia
 
             for i in range(40):
-                if pyautogui.pixelMatchesColor((x_origem + 435), (y_origem + 264), (26, 29, 33),
-                                               tolerance=5):  # testa se tem sala com pelo menos um lugar vazio, olha se tem preto no fim da barra de ocupação
+                if pyautogui.pixelMatchesColor((x_origem + 435), (y_origem + 264), (26, 29, 33), tolerance=5):
+                    # testa se tem sala com pelo menos um lugar vazio, olha se tem preto no fim da barra de ocupação
                     pyautogui.doubleClick(490 + x_origem, 263 + y_origem)  # clica para entar na sala vazia
                     cont_erro_entrar_mesa += 1
 
