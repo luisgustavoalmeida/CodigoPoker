@@ -580,7 +580,7 @@ def sala_minima_niquel(x_origem, y_origem, num_mesa, blind_mesa):
 
         elif pyautogui.pixelMatchesColor((x_origem + 205), (y_origem + 265), (46, 87, 132), tolerance=3):  # testa se existe sala com este numero
             print("Não existe sala com esse numero")
-            if j > 5:
+            if j > 10:
                 return False, False
         time.sleep(0.2)
     Limpa.limpa_total(x_origem, y_origem)
