@@ -1,5 +1,8 @@
+import random
 import time
+
 import pyautogui
+
 import HoraT
 import IP
 import Limpa
@@ -62,14 +65,28 @@ def cartas_premidas_joga_vezes(x_origem, y_origem, id, senha, url, navegador):
                 # espera ter as cartas virado para baixo lado marrom para cima
                 if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 239), (111, 26, 37), tolerance=10):
                     print("ta com as cartas viradas para baixo")
-                    pyautogui.click(x_origem + 658, y_origem + 341)  # clica nas cartas vermelhas
-                    for i in range(100):
-                        # testa se tem a ficha de 200 verde na posição correta
-                        if pyautogui.pixelMatchesColor((x_origem + 641), (y_origem + 344), (193, 46, 47), tolerance=5):
-                            print('200 fichas no lugar')
-                            pyautogui.doubleClick(x_origem + 711, y_origem + 422)  # clica em comfirmar
-                            confirmar = True
-                            break
+                    print("Faz uma aposta aletoria ente cartas vermelhar ou pretas")
+                    valor_aleatorio = random.choice([True, False])
+                    if valor_aleatorio:
+                        pyautogui.click(x_origem + 686, y_origem + 353)  # clica nas cartas vermelhas
+                        print('vermelhas')
+                        for _ in range(100):
+                            # testa se tem a ficha de 200 verde na posição correta
+                            if pyautogui.pixelMatchesColor((x_origem + 641), (y_origem + 344), (193, 46, 47), tolerance=10):
+                                print('200 fichas no lugar')
+                                pyautogui.doubleClick(x_origem + 711, y_origem + 422)  # clica em comfirmar
+                                confirmar = True
+                                break
+                    else:
+                        pyautogui.click(x_origem + 714, y_origem + 291)  # clica nas cartas pretas
+                        print('pretas')
+                        for _ in range(100):
+                            # testa se tem a ficha de 200 verde na posição correta
+                            if pyautogui.pixelMatchesColor((x_origem + 678), (y_origem + 295), (190, 42, 42), tolerance=10):
+                                print('200 fichas no lugar')
+                                pyautogui.doubleClick(x_origem + 711, y_origem + 422)  # clica em comfirmar
+                                confirmar = True
+                                break
 
                 if confirmar:
                     break
@@ -265,14 +282,27 @@ def cartas_premidas_joga_vezes_upando(x_origem, y_origem):
                             pyautogui.click(x_origem + 658, y_origem + 341)  # clica nas cartas vermelhas
                             time.sleep(0.1)
 
-                    pyautogui.click(x_origem + 658, y_origem + 341)  # clica nas cartas vermelhas
-                    for i in range(100):
-                        # testa se tem a ficha de 200 verde na posição correta
-                        if pyautogui.pixelMatchesColor((x_origem + 641), (y_origem + 344), (193, 46, 47), tolerance=5):
-                            print('200 fichas no lugar')
-                            pyautogui.doubleClick(x_origem + 711, y_origem + 422)  # clica em comfirmar
-                            confirmar = True
-                            break
+                    valor_aleatorio = random.choice([True, False])
+                    if valor_aleatorio:
+                        pyautogui.click(x_origem + 686, y_origem + 353)  # clica nas cartas vermelhas
+                        print('vermelhas')
+                        for _ in range(100):
+                            # testa se tem a ficha de 200 verde na posição correta
+                            if pyautogui.pixelMatchesColor((x_origem + 641), (y_origem + 344), (193, 46, 47), tolerance=10):
+                                print('200 fichas no lugar')
+                                pyautogui.doubleClick(x_origem + 711, y_origem + 422)  # clica em comfirmar
+                                confirmar = True
+                                break
+                    else:
+                        pyautogui.click(x_origem + 714, y_origem + 291)  # clica nas cartas pretas
+                        print('pretas')
+                        for _ in range(100):
+                            # testa se tem a ficha de 200 verde na posição correta
+                            if pyautogui.pixelMatchesColor((x_origem + 678), (y_origem + 295), (190, 42, 42), tolerance=10):
+                                print('200 fichas no lugar')
+                                pyautogui.doubleClick(x_origem + 711, y_origem + 422)  # clica em comfirmar
+                                confirmar = True
+                                break
 
                 if confirmar:
                     break

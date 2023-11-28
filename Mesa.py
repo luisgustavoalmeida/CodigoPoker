@@ -1,3 +1,4 @@
+import random
 import socket
 import time
 
@@ -794,8 +795,8 @@ def joga_uma_vez(x_origem, y_origem, numero_jogadas=3):
         print("Sentou :", sentou)
 
         if jogou_uma_vez:
-            if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68),
-                                           tolerance=10):  # testa se apareceu as mensagens verdes na parte de baixo
+            if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=10):
+                # testa se apareceu as mensagens verdes na parte de baixo
                 cont_jogou += 1
                 print("Jogou vezes igua a: ", cont_jogou)
                 if cont_jogou >= numero_jogadas:
@@ -887,8 +888,9 @@ def dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, time_rodou, roleta, lev
         Limpa.limpa_promocao(x_origem, y_origem)
         time.sleep(2)
         Limpa.limpa_total(x_origem, y_origem)
-        print('Joga uma vez')
-        joga_uma_vez(x_origem, y_origem, 3)
+        numero_aleatorio = random.randint(2, 4)
+        print('Joga vezes: ', numero_aleatorio)
+        joga_uma_vez(x_origem, y_origem, numero_aleatorio)
         time.sleep(1)
         Limpa.iniciantes(x_origem, y_origem)
         Limpa.limpa_total(x_origem, y_origem)
@@ -911,8 +913,9 @@ def dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, time_rodou, roleta, lev
         Limpa.limpa_promocao(x_origem, y_origem)
         time.sleep(2)
         Limpa.limpa_total(x_origem, y_origem)
-        print('Joga uma vez')
-        joga_uma_vez(x_origem, y_origem, 6)
+        numero_aleatorio = random.randint(5, 10)
+        print('Joga vezes: ', numero_aleatorio)
+        joga_uma_vez(x_origem, y_origem, numero_aleatorio)
         time.sleep(1)
         Limpa.iniciantes(x_origem, y_origem)
         Limpa.limpa_total(x_origem, y_origem)
@@ -935,8 +938,9 @@ def dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, time_rodou, roleta, lev
         Limpa.limpa_promocao(x_origem, y_origem)
         time.sleep(2)
         Limpa.limpa_total(x_origem, y_origem)
-        print('Joga uma vez')
-        joga_uma_vez(x_origem, y_origem, 6)
+        numero_aleatorio = random.randint(5, 10)
+        print('Joga vezes: ', numero_aleatorio)
+        joga_uma_vez(x_origem, y_origem, numero_aleatorio)
         time.sleep(1)
         Limpa.iniciantes(x_origem, y_origem)
         Limpa.limpa_total(x_origem, y_origem)

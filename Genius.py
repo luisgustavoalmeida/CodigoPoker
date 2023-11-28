@@ -1,4 +1,5 @@
 import time
+import random
 
 import pyautogui
 
@@ -155,9 +156,15 @@ def genius_joga_vezes(x_origem, y_origem, id, senha, url, navegador):
                 # espera o time
                 posicao = localizar_imagem(imagem1, regiao, precisao)
                 if posicao is not None:  # Verifica se a imagem foi encontrada
-                    print("faz a aposta")
-                    pyautogui.click(x_origem + 603, y_origem + 223)  # clica em Staci ganha
-                    print('espera o tempo passar ate sair o premio')
+                    print("Faz uma aposta aletoria ente Stace e David")
+                    valor_aleatorio = random.choice([True, False])
+                    if valor_aleatorio:
+                        pyautogui.click(x_origem + 603, y_origem + 223)  # clica em Staci ganha
+                        print('Stace')
+                    else:
+                        pyautogui.click(x_origem + 366, y_origem + 223)  # clica em David ganha
+                        print('David')
+                    print('Espera o tempo passar ate sair o premio')
                     time.sleep(10)
                     break
                 time.sleep(0.3)
@@ -347,8 +354,15 @@ def genius_joga_vezes_upando(x_origem, y_origem):
                     print("faz a aposta")
                     if pyautogui.pixelMatchesColor((x_origem + 449), (y_origem + 655), (193, 119, 70), tolerance=5):
                         # Testa se tem uma setinha para cima
-                        pyautogui.click(x_origem + 603, y_origem + 223)  # clica em Staci ganha
-                        print('espera o tempo passar ate sair o premio')
+                        print("Faz uma aposta aletoria ente Stace e David")
+                        valor_aleatorio = random.choice([True, False])
+                        if valor_aleatorio:
+                            pyautogui.click(x_origem + 603, y_origem + 223)  # clica em Staci ganha
+                            print('Stace')
+                        else:
+                            pyautogui.click(x_origem + 366, y_origem + 223)  # clica em David ganha
+                            print('David')
+                        print('Espera o tempo passar ate sair o premio')
 
                     else:
                         for i in range(5):

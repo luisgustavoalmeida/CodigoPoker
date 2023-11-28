@@ -84,7 +84,8 @@ def limpa_jogando(x_origem, y_origem):
 
     # aviso do sistema dentro da mesa
     elif pyautogui.pixelMatchesColor((x_origem + 455), (y_origem + 417), (25, 116, 184), tolerance=19):
-        pyautogui.click(641 + x_origem, 278 + y_origem)  # clica no x do aviso do sistema "tem certesa de que quer sair da mesa?"
+        # clica no x do aviso do sistema "tem certesa de que quer sair da mesa?"
+        pyautogui.click(641 + x_origem, 278 + y_origem)
         print("aviso do sistema dentro da mesa")
 
     # Laranja

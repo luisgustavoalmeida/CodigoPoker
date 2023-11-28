@@ -260,7 +260,7 @@ while True:
 
                     level_conta = OCR_tela.level_conta(x_origem, y_origem)
                     Mesa.dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, time_rodou, roleta, level_conta)
-                    
+
                     if not conta_upada:
                         Limpa.limpa_total(x_origem, y_origem)
                         Tarefas.recolher_tarefa_upando(x_origem, y_origem)
