@@ -540,6 +540,7 @@ def sala_minima_niquel(x_origem, y_origem, num_mesa, blind_mesa):
             # erro ao buscar sala, fica uma faixa cinza na linha da sala
             print('Erro ao buscar sala, vai ser dado um F5')
             pyautogui.press('f5')
+            time.sleep(25)
             break
 
         if pyautogui.pixelMatchesColor((x_origem + 435), (y_origem + 264), (26, 29, 33), tolerance=5):
