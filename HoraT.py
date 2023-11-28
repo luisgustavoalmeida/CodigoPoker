@@ -15,10 +15,6 @@ tempo_tarefa = tempo_total - tempo_roletas  # tempo tarefa em segundos # tempo t
 
 faixa_tempo = 700  # janela de tempo para sair das contas no tarefas
 
-# print("tempo_tarefa :", tempo_tarefa)
-# print('tempo_roletas :', tempo_roletas)
-# print('tempo_total :', tempo_total)
-
 guias = ["R1", "R2", "R3", "R4", "R5"]
 
 
@@ -125,7 +121,7 @@ def mudar_guia(id, guia):
 def fim_tempo_tarefa():
     print("Testa se esta na hora de parar o tarefas")
     hora_atual = datetime.datetime.now().time()
-    # print("hora_atual: ", hora_atual)
+
     tempo_atual = (hora_atual.hour * 3600) + (hora_atual.minute * 60) + hora_atual.second  # hora atual em segundos
     print("tempo_atual: ", tempo_atual)
 
@@ -137,33 +133,16 @@ def fim_tempo_tarefa():
         return False
 
     for i in range(1, 5):
-        # print(i)
-        # hora_comecar_tarefas = ((tempo_total * i) - tempo_tarefa)  # 4 9 14 19
-        # hora_terminar_tarefas = (((tempo_total * i) - tempo_tarefa) + tempo_tarefa)
-        # # print("hora_comecar_tarefas", hora_comecar_tarefas)
-        # # print("hora_terminar_tarefas", hora_terminar_tarefas)
 
         if ((tempo_total * i) - tempo_tarefa) <= tempo_atual <= (((tempo_total * i) - tempo_tarefa) + tempo_tarefa):
             print("Continua fazendo tarefas")
             return False
 
     for i in range(0, 5):  # do 0 ate o 4
-        # print(i)
-        # inicio_faixa = (tempo_total * i)  # 5H * i tempo_total igual a 5h  0, 5, 10, 15, 20,
-        # print("inicio_faixa :", inicio_faixa)
-        # fim_faixa = ((tempo_total * i) + faixa_tempo)
-        # print("fim_faixa :", fim_faixa)
+
         if (tempo_total * i) < tempo_atual < ((tempo_total * i) + faixa_tempo):
             print('Interrompe a tarefa e vai para o R')
             return True
 
     print("outro, Continua fazendo tarefas")
     return False
-
-# guia = "T1"
-# id = "32136546"
-# # #
-# guia = mudar_guia(id, guia)
-# print("vai para a gua: ", guia)
-
-# fim_tempo_tarefa()
