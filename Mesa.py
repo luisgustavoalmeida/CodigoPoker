@@ -189,9 +189,15 @@ def sentar_mesa(x_origem, y_origem, senta_com_maximo, blind='2040'):
 
     print('sentar_mesa')
     sentou = False
+    if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (27, 92, 155), tolerance=19):
+        print('possivel aviso so sistema, roda um limpa jogando')
+        Limpa.limpa_jogando(x_origem, y_origem)
+        time.sleep(0.5)
+
     # testa se esta aparecendo o botao azul "Jogar agora"
     if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (27, 92, 155), tolerance=19):
         # testa se esta dentro da mesa
+
         print("Está dentro da mesa")
 
         if not (pyautogui.pixelMatchesColor(495 + x_origem, 627 + y_origem, (15, 160, 220), tolerance=10)):
