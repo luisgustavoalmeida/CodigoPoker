@@ -270,8 +270,8 @@ def fazer_login(id, senha, url, navegador, loga_pk=True):
                                                  'Desabilitamos sua conta',
                                                  'você apresentou um recurso',
                                                  'Confirme seu número de celular',
-                                                 'precisamos confirmar que esta conta pertence a você',
-                                                 'Suspeitamos que o comportamento da sua conta seja automatizado']
+                                                 'precisamos confirmar que esta conta pertence a você']
+                            # 'Suspeitamos que o comportamento da sua conta seja automatizado'
 
                             for item in lista_face_caidas:
                                 # percorre os textos que tem quando tem conta caida para o face
@@ -287,7 +287,7 @@ def fazer_login(id, senha, url, navegador, loga_pk=True):
                             elementos_para_clicar = ['Começar', 'Avançar', 'Avançar', 'Avançar',
                                                      'Voltar para o Facebook', 'Ignorar']
                             encontrou = False
-                            for i in range(2):
+                            for _ in range(2):
                                 for elemento in elementos_para_clicar:
                                     elemento_seletor = f'div[aria-label="{elemento}"]'
                                     print("procura: ", elemento)
@@ -409,7 +409,8 @@ def fazer_login(id, senha, url, navegador, loga_pk=True):
 
                     else:
                         lista_face = ['Você não pode usar este recurso no momento', 'Limitamos a frequência',
-                                      'senha inserida está incorreta', 'Esqueceu a conta?', 'Tentar outra forma']
+                                      'senha inserida está incorreta', 'Esqueceu a senha', 'Esqueceu a conta?', 'Tentar outra forma',
+                                      'Enviaremos um código para o seu email', 'Insira o código de segurança']
                         for item in lista_face:  # percorre os textos que tem quando tem conta caida para o face
                             try:
                                 elemento = navegador.find_element(By.XPATH, f"//span[contains(text(), '{item}')]")
@@ -505,17 +506,17 @@ def busca_link(navegador):
     if nome_usuario == "PokerIP":  # and (nome_computador == "PC-I5-8600K"):
         id = "Luis.gustavo.almeida88"
         senha = "020996Pa"
-        endereco_falha = 'F2'
+        endereco_falha = 'F3'
 
     elif nome_usuario == "lgagu":  # and (nome_computador == "PC-I7-9700KF"):
         id = "stefaniaalmeida.jf"
         senha = "$TE20091992te"
-        endereco_falha = 'F3'
+        endereco_falha = 'F4'
 
     else:  # nome_usuario == "PokerIP": #and (nome_computador == "PC-i3-8145U"):
         id = "Luis.gustavo.almeida88"
         senha = "020996Pa"
-        endereco_falha = 'F4'
+        endereco_falha = 'F5'
 
     url = "https://pt-br.facebook.com/"
 
@@ -635,7 +636,7 @@ def busca_link(navegador):
         print("A URL começa com o padrão desejado.")
         print(link_da_barra_de_endereco)
         print('escreve o link')
-        Google.escrever_celula(link_da_barra_de_endereco, 'Dados', 'F1')
+        Google.escrever_celula(link_da_barra_de_endereco, 'Dados', 'F2')
 
         # Obtenha a data e hora atual
         data_hora_atual = str(datetime.datetime.now())
