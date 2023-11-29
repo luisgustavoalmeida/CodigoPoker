@@ -110,27 +110,17 @@ def credencial():
     """Mostra o uso básico da Sheets API.
     Imprime valores de uma planilha de amostra.
     """
-
-    # valor_dicionario = dicionari_token_credencial_n[nome_completo]
-    # token = valor_dicionario[0]  # pega o primeiro item da tupla
-    # credentials = valor_dicionario[1]  # pega o segundo item da tuplas
-    # return token, credentials
     creds = None
-    # token, credentials = token_credential()
-
-    # O arquivo token.json armazena os tokens de acesso e atualização do usuário
-    # e é criado automaticamente quando o fluxo de autorização é concluído pela
-    # primeira vez.
+    # Verifique se o arquivo de token existe
     if os.path.exists(token):
         creds = Credentials.from_authorized_user_file(token, SCOPES)
 
-    # Se não houver credenciais (válidas) disponíveis, deixe o usuário efetuar login.
+    # Se não houver credenciais válidas, solicite ao usuário que faça login
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file(
-                credentials, SCOPES)
+            flow = InstalledAppFlow.from_client_secrets_file(credentials, SCOPES)
             creds = flow.run_local_server(port=0)
         # Salve as credenciais para a próxima execução
         with open(token, 'w') as token_nome:
@@ -140,50 +130,64 @@ def credencial():
 
 
 def gerar_tokens():
+    """
+    Função para iterar sobre um dicionário de tokens e exibir informações relevantes.
+
+    Esta função utiliza variáveis globais 'token' e 'credentials', e chama a função 'credencial()'.
+
+    Dicionário esperado: dicionari_token_credencial_n, onde cada valor é uma tupla
+    contendo informações como token, credentials, conta e senha.
+
+    Exemplo de chamada:
+    gerar_tokens()
+    """
     global token, credentials
+    # Itera sobre o dicionário
     for chave, valor_dicionario in dicionari_token_credencial_n.items():
+        # Extração de valores do dicionário
         token = valor_dicionario[0]
         credentials = valor_dicionario[1]
         conta = valor_dicionario[3]
         senha = valor_dicionario[4]
+        # Exibe informações
         print(f"\n\n Para a chave: {chave} \n Token: {token} \n Credentials: {credentials} \n Conta: {conta} \n Senha: {senha} \n\n ")
+        # Chama a função 'credencial()'
         credencial()
 
 
 cred = credencial()
 service = build('sheets', 'v4', credentials=cred)
 
-
-def primeira_celula_vazia3(guia):
-    print('primeira celula vazia')
-    global cred
-    global service
-    regiao = f"{guia}!D:D"  # 'R1!D:D'
-    # Chame a API Sheets
-    sheet = service.spreadsheets()
-    while True:
-        try:
-            result = sheet.values().get(
-                spreadsheetId=planilha_id,
-                range=regiao,
-                majorDimension="COLUMNS",
-                valueRenderOption="UNFORMATTED_VALUE"
-            ).execute()
-            values = result.get('values', [[]])[0]
-
-            try:
-                i = values.index("")
-                return f"D{i + 1}"
-            except ValueError:
-                i = len(values)
-                return f"D{i + 1}"
-        except Exception as error:
-            print(f"Ocorreu um erro ao obter o valor da célula:")
-            print(f"Erro: {str(error)}")
-            time.sleep(5)
-            IP.tem_internet()
-            cred = credencial()
-            service = build('sheets', 'v4', credentials=cred)
+# def primeira_celula_vazia3(guia):
+#     print('primeira celula vazia')
+#     global cred
+#     global service
+#     regiao = f"{guia}!D:D"  # 'R1!D:D'
+#     # Chame a API Sheets
+#     sheet = service.spreadsheets()
+#     while True:
+#         try:
+#             result = sheet.values().get(
+#                 spreadsheetId=planilha_id,
+#                 range=regiao,
+#                 majorDimension="COLUMNS",
+#                 valueRenderOption="UNFORMATTED_VALUE"
+#             ).execute()
+#             values = result.get('values', [[]])[0]
+#
+#             try:
+#                 i = values.index("")
+#                 return f"D{i + 1}"
+#             except ValueError:
+#                 i = len(values)
+#                 return f"D{i + 1}"
+#         except Exception as error:
+#             print(f"Ocorreu um erro ao obter o valor da célula:")
+#             print(f"Erro: {str(error)}")
+#             time.sleep(5)
+#             IP.tem_internet()
+#             cred = credencial()
+#             service = build('sheets', 'v4', credentials=cred)
 
 
 linha_vazia_anterior = 2  # Inicializa a variável global
@@ -192,22 +196,34 @@ guia_antiga = None
 
 
 def primeira_celula_vazia(guia):
-    global linha_vazia_anterior  # Indica que vamos utilizar a variável global
+    """
+    Encontra a primeira célula vazia em uma coluna específica da planilha.
+
+    Parameters:
+    - guia (str): O nome da guia na planilha.
+
+    Returns:
+    - str: O endereço da primeira célula vazia no formato 'D{n}', onde n é o número da linha.
+    """
+    global linha_vazia_anterior
     global intervalo_de_busca
     global guia_antiga
     print('primeira celula vazia')
     global cred
     global service
+
+    # Verifica se a guia foi alterada
     if guia_antiga != guia:
         guia_antiga = guia
         linha_vazia_anterior = 2
 
-        # Chame a API Sheets
+    # Chama a API Sheets
     sheet = service.spreadsheets()
 
     while True:
         print('linha vazia: ', linha_vazia_anterior)
         try:
+            # Obtém os valores do intervalo
             result = sheet.values().get(
                 spreadsheetId=planilha_id,
                 range=f"{guia}!D{linha_vazia_anterior}:D{linha_vazia_anterior + intervalo_de_busca}",
@@ -217,7 +233,7 @@ def primeira_celula_vazia(guia):
             values = result.get('values', [[]])[0]
             # print(values)
 
-            # Montar uma lista com os 50 valores do intervalo
+            # Tenta encontrar a célula vazia no intervalo
             try:
                 i = values.index("")
                 # print(i)
