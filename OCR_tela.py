@@ -1313,7 +1313,7 @@ def level_conta(x_origem, y_origem):
     # Configurações para o processo OCR
     inveter_cor = False
     esca_ciza = True
-    fator_ampliacao = 2
+    fator_ampliacao = 3
     contraste_pre = 1
     contraste_pos = 1
     regiao_ficha = (x_origem + 599, y_origem + 239, x_origem + 630, y_origem + 257)  # leval

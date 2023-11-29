@@ -33,7 +33,6 @@ nome_usuario = os.getlogin()
 # nome do computador e do usuario
 nome_completo = socket.gethostname() + "_" + os.getlogin()
 
-
 dicionari_token_credencial_n = {'PC-I5-8600K_PokerIP': ("token1.json", "credentials0.json", 1, 'gayaluisaalmeida@gmail.com', 'lglg32379089'),
                                 'PC-I5-8600K_lgagu': ("token2.json", "credentials0.json", 2, 'lga.gustavo.a@gmail.com', 'LGlg32379089@'),
                                 'PC-I5-8600K_Poker': ("token3.json", "credentials0.json", 3, 'luis.gustavo@engenharia.ufjf.br', 'LGlg32379089@#'),
