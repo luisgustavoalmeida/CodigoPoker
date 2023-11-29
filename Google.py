@@ -33,18 +33,6 @@ nome_usuario = os.getlogin()
 # nome do computador e do usuario
 nome_completo = socket.gethostname() + "_" + os.getlogin()
 
-# cada computador tem uma conta gmail
-# crendencial 0 : lga.gustavo.a@gmail.com senha: LGlg32379089@
-# crendencial 1 : gayaluisaalmeida@gmail.com senha: Lg1405lG
-# crendencial 2 : luis.gustavo@engenharia.ufjf.br senha: LGlg32379089@#
-# cria um dicionario para separar as credenciais, ou seja uma credencial APi para cada computador
-
-# if (nome_computador == "PC-I5-8600K" or nome_computador == "PC-I5-9400A" or nome_computador == "PC-I5-9400B"
-#         or nome_computador == "PC-I5-9400C"):
-#     planilha_id = '1cEeMrBRVLnw7qtjiA63dK5q_HNvmJaCC5kNudzDjLgM'
-# else:
-#     planilha_id = '1AKaDbSnqJroq_CucIkvhKHsxRzOkQE6mcDALc8q8Q2A'
-
 
 dicionari_token_credencial_n = {'PC-I5-8600K_PokerIP': ("token1.json", "credentials0.json", 1, 'gayaluisaalmeida@gmail.com', 'lglg32379089'),
                                 'PC-I5-8600K_lgagu': ("token2.json", "credentials0.json", 2, 'lga.gustavo.a@gmail.com', 'LGlg32379089@'),
@@ -160,34 +148,6 @@ def gerar_tokens():
         senha = valor_dicionario[4]
         print(f"\n\n Para a chave: {chave} \n Token: {token} \n Credentials: {credentials} \n Conta: {conta} \n Senha: {senha} \n\n ")
         credencial()
-
-
-gerar_tokens()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 cred = credencial()
