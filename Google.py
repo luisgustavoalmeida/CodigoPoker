@@ -103,6 +103,8 @@ valor_dicionario = dicionari_token_credencial_n[nome_completo]
 valor_pc = valor_dicionario[2]  # numero do computador
 token = valor_dicionario[0]  # pega o primeiro item da tupla
 credentials = valor_dicionario[1]  # pega o segundo item da tuplas
+token_path = os.path.join('Tokens', token)
+credencial_path = os.path.join('Tokens', credentials)
 
 
 def credencial():
@@ -112,18 +114,18 @@ def credencial():
     """
     creds = None
     # Verifique se o arquivo de token existe
-    if os.path.exists(token):
-        creds = Credentials.from_authorized_user_file(token, SCOPES)
+    if os.path.exists(token_path):
+        creds = Credentials.from_authorized_user_file(token_path, SCOPES)
 
     # Se não houver credenciais válidas, solicite ao usuário que faça login
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file(credentials, SCOPES)
+            flow = InstalledAppFlow.from_client_secrets_file(credencial_path, SCOPES)
             creds = flow.run_local_server(port=0)
         # Salve as credenciais para a próxima execução
-        with open(token, 'w') as token_nome:
+        with open(token_path, 'w') as token_nome:
             token_nome.write(creds.to_json())
 
     return creds
@@ -141,7 +143,7 @@ def gerar_tokens():
     Exemplo de chamada:
     gerar_tokens()
     """
-    global token, credentials
+    global token, credentials, token_path, credencial_path
     # Itera sobre o dicionário
     for chave, valor_dicionario in dicionari_token_credencial_n.items():
         # Extração de valores do dicionário
@@ -149,6 +151,8 @@ def gerar_tokens():
         credentials = valor_dicionario[1]
         conta = valor_dicionario[3]
         senha = valor_dicionario[4]
+        token_path = os.path.join('Tokens', token)
+        credencial_path = os.path.join('Tokens', credentials)
         # Exibe informações
         print(f"\n\n Para a chave: {chave} \n Token: {token} \n Credentials: {credentials} \n Conta: {conta} \n Senha: {senha} \n\n ")
         # Chama a função 'credencial()'
