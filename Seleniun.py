@@ -196,7 +196,7 @@ def fazer_login(id, senha, url, navegador, loga_pk=True):
                             # Aguarda até que o texto seja visível na página
                             texto_a_procurar = ["Você não tem nenhum app ou site para analisar", 'Não tens apps ou sites para rever']
 
-                            for i in range(5):
+                            for i in range(7):
                                 pyautogui.click(914, 368)  # clique bobo, agora na central de contas
                                 print("Tentativa: ", i)
                                 for texto in texto_a_procurar:
