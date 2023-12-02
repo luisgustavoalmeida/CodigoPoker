@@ -39,6 +39,8 @@ comando_escravo = None
 nome_computador = socket.gethostname()
 nome_usuario = os.getlogin()
 
+nome_completo = nome_computador + "_" + nome_usuario
+
 #  lista com os computadores que vao dar comando nos escravos, colocar nesta lista para funcionar como metre
 lista_PC_meste = ('xPC-I7-9700KF', 'PC-i3-8145U', 'Thiago-PC')
 
@@ -46,9 +48,6 @@ lista_PC_meste = ('xPC-I7-9700KF', 'PC-i3-8145U', 'Thiago-PC')
 def cria_caminho_resposta_fb():
     """Função destinada a manipular o dicionário com os nomes dos computadores
     e criar um caminho para apontar na função callback """
-
-    # Obtenha o nome completo do computador e do usuário
-    nome_completo = socket.gethostname() + "_" + os.getlogin()
 
     # Crie um dicionário com os valores formatados
     dicionari_pc = {}
@@ -153,34 +152,46 @@ def on_update(event):
         # Se ocorrer um erro durante a atualização, aguarde e tente novamente
         time.sleep(5)  # Ajuste o tempo de espera conforme necessário
         print("Tentando reconectar...")
-        reconectar_firebase()
+        # reconectar_firebase()
 
 
-# # Inicializa o Firebase
-# firebase = pyrebase.initialize_app(config)
-#
-# # Obtém uma referência para o banco de dados
-# db = firebase.database()
-#
-# # Referência para o nó do Firebase que você deseja observar
-# ref = firebase.database().child(caminho_resposta)  # colocar o caminho de onde vem os comandos
-#
-# # Registrar o observador usando o método "stream"
-# # A função "on" irá chamar a função "on_update" sempre que ocorrer uma edição no nó referenciado
-# ref.stream(on_update)
+# Inicializa o Firebase
+firebase = pyrebase.initialize_app(config)
+
+# Obtém uma referência para o banco de dados
+db = firebase.database()
+
+if nome_completo in lista_PC_meste:
+    print(f"{nome_completo} está na lista de PCs mestres.")
+    # # Referência para o nó do Firebase que você deseja observar
+    ref = firebase.database().child(caminho_resposta)  # colocar o caminho de onde vem os comandos
+    #
+    # # Registrar o observador usando o método "stream"
+    # # A função "on" irá chamar a função "on_update" sempre que ocorrer uma edição no nó referenciado
+    ref.stream(on_update)
+else:
+
+    print(f"{nome_completo} não está na lista de PCs mestres.")
+
+
+def comando_escravo():
+    global comando_escravo
+    dado = db.child(caminho_resposta).get().val()
+
+    print(f"O dado em {caminho_resposta} é: {dado}")
+    comando_escravo = dado
+    return comando_escravo
 
 
 # Função para reconectar ao Firebase
-def reconectar_firebase():
-    global firebase, db, ref, caminho_resposta
-    print("Tentando reconectar ao Firebase...")
-    firebase = inicializar_firebase()
-    db = firebase.database()
-    ref = firebase.database().child(caminho_resposta)  # colocar o caminho de onde vem os comandos
-    ref.stream(on_update)
-
-
-reconectar_firebase()
+# def reconectar_firebase():
+#     global firebase, db, ref, caminho_resposta
+#     print("Tentando reconectar ao Firebase...")
+#     firebase = inicializar_firebase()
+#     db = firebase.database()
+#     ref = firebase.database().child(caminho_resposta)  # colocar o caminho de onde vem os comandos
+#     ref.stream(on_update)
+# reconectar_firebase()
 
 
 def alterar_dado_global(nome_variavel, valor):

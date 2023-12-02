@@ -61,15 +61,6 @@ def carregado_origem(id, senha, url, navegador):  # navegador
                 if status_conta != 'Tutorial':
                     status_conta = 'Carregada'
                 return x_origem, y_origem, status_conta
-            # posicao = localizar_imagem(origemB, regiao_busca, precisao_origem)
-            # if posicao is not None:# Verifica se a imagem foi encontrada
-            #     x_origem, y_origem = posicao.left, posicao.top
-            #     x_origem = int(x_origem)
-            #     y_origem = int(y_origem)
-            #     if status_conta != 'Tutorial':
-            #         status_conta = 'Carregada'
-            #     return x_origem, y_origem, status_conta
-            # testa se tem botao para aceitar
             else:
                 imagem = r'Imagens\Aceite.png'
                 regiao = (380, 400, 250, 350)

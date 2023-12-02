@@ -13,7 +13,7 @@ tempo_total = 18000  # 5 horas em segudos
 
 tempo_tarefa = tempo_total - tempo_roletas  # tempo tarefa em segundos # tempo total menos tempo não usado nas roletas
 
-faixa_tempo = 700  # janela de tempo para sair das contas no tarefas
+faixa_tempo = 1200  # janela de tempo para sair das contas no tarefas
 
 guias = ["R1", "R2", "R3", "R4", "R5"]
 

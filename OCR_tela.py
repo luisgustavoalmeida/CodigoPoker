@@ -1333,17 +1333,20 @@ def level_conta(x_origem, y_origem):
             if lido is not None:
                 lido = tratar_valor_numerico(lido)
                 # Verifica se o valor está na faixa desejada
-                if 1 <= lido < 30:
+                if 1 < lido < 30:
                     print("\n   Nível da conta:", lido, '\n')
                     if pyautogui.pixelMatchesColor((x_origem + 241), (y_origem + 170), (227, 18, 5), tolerance=2):
                         pyautogui.click(771 + x_origem, 162 + y_origem)  # clica para fechar a tela do perfil
                     return lido
                 else:
                     print("Valor fora da faixa desejada")
-                    lido = 0
+                    lido = 1
             else:
                 print("Erro na leitura do OCR")
-                lido = 0
+                lido = 1
+    if pyautogui.pixelMatchesColor((x_origem + 241), (y_origem + 170), (227, 18, 5), tolerance=2):
+        pyautogui.click(771 + x_origem, 162 + y_origem)  # clica para fechar a tela do perfil
+    print('Erro na leitura do nivel da comta')
     return lido
 
 # aviso_do_sistema()

@@ -225,7 +225,7 @@ while True:
                     time.sleep(1)
                     # Limpa.limpa_total(x_origem, y_origem)
 
-                    recebido1 = Firebase.comando_escravo
+                    recebido1 = Firebase.comando_escravo()
                     if recebido1 != recebido2:
                         recebido2 = recebido1
                         comando = recebido1.strip().title()  # remove espaços vasiao e coloca a primeira letra amiusculo
@@ -265,7 +265,6 @@ while True:
                             sentou = Mesa.sentar_mesa(x_origem, y_origem, False, blind)
                             if sentou:
                                 status_comando = "Sentou"
-                                Upar.passa_ate_lv7(x_origem, y_origem)
                             else:
                                 status_comando = "Não sentou"
                         else:

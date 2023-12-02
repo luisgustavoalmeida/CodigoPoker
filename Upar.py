@@ -223,7 +223,6 @@ def passa_ate_lv7(x_origem, y_origem):  # para se fazer tarefas
     # Firebase.confirmacao_comando_resposta("Jogando mesa")
     level = 0
     status_comando = "Jogando mesa"
-    so_tem_gire = "continua"
 
     while True:
         # comando = Firebase.comando_escravo

@@ -160,7 +160,7 @@ def fazer_login(id, senha, url, navegador, loga_pk=True):
         print('continua login')
         url_atual = pega_url(navegador, url)
 
-        print(url_atual)
+        # print(url_atual)
 
         if (("/login/" in url_atual) and loga_pk) or (not loga_pk and ("facebook.com" in url_atual)):
             print('Padrao de URL poker')
@@ -181,9 +181,28 @@ def fazer_login(id, senha, url, navegador, loga_pk=True):
                     if "/login/" not in url_atual:
                         if ("/pokerbrasil?" in url_atual) or ("/rallyacespoker" in url_atual):
                             # https://apps.facebook.com/pokerbrasil?vtype&amfmethod=appLinkFanPageAward&SignedParams=JrLALkSch1wuQxrULK6SWLAcpjTOb9Pmi5QvavvikU0.eyJhY3QiOiJmcCIsImZwX2FpZCI6IjU5ODUifQ&fbclid=IwAR252AFFL560939epg6Ki4tzNtLvgQJiZISVIZXFPjjBpBp5TNLBNX6TFXk
+                            time.sleep(1)
+                            lista_face = ['bloqueada temporariamente', 'bloqueado temporariamente', 'temporariamente']
+                            for item in lista_face:  # percorre os textos que tem quando tem conta caida para o face
+                                try:
+                                    elemento = navegador.find_element(By.XPATH, f"//span[contains(text(), '{item}')]")
+                                    print(item)
+                                    status = 'Bloqueado temporariamente'
+                                    entrou = False
+                                    return entrou, status
+                                except NoSuchElementException:
+                                    continue
+
                             print("A conta está certa.")
                             entrou = True
                             status = 'Carregada'
+                            return entrou, status
+
+                        elif "pokerbrasil/?ref=bookmarks" in url_atual:
+                            # https://apps.facebook.com/pokerbrasil/?ref=bookmarks&count=0
+                            print("A conta está certa.")
+                            entrou = False
+                            status = 'Bloqueado temporariamente'
                             return entrou, status
 
                         elif "/settings?" in url_atual:
