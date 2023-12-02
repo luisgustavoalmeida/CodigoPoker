@@ -262,10 +262,12 @@ while True:
                             pyautogui.doubleClick(x_origem + 492, y_origem + 383)  # clica no meio da roleta para rodar
 
                     level_conta = OCR_tela.level_conta(x_origem, y_origem)
-                    Mesa.dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, time_rodou, roleta, level_conta)
+                    # Mesa.dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, time_rodou, roleta, level_conta)
                     if 7 > level_conta > 4:
                         Mesa.joga_ate_lv_7(x_origem, y_origem)
                         level_conta = OCR_tela.level_conta(x_origem, y_origem)
+                    else:
+                        Mesa.dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, time_rodou, roleta, level_conta)
 
                     if not conta_upada:
                         Limpa.limpa_total(x_origem, y_origem)
