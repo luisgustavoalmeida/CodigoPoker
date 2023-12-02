@@ -175,6 +175,9 @@ while True:
                 if status_poker == 'Banida':  # se aconta esta banida
                     print("conta banida tem que marcar na plinilha")
                     break
+                elif status_poker == 'Bloqueado Temporariamente':  # se aconta esta Bloqueado Temporariamente
+                    print("conta Temporariamente bloqueado tem que marcar na plinilha")
+                    break
 
                 elif status_poker == 'Tutorial':
                     ja_fez_tutorial = False
@@ -470,7 +473,7 @@ while True:
             Google.marca_caida(stataus_facebook, guia, linha)
             id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
 
-        elif status_poker == 'Banida':
+        elif status_poker == 'Banida' or status_poker == 'Bloqueado Temporariamente':
 
             print("Conta não entou, o Statos é: ", status_poker)
             Google.marca_caida(status_poker, guia, linha)

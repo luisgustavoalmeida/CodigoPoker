@@ -82,6 +82,22 @@ def carregado_origem(id, senha, url, navegador):  # navegador
                     status_conta = 'Banida'
                     return 0, 0, status_conta
 
+                regiao = (540, 180, 200, 80)
+                imagem = r'Imagens\Temporariamente.png'
+                precisao = 0.8
+                localizado = localizar_imagem(imagem, regiao, precisao)
+                if localizado is not None:
+                    print("Você está bloquadao temporariamente imagem reconhecida")
+                    status_conta = 'Bloqueado Temporariamente'
+                    return 0, 0, status_conta
+
+                if (pyautogui.pixelMatchesColor(700, 130, (66, 103, 178), tolerance=5)
+                        and pyautogui.pixelMatchesColor(700, 300, (242, 242, 242), tolerance=5)):
+                    # testa se tem a barra azul do facebook e testa se tem uma barra cinza da mensagem do temporarimente bloqueado
+                    print("Você está bloquadao temporariamente cor reconhecida")
+                    status_conta = 'Bloqueado Temporariamente'
+                    return 0, 0, status_conta
+
                 # tutorial
                 regiao = (440, 480, 330, 270)
                 imagem = r'Imagens\Continuar2.png'
