@@ -674,6 +674,6 @@ def busca_link(navegador):
 
 ######################################################################################################################
 # # para abrir o navegador e deixar abero. Descomentar as duas linhas abaixo
-navegador = cria_nevegador()
-# busca_link(navegador)
-time.sleep(10000)
+# navegador = cria_nevegador()
+# # busca_link(navegador)
+# time.sleep(10000)
