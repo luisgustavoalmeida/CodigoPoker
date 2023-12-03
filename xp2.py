@@ -35,7 +35,7 @@ def pega_2xp(x_origem, y_origem):
                     print('2 XP Acionado')
                     time.sleep(1)
                     # return "2XP acionado"
-            elif (not pyautogui.pixelMatchesColor((x_origem + 230), (y_origem + 222), (152, 48, 220), tolerance=10)
+            elif ((not pyautogui.pixelMatchesColor((x_origem + 230), (y_origem + 222), (152, 48, 220), tolerance=10))
                   and pyautogui.pixelMatchesColor((x_origem + 241), (y_origem + 146), (250, 112, 1), tolerance=10)):
                 # testa se não tem a guia de 2xp # testa se esta meus objetos esta visivel
                 print('Não tem a guia de 2xp')
