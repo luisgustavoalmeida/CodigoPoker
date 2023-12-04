@@ -1339,7 +1339,7 @@ def level_conta(x_origem, y_origem):
                         pyautogui.click(771 + x_origem, 162 + y_origem)  # clica para fechar a tela do perfil
                     return lido
                 else:
-                    print("Valor fora da faixa desejada")
+                    print("Nível da contar fora da faixa desejada")
                     lido = 1
             else:
                 print("Erro na leitura do OCR")

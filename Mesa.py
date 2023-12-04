@@ -39,9 +39,9 @@ lista_salas_jogar = [{'1537': ('2040', 80, 40)}, {'1538': ('2040', 80, 40)}, {'1
                      {'1538': ('2040', 80, 40)}, {'1536': ('2040', 80, 40)}, {'1535': ('2040', 80, 40)},
                      {'1769': ('2040', 80, 40)}, {'1768': ('2040', 80, 40)}, {'1767': ('2040', 80, 40)},
                      {'1766': ('2040', 80, 40)}, {'1765': ('2040', 80, 40)},
-                     {'12': ('12', 2, 4)}, {'296': ('12', 2, 4)}, {'4': ('12', 2, 4)}, {'297': ('12', 2, 4)},
-                     {'295': ('12', 2, 4)}, {'294': ('12', 2, 4)}, {'293': ('12', 2, 4)},
-                     {'52': ('24', 4, 8)},
+                     # {'12': ('12', 2, 4)}, {'296': ('12', 2, 4)}, {'4': ('12', 2, 4)}, {'297': ('12', 2, 4)},
+                     # {'295': ('12', 2, 4)}, {'294': ('12', 2, 4)}, {'293': ('12', 2, 4)},
+                     # {'52': ('24', 4, 8)},
                      ]
 
 dicionari_PC_cadeira = {'PC-I5-8600K': {'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_3': (847, 366),
@@ -208,7 +208,10 @@ def sentar_mesa(x_origem, y_origem, senta_com_maximo, blind='2040'):
             return sentou
         else:
             blind_sala = OCR_tela.blind_sala(x_origem, y_origem)
-            blind = blind.replace("/", "")
+            try:
+                blind = blind.replace("/", "")
+            except:
+                print('erro blind')
 
             if blind == blind_sala:
                 print("Sentar mesa: Está na sala certa")
@@ -426,7 +429,10 @@ def escolher_blind(x_origem, y_origem, blind):
         else:
             print("Não tem sala vazia")
 
-    blind = blind.replace("/", "")
+    try:
+        blind = blind.replace("/", "")
+    except:
+        print('erro blind')
 
     if blind == blind_sala:
         numero = OCR_tela.numero_sala(x_origem, y_origem)
@@ -624,14 +630,14 @@ def gira_10auto(x_origem, y_origem):
 
 def passa_corre_joga(x_origem, y_origem, valor_aposta1=40, valor_aposta2=80):  # para se fazer tarefas
     print("passa_corre_joga")
-    jogou_uma_vez = False
+    jogou_uma_vez = False, False
     # se nao esta com v azul dentro do quadrado branco e se esta com quadrado branco
     if ((not pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (59, 171, 228), tolerance=1))
             and (pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (255, 255, 255), tolerance=1))):
         pyautogui.click((x_origem + 337), (y_origem + 605))
         # time.sleep(0.3)
         print("foi encontado o quadrado")
-        jogou_uma_vez = True
+        jogou_uma_vez = True, False
 
     else:
         print("nao tem quadrado branco")
@@ -643,21 +649,21 @@ def passa_corre_joga(x_origem, y_origem, valor_aposta1=40, valor_aposta2=80):  #
             if (valor == valor_aposta1) or (valor == valor_aposta2):
                 pyautogui.click((x_origem + 337), (y_origem + 605))  # clica no passar
                 print("tem que passar")
-                jogou_uma_vez = True
+                jogou_uma_vez = True, False
             else:
                 # pyautogui.click((x_origem + 528), (y_origem + 605))  # clica no correr
                 print("tem que correr")
-                time.sleep(3)
-                jogou_uma_vez = True
+                # time.sleep(3)
+                jogou_uma_vez = True, True
 
         # se nao tem area branca com valor
         elif pyautogui.pixelMatchesColor((x_origem + 343), (y_origem + 599), (255, 255, 255), tolerance=1):  # testa se tem um v de pagar
             # print("ta com all-in ou ta tudo azul")
             # if pyautogui.pixelMatchesColor((x_origem + 528), (y_origem + 603), (255, 255, 255), tolerance=1):
             print("ta com x branco do correr")
-            time.sleep(3)
+            # time.sleep(3)
             # pyautogui.click((x_origem + 528), (y_origem + 605))  # clica no correr
-            jogou_uma_vez = True
+            jogou_uma_vez = True, True
 
     return jogou_uma_vez
 
@@ -807,7 +813,7 @@ def joga_uma_vez(x_origem, y_origem, numero_jogadas=3):
         print("Sentou :", sentou)
 
         if jogou_uma_vez:
-            if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=10):
+            if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=20):
                 # testa se apareceu as mensagens verdes na parte de baixo
                 cont_jogou += 1
                 print("Jogou vezes igua a: ", cont_jogou)
@@ -828,8 +834,11 @@ def joga_uma_vez(x_origem, y_origem, numero_jogadas=3):
 
         if sentou:
             print("esta sentado")
-            if passa_corre_joga(x_origem, y_origem, valor_aposta1, valor_aposta2):
+            (jogou, humano) = passa_corre_joga(x_origem, y_origem, valor_aposta1, valor_aposta2)
+            if jogou:
                 jogou_uma_vez = True
+            print('jogou_uma_vez: ', jogou_uma_vez)
+            print('humano: ', humano)
 
         else:
             print("ainda nao esta sentado")
@@ -884,18 +893,21 @@ def joga_uma_vez(x_origem, y_origem, numero_jogadas=3):
 def joga_ate_lv_7(x_origem, y_origem):
     print('joga_ate_lv_7')
 
-    xp2.pega_2xp(x_origem, y_origem)
+    # xp2.pega_2xp(x_origem, y_origem)
 
     global lista_salas_jogar
     blind_mesa = None
     sentou = False
     continua_jogando = True
     jogou_uma_vez = False
+    humano = False
     cont_jogou = 0
     senta_com_maximo = False
 
     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
         return "sair da conta"
+
+    xp2.pega_2xp(x_origem, y_origem)
 
     time_entrou = time.perf_counter()
 
@@ -908,7 +920,7 @@ def joga_ate_lv_7(x_origem, y_origem):
         print("Sentou :", sentou)
 
         if jogou_uma_vez:
-            if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=10):
+            if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=20):
                 # testa se apareceu as mensagens verdes na parte de baixo
                 level_conta = OCR_tela.level_conta(x_origem, y_origem)
                 cont_jogou += 1
@@ -930,10 +942,20 @@ def joga_ate_lv_7(x_origem, y_origem):
                 Limpa.limpa_jogando(x_origem, y_origem)
             time.sleep(1)
 
+        if humano:
+            print('Jogador humano na mesa, troca de mesa')
+            jogou_uma_vez = False
+            humano = False
+            Limpa.limpa_total(x_origem, y_origem)
+            Limpa.limpa_jogando(x_origem, y_origem)
+
         if sentou:
             print("esta sentado")
-            if passa_corre_joga(x_origem, y_origem, valor_aposta1, valor_aposta2):
+            (jogou, humano) = passa_corre_joga(x_origem, y_origem, valor_aposta1, valor_aposta2)
+            if jogou:
                 jogou_uma_vez = True
+            # print('jogou_uma_vez: ', jogou_uma_vez)
+            # print('humano: ', humano)
 
         else:
             print("ainda nao esta sentado")
@@ -954,18 +976,20 @@ def joga_ate_lv_7(x_origem, y_origem):
                     blind_certo, sala_existe = sala_minima_niquel(x_origem, y_origem, num_mesa, blind_mesa)
 
                     if not sala_existe:
-                        print(lista_salas_jogar)
+                        # print(lista_salas_jogar)
                         # Remover o primeiro item da lista usando pop(0)
                         primeiro_item = lista_salas_jogar.pop(0)
                         # Adicionar o primeiro item de volta à lista usando append(), colocando-o no final
                         lista_salas_jogar.append(primeiro_item)
-                        print(lista_salas_jogar)
+                        # print(lista_salas_jogar)
 
                     if blind_certo:
                         sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa)
                         if sentou:
                             time_entrou = time.perf_counter()
                             print('esta tudo ok, slote e sentado')
+                            jogou_uma_vez = False
+                            humano = False
                             break
 
                 if sentou:
