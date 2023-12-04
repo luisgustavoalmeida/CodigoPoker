@@ -386,7 +386,7 @@ def valor_fichas(x_origem, y_origem):
             # Verifica se o valor está dentro da faixa desejada
             if 500 < valor < 15000000:
                 print(f"Valor das fichas: {valor}")
-                # return valor
+                return valor
             else:
                 print('Valor fora sa feixa esperado')
                 valor = 0
