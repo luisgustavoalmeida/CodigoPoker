@@ -913,9 +913,9 @@ def joga_ate_lv_7(x_origem, y_origem):
                 level_conta = OCR_tela.level_conta(x_origem, y_origem)
                 cont_jogou += 1
                 print("Jogou vezes igua a: ", cont_jogou)
-                if level_conta >= 9:
+                if level_conta >= 10:
                     level_conta = OCR_tela.level_conta(x_origem, y_origem)
-                    if level_conta >= 7:
+                    if level_conta >= 10:
                         break
                 jogou_uma_vez = False
                 time_entrou = time.perf_counter()
