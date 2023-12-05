@@ -174,7 +174,7 @@ def clica_seta_sentar(x_origem, y_origem):
     return False
 
 
-def sentar_mesa(x_origem, y_origem, senta_com_maximo, blind='2040'):
+def sentar_mesa(x_origem, y_origem, senta_com_maximo=False, blind='2040'):
     """
     Tenta sentar em uma mesa de poker virtual com base nas coordenadas fornecidas.
 
@@ -837,8 +837,8 @@ def joga_uma_vez(x_origem, y_origem, numero_jogadas=3):
             (jogou, humano) = passa_corre_joga(x_origem, y_origem, valor_aposta1, valor_aposta2)
             if jogou:
                 jogou_uma_vez = True
-            print('jogou_uma_vez: ', jogou_uma_vez)
-            print('humano: ', humano)
+            # print('jogou_uma_vez: ', jogou_uma_vez)
+            # print('humano: ', humano)
 
         else:
             print("ainda nao esta sentado")
@@ -850,8 +850,8 @@ def joga_uma_vez(x_origem, y_origem, numero_jogadas=3):
                     valor_aposta1 = valor_tupla[1]  # Obtendo o primeiro número da tupla
                     valor_aposta2 = valor_tupla[2]  # Obtendo o segundo número da tupla
 
-                    print('procura mesa')
-                    print(lista_salas_jogar)
+                    # print('procura mesa')
+                    # print(lista_salas_jogar)
                     print('Mumero da mesa para tentar sentar: ', num_mesa)
                     IP.tem_internet()
                     Limpa.limpa_jogando(x_origem, y_origem)
@@ -859,12 +859,12 @@ def joga_uma_vez(x_origem, y_origem, numero_jogadas=3):
                     blind_certo, sala_existe = sala_minima_niquel(x_origem, y_origem, num_mesa, blind_mesa)
 
                     if not sala_existe:
-                        print(lista_salas_jogar)
+                        # print(lista_salas_jogar)
                         # Remover o primeiro item da lista usando pop(0)
                         primeiro_item = lista_salas_jogar.pop(0)
                         # Adicionar o primeiro item de volta à lista usando append(), colocando-o no final
                         lista_salas_jogar.append(primeiro_item)
-                        print(lista_salas_jogar)
+                        # print(lista_salas_jogar)
 
                     if blind_certo:
                         sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa)
@@ -872,11 +872,16 @@ def joga_uma_vez(x_origem, y_origem, numero_jogadas=3):
                             time_entrou = time.perf_counter()
                             print('esta tudo ok, slote e sentado')
                             break
+                        else:
+                            time_entrou = 0
 
                 if sentou:
                     break
+                else:
+                    time_entrou = 0
 
             if not sentou:
+                time_entrou = 0
                 print("rodou a lista de mesas 2x, da um F5 para recarregar as mesas")
                 IP.tem_internet()
                 print('f5')
@@ -950,7 +955,6 @@ def joga_ate_lv_7(x_origem, y_origem):
             Limpa.limpa_jogando(x_origem, y_origem)
 
         if sentou:
-
             print("esta sentado")
             (jogou, humano) = passa_corre_joga(x_origem, y_origem, valor_aposta1, valor_aposta2)
             if jogou:
@@ -959,7 +963,6 @@ def joga_ate_lv_7(x_origem, y_origem):
             # print('humano: ', humano)
 
         else:
-            jogou_uma_vez = False
             humano = False
             print("ainda nao esta sentado")
             for i in range(2):
@@ -992,11 +995,16 @@ def joga_ate_lv_7(x_origem, y_origem):
                             time_entrou = time.perf_counter()
                             print('esta tudo ok, slote e sentado')
                             break
+                        else:
+                            time_entrou = 0
 
                 if sentou:
                     break
+                else:
+                    time_entrou = 0
 
             if not sentou:
+                time_entrou = 0
                 print("rodou a lista de mesas 2x, da um F5 para recarregar as mesas")
                 IP.tem_internet()
                 print('f5')
