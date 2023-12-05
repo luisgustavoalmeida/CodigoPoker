@@ -950,6 +950,7 @@ def joga_ate_lv_7(x_origem, y_origem):
             Limpa.limpa_jogando(x_origem, y_origem)
 
         if sentou:
+
             print("esta sentado")
             (jogou, humano) = passa_corre_joga(x_origem, y_origem, valor_aposta1, valor_aposta2)
             if jogou:
@@ -958,6 +959,8 @@ def joga_ate_lv_7(x_origem, y_origem):
             # print('humano: ', humano)
 
         else:
+            jogou_uma_vez = False
+            humano = False
             print("ainda nao esta sentado")
             for i in range(2):
                 for dicionario in lista_salas_jogar:
@@ -967,8 +970,8 @@ def joga_ate_lv_7(x_origem, y_origem):
                     valor_aposta1 = valor_tupla[1]  # Obtendo o primeiro número da tupla
                     valor_aposta2 = valor_tupla[2]  # Obtendo o segundo número da tupla
 
-                    print('procura mesa')
-                    print(lista_salas_jogar)
+                    # print('procura mesa')
+                    # print(lista_salas_jogar)
                     print('Mumero da mesa para tentar sentar: ', num_mesa)
                     IP.tem_internet()
                     Limpa.limpa_jogando(x_origem, y_origem)
@@ -988,8 +991,6 @@ def joga_ate_lv_7(x_origem, y_origem):
                         if sentou:
                             time_entrou = time.perf_counter()
                             print('esta tudo ok, slote e sentado')
-                            jogou_uma_vez = False
-                            humano = False
                             break
 
                 if sentou:
