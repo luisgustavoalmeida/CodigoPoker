@@ -282,27 +282,40 @@ def sentar_mesa(x_origem, y_origem, senta_com_maximo=False, blind='2040'):
 
                                 time.sleep(0.5)
 
-                                if pyautogui.pixelMatchesColor(avisodo_sistema_x, avisodo_sistema_y, cor_nao_possui_fichas2, tolerance=20):
+                                if pyautogui.pixelMatchesColor(avisodo_sistema_x, avisodo_sistema_y, cor_nao_possui_fichas, tolerance=5):
+                                    print('Aviso do sistema')
                                     # testa se tem aviso do sistema
 
-                                    if pyautogui.pixelMatchesColor((x_origem + 329), (y_origem + 340), (33, 66, 103), tolerance=19):
+                                    if pyautogui.pixelMatchesColor((x_origem + 337), (y_origem + 337), (33, 66, 103), tolerance=5):
                                         # Desculpex vocês nao possui fichas suficientes para senter. Favor ir a uma sala ou faça uma recarga
                                         pyautogui.click((x_origem + 641), (y_origem + 278))  # fecha aviso do sistema
                                         print('Desculpex vocês nao possui fichas suficientes para senter. Favor ir a uma sala ou faça uma recarga')
                                         sentou = False
                                         return sentou
-                                    elif pyautogui.pixelMatchesColor((x_origem + 332), (y_origem + 339), (33, 66, 103), tolerance=19):
+
+                                    elif pyautogui.pixelMatchesColor((x_origem + 373), (y_origem + 339), (63, 92, 123), tolerance=5):
+                                        pyautogui.click((x_origem + 641), (y_origem + 278))  # fecha aviso do sistema
+                                        print('Desculpe! Não possui fichas suficientes')
+                                        sentou = False
+                                        return sentou
+
+                                    elif pyautogui.pixelMatchesColor((x_origem + 340), (y_origem + 336), (33, 66, 103), tolerance=5):
                                         # Você não pode jogar com duas contas ao mesmo tempo
                                         pyautogui.click((x_origem + 641), (y_origem + 278))  # fecha aviso do sistema
                                         print('Você não pode jogar com duas contas ao mesmo tempo')
                                         sentou = False
                                         return sentou
-                                    else:
+
+                                    elif pyautogui.pixelMatchesColor((x_origem + 369), (y_origem + 341), (33, 66, 103), tolerance=5):
                                         # Este lugar ja foi ocupado
                                         pyautogui.click((x_origem + 641), (y_origem + 278))  # fecha aviso do sistema
-                                        print("Este lugar ja foi ocuádo")
+                                        print("Este lugar ja foi ocupado")
                                         sentou = False
                                         # tenta sentar em outra cadeira
+                                        break
+                                    else:
+                                        pyautogui.click((x_origem + 641), (y_origem + 278))  # fecha aviso do sistema
+                                        print('outro amensagem com aviso do sistema')
                                         break
 
                                 else:
