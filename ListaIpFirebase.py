@@ -38,6 +38,8 @@ config1 = {
 # Variável para armazenar a última data de acesso
 ultima_data_acesso = None
 
+tempo_sem_uso_ip = 36
+
 
 def escolher_configuracao_e_db():
     """
@@ -103,7 +105,7 @@ def unir_e_atualizar_dados():
         dados_combinados = [dict(t) for t in {tuple(d.items()) for d in dados_combinados}]
 
         # Remove IPs que estão na lista por mais de 24 horas
-        dados_combinados = [ip_info for ip_info in dados_combinados if time.time() - ip_info['timestamp'] <= 24 * 3600]
+        dados_combinados = [ip_info for ip_info in dados_combinados if time.time() - ip_info['timestamp'] <= tempo_sem_uso_ip * 3600]
 
         # Atualiza a referência 'ips' nos dois bancos
         db_1.child('ips').set(dados_combinados)
@@ -145,7 +147,7 @@ def verifica_e_adiciona_ip(ip):
         ultima_data_acesso = datetime.datetime.now()
 
     # Remove IPs que estão na lista por mais de 24 horas
-    lista_ips = [ip_info for ip_info in lista_ips if time.time() - ip_info['timestamp'] <= 24 * 3600]
+    lista_ips = [ip_info for ip_info in lista_ips if time.time() - ip_info['timestamp'] <= tempo_sem_uso_ip * 3600]
 
     # Verifica se o IP já está na lista
     for ip_info in lista_ips:
