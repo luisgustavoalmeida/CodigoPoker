@@ -1032,7 +1032,7 @@ def blind_sala(x_origem, y_origem):
     config = '--psm 7 --oem 3 -c tessedit_char_whitelist=/0123456789KM'
 
     # Define a região onde a informação da blind está localizada
-    regiao = (x_origem + 52, y_origem + 99, x_origem + 125, y_origem + 115)
+    regiao = (x_origem + 54, y_origem + 99, x_origem + 95, y_origem + 115)
 
     # Realiza a leitura da região para obter a informação da blind
     blind = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
