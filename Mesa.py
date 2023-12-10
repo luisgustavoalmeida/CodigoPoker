@@ -16,12 +16,13 @@ import xp2
 
 nome_computador = socket.gethostname()
 
-lista_salas_niquel = [{'1537': ('2040', 80, 40)}, {'1538': ('2040', 80, 40)}, {'1546': ('2040', 80, 40)},
-                      {'1542': ('2040', 80, 40)}, {'1545': ('2040', 80, 40)}, {'1543': ('2040', 80, 40)},
-                      {'1542': ('2040', 80, 40)}, {'1541': ('2040', 80, 40)}, {'1540': ('2040', 80, 40)},
-                      {'1538': ('2040', 80, 40)}, {'1536': ('2040', 80, 40)}, {'1535': ('2040', 80, 40)},
-                      {'1769': ('2040', 80, 40)}, {'1768': ('2040', 80, 40)}, {'1767': ('2040', 80, 40)},
-                      {'1766': ('2040', 80, 40)}, {'1765': ('2040', 80, 40)}]
+lista_salas_niquel = [{'435': ('2040', 80, 40)}, {'1027': ('2040', 80, 40)}, {'1028': ('2040', 80, 40)}, {'1236': ('2040', 80, 40)},
+                      {'1535': ('2040', 80, 40)}, {'1536': ('2040', 80, 40)}, {'1537': ('2040', 80, 40)}, {'1537': ('2040', 80, 40)},
+                      {'1538': ('2040', 80, 40)}, {'1538': ('2040', 80, 40)}, {'1540': ('2040', 80, 40)}, {'1541': ('2040', 80, 40)},
+                      {'1542': ('2040', 80, 40)}, {'1543': ('2040', 80, 40)}, {'1545': ('2040', 80, 40)}, {'1546': ('2040', 80, 40)},
+                      {'1648': ('2040', 80, 40)}, {'1649': ('2040', 80, 40)}, {'1650': ('2040', 80, 40)}, {'1651': ('2040', 80, 40)},
+                      {'1652': ('2040', 80, 40)}, {'1765': ('2040', 80, 40)}, {'1766': ('2040', 80, 40)}, {'1767': ('2040', 80, 40)},
+                      {'1768': ('2040', 80, 40)}, {'1769': ('2040', 80, 40)}]
 
 # lista_salas_jogar = [{'12': ('12', 2, 4)}, {'296': ('12', 2, 4)}, {'4': ('12', 2, 4)}, {'297': ('12', 2, 4)},
 #                      {'295': ('12', 2, 4)}, {'294': ('12', 2, 4)}, {'293': ('12', 2, 4)},
@@ -240,14 +241,14 @@ def sentar_mesa(x_origem, y_origem, senta_com_maximo=False, blind='2040'):
                             # testa o tipo de caixa de comprar ficha, testa se a caixa é mais larga, olha uma mao cinsa segurando um dinheiro
                             if pyautogui.pixelMatchesColor((x_origem + 313), (y_origem + 445), (55, 57, 62), tolerance=20):
                                 # print("janela mais alta")
-                                # pyautogui.click((x_origem + 522), (y_origem + 405))  # Marca a re-compra automatica
+                                pyautogui.click((x_origem + 522), (y_origem + 405))  # Marca a re-compra automatica
                                 posicao_valor_minimo_x = 324 + x_origem
                                 posicao_valor_minimo_y = 354 + y_origem
                                 posicao_valor_maximo_x = 659 + x_origem
                                 posicao_valor_maximo_y = 354 + y_origem
                             else:
                                 # print("janela mais baixa")
-                                # pyautogui.click((x_origem + 522), (y_origem + 424))  # Marca a re-compra automatica
+                                pyautogui.click((x_origem + 522), (y_origem + 424))  # Marca a re-compra automatica
                                 posicao_valor_minimo_x = 324 + x_origem
                                 posicao_valor_minimo_y = 372 + y_origem
                                 posicao_valor_maximo_x = 659 + x_origem
