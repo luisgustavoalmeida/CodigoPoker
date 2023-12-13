@@ -156,7 +156,7 @@ def cadeiras_livres(x_origem, y_origem, cor_cadeira=(254, 207, 0), tolerancia=10
     return True
 
 
-def conta_cadeiras_livres_celular(x_origem, y_origem, cor_celular=(136, 137, 137), tolerancia=10):
+def conta_cadeiras_livres_celular(x_origem, y_origem, cor_celular=(136, 137, 137), tolerancia=8):
     """
     Conta o número de cadeiras livres ao redor de uma mesa.
 
@@ -181,7 +181,7 @@ def conta_cadeiras_livres_celular(x_origem, y_origem, cor_celular=(136, 137, 137
     return cadeiras_livres
 
 
-def cadeiras_celular(x_origem, y_origem, cor_celular=(136, 137, 137), tolerancia=10):
+def cadeiras_celular(x_origem, y_origem, cor_celular=(136, 137, 137), tolerancia=8):
     """
     Verifica se todas as cadeiras em torno de uma mesa estão livres.
 
@@ -253,11 +253,11 @@ def sentar_mesa(x_origem, y_origem, senta_com_maximo=False, blind='2040', teste_
     if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (27, 92, 155), tolerance=5):
         # testa se esta dentro da mesa
 
-        print("Está dentro da mesa")
+        # print("Está dentro da mesa")
 
         if not (pyautogui.pixelMatchesColor(495 + x_origem, 627 + y_origem, (15, 160, 220), tolerance=10)):
             # test se tem o botao jogar agoar apara seber se ja ta sentado
-            print('Já está sentado')
+            # print('Já está sentado')
             sentou = True
             return sentou
         else:
@@ -598,8 +598,8 @@ def sala_minima_niquel(x_origem, y_origem, num_mesa, blind_mesa):
     #     pyautogui.click(280 + x_origem, 200 + y_origem)  # clica na lista de aprendizes
 
     time.sleep(0.3)
-    if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-        return "sair da conta"
+    # if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
+    #     return "sair da conta"
     Limpa.aviso_canto_lobby(x_origem, y_origem)
     pyautogui.doubleClick(310 + x_origem, 617 + y_origem)  # clica FORA caixa de busca de salas para apagar o valor
     time.sleep(0.2)
@@ -765,15 +765,15 @@ def joga(x_origem, y_origem, id, senha, url, navegador, ajusta_aposta):
 
     while continua_jogando:  # permanece joghando
         senta_com_maximo = False
-        print('joga mesa')
+        # print('joga mesa')
         Limpa.fecha_tarefa(x_origem, y_origem)
         Limpa.limpa_jogando(x_origem, y_origem)
 
         sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa)
-        print("Sentou : ", sentou)
+        # print("Sentou : ", sentou)
 
         if sentou:
-            print("esta sentado")
+            # print("esta sentado")
             passa_corre_joga(x_origem, y_origem, valor_aposta1, valor_aposta2)
             auto10 = gira_10auto(x_origem, y_origem)
             if auto10:
@@ -881,11 +881,11 @@ def joga_uma_vez(x_origem, y_origem, numero_jogadas=3):
 
     while continua_jogando:  # permanece joghando
 
-        print('joga mesa')
+        # print('joga mesa')
         Limpa.fecha_tarefa(x_origem, y_origem)
         Limpa.limpa_jogando(x_origem, y_origem)
         sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa, True)
-        print("Sentou :", sentou)
+        # print("Sentou :", sentou)
 
         if jogou_uma_vez:
             if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=20):
@@ -896,16 +896,19 @@ def joga_uma_vez(x_origem, y_origem, numero_jogadas=3):
                     break
                 jogou_uma_vez = False
                 time_entrou = time.perf_counter()
+                if not cadeiras_celular(x_origem, y_origem):
+                    print('Sair da mesa fim da jogada com humanos na mesa')
+                    humano = True
 
-        else:
-            time_sair = time.perf_counter()
-            tempo_total = time_sair - time_entrou
-            print('tempo que esta esperando', tempo_total)
-            if tempo_total > 130:  # troica de mesa se ficar muito tempo parado sem entrar alguem para jogar
-                print("tempo limite atingido sem outro jogador, sai da mesa para tentar em outra")
-                Limpa.limpa_total(x_origem, y_origem)
-                Limpa.limpa_jogando(x_origem, y_origem)
-            time.sleep(1)
+        # else:
+        time_sair = time.perf_counter()
+        tempo_total = time_sair - time_entrou
+        # print('tempo que esta esperando', tempo_total)
+        if tempo_total > 130:  # troica de mesa se ficar muito tempo parado sem entrar alguem para jogar
+            print("tempo limite atingido sem outro jogador, sai da mesa para tentar em outra")
+            Limpa.limpa_total(x_origem, y_origem)
+            Limpa.limpa_jogando(x_origem, y_origem)
+        time.sleep(0.5)
 
         if humano:
             print('Jogador humano na mesa, troca de mesa')
@@ -915,7 +918,7 @@ def joga_uma_vez(x_origem, y_origem, numero_jogadas=3):
             Limpa.limpa_jogando(x_origem, y_origem)
 
         if sentou:
-            print("esta sentado")
+            # print("esta sentado")
             (jogou, humano) = passa_corre_joga(x_origem, y_origem, valor_aposta1, valor_aposta2)
             if jogou:
                 jogou_uma_vez = True
@@ -1001,11 +1004,11 @@ def joga_ate_lv_7(x_origem, y_origem):
 
     while continua_jogando:  # permanece joghando
 
-        print('joga mesa')
+        # print('joga mesa')
         Limpa.fecha_tarefa(x_origem, y_origem)
         Limpa.limpa_jogando(x_origem, y_origem)
         sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa, True)
-        print("Sentou :", sentou)
+        # print("Sentou :", sentou)
 
         if jogou_uma_vez:
             if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=20):
@@ -1023,16 +1026,19 @@ def joga_ate_lv_7(x_origem, y_origem):
 
                 jogou_uma_vez = False
                 time_entrou = time.perf_counter()
+                if not cadeiras_celular(x_origem, y_origem):
+                    print('Sair da mesa fim da jogada com humanos na mesa')
+                    humano = True
 
-        else:
-            time_sair = time.perf_counter()
-            tempo_total = time_sair - time_entrou
-            print('tempo que esta esperando', tempo_total)
-            if tempo_total > 130:  # troica de mesa se ficar muito tempo parado sem entrar alguem para jogar
-                print("tempo limite atingido sem outro jogador, sai da mesa para tentar em outra")
-                Limpa.limpa_total(x_origem, y_origem)
-                Limpa.limpa_jogando(x_origem, y_origem)
-            time.sleep(1)
+        # else:
+        time_sair = time.perf_counter()
+        tempo_total = time_sair - time_entrou
+        # print('tempo que esta esperando', tempo_total)
+        if tempo_total > 130:  # troica de mesa se ficar muito tempo parado sem entrar alguem para jogar
+            print("tempo limite atingido sem outro jogador, sai da mesa para tentar em outra")
+            Limpa.limpa_total(x_origem, y_origem)
+            Limpa.limpa_jogando(x_origem, y_origem)
+        time.sleep(0.5)
 
         if humano:
             print('Jogador humano na mesa, troca de mesa')
