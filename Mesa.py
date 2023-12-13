@@ -872,6 +872,7 @@ def joga_uma_vez(x_origem, y_origem, numero_jogadas=3):
     jogou_uma_vez = False
     cont_jogou = 0
     senta_com_maximo = False
+    humano = False
 
     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
         return "sair da conta"
@@ -906,6 +907,13 @@ def joga_uma_vez(x_origem, y_origem, numero_jogadas=3):
                 Limpa.limpa_jogando(x_origem, y_origem)
             time.sleep(1)
 
+        if humano:
+            print('Jogador humano na mesa, troca de mesa')
+            jogou_uma_vez = False
+            humano = False
+            Limpa.limpa_total(x_origem, y_origem)
+            Limpa.limpa_jogando(x_origem, y_origem)
+
         if sentou:
             print("esta sentado")
             (jogou, humano) = passa_corre_joga(x_origem, y_origem, valor_aposta1, valor_aposta2)
@@ -915,6 +923,7 @@ def joga_uma_vez(x_origem, y_origem, numero_jogadas=3):
             # print('humano: ', humano)
 
         else:
+            humano = False
             print("ainda nao esta sentado")
             for i in range(2):
                 for dicionario in lista_salas_jogar:
