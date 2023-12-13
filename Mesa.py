@@ -92,6 +92,10 @@ dicionario_cadeira = {'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira
                       'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451),
                       'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)}
 
+dicionario_celular = {'cadeira_1': (645, 135), 'cadeira_2': (818, 217), 'cadeira_3': (814, 377),
+                      'cadeira_4': (675, 473), 'cadeira_5': (484, 473), 'cadeira_6': (290, 473),
+                      'cadeira_7': (144, 377), 'cadeira_8': (156, 217), 'cadeira_9': (334, 135)}
+
 prioridade_cadeira = dicionari_PC_cadeira[nome_computador]
 
 
@@ -152,6 +156,53 @@ def cadeiras_livres(x_origem, y_origem, cor_cadeira=(254, 207, 0), tolerancia=10
     return True
 
 
+def conta_cadeiras_livres_celular(x_origem, y_origem, cor_celular=(136, 137, 137), tolerancia=10):
+    """
+    Conta o número de cadeiras livres ao redor de uma mesa.
+
+    Parâmetros:
+    - x_origem: A coordenada X da origem da mesa.
+    - y_origem: A coordenada Y da origem da mesa.
+    - cor_cadeira: A cor da cadeira em formato RGB.
+    - tolerancia: A tolerância para correspondência de cor.
+
+    Retorna:
+    - O número de cadeiras livres ao redor da mesa.
+    """
+
+    # Usando uma list comprehension e a função sum para contar cadeiras livres
+    cadeiras_livres = sum(
+        1 for valor in dicionario_celular.values()
+        if pyautogui.pixelMatchesColor(x_origem + valor[0], y_origem + valor[1], cor_celular, tolerance=tolerancia)
+    )
+
+    # Exibindo a mensagem com o número de cadeiras livres
+    print(f"Esta mesa tem {cadeiras_livres} cadeiras com celular.")
+    return cadeiras_livres
+
+
+def cadeiras_celular(x_origem, y_origem, cor_celular=(136, 137, 137), tolerancia=10):
+    """
+    Verifica se todas as cadeiras em torno de uma mesa estão livres.
+
+    Parâmetros:
+    - x_origem: A coordenada X da origem da mesa.
+    - y_origem: A coordenada Y da origem da mesa.
+    - cor_cadeira: A cor da cadeira em formato RGB.
+    - tolerancia: A tolerância para correspondência de cor.
+
+    Retorna:
+    - True se todas as cadeiras estiverem livres, False se pelo menos uma cadeira estiver ocupada.
+    """
+    print('cadeiras_livres')
+    for x, y in dicionario_celular.values():
+        if pyautogui.pixelMatchesColor(x_origem + x, y_origem + y, cor_celular, tolerance=tolerancia):
+            print('Pelo menos uma cadeira está com celular.')
+            return False
+    print('Todas as cadeiras estão livres de celular.')
+    return True
+
+
 def clica_seta_sentar(x_origem, y_origem):
     """
     Clica na seta de uma cadeira com base nas coordenadas de origem fornecidas.
@@ -177,7 +228,7 @@ def clica_seta_sentar(x_origem, y_origem):
     return False
 
 
-def sentar_mesa(x_origem, y_origem, senta_com_maximo=False, blind='2040'):
+def sentar_mesa(x_origem, y_origem, senta_com_maximo=False, blind='2040', teste_celular=False):
     """
     Tenta sentar em uma mesa de poker virtual com base nas coordenadas fornecidas.
 
@@ -222,8 +273,15 @@ def sentar_mesa(x_origem, y_origem, senta_com_maximo=False, blind='2040'):
                 print("Sentar mesa: Está na sala errada")
                 return False
 
+            if teste_celular:
+                if not cadeiras_celular(x_origem, y_origem):
+                    print('Sai da mesa pq tem humanos')
+                    sentou = False
+                    return sentou
+
             for _ in range(10):
                 print('Tentando sentar')
+
                 clica_seta = clica_seta_sentar(x_origem, y_origem)
 
                 if clica_seta:
@@ -825,7 +883,7 @@ def joga_uma_vez(x_origem, y_origem, numero_jogadas=3):
         print('joga mesa')
         Limpa.fecha_tarefa(x_origem, y_origem)
         Limpa.limpa_jogando(x_origem, y_origem)
-        sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa)
+        sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa, True)
         print("Sentou :", sentou)
 
         if jogou_uma_vez:
@@ -883,7 +941,7 @@ def joga_uma_vez(x_origem, y_origem, numero_jogadas=3):
                         # print(lista_salas_jogar)
 
                     if blind_certo:
-                        sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa)
+                        sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa, True)
                         if sentou:
                             time_entrou = time.perf_counter()
                             print('esta tudo ok, slote e sentado')
@@ -902,7 +960,7 @@ def joga_uma_vez(x_origem, y_origem, numero_jogadas=3):
                 IP.tem_internet()
                 print('f5')
                 pyautogui.press('f5')
-                time.sleep(15)
+                time.sleep(25)
 
     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
         return "sair da conta"
@@ -937,7 +995,7 @@ def joga_ate_lv_7(x_origem, y_origem):
         print('joga mesa')
         Limpa.fecha_tarefa(x_origem, y_origem)
         Limpa.limpa_jogando(x_origem, y_origem)
-        sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa)
+        sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa, True)
         print("Sentou :", sentou)
 
         if jogou_uma_vez:
@@ -971,8 +1029,8 @@ def joga_ate_lv_7(x_origem, y_origem):
             print('Jogador humano na mesa, troca de mesa')
             jogou_uma_vez = False
             humano = False
-            # Limpa.limpa_total(x_origem, y_origem)
-            # Limpa.limpa_jogando(x_origem, y_origem)
+            Limpa.limpa_total(x_origem, y_origem)
+            Limpa.limpa_jogando(x_origem, y_origem)
 
         if sentou:
             print("esta sentado")
@@ -1010,7 +1068,7 @@ def joga_ate_lv_7(x_origem, y_origem):
                         # print(lista_salas_jogar)
 
                     if blind_certo:
-                        sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa)
+                        sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa, True)
                         if sentou:
                             time_entrou = time.perf_counter()
                             print('esta tudo ok, slote e sentado')
@@ -1184,6 +1242,8 @@ def dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, time_rodou, roleta, lev
 #     return
 
 # x_origem, y_origem = Origem_pg.x_y()
+# cadeiras_celular(x_origem, y_origem)
+# conta_cadeiras_livres_celular(x_origem, y_origem)
 # joga_uma_vez(x_origem, y_origem)
 # cadeiras_livres_resultado = cadeiras_livres(x_origem, y_origem )
 # print("Resultado:", cadeiras_livres_resultado)
