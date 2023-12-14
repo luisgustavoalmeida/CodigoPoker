@@ -899,6 +899,11 @@ def joga_uma_vez(x_origem, y_origem, numero_jogadas=3):
                 if not cadeiras_celular(x_origem, y_origem):
                     print('Sair da mesa fim da jogada com humanos na mesa')
                     humano = True
+        else:
+            if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=20):
+                if not cadeiras_celular(x_origem, y_origem):
+                    print('Sair da mesa fim da jogada com humanos na mesa')
+                    humano = True
 
         # else:
         time_sair = time.perf_counter()
@@ -1026,6 +1031,11 @@ def joga_ate_lv_7(x_origem, y_origem):
 
                 jogou_uma_vez = False
                 time_entrou = time.perf_counter()
+                if not cadeiras_celular(x_origem, y_origem):
+                    print('Sair da mesa fim da jogada com humanos na mesa')
+                    humano = True
+        else:
+            if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=20):
                 if not cadeiras_celular(x_origem, y_origem):
                     print('Sair da mesa fim da jogada com humanos na mesa')
                     humano = True
