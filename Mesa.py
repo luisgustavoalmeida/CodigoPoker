@@ -42,7 +42,7 @@ lista_salas_niquel = [{'435': ('2040', 80, 40)}, {'1027': ('2040', 80, 40)}, {'1
 #                       {'1652': ('2040', 80, 40)}, {'1765': ('2040', 80, 40)}, {'1766': ('2040', 80, 40)}, {'1767': ('2040', 80, 40)},
 #                       {'1768': ('2040', 80, 40)}, {'1769': ('2040', 80, 40)}]
 
-lista_salas_jogar = [{'999': ('2550', 100, 50)}, {'1003': ('2550', 100, 50)}, {'1004': ('2550', 100, 50)},
+lista_salas_jogar = [{'135': ('2550', 100, 50)}, {'999': ('2550', 100, 50)}, {'1003': ('2550', 100, 50)}, {'1004': ('2550', 100, 50)},
                      {'1243': ('2550', 100, 50)}, {'1245': ('2550', 100, 50)}, {'1246': ('2550', 100, 50)}, {'1247': ('2550', 100, 50)},
                      {'1673': ('2550', 100, 50)}, {'1674': ('2550', 100, 50)}, {'1675': ('2550', 100, 50)}, {'1676': ('2550', 100, 50)},
                      {'1677': ('2550', 100, 50)}, {'1678': ('2550', 100, 50)}]
@@ -608,7 +608,9 @@ def sala_minima_niquel(x_origem, y_origem, num_mesa, blind_mesa):
     pyautogui.write(num_mesa)  # escreve o numero da sala na barra de busca
     time.sleep(0.2)
     pyautogui.press('enter')  # Pressiona a tecla Enter
-    pyautogui.doubleClick(99 + x_origem, 234 + y_origem)  # clica na primeira coluna do id
+    pyautogui.click(99 + x_origem, 238 + y_origem)  # clica na primeira coluna do id
+    time.sleep(0.2)
+    pyautogui.click(99 + x_origem, 238 + y_origem)  # clica na primeira coluna do id
     time.sleep(0.2)
 
     print('mesa: ', num_mesa)
@@ -874,6 +876,9 @@ def joga_uma_vez(x_origem, y_origem, numero_jogadas=3):
     senta_com_maximo = False
     humano = False
 
+    sala_atual = None
+    pular_sala = False
+
     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
         return "sair da conta"
 
@@ -899,11 +904,13 @@ def joga_uma_vez(x_origem, y_origem, numero_jogadas=3):
                 if not cadeiras_celular(x_origem, y_origem):
                     print('Sair da mesa fim da jogada com humanos na mesa')
                     humano = True
+
         else:
             if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=20):
                 if not cadeiras_celular(x_origem, y_origem):
                     print('Sair da mesa fim da jogada com humanos na mesa')
                     humano = True
+
 
         # else:
         time_sair = time.perf_counter()
@@ -913,12 +920,14 @@ def joga_uma_vez(x_origem, y_origem, numero_jogadas=3):
             print("tempo limite atingido sem outro jogador, sai da mesa para tentar em outra")
             Limpa.limpa_total(x_origem, y_origem)
             Limpa.limpa_jogando(x_origem, y_origem)
-        time.sleep(0.5)
+            pular_sala = True
+        time.sleep(0.3)
 
         if humano:
             print('Jogador humano na mesa, troca de mesa')
             jogou_uma_vez = False
             humano = False
+            pular_sala = True
             Limpa.limpa_total(x_origem, y_origem)
             Limpa.limpa_jogando(x_origem, y_origem)
 
@@ -934,7 +943,11 @@ def joga_uma_vez(x_origem, y_origem, numero_jogadas=3):
             humano = False
             print("ainda nao esta sentado")
             for i in range(2):
-                for dicionario in lista_salas_jogar:
+                for indice, dicionario in enumerate(lista_salas_jogar):
+
+                    if indice == sala_atual and pular_sala:
+                        continue  # Pule a primeira iteração, começando pelo segundo item
+
                     num_mesa = list(dicionario.keys())[0]  # Obtendo a chave do dicionário
                     valor_tupla = dicionario[num_mesa]  # Obtendo a tupla associada à chave
                     blind_mesa = valor_tupla[0]  # Obtendo a string da tupla
@@ -962,9 +975,14 @@ def joga_uma_vez(x_origem, y_origem, numero_jogadas=3):
                         if sentou:
                             time_entrou = time.perf_counter()
                             print('esta tudo ok, slote e sentado')
+                            sala_atual = indice
+                            pular_sala = False
                             break
                         else:
                             time_entrou = 0
+
+                if i == 1:
+                    pular_sala = False
 
                 if sentou:
                     break
@@ -999,6 +1017,9 @@ def joga_ate_lv_7(x_origem, y_origem):
     humano = False
     cont_jogou = 0
     senta_com_maximo = False
+
+    sala_atual = None
+    pular_sala = False
 
     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
         return "sair da conta"
@@ -1048,12 +1069,14 @@ def joga_ate_lv_7(x_origem, y_origem):
             print("tempo limite atingido sem outro jogador, sai da mesa para tentar em outra")
             Limpa.limpa_total(x_origem, y_origem)
             Limpa.limpa_jogando(x_origem, y_origem)
-        time.sleep(0.5)
+            pular_sala = True
+        time.sleep(0.3)
 
         if humano:
             print('Jogador humano na mesa, troca de mesa')
             jogou_uma_vez = False
             humano = False
+            pular_sala = True
             Limpa.limpa_total(x_origem, y_origem)
             Limpa.limpa_jogando(x_origem, y_origem)
 
@@ -1069,7 +1092,11 @@ def joga_ate_lv_7(x_origem, y_origem):
             humano = False
             print("ainda nao esta sentado")
             for i in range(2):
-                for dicionario in lista_salas_jogar:
+                for indice, dicionario in enumerate(lista_salas_jogar):
+
+                    if indice == sala_atual and pular_sala:
+                        continue  # Pule a primeira iteração, começando pelo segundo item
+
                     num_mesa = list(dicionario.keys())[0]  # Obtendo a chave do dicionário
                     valor_tupla = dicionario[num_mesa]  # Obtendo a tupla associada à chave
                     blind_mesa = valor_tupla[0]  # Obtendo a string da tupla
@@ -1097,9 +1124,14 @@ def joga_ate_lv_7(x_origem, y_origem):
                         if sentou:
                             time_entrou = time.perf_counter()
                             print('esta tudo ok, slote e sentado')
+                            sala_atual = indice
+                            pular_sala = False
                             break
                         else:
                             time_entrou = 0
+
+                if i == 1:
+                    pular_sala = False
 
                 if sentou:
                     break
