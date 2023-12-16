@@ -1154,7 +1154,7 @@ def joga_ate_lv_7(x_origem, y_origem):
 
 
 def dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, time_rodou, roleta, level_conta=1):
-    if level_conta >= 7:  # (dia_da_semana == 5 or dia_da_semana == 6):  # and level_conta >= 7:  # testa se é sabado ou domingo
+    if level_conta >= 10:  # (dia_da_semana == 5 or dia_da_semana == 6):  # and level_conta >= 7:  # testa se é sabado ou domingo
         # 0 segunda, 1 terça, 2 quarta, 3 quinta, 4 sexta, 5 sabado, 6 domingo
         print('conta para jogar mesa')
         if roleta == 'roleta_2':
@@ -1179,7 +1179,7 @@ def dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, time_rodou, roleta, lev
         Limpa.iniciantes(x_origem, y_origem)
         Limpa.limpa_total(x_origem, y_origem)
 
-    elif 1 < level_conta < 7:  # (dia_da_semana == 0 or dia_da_semana == 1 or dia_da_semana == 2 or dia_da_semana == 3 or dia_da_semana == 4) and
+    elif 1 < level_conta < 10:  # (dia_da_semana == 0 or dia_da_semana == 1 or dia_da_semana == 2 or dia_da_semana == 3 or dia_da_semana == 4) and
         # 0 segunda, 1 terça, 2 quarta, 3 quinta, 4 sexta, 5 sabado, 6 domingo
         print('conta para jogar mesa')
         if roleta == 'roleta_2':
@@ -1197,7 +1197,7 @@ def dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, time_rodou, roleta, lev
         Limpa.limpa_promocao(x_origem, y_origem)
         time.sleep(2)
         Limpa.limpa_total(x_origem, y_origem)
-        numero_aleatorio = random.randint(5, 10)
+        numero_aleatorio = random.randint(10, 15)
         print('Joga vezes: ', numero_aleatorio)
         joga_uma_vez(x_origem, y_origem, numero_aleatorio)
         time.sleep(1)
