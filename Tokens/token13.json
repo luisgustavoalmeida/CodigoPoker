@@ -1,11 +1,12 @@
 {
-  "token": "ya29.a0AfB_byDAqBcRqB2WDoTnTPrzeCDS0Vo6Qs-O-evxPenZsMfus3fRc5BIrlpLPIdFv6b_SeTl_RP0UKeNYBz0BbFddpunmIc4SsN9Bs8q1eBX4facKRx7D3UUhcqTJXSUCRQavn_INbfVi2g3gPWZg_JQmVlQCg-zyVPzaCgYKAQ8SARISFQHGX2MinnZ8wnlFAc9GLi2iCOYnFQ0171",
-  "refresh_token": "1//0hVfTG2Hx8TxrCgYIARAAGBESNwF-L9IrxACzQ60D-kD_o4OEMg433z5kbPywXDGlxdxhRSxQIhzaXY8NIZuVdglcku9ia7sZ3sE",
+  "token": "ya29.a0AfB_byA-TcX4qFi2S8Jo6NEGHO_WrVkFhg0CCCKNMs05aGKLxeCjcQzlZ9b9Eq3f2fCcIPSaHuMkCkJbFGZ_ROxFwhDOfp7wcRCKnfzCnkxI8pH4lV1pTY6_hM-h0zDH2_Vh8ojnxlMsH6twp6U--oFIyjVb3TGyPAwWaCgYKAbcSARISFQHGX2Mi8cWFYmFVZcznQw9PdbCSDg0171",
+  "refresh_token": "1//0h-ENT7p6nbQsCgYIARAAGBESNwF-L9IrHa-0gvxKqRLltFr-OyGFkMJKAbnxUQfa7KppNkZ9rfkLjtVR1hA3QGhUXPfbfSMH_Bg",
   "token_uri": "https://oauth2.googleapis.com/token",
   "client_id": "1021219182139-cvn9cgc34ahqqs2mqat5iv3d0nl8jf1m.apps.googleusercontent.com",
   "client_secret": "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",
   "scopes": [
     "https://www.googleapis.com/auth/spreadsheets"
   ],
-  "expiry": "2023-12-10T21:56:20.169698Z"
+  "universe_domain": "googleapis.com",
+  "expiry": "2023-12-17T21:42:50.084761Z"
 }
