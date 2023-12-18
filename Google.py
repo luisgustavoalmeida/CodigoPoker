@@ -330,6 +330,12 @@ def escrever_valores_lote(valores, guia, linha):
     global cred
     global service
     range_start = f"{guia}!E{linha}:I{linha}"
+
+    # Verifica se o quinto valor é vazio
+    if valores[4] == "":
+        # Se for vazio, exclui o quinto valor da lista
+        valores = valores[:4]
+
     data = {
         'range': range_start,
         'majorDimension': 'ROWS',
