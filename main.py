@@ -272,7 +272,8 @@ while True:
                             break
                         time.sleep(0.3)
 
-                if roleta != 'roleta_2':
+                if roleta == 'roleta_1':
+                    # Joga mesa
                     level_conta = OCR_tela.level_conta(x_origem, y_origem)
                     # Mesa.dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, time_rodou, roleta, level_conta)
                     if not conta_upada:

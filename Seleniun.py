@@ -47,6 +47,7 @@ options.add_argument("--disable-geolocation")  # desativar a funcionalidade de l
 options.add_argument("--window-size=1380,1050")  # Definir o tamanho da janela # largura altura options.add_argument("--window-size=1440,1045")
 options.add_argument("--window-position=-8,-5")  # Mover a janela para a posição (0,0) da tela
 options.add_argument("--mute-audio")  # desativar o áudio
+# options.add_argument("--disable-extensions")
 # options.add_argument("--disable-gpu") # Desabilita o uso da GPU pelo navegador.
 # options.add_argument("--disable-translate") # Desabilita a tradução automática de páginas pelo navegador
 
@@ -152,6 +153,7 @@ def teste_logado(id, senha, url, navegador):
 
 def fazer_login(id, senha, url, navegador, loga_pk=True):
     while True:
+
         if se_esta_lagado(navegador) is True:
             sair_face(url, navegador)
 
@@ -466,14 +468,83 @@ def fechar_navegador(navegador):
 def sair_face(url, navegador):
     for i in range(10):
 
-        print("sair do facebook")
+        print("sair do facebook\n\n\n")
         IP.tem_internet()
-        script = """javascript:void(function(){ function deleteAllCookiesFromCurrentDomain() { var cookies = document.cookie.split("; "); for (var c = 0; c < cookies.length; c++) { var d = window.location.hostname.split("."); while (d.length > 0) { var cookieBase = encodeURIComponent(cookies[c].split(";")[0].split("=")[0]) + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT; domain=' + d.join('.') + ' ;path='; var p = location.pathname.split('/'); document.cookie = cookieBase + '/'; while (p.length > 0) { document.cookie = cookieBase + p.join('/'); p.pop(); }; d.shift(); } } } deleteAllCookiesFromCurrentDomain(); location.href = '""" + url + """'; })();"""
+
+        # time.sleep(2)
+        # print('abre novaguia')
+        # # Abrir uma nova guia
+        # navegador.execute_script("window.open('', '_blank');")
+        # time.sleep(2)
+        # # muda o foco par aa primeira guia
+        # navegador.switch_to.window(navegador.window_handles[0])
+        # time.sleep(2)
+        # # Pressione as teclas "Ctrl+W" para fechar a primeira guia
+        # pyautogui.hotkey('ctrl', 'w')
+        # time.sleep(2)
+        # navegador.switch_to.window(navegador.window_handles[0])
+        # navegador.delete_all_cookies()
+        # navegador.execute_script("window.localStorage.clear();")
+        # navegador.execute_script("window.sessionStorage.clear();")
+        # navegador.execute_script("window.location.reload(true);")
+        # navegador.execute_script("window.open('', '_blank');")
+        # time.sleep(2)
+        # # muda o foco par aa primeira guia
+        # navegador.switch_to.window(navegador.window_handles[0])
+        # time.sleep(2)
+        # # Pressione as teclas "Ctrl+W" para fechar a primeira guia
+        # pyautogui.hotkey('ctrl', 'w')
+        # time.sleep(2)
+        # navegador.switch_to.window(navegador.window_handles[0])
+        # navegador.get(url)
+        # time.sleep(2)
+        #
+        # return
+
+        print("\n\n\n sair do facebook\n\n\n")
+
+        url_sair = 'https://www.facebook.com'
+
+        script = """javascript:void(function(){ function deleteAllCookiesFromCurrentDomain() { var cookies = document.cookie.split("; "); for (var c = 0; c < cookies.length; c++) { var d = window.location.hostname.split("."); while (d.length > 0) { var cookieBase = encodeURIComponent(cookies[c].split(";")[0].split("=")[0]) + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT; domain=' + d.join('.') + ' ;path='; var p = location.pathname.split('/'); document.cookie = cookieBase + '/'; while (p.length > 0) { document.cookie = cookieBase + p.join('/'); p.pop(); }; d.shift(); } } } deleteAllCookiesFromCurrentDomain(); location.href = '""" + url_sair + """'; })();"""
 
         try:
 
             navegador.execute_script(script)
+            # WebDriverWait(navegador, 5).until(EC.presence_of_element_located((By.NAME, 'email')))
+
+            print('abre novaguia')
+            # Abrir uma nova guia
+            pyautogui.hotkey('ctrl', 't')
+
+            for _ in range(100):
+                # Obtenha a lista de identificadores de janelas abertas
+                window_handles = navegador.window_handles
+
+                # Verifique se há duas guias abertas
+                if len(window_handles) >= 2:
+                    print("Duas guias abertas.")
+                    break
+                time.sleep(0.1)
+
+            # muda o foco par aa primeira guia
+            navegador.switch_to.window(navegador.window_handles[0])
+            # Pressione as teclas "Ctrl+W" para fechar a primeira guia
+            pyautogui.hotkey('ctrl', 'w')
+
+            for _ in range(100):
+                # Obtenha a lista de identificadores de janelas abertas
+                window_handles = navegador.window_handles
+
+                # Verifique se há duas guias abertas
+                if len(window_handles) == 1:
+                    print("Duas guias abertas.")
+                    break
+                time.sleep(0.1)
+
+            navegador.switch_to.window(navegador.window_handles[0])
+            navegador.get(url)
             WebDriverWait(navegador, 5).until(EC.presence_of_element_located((By.NAME, 'email')))
+
             return
 
         except Exception as e:
@@ -674,7 +745,60 @@ def busca_link(navegador):
         print("link fanpag fora do padrão")
 
 ######################################################################################################################
-# # para abrir o navegador e deixar abero. Descomentar as duas linhas abaixo
+# para abrir o navegador e deixar abero. Descomentar as duas linhas abaixo
 # navegador = cria_nevegador()
+#
+# navegador.get("https://apps.facebook.com/pokerbrasil?vtype=&amfmethod=appLinkFanPageAward&SignedParams=hIygZ7vSvP9r7RwePVy1W5XheNQYiuWT8U9EdgPVaB4.eyJhY3QiOiJmcCIsImZwX2FpZCI6IjYyMDAifQ&fbclid=IwAR1folpzzbjVGnnI-cxCtwm8rZky5Is52TGgzh_CNVvnCRVryopwAYAzbdQ")
+#
+# time.sleep(30)
+# # Obter todos os cookies
+# cookies = navegador.get_cookies()
+#
+# # Exibir nomes dos cookies
+# for cookie in cookies:
+#     print("Nome do Cookie:", cookie['name'])
+#
+# print('presence')
+# navegador.delete_cookie("presence")
+# navegador.get("https://apps.facebook.com/pokerbrasil?vtype=&amfmethod=appLinkFanPageAward&SignedParams=hIygZ7vSvP9r7RwePVy1W5XheNQYiuWT8U9EdgPVaB4.eyJhY3QiOiJmcCIsImZwX2FpZCI6IjYyMDAifQ&fbclid=IwAR1folpzzbjVGnnI-cxCtwm8rZky5Is52TGgzh_CNVvnCRVryopwAYAzbdQ")
+#
+# time.sleep(30)
+# print("\nfr")
+# navegador.delete_cookie("fr")
+# navegador.get("https://apps.facebook.com/pokerbrasil?vtype=&amfmethod=appLinkFanPageAward&SignedParams=hIygZ7vSvP9r7RwePVy1W5XheNQYiuWT8U9EdgPVaB4.eyJhY3QiOiJmcCIsImZwX2FpZCI6IjYyMDAifQ&fbclid=IwAR1folpzzbjVGnnI-cxCtwm8rZky5Is52TGgzh_CNVvnCRVryopwAYAzbdQ")
+#
+# time.sleep(30)
+# print("\nxs")
+# navegador.delete_cookie("xs")
+# navegador.get("https://apps.facebook.com/pokerbrasil?vtype=&amfmethod=appLinkFanPageAward&SignedParams=hIygZ7vSvP9r7RwePVy1W5XheNQYiuWT8U9EdgPVaB4.eyJhY3QiOiJmcCIsImZwX2FpZCI6IjYyMDAifQ&fbclid=IwAR1folpzzbjVGnnI-cxCtwm8rZky5Is52TGgzh_CNVvnCRVryopwAYAzbdQ")
+#
+# time.sleep(30)
+# print("\nc_user")
+# navegador.delete_cookie("c_user")
+# navegador.get("https://apps.facebook.com/pokerbrasil?vtype=&amfmethod=appLinkFanPageAward&SignedParams=hIygZ7vSvP9r7RwePVy1W5XheNQYiuWT8U9EdgPVaB4.eyJhY3QiOiJmcCIsImZwX2FpZCI6IjYyMDAifQ&fbclid=IwAR1folpzzbjVGnnI-cxCtwm8rZky5Is52TGgzh_CNVvnCRVryopwAYAzbdQ")
+#
+# time.sleep(30)
+# print("\nwd")
+# navegador.delete_cookie("wd")
+# navegador.get("https://apps.facebook.com/pokerbrasil?vtype=&amfmethod=appLinkFanPageAward&SignedParams=hIygZ7vSvP9r7RwePVy1W5XheNQYiuWT8U9EdgPVaB4.eyJhY3QiOiJmcCIsImZwX2FpZCI6IjYyMDAifQ&fbclid=IwAR1folpzzbjVGnnI-cxCtwm8rZky5Is52TGgzh_CNVvnCRVryopwAYAzbdQ")
+#
+# time.sleep(30)
+# print("\noo")
+# navegador.delete_cookie("oo")
+# navegador.get("https://apps.facebook.com/pokerbrasil?vtype=&amfmethod=appLinkFanPageAward&SignedParams=hIygZ7vSvP9r7RwePVy1W5XheNQYiuWT8U9EdgPVaB4.eyJhY3QiOiJmcCIsImZwX2FpZCI6IjYyMDAifQ&fbclid=IwAR1folpzzbjVGnnI-cxCtwm8rZky5Is52TGgzh_CNVvnCRVryopwAYAzbdQ")
+#
+# time.sleep(30)
+# print("\nsb")
+# navegador.delete_cookie("sb")
+# navegador.get("https://apps.facebook.com/pokerbrasil?vtype=&amfmethod=appLinkFanPageAward&SignedParams=hIygZ7vSvP9r7RwePVy1W5XheNQYiuWT8U9EdgPVaB4.eyJhY3QiOiJmcCIsImZwX2FpZCI6IjYyMDAifQ&fbclid=IwAR1folpzzbjVGnnI-cxCtwm8rZky5Is52TGgzh_CNVvnCRVryopwAYAzbdQ")
+#
+# time.sleep(30)
+# print("\ndatr")
+# navegador.delete_cookie("datr")
+# navegador.get("https://apps.facebook.com/pokerbrasil?vtype=&amfmethod=appLinkFanPageAward&SignedParams=hIygZ7vSvP9r7RwePVy1W5XheNQYiuWT8U9EdgPVaB4.eyJhY3QiOiJmcCIsImZwX2FpZCI6IjYyMDAifQ&fbclid=IwAR1folpzzbjVGnnI-cxCtwm8rZky5Is52TGgzh_CNVvnCRVryopwAYAzbdQ")
+
+
+
+
 # # busca_link(navegador)
 # time.sleep(10000)
