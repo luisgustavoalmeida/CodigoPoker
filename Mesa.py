@@ -45,7 +45,7 @@ lista_salas_niquel = [{'435': ('2040', 80, 40)}, {'1027': ('2040', 80, 40)}, {'1
 lista_salas_jogar = [{'135': ('2550', 100, 50)}, {'999': ('2550', 100, 50)}, {'1003': ('2550', 100, 50)}, {'1004': ('2550', 100, 50)},
                      {'1243': ('2550', 100, 50)}, {'1245': ('2550', 100, 50)}, {'1246': ('2550', 100, 50)}, {'1247': ('2550', 100, 50)},
                      {'1673': ('2550', 100, 50)}, {'1674': ('2550', 100, 50)}, {'1675': ('2550', 100, 50)}, {'1676': ('2550', 100, 50)},
-                     {'1677': ('2550', 100, 50)}, {'1678': ('2550', 100, 50)}]
+                     {'1677': ('2550', 100, 50)}, {'1678': ('2550', 100, 50)}, {'134': ('2550', 100, 50)}]
 
 dicionari_PC_cadeira = {'PC-I5-8600K': {'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_3': (847, 366),
                                         'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451),
@@ -916,7 +916,7 @@ def joga_uma_vez(x_origem, y_origem, numero_jogadas=3):
         time_sair = time.perf_counter()
         tempo_total = time_sair - time_entrou
         # print('tempo que esta esperando', tempo_total)
-        if tempo_total > 130:  # troica de mesa se ficar muito tempo parado sem entrar alguem para jogar
+        if tempo_total > 60:  # troica de mesa se ficar muito tempo parado sem entrar alguem para jogar
             print("tempo limite atingido sem outro jogador, sai da mesa para tentar em outra")
             Limpa.limpa_total(x_origem, y_origem)
             Limpa.limpa_jogando(x_origem, y_origem)
@@ -1065,7 +1065,7 @@ def joga_ate_lv_7(x_origem, y_origem):
         time_sair = time.perf_counter()
         tempo_total = time_sair - time_entrou
         # print('tempo que esta esperando', tempo_total)
-        if tempo_total > 130:  # troica de mesa se ficar muito tempo parado sem entrar alguem para jogar
+        if tempo_total > 60:  # troica de mesa se ficar muito tempo parado sem entrar alguem para jogar
             print("tempo limite atingido sem outro jogador, sai da mesa para tentar em outra")
             Limpa.limpa_total(x_origem, y_origem)
             Limpa.limpa_jogando(x_origem, y_origem)
