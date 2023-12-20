@@ -176,16 +176,23 @@ def fazer_login(id, senha, url, navegador, loga_pk=True):
                 # fazer login clicando no botão de login
                 login_button = navegador.find_element(By.NAME, 'login')
                 login_button.click()
+                print('fez o login. iniciando teste de logado')
                 for i in range(20):
-                    time.sleep(1)
-                    url_atual = pega_url(navegador, url)
-                    print(url_atual)
+
+                    for _ in range(100):
+                        url_atual = pega_url(navegador, url)
+                        if "/login/" not in url_atual:
+                            break
+                        time.sleep(0.02)
+
+                    # print(url_atual)
                     if "/login/" not in url_atual:
+
                         if ("/pokerbrasil?" in url_atual) or ("/rallyacespoker" in url_atual):
+                            print('URL padrao correta')
                             # https://apps.facebook.com/pokerbrasil?vtype&amfmethod=appLinkFanPageAward&SignedParams=JrLALkSch1wuQxrULK6SWLAcpjTOb9Pmi5QvavvikU0.eyJhY3QiOiJmcCIsImZwX2FpZCI6IjU5ODUifQ&fbclid=IwAR252AFFL560939epg6Ki4tzNtLvgQJiZISVIZXFPjjBpBp5TNLBNX6TFXk
                             time.sleep(1)
-                            lista_face = ['bloqueada temporariamente', 'bloqueado temporariamente',
-                                          'temporariamente', 'não está disponível no momento']
+                            lista_face = ['temporariamente', 'não está disponível no momento']
                             for item in lista_face:  # percorre os textos que tem quando tem conta caida para o face
                                 try:
                                     elemento = navegador.find_element(By.XPATH, f"//span[contains(text(), '{item}')]")
@@ -292,7 +299,8 @@ def fazer_login(id, senha, url, navegador, loga_pk=True):
                                                  'Desabilitamos sua conta',
                                                  'você apresentou um recurso',
                                                  'Confirme seu número de celular',
-                                                 'precisamos confirmar que esta conta pertence a você']
+                                                 'precisamos confirmar que esta conta pertence a você',
+                                                 'Verifique']
                             # 'Suspeitamos que o comportamento da sua conta seja automatizado'
 
                             for item in lista_face_caidas:
