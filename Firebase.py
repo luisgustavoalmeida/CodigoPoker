@@ -175,12 +175,18 @@ else:
 
 
 def comando_escravo():
-    global comando_escravo
-    dado = db.child(caminho_resposta).get().val()
+    # global comando_escravo
+    try:
+        dado = db.child(caminho_resposta).get().val()
+        if dado:
+            # Faça algo com os dados
+            print(f"O dado em {caminho_resposta} é: {dado}")
+            return dado
+        else:
+            print("Nenhum dado encontrado no caminho:", caminho_resposta)
+    except Exception as e:
+        print("Erro ao obter dados:", str(e))
 
-    print(f"O dado em {caminho_resposta} é: {dado}")
-    comando_escravo = dado
-    return comando_escravo
 
 
 # Função para reconectar ao Firebase
@@ -362,3 +368,6 @@ def comando_coleetivo_escravo_escravo(comando):
 
 # confirmacao_escravo("funciona")
 # escreve_resposta_escravo("funciona")
+
+
+comando_escravo()

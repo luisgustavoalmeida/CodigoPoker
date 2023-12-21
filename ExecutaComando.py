@@ -114,6 +114,7 @@ while True:
         valor_fichas = ""
         pontuacao_tarefas = ""
         hora_atual = ""
+        level_conta = ""
         status_poker = None
         valores = [""]
         roda = True
@@ -211,8 +212,8 @@ while True:
                     time.sleep(2)
 
                 # codigo deve ser escrito aqui dentro ...
-                status_comando = xp2.pega_2xp(x_origem, y_origem)
-                Firebase.confirmacao_comando_resposta(status_comando)
+                # status_comando = xp2.pega_2xp(x_origem, y_origem)
+                # Firebase.confirmacao_comando_resposta(status_comando)
 
                 # status_comando = 'Aguardando comando'
                 status_comando = Mesa.escolher_blind(x_origem, y_origem, blind)
@@ -274,30 +275,6 @@ while True:
                         comando = 'Executado'
                         Upar.passa_ate_lv7(x_origem, y_origem)
 
-                    elif comando == "Recolher":
-                        comando = 'Executado'
-                        status_comando = Tarefas.recolher_tarefa_upando(x_origem, y_origem)
-
-                    elif comando == "Levanta":
-                        comando = 'Executado'
-                        status_comando = Upar.levantar_mesa(x_origem, y_origem)
-
-                    elif comando == "Slot":
-                        comando = 'Executado'
-                        Upar.solot_genius_cartas_upando(x_origem, y_origem, blind)
-
-                    elif comando == "Genius":
-                        comando = 'Executado'
-                        Upar.genius_cartas_upando(x_origem, y_origem, blind)
-
-                    elif comando == "Cartas":
-                        comando = 'Executado'
-                        Upar.cartas_upando(x_origem, y_origem, blind)
-
-                    elif comando == "2Xp":
-                        comando = 'Executado'
-                        status_comando = xp2.pega_2xp(x_origem, y_origem)
-
                     Firebase.confirmacao_comando_resposta(status_comando)
 
                 Firebase.confirmacao_comando_resposta('Entrendo em uma nova conta')
@@ -315,7 +292,7 @@ while True:
                 break
 
         ip, com_internet = IP.meu_ip()  # obtem meu endereço de IP
-        valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
+        valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip, level_conta]
         Seleniun.sair_face(url, navegador)
 
         # print('-----------------espera terminar tarefa independente----------------')
