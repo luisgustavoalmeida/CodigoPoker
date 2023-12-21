@@ -545,20 +545,31 @@ def sair_face(url, navegador):
 
                 # Verifique se há duas guias abertas
                 if len(window_handles) == 1:
-                    print("Duas guias abertas.")
+                    print("Uma guias aberta.")
                     break
                 time.sleep(0.1)
 
             navegador.switch_to.window(navegador.window_handles[0])
             navegador.get(url)
-            WebDriverWait(navegador, 5).until(EC.presence_of_element_located((By.NAME, 'email')))
+            try:
+                WebDriverWait(navegador, 5).until(EC.presence_of_element_located((By.NAME, 'email')))
+                return
+            except TimeoutException:
+                print("Tempo de espera expirado. Elemento 'email' não encontrado.")
+                IP.tem_internet()
+                navegador.delete_cookie("c_user")
+                print('Deleta i cookies do usuario')
+                navegador.get(url)
+                time.sleep(2)
 
+            WebDriverWait(navegador, 5).until(EC.presence_of_element_located((By.NAME, 'email')))
             return
 
         except Exception as e:
 
             print("ERRO ao executar o script sair ")
             print(e)
+            navegador.delete_cookie("c_user")
             # time.sleep(3)
             IP.tem_internet()
             print("Da um F5 e espera 3 segundos")
