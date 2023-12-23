@@ -13,6 +13,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.keys import Keys
 
 import Google
 import IP
@@ -473,41 +474,53 @@ def fechar_navegador(navegador):
     navegador.quit()
 
 
+def abrir_fechar_guia(navegador):
+    # Abrir uma nova guia
+    pyautogui.hotkey('ctrl', 't')
+
+    try:
+        # Aguarde até que haja pelo menos duas guias abertas
+        WebDriverWait(navegador, 10).until(lambda x: len(x.window_handles) >= 2)
+
+        # Mude para a primeira guia
+        navegador.switch_to.window(navegador.window_handles[0])
+
+        # Feche a primeira guia
+        navegador.close()
+
+        # Mude para a segunda guia
+        navegador.switch_to.window(navegador.window_handles[0])
+
+        # Verifique se o foco está na primeira guia
+        if navegador.current_window_handle != navegador.window_handles[0]:
+            print("O foco não está na primeira guia.")
+        else:
+            print("O foco está na primeira guia.")
+
+    except TimeoutException:
+        print("Tempo limite excedido ao aguardar guias abertas.")
+
+
+def recarregar_pagina(navegador, url):
+    try:
+        # Aguarde até que haja uma única guia aberta
+        WebDriverWait(navegador, 10).until(lambda x: len(x.window_handles) == 1)
+
+        # Mude para a única guia aberta
+        navegador.switch_to.window(navegador.window_handles[0])
+
+        # Recarregue a página
+        navegador.get(url)
+
+    except TimeoutException:
+        print("Tempo limite excedido ao aguardar única guia aberta.")
+
+
 def sair_face(url, navegador):
-    for i in range(10):
+    for _ in range(30):
 
         print("sair do facebook\n\n\n")
         IP.tem_internet()
-
-        # time.sleep(2)
-        # print('abre novaguia')
-        # # Abrir uma nova guia
-        # navegador.execute_script("window.open('', '_blank');")
-        # time.sleep(2)
-        # # muda o foco par aa primeira guia
-        # navegador.switch_to.window(navegador.window_handles[0])
-        # time.sleep(2)
-        # # Pressione as teclas "Ctrl+W" para fechar a primeira guia
-        # pyautogui.hotkey('ctrl', 'w')
-        # time.sleep(2)
-        # navegador.switch_to.window(navegador.window_handles[0])
-        # navegador.delete_all_cookies()
-        # navegador.execute_script("window.localStorage.clear();")
-        # navegador.execute_script("window.sessionStorage.clear();")
-        # navegador.execute_script("window.location.reload(true);")
-        # navegador.execute_script("window.open('', '_blank');")
-        # time.sleep(2)
-        # # muda o foco par aa primeira guia
-        # navegador.switch_to.window(navegador.window_handles[0])
-        # time.sleep(2)
-        # # Pressione as teclas "Ctrl+W" para fechar a primeira guia
-        # pyautogui.hotkey('ctrl', 'w')
-        # time.sleep(2)
-        # navegador.switch_to.window(navegador.window_handles[0])
-        # navegador.get(url)
-        # time.sleep(2)
-        #
-        # return
 
         print("\n\n\n sair do facebook\n\n\n")
 
@@ -518,76 +531,88 @@ def sair_face(url, navegador):
         try:
 
             navegador.execute_script(script)
-            # WebDriverWait(navegador, 5).until(EC.presence_of_element_located((By.NAME, 'email')))
 
-            print('abre novaguia')
-            # Abrir uma nova guia
-            pyautogui.hotkey('ctrl', 't')
+            # Exclui todos os cookies
+            # navegador.delete_all_cookies()
 
-            for _ in range(100):
-                # Obtenha a lista de identificadores de janelas abertas
-                window_handles = navegador.window_handles
+            abrir_fechar_guia(navegador)
+            recarregar_pagina(navegador, url)
 
-                # Verifique se há duas guias abertas
-                if len(window_handles) >= 2:
-                    print("Duas guias abertas.")
-                    break
-                time.sleep(0.1)
+            # print('abre novaguia')
+            # # Abrir uma nova guia
+            # pyautogui.hotkey('ctrl', 't')
+            #
+            # for _ in range(100):
+            #     # Obtenha a lista de identificadores de janelas abertas
+            #     window_handles = navegador.window_handles
+            #     time.sleep(0.1)
+            #     # Verifique se há duas guias abertas
+            #     if len(window_handles) >= 2:
+            #         # muda o foco par aa primeira guia
+            #         navegador.switch_to.window(navegador.window_handles[0])
+            #         # Obtém o identificador da janela atual
+            #         janela_atual = navegador.current_window_handle
+            #         # Obtém o identificador da primeira guia
+            #         primeira_guia = navegador.window_handles[0]
+            #
+            #         # Verifica se o foco está na primeira guia
+            #         if janela_atual == primeira_guia:
+            #             print("O foco está na primeira guia.")
+            #             # Pressione as teclas "Ctrl+W" para fechar a primeira guia
+            #             pyautogui.hotkey('ctrl', 'w')
+            #             break
+            #         else:
+            #             print("O foco não está na primeira guia.")
+            #
+            # try:
+            #     for _ in range(100):
+            #         # Obtenha a lista de identificadores de janelas abertas
+            #         window_handles = navegador.window_handles
+            #
+            #         # Verifique se há uma guia aberta
+            #         if len(window_handles) == 1:
+            #             navegador.switch_to.window(navegador.window_handles[0])
+            #             # Obtém o identificador da janela atual
+            #             janela_atual = navegador.current_window_handle
+            #             # Obtém o identificador da primeira guia
+            #             primeira_guia = navegador.window_handles[0]
+            #
+            #             # Verifica se o foco está na primeira guia
+            #             if janela_atual == primeira_guia:
+            #                 print("So tem uma guia aberta")
+            #                 navegador.get(url)
+            #                 break
+            #             else:
+            #                 print("O foco não está na primeira guia.")
+            #             break
+            #         time.sleep(0.1)
+            # except Exception as e:
+            #     print(f"Erro ao fechar a guia: {e}")
 
-            # muda o foco par aa primeira guia
-            navegador.switch_to.window(navegador.window_handles[0])
-            # Pressione as teclas "Ctrl+W" para fechar a primeira guia
-            pyautogui.hotkey('ctrl', 'w')
-
-            for _ in range(100):
-                # Obtenha a lista de identificadores de janelas abertas
-                window_handles = navegador.window_handles
-
-                # Verifique se há duas guias abertas
-                if len(window_handles) == 1:
-                    print("Uma guias aberta.")
-                    break
-                time.sleep(0.1)
-
-            navegador.switch_to.window(navegador.window_handles[0])
-            navegador.get(url)
             try:
                 WebDriverWait(navegador, 5).until(EC.presence_of_element_located((By.NAME, 'email')))
+                print('Pagina pronta, conta NÃO logada')
                 return
             except TimeoutException:
                 print("Tempo de espera expirado. Elemento 'email' não encontrado.")
-                IP.tem_internet()
-                navegador.delete_cookie("c_user")
-                print('Deleta i cookies do usuario')
-                navegador.get(url)
-                time.sleep(2)
-
-            WebDriverWait(navegador, 5).until(EC.presence_of_element_located((By.NAME, 'email')))
-            return
 
         except Exception as e:
 
             print("ERRO ao executar o script sair ")
             print(e)
+            # Exclui todos os cookies
+            # navegador.delete_all_cookies()
             navegador.delete_cookie("c_user")
-            # time.sleep(3)
             IP.tem_internet()
-            print("Da um F5 e espera 3 segundos")
-            # pyautogui.press('f5')
             navegador.get(url)
-            # navegador.execute_script(script)
-            time.sleep(3)
-            # continue
             print("testa se tem nao é vc")
 
             try:
-
                 # Esperar até que o elemento "Não é você?" seja clicável
-                # elemento_nao_e_voce = WebDriverWait(navegador, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'div[aria-label="Não é você?"]')))
-                elemento_nao_e_voce = WebDriverWait(navegador, 5).until(EC.element_to_be_clickable((By.ID, 'not_me_link')))
+                elemento_nao_e_voce = WebDriverWait(navegador, 7).until(EC.element_to_be_clickable((By.ID, 'not_me_link')))
 
                 # Clicar no elemento
-                print('Clicar no elemento')
+                print('Clicar no elemento nao_e_voce')
                 elemento_nao_e_voce.click()
                 print('espera 2s')
                 time.sleep(2)
@@ -815,8 +840,6 @@ def busca_link(navegador):
 # print("\ndatr")
 # navegador.delete_cookie("datr")
 # navegador.get("https://apps.facebook.com/pokerbrasil?vtype=&amfmethod=appLinkFanPageAward&SignedParams=hIygZ7vSvP9r7RwePVy1W5XheNQYiuWT8U9EdgPVaB4.eyJhY3QiOiJmcCIsImZwX2FpZCI6IjYyMDAifQ&fbclid=IwAR1folpzzbjVGnnI-cxCtwm8rZky5Is52TGgzh_CNVvnCRVryopwAYAzbdQ")
-
-
 
 
 # # busca_link(navegador)
