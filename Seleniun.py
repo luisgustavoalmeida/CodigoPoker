@@ -589,12 +589,9 @@ def sair_face(url, navegador):
             # except Exception as e:
             #     print(f"Erro ao fechar a guia: {e}")
 
-            try:
-                WebDriverWait(navegador, 5).until(EC.presence_of_element_located((By.NAME, 'email')))
-                print('Pagina pronta, conta NÃO logada')
-                return
-            except TimeoutException:
-                print("Tempo de espera expirado. Elemento 'email' não encontrado.")
+            WebDriverWait(navegador, 5).until(EC.presence_of_element_located((By.NAME, 'email')))
+            print('Pagina pronta, conta NÃO logada')
+            return
 
         except Exception as e:
 
@@ -602,6 +599,7 @@ def sair_face(url, navegador):
             print(e)
             # Exclui todos os cookies
             # navegador.delete_all_cookies()
+            navegador.delete_cookie("xs")
             navegador.delete_cookie("c_user")
             IP.tem_internet()
             navegador.get(url)
@@ -789,7 +787,7 @@ def busca_link(navegador):
         print("link fanpag fora do padrão")
 
 ######################################################################################################################
-# para abrir o navegador e deixar abero. Descomentar as duas linhas abaixo
+# # para abrir o navegador e deixar abero. Descomentar as duas linhas abaixo
 # navegador = cria_nevegador()
 #
 # navegador.get("https://apps.facebook.com/pokerbrasil?vtype=&amfmethod=appLinkFanPageAward&SignedParams=hIygZ7vSvP9r7RwePVy1W5XheNQYiuWT8U9EdgPVaB4.eyJhY3QiOiJmcCIsImZwX2FpZCI6IjYyMDAifQ&fbclid=IwAR1folpzzbjVGnnI-cxCtwm8rZky5Is52TGgzh_CNVvnCRVryopwAYAzbdQ")
@@ -802,7 +800,7 @@ def busca_link(navegador):
 # for cookie in cookies:
 #     print("Nome do Cookie:", cookie['name'])
 #
-# print('presence')
+# print('\npresence')
 # navegador.delete_cookie("presence")
 # navegador.get("https://apps.facebook.com/pokerbrasil?vtype=&amfmethod=appLinkFanPageAward&SignedParams=hIygZ7vSvP9r7RwePVy1W5XheNQYiuWT8U9EdgPVaB4.eyJhY3QiOiJmcCIsImZwX2FpZCI6IjYyMDAifQ&fbclid=IwAR1folpzzbjVGnnI-cxCtwm8rZky5Is52TGgzh_CNVvnCRVryopwAYAzbdQ")
 #
