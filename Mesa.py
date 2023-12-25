@@ -194,12 +194,12 @@ def cadeiras_celular(x_origem, y_origem, cor_celular=(136, 137, 137), tolerancia
     Retorna:
     - True se todas as cadeiras estiverem livres, False se pelo menos uma cadeira estiver ocupada.
     """
-    print('cadeiras_livres')
+    # print('cadeiras_livres')
     for x, y in dicionario_celular.values():
         if pyautogui.pixelMatchesColor(x_origem + x, y_origem + y, cor_celular, tolerance=tolerancia):
             print('Pelo menos uma cadeira está com celular.')
             return False
-    print('Todas as cadeiras estão livres de celular.')
+    # print('Todas as cadeiras estão livres de celular.')
     return True
 
 
@@ -419,7 +419,7 @@ def escolher_blind(x_origem, y_origem, blind):
 
     Limpa.aviso_canto_lobby(x_origem, y_origem)
 
-    for i in range(20):  # abrir o menu blind
+    for _ in range(20):  # abrir o menu blind
         # testa se a caixa de escolha do blind esta aberta, olha a barra preta
         if pyautogui.pixelMatchesColor((x_origem + 200), (y_origem + 450), (0, 0, 0), tolerance=1):
             pyautogui.click(268 + x_origem, 571 + y_origem, button='left')  # clica no aptualizar blind
@@ -618,7 +618,7 @@ def sala_minima_niquel(x_origem, y_origem, num_mesa, blind_mesa):
     cont_erro_entrar_mesa = 0
     blind_sala = None
     for j in range(20):
-        print(j)
+        # print(j)
         if pyautogui.pixelMatchesColor((x_origem + 310), (y_origem + 264), (95, 106, 122), tolerance=5):
             # erro ao buscar sala, fica uma faixa cinza na linha da sala
             print('Erro ao buscar sala, vai ser dado um F5')
@@ -663,9 +663,9 @@ def sala_minima_niquel(x_origem, y_origem, num_mesa, blind_mesa):
 
         elif pyautogui.pixelMatchesColor((x_origem + 205), (y_origem + 265), (46, 87, 132), tolerance=3):  # testa se existe sala com este numero
             print("Não existe sala com esse numero")
-            if j > 10:
+            if j > 15:
                 return False, False
-        time.sleep(0.2)
+        time.sleep(0.1)
     Limpa.limpa_total(x_origem, y_origem)
     print("alguma outra falha para achar mesa")
     return False, True
@@ -705,26 +705,27 @@ def gira_10auto(x_origem, y_origem):
 
 
 def passa_corre_joga(x_origem, y_origem, valor_aposta1=40, valor_aposta2=80):  # para se fazer tarefas
-    print("passa_corre_joga")
+    # print("passa_corre_joga")
     jogou_uma_vez = False, False
     # se nao esta com v azul dentro do quadrado branco e se esta com quadrado branco
-    if ((not pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (59, 171, 228), tolerance=1))
-            and (pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (255, 255, 255), tolerance=1))):
+    if ((not pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (59, 171, 228), tolerance=3))
+            and (pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (255, 255, 255), tolerance=3))):
         pyautogui.click((x_origem + 337), (y_origem + 605))
         # time.sleep(0.3)
-        print("foi encontado o quadrado")
+        # print("foi encontado o quadrado")
         jogou_uma_vez = True, False
 
     else:
-        print("nao tem quadrado branco")
+        # print("nao tem quadrado branco")
         # testa se o valor nao foi aumentado ou seja igual a 40 ou 80
-        if pyautogui.pixelMatchesColor((x_origem + 480), (y_origem + 650), (255, 255, 255), tolerance=1):  # testa se tem area branca
-            print("area de valor branco")
+
+        if pyautogui.pixelMatchesColor((x_origem + 480), (y_origem + 650), (255, 255, 255), tolerance=5):  # testa se tem area branca
+            # print("area de valor branco")
             valor = OCR_tela.valor_apostar(x_origem, y_origem)
             print('Valor da aposta: ', valor)
             if (valor == valor_aposta1) or (valor == valor_aposta2):
                 pyautogui.click((x_origem + 337), (y_origem + 605))  # clica no passar
-                print("tem que passar")
+                # print("tem que passar")
                 jogou_uma_vez = True, False
             else:
                 # pyautogui.click((x_origem + 528), (y_origem + 605))  # clica no correr
@@ -733,13 +734,22 @@ def passa_corre_joga(x_origem, y_origem, valor_aposta1=40, valor_aposta2=80):  #
                 jogou_uma_vez = True, True
 
         # se nao tem area branca com valor
-        elif pyautogui.pixelMatchesColor((x_origem + 343), (y_origem + 599), (255, 255, 255), tolerance=1):  # testa se tem um v de pagar
+        elif pyautogui.pixelMatchesColor((x_origem + 343), (y_origem + 599), (255, 255, 255), tolerance=0):  # testa se tem um v de pagar
             # print("ta com all-in ou ta tudo azul")
             # if pyautogui.pixelMatchesColor((x_origem + 528), (y_origem + 603), (255, 255, 255), tolerance=1):
-            print("ta com x branco do correr")
-            # time.sleep(3)
-            # pyautogui.click((x_origem + 528), (y_origem + 605))  # clica no correr
-            jogou_uma_vez = True, True
+            print('\n\npossivel erro na leitura\n\n')
+            time.sleep(1)
+            if pyautogui.pixelMatchesColor((x_origem + 480), (y_origem + 650), (255, 255, 255), tolerance=5):  # testa se tem area branca
+                # print("area de valor branco")
+                jogou_uma_vez = True, False
+                return jogou_uma_vez
+
+            # time.sleep(7)
+            if pyautogui.pixelMatchesColor((x_origem + 343), (y_origem + 599), (255, 255, 255), tolerance=0):
+                print("ta com x branco do correr")
+                # time.sleep(3)
+                # pyautogui.click((x_origem + 528), (y_origem + 605))  # clica no correr
+                jogou_uma_vez = True, True
 
     return jogou_uma_vez
 
@@ -875,6 +885,7 @@ def joga_uma_vez(x_origem, y_origem, numero_jogadas=3):
     cont_jogou = 0
     senta_com_maximo = False
     humano = False
+    cont_limpa_jogando = 0
 
     sala_atual = None
     pular_sala = False
@@ -883,13 +894,20 @@ def joga_uma_vez(x_origem, y_origem, numero_jogadas=3):
         return "sair da conta"
 
     time_entrou = time.perf_counter()
+    Limpa.fecha_tarefa(x_origem, y_origem)
+    Limpa.limpa_jogando(x_origem, y_origem)
+    sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa, True)
 
     while continua_jogando:  # permanece joghando
 
         # print('joga mesa')
-        Limpa.fecha_tarefa(x_origem, y_origem)
-        Limpa.limpa_jogando(x_origem, y_origem)
-        sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa, True)
+        if cont_limpa_jogando > 40:
+            cont_limpa_jogando = 0
+            Limpa.fecha_tarefa(x_origem, y_origem)
+            Limpa.limpa_jogando(x_origem, y_origem)
+            sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa, True)
+        cont_limpa_jogando += 1
+
         # print("Sentou :", sentou)
 
         if jogou_uma_vez:
@@ -907,9 +925,13 @@ def joga_uma_vez(x_origem, y_origem, numero_jogadas=3):
 
         else:
             if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=20):
-                if not cadeiras_celular(x_origem, y_origem):
-                    print('Sair da mesa fim da jogada com humanos na mesa')
-                    humano = True
+                for i in range(20):
+                    # print(i)
+                    time.sleep(0.3)
+                    if not cadeiras_celular(x_origem, y_origem):
+                        print('Sair da mesa fim da jogada com humanos na mesa')
+                        humano = True
+                        break
 
         # else:
         time_sair = time.perf_counter()
@@ -920,7 +942,7 @@ def joga_uma_vez(x_origem, y_origem, numero_jogadas=3):
             Limpa.limpa_total(x_origem, y_origem)
             Limpa.limpa_jogando(x_origem, y_origem)
             pular_sala = True
-        time.sleep(0.3)
+        # time.sleep(0.3)
 
         if humano:
             print('Jogador humano na mesa, troca de mesa')
@@ -1016,7 +1038,7 @@ def joga_ate_lv_7(x_origem, y_origem):
     humano = False
     cont_jogou = 0
     senta_com_maximo = False
-
+    cont_limpa_jogando = 0
     sala_atual = None
     pular_sala = False
 
@@ -1027,12 +1049,21 @@ def joga_ate_lv_7(x_origem, y_origem):
 
     time_entrou = time.perf_counter()
 
+    Limpa.fecha_tarefa(x_origem, y_origem)
+    Limpa.limpa_jogando(x_origem, y_origem)
+    sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa, True)
+
     while continua_jogando:  # permanece joghando
 
         # print('joga mesa')
-        Limpa.fecha_tarefa(x_origem, y_origem)
-        Limpa.limpa_jogando(x_origem, y_origem)
-        sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa, True)
+
+        if cont_limpa_jogando > 40:
+            cont_limpa_jogando = 0
+            Limpa.fecha_tarefa(x_origem, y_origem)
+            Limpa.limpa_jogando(x_origem, y_origem)
+            sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa, True)
+        cont_limpa_jogando += 1
+
         # print("Sentou :", sentou)
 
         if jogou_uma_vez:
@@ -1056,9 +1087,14 @@ def joga_ate_lv_7(x_origem, y_origem):
                     humano = True
         else:
             if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=20):
-                if not cadeiras_celular(x_origem, y_origem):
-                    print('Sair da mesa fim da jogada com humanos na mesa')
-                    humano = True
+                for i in range(20):
+                    # print(i)
+                    time.sleep(0.3)
+                    if not cadeiras_celular(x_origem, y_origem):
+                        print('Sair da mesa fim da jogada com humanos na mesa')
+                        humano = True
+                        break
+
 
         # else:
         time_sair = time.perf_counter()
@@ -1069,7 +1105,7 @@ def joga_ate_lv_7(x_origem, y_origem):
             Limpa.limpa_total(x_origem, y_origem)
             Limpa.limpa_jogando(x_origem, y_origem)
             pular_sala = True
-        time.sleep(0.3)
+        # time.sleep(0.3)
 
         if humano:
             print('Jogador humano na mesa, troca de mesa')
@@ -1080,7 +1116,7 @@ def joga_ate_lv_7(x_origem, y_origem):
             Limpa.limpa_jogando(x_origem, y_origem)
 
         if sentou:
-            print("esta sentado")
+            # print("esta sentado")
             (jogou, humano) = passa_corre_joga(x_origem, y_origem, valor_aposta1, valor_aposta2)
             if jogou:
                 jogou_uma_vez = True
