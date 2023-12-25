@@ -1085,8 +1085,9 @@ def numero_sala(x_origem, y_origem):
         print('Número da sala:', numero)
 
         if numero is not None:
-            if numero == "99912":
-                numero = '999'
+            if numero[-2:] == "12":
+                # Remove os dois últimos dígitos
+                numero = numero[:-2]
 
             numero = tratar_valor_numerico(numero)
             return str(numero)
