@@ -285,7 +285,8 @@ while True:
                         Mesa.dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, time_rodou, roleta, level_conta)
                         level_conta = OCR_tela.level_conta(x_origem, y_origem)
                     elif 10 > level_conta >= 4:
-                        Mesa.joga_ate_lv_7(x_origem, y_origem)
+                        # Mesa.joga_ate_lv_7(x_origem, y_origem)
+                        Mesa.mesa_upar_jogar(x_origem, y_origem, 0, True)
                         level_conta = OCR_tela.level_conta(x_origem, y_origem)
                     else:
                         Mesa.dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, time_rodou, roleta, level_conta)

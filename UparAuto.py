@@ -29,20 +29,20 @@ def upar(x_origem, y_origem):
 
         if 'Jogar 1 mãos em qualquer mesa' in lista_tarefa_upar:
             print("\n\n Jogar 10 mãos em qualquer mesa \n\n")
-            Mesa.joga_uma_vez(x_origem, y_origem, 1)
+            Mesa.mesa_upar_jogar(x_origem, y_origem, 1, False)
             recolher_tarefa_upando(x_origem, y_origem)
             lista_tarefa_upar = tarefas_diaris_upando(x_origem, y_origem)
 
         elif 'Jogar 5 mãos em qualquer mesa' in lista_tarefa_upar:
             print("\n\n Jogar 10 mãos em qualquer mesa \n\n")
-            Mesa.joga_uma_vez(x_origem, y_origem, 5)
+            Mesa.mesa_upar_jogar(x_origem, y_origem, 5, False)
             recolher_tarefa_upando(x_origem, y_origem)
             time.sleep(2)
             lista_tarefa_upar = tarefas_diaris_upando(x_origem, y_origem)
 
         elif 'Jogar 10 mãos em qualquer mesa' in lista_tarefa_upar:
             print("\n\n Jogar 10 mãos em qualquer mesa \n\n")
-            Mesa.joga_uma_vez(x_origem, y_origem, 10)
+            Mesa.mesa_upar_jogar(x_origem, y_origem, 10, False)
             recolher_tarefa_upando(x_origem, y_origem)
             time.sleep(2)
             lista_tarefa_upar = tarefas_diaris_upando(x_origem, y_origem)
