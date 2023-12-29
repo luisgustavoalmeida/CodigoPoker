@@ -37,12 +37,13 @@ teve_atualizacao = False
 comando_escravo = None
 
 nome_computador = socket.gethostname()
+print('nome_computador', nome_computador)
 nome_usuario = os.getlogin()
 
 nome_completo = nome_computador + "_" + nome_usuario
 
 #  lista com os computadores que vao dar comando nos escravos, colocar nesta lista para funcionar como metre
-lista_PC_meste = ('xPC-I7-9700KF', 'PC-i3-8145U', 'Thiago-PC')
+lista_PC_meste = ('PC-I7-9700KF', 'PC-i3-8145U', 'Thiago-PC')
 
 
 def cria_caminho_resposta_fb():
@@ -161,7 +162,7 @@ firebase = pyrebase.initialize_app(config)
 # Obtém uma referência para o banco de dados
 db = firebase.database()
 
-if nome_completo in lista_PC_meste:
+if nome_computador in lista_PC_meste:
     print(f"{nome_completo} está na lista de PCs mestres.")
     # # Referência para o nó do Firebase que você deseja observar
     ref = firebase.database().child(caminho_resposta)  # colocar o caminho de onde vem os comandos

@@ -198,7 +198,7 @@ while True:
                 valor_fichas = 0
                 parar_tarefas = False
                 lista_tarefas_fazer = []
-                blind = '500/1K'
+                blind = '2K/4K'
 
                 if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
                     parar_tarefas = True
@@ -239,33 +239,24 @@ while True:
                         comando = 'Executado'
                         break
 
-                    elif comando == "F5":
-                        status_comando = "Dando F5"
-                        comando = 'Executado'
-                        pyautogui.press('f5')
-
                     elif comando == "Limpa":
                         status_comando = "Limpando"
                         comando = 'Executado'
                         for i in range(5):
                             Limpa.limpa_total(x_origem, y_origem)
 
-                    elif comando == "Mesa1":
-                        blind = '500/1K'
-                        comando = 'Executado'
-                        status_comando = Mesa.escolher_blind(x_origem, y_origem, blind)
-
-                    elif comando == "Mesa2":
-                        blind = '1K/2K'
+                    elif '/' in comando:
+                        blind = comando
                         comando = 'Executado'
                         status_comando = Mesa.escolher_blind(x_origem, y_origem, blind)
 
                     elif comando == "Senta":
                         comando = 'Executado'
                         if Mesa.cadeiras_livres(x_origem, y_origem):
-                            sentou = Mesa.sentar_mesa(x_origem, y_origem, False, blind)
+                            sentou = Mesa.sentar_mesa(x_origem, y_origem, True, blind, True)
                             if sentou:
                                 status_comando = "Sentou"
+                                Mesa.mesa_recolher(x_origem, y_origem, 2, blind)
                             else:
                                 status_comando = "Não sentou"
                         else:
@@ -273,7 +264,8 @@ while True:
 
                     elif comando == "Joga":
                         comando = 'Executado'
-                        Upar.passa_ate_lv7(x_origem, y_origem)
+                        Mesa.mesa_recolher(x_origem, y_origem, 2, blind)
+
 
                     Firebase.confirmacao_comando_resposta(status_comando)
 
