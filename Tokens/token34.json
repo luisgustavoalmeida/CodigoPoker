@@ -1,5 +1,5 @@
 {
-  "token": "ya29.a0AfB_byBMffjNWuQEKiItD53pvIHuGa_D2UjWMqYZnrGr3vskn-zLdaCjk-yNTOJLKTfGv4B76VS7oS0pKk0aF55EJ0_pEwIk7V7Z5QAiYR7mk0exHARx5d4crStB855fce2RjRnUDS4_NUwyQwy2x3ptz4LwmshEdKDBaCgYKAe4SARISFQHGX2MiCxHXCeii-P7xR9RHekVsNQ0171",
+  "token": "ya29.a0AfB_byCFbaBJLy2SzAic_i8Xqg5hxlLf6TVDQCPyk33XZnoeJPGdOVLBnj5KaysrG1FF8TFOsZwfNo4_Hj6KwGcRN7ReMLDpcnZ7wnhdNJyH0Cag7hu6EwofQ9n7CIyw1sj_WdSPrgPBIyY1HnHQ9i0RSodDT-QBb-fNCQaCgYKAZcSARISFQHGX2MiTXlIY2gT-5g0yANFctj09g0173",
   "refresh_token": "1//0h6-aE0h4N0AzCgYIARAAGBESNwF-L9IrWba5wn3ipTVuzkTG0PXY7rycA13hTpDtUgFBtKOZE-YpTpttjCVAFQC63BZSVANT5u8",
   "token_uri": "https://oauth2.googleapis.com/token",
   "client_id": "866061274168-3qih184lfm61vorhhbejoore5fgcak6i.apps.googleusercontent.com",
@@ -8,5 +8,5 @@
     "https://www.googleapis.com/auth/spreadsheets"
   ],
   "universe_domain": "googleapis.com",
-  "expiry": "2023-12-23T20:19:03.780775Z"
+  "expiry": "2023-12-29T02:44:15.870400Z"
 }
