@@ -13,8 +13,15 @@ import IP
 import Tarefas
 import HoraT
 import xp2
+import Origem_pg
 
 nome_computador = socket.gethostname()
+
+blinb_rolagem = {'1/2': (534, 478, 2, 4), '2/4': (534, 504, 4, 8), '5/10': (534, 530, 10, 20), '10/20': (534, 556, 20, 40),
+                 '20/40': (534, 582, 40, 80), '25/50': (548, 478, 50, 100), '50/100': (548, 504, 100, 200), '100/200': (548, 530, 200, 400),
+                 '200/400': (548, 556, 400, 800), '500/1K': (548, 582, 1000, 2000), '1K/2K': (563, 478, 2000, 4000), '2K/4K': (563, 504, 4000, 8000),
+                 '5K/10K': (563, 530, 10000, 20000), '10K/20K': (563, 556, 20000, 40000), '20K/40K': (563, 582, 40000, 80000),
+                 '50K/100K': (571, 530, 100000, 200000), '100K/200K': (571, 556, 200000, 400000), '500K/1M': (571, 582, 1000000, 2000000)}
 
 lista_salas_niquel = [{'435': ('2040', 80, 40)}, {'1027': ('2040', 80, 40)}, {'1028': ('2040', 80, 40)}, {'1236': ('2040', 80, 40)},
                       {'1535': ('2040', 80, 40)}, {'1536': ('2040', 80, 40)}, {'1537': ('2040', 80, 40)}, {'1537': ('2040', 80, 40)},
@@ -296,19 +303,23 @@ def sentar_mesa(x_origem, y_origem, senta_com_maximo=False, blind='2040', teste_
 
                     for _ in range(20):
                         # Testa se o botão azul do comprar está visível # testa algumas vezes
-                        if pyautogui.pixelMatchesColor(posicao_comprar_x, posicao_comprar_y, cor_comprar, tolerance=35):
+                        if pyautogui.pixelMatchesColor(posicao_comprar_x, posicao_comprar_y, cor_comprar, 35):
                             print("Tem comprar")
                             # testa o tipo de caixa de comprar ficha, testa se a caixa é mais larga, olha uma mao cinsa segurando um dinheiro
-                            if pyautogui.pixelMatchesColor((x_origem + 313), (y_origem + 445), (55, 57, 62), tolerance=20):
+                            if pyautogui.pixelMatchesColor((x_origem + 313), (y_origem + 445), (55, 57, 62), 20):
                                 # print("janela mais alta")
-                                pyautogui.click((x_origem + 522), (y_origem + 405))  # Marca a re-compra automatica
+                                if pyautogui.pixelMatchesColor((x_origem + 520), (y_origem + 407), (255, 255, 255), 10):
+                                    # testa se a recompra nao esta marcada
+                                    pyautogui.click((x_origem + 522), (y_origem + 405))  # Marca a re-compra automatica
                                 posicao_valor_minimo_x = 324 + x_origem
                                 posicao_valor_minimo_y = 354 + y_origem
                                 posicao_valor_maximo_x = 659 + x_origem
                                 posicao_valor_maximo_y = 354 + y_origem
                             else:
                                 # print("janela mais baixa")
-                                pyautogui.click((x_origem + 522), (y_origem + 424))  # Marca a re-compra automatica
+                                if pyautogui.pixelMatchesColor((x_origem + 520), (y_origem + 427), (255, 255, 255), 10):
+                                    # testa se a recompra nao esta marcada
+                                    pyautogui.click((x_origem + 522), (y_origem + 424))  # Marca a re-compra automatica
                                 posicao_valor_minimo_x = 324 + x_origem
                                 posicao_valor_minimo_y = 372 + y_origem
                                 posicao_valor_maximo_x = 659 + x_origem
@@ -409,11 +420,6 @@ def escolher_blind(x_origem, y_origem, blind):
     - int: Retorna o número da sala se bem-sucedido, 0 caso contrário.
     """
 
-    blinb_rolagem = {'1/2': (534, 478), '2/4': (534, 504), '5/10': (534, 530), '10/20': (534, 556), '20/40': (534, 582),
-                     '20/50': (548, 478), '50/100': (548, 504), '100/200': (548, 530), '200/400': (548, 556), '500/1K': (548, 582),
-                     '1K/2K': (563, 478), '2K/4K': (563, 504), '5K/10K': (563, 530), '10K/20K': (563, 556), '20K/40K': (563, 582),
-                     '50K/100K': (571, 530), '100K/200K': (571, 556), '500K/1M': (571, 582)}
-
     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
         return "sair da conta"
 
@@ -440,7 +446,7 @@ def escolher_blind(x_origem, y_origem, blind):
             print("Clicar para abrir a barra de rolagem")
             time.sleep(0.3)
 
-    posicao_barra, posicao_lista = blinb_rolagem[blind]
+    posicao_barra, posicao_lista = list(blinb_rolagem[blind])[:2]
 
     pyautogui.doubleClick(300 + x_origem, posicao_barra + y_origem, button='left')  # clica para rolar
     time.sleep(0.2)
@@ -707,49 +713,33 @@ def gira_10auto(x_origem, y_origem):
 def passa_corre_joga(x_origem, y_origem, valor_aposta1=40, valor_aposta2=80):  # para se fazer tarefas
     # print("passa_corre_joga")
     jogou_uma_vez = False, False
-    # se nao esta com v azul dentro do quadrado branco e se esta com quadrado branco
-    if ((not pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (59, 171, 228), tolerance=3))
-            and (pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (255, 255, 255), tolerance=3))):
+    # seesta com v azul dentro do quadrado branco
+    if pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (59, 171, 228), 3):
+        return jogou_uma_vez
+
+    # se esta com quadrado branco
+    elif pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (255, 255, 255), 3):
         pyautogui.click((x_origem + 337), (y_origem + 605))
-        # time.sleep(0.3)
-        # print("foi encontado o quadrado")
+        time.sleep(0.3)
+        print("Passar")
         jogou_uma_vez = True, False
+        return jogou_uma_vez
 
-    else:
-        # print("nao tem quadrado branco")
-        # testa se o valor nao foi aumentado ou seja igual a 40 ou 80
-
-        if pyautogui.pixelMatchesColor((x_origem + 480), (y_origem + 650), (255, 255, 255), tolerance=5):  # testa se tem area branca
-            # print("area de valor branco")
-            valor = OCR_tela.valor_apostar(x_origem, y_origem)
-            print('Valor da aposta: ', valor)
-            if (valor == valor_aposta1) or (valor == valor_aposta2):
-                pyautogui.click((x_origem + 337), (y_origem + 605))  # clica no passar
-                # print("tem que passar")
-                jogou_uma_vez = True, False
-            else:
-                # pyautogui.click((x_origem + 528), (y_origem + 605))  # clica no correr
-                print("tem que correr")
-                # time.sleep(3)
-                jogou_uma_vez = True, True
-
-        # se nao tem area branca com valor
-        elif pyautogui.pixelMatchesColor((x_origem + 343), (y_origem + 599), (255, 255, 255), tolerance=0):  # testa se tem um v de pagar
-            # print("ta com all-in ou ta tudo azul")
-            # if pyautogui.pixelMatchesColor((x_origem + 528), (y_origem + 603), (255, 255, 255), tolerance=1):
-            print('\n\npossivel erro na leitura\n\n')
-            time.sleep(1)
-            if pyautogui.pixelMatchesColor((x_origem + 480), (y_origem + 650), (255, 255, 255), tolerance=5):  # testa se tem area branca
-                # print("area de valor branco")
-                jogou_uma_vez = True, False
-                return jogou_uma_vez
-
-            # time.sleep(7)
-            if pyautogui.pixelMatchesColor((x_origem + 343), (y_origem + 599), (255, 255, 255), tolerance=0):
-                print("ta com x branco do correr")
-                # time.sleep(3)
-                # pyautogui.click((x_origem + 528), (y_origem + 605))  # clica no correr
-                jogou_uma_vez = True, True
+    elif pyautogui.pixelMatchesColor((x_origem + 480), (y_origem + 650), (255, 255, 255), 5):  # testa se tem area branca
+        # print("area de valor branco")
+        valor = OCR_tela.valor_apostar(x_origem, y_origem)
+        print('Valor da aposta: ', valor)
+        if (valor == valor_aposta1) or (valor == valor_aposta2):
+            pyautogui.click((x_origem + 337), (y_origem + 605))  # clica no passar
+            print("Valor esprado, Paga")
+            jogou_uma_vez = True, False
+            return jogou_uma_vez
+        else:
+            # pyautogui.click((x_origem + 528), (y_origem + 605))  # clica no correr
+            print("Valor diferente do esperado")
+            # time.sleep(3)
+            jogou_uma_vez = True, True
+            return jogou_uma_vez
 
     return jogou_uma_vez
 
@@ -872,320 +862,6 @@ def joga(x_origem, y_origem, id, senha, url, navegador, ajusta_aposta):
             gira_niquel(x_origem, y_origem)
         time.sleep(0.5)
     return
-
-
-# def joga_uma_vez(x_origem, y_origem, numero_jogadas=3):
-#     print('joga_uma_vez')
-#
-#     global lista_salas_jogar
-#     blind_mesa = None
-#     sentou = False
-#     continua_jogando = True
-#     jogou_uma_vez = False
-#     cont_jogou = 0
-#     senta_com_maximo = False
-#     humano = False
-#     cont_limpa_jogando = 0
-#
-#     sala_atual = None
-#     pular_sala = False
-#
-#     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-#         return "sair da conta"
-#
-#     time_entrou = time.perf_counter()
-#     Limpa.fecha_tarefa(x_origem, y_origem)
-#     Limpa.limpa_jogando(x_origem, y_origem)
-#     sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa, True)
-#
-#     while continua_jogando:  # permanece joghando
-#
-#         # print('joga mesa')
-#         if cont_limpa_jogando > 40:
-#             cont_limpa_jogando = 0
-#             Limpa.fecha_tarefa(x_origem, y_origem)
-#             Limpa.limpa_jogando(x_origem, y_origem)
-#             sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa, True)
-#         cont_limpa_jogando += 1
-#
-#         # print("Sentou :", sentou)
-#
-#         if jogou_uma_vez:
-#             if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=20):
-#                 # testa se apareceu as mensagens verdes na parte de baixo
-#                 cont_jogou += 1
-#                 print("Jogou vezes igua a: ", cont_jogou)
-#                 if cont_jogou >= numero_jogadas:
-#                     break
-#
-#                 jogou_uma_vez = False
-#                 time_entrou = time.perf_counter()
-#                 if not cadeiras_celular(x_origem, y_origem):
-#                     print('Sair da mesa fim da jogada com humanos na mesa')
-#                     humano = True
-#
-#         else:
-#             if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=20):
-#                 for i in range(20):
-#                     # print(i)
-#                     time.sleep(0.3)
-#                     if not cadeiras_celular(x_origem, y_origem):
-#                         print('Sair da mesa fim da jogada com humanos na mesa')
-#                         humano = True
-#                         break
-#
-#         # else:
-#         time_sair = time.perf_counter()
-#         tempo_total = time_sair - time_entrou
-#         # print('tempo que esta esperando', tempo_total)
-#         if tempo_total > 60:  # troica de mesa se ficar muito tempo parado sem entrar alguem para jogar
-#             print("tempo limite atingido sem outro jogador, sai da mesa para tentar em outra")
-#             Limpa.limpa_total(x_origem, y_origem)
-#             Limpa.limpa_jogando(x_origem, y_origem)
-#             pular_sala = True
-#         # time.sleep(0.3)
-#
-#         if humano:
-#             print('Jogador humano na mesa, troca de mesa')
-#             jogou_uma_vez = False
-#             humano = False
-#             pular_sala = True
-#             Limpa.limpa_total(x_origem, y_origem)
-#             Limpa.limpa_jogando(x_origem, y_origem)
-#
-#         if sentou:
-#             # print("esta sentado")
-#             (jogou, humano) = passa_corre_joga(x_origem, y_origem, valor_aposta1, valor_aposta2)
-#             if jogou:
-#                 jogou_uma_vez = True
-#             # print('jogou_uma_vez: ', jogou_uma_vez)
-#             # print('humano: ', humano)
-#
-#         else:
-#             humano = False
-#             print("ainda nao esta sentado")
-#             for i in range(2):
-#                 for indice, dicionario in enumerate(lista_salas_jogar):
-#
-#                     if indice == sala_atual and pular_sala:
-#                         continue  # Pule a primeira iteração, começando pelo segundo item
-#
-#                     num_mesa = list(dicionario.keys())[0]  # Obtendo a chave do dicionário
-#                     valor_tupla = dicionario[num_mesa]  # Obtendo a tupla associada à chave
-#                     blind_mesa = valor_tupla[0]  # Obtendo a string da tupla
-#                     valor_aposta1 = valor_tupla[1]  # Obtendo o primeiro número da tupla
-#                     valor_aposta2 = valor_tupla[2]  # Obtendo o segundo número da tupla
-#
-#                     # print('procura mesa')
-#                     # print(lista_salas_jogar)
-#                     print('Mumero da mesa para tentar sentar: ', num_mesa)
-#                     IP.tem_internet()
-#                     Limpa.limpa_jogando(x_origem, y_origem)
-#                     Limpa.limpa_total(x_origem, y_origem)
-#                     blind_certo, sala_existe = sala_minima_niquel(x_origem, y_origem, num_mesa, blind_mesa)
-#
-#                     if not sala_existe:
-#                         # print(lista_salas_jogar)
-#                         # Remover o primeiro item da lista usando pop(0)
-#                         primeiro_item = lista_salas_jogar.pop(0)
-#                         # Adicionar o primeiro item de volta à lista usando append(), colocando-o no final
-#                         lista_salas_jogar.append(primeiro_item)
-#                         # print(lista_salas_jogar)
-#
-#                     if blind_certo:
-#                         sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa, True)
-#                         if sentou:
-#                             time_entrou = time.perf_counter()
-#                             print('esta tudo ok, slote e sentado')
-#                             sala_atual = indice
-#                             pular_sala = False
-#                             break
-#                         else:
-#                             time_entrou = 0
-#
-#                 if i == 1:
-#                     pular_sala = False
-#
-#                 if sentou:
-#                     break
-#                 else:
-#                     time_entrou = 0
-#
-#             if not sentou:
-#                 time_entrou = 0
-#                 print("rodou a lista de mesas 2x, da um F5 para recarregar as mesas")
-#                 IP.tem_internet()
-#                 print('f5')
-#                 pyautogui.press('f5')
-#                 time.sleep(25)
-#
-#     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-#         return "sair da conta"
-#
-#     Limpa.limpa_jogando(x_origem, y_origem)
-#     return
-
-
-# def joga_ate_lv_7(x_origem, y_origem):
-#     print('joga_ate_lv_7')
-#
-#     # xp2.pega_2xp(x_origem, y_origem)
-#
-#     global lista_salas_jogar
-#     blind_mesa = None
-#     sentou = False
-#     continua_jogando = True
-#     jogou_uma_vez = False
-#     humano = False
-#     cont_jogou = 0
-#     senta_com_maximo = False
-#     cont_limpa_jogando = 0
-#     sala_atual = None
-#     pular_sala = False
-#
-#     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-#         return "sair da conta"
-#
-#     xp2.pega_2xp(x_origem, y_origem)
-#
-#     time_entrou = time.perf_counter()
-#
-#     Limpa.fecha_tarefa(x_origem, y_origem)
-#     Limpa.limpa_jogando(x_origem, y_origem)
-#     sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa, True)
-#
-#     while continua_jogando:  # permanece joghando
-#
-#         # print('joga mesa')
-#
-#         if cont_limpa_jogando > 40:
-#             cont_limpa_jogando = 0
-#             Limpa.fecha_tarefa(x_origem, y_origem)
-#             Limpa.limpa_jogando(x_origem, y_origem)
-#             sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa, True)
-#         cont_limpa_jogando += 1
-#
-#         # print("Sentou :", sentou)
-#
-#         if jogou_uma_vez:
-#             if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=20):
-#                 # testa se apareceu as mensagens verdes na parte de baixo
-#                 level_conta = OCR_tela.level_conta(x_origem, y_origem)
-#                 cont_jogou += 1
-#                 print("Jogou vezes igua a: ", cont_jogou)
-#                 if level_conta >= 10:
-#                     level_conta = OCR_tela.level_conta(x_origem, y_origem)
-#                     if level_conta >= 10:
-#                         break
-#
-#                 if cont_jogou % 5 == 0:  # testa se tem que trocar ip a casa 5 jogadas
-#                     IP.testa_trocar_IP()  # ve se tem que trocar ip
-#
-#                 jogou_uma_vez = False
-#                 time_entrou = time.perf_counter()
-#                 if not cadeiras_celular(x_origem, y_origem):
-#                     print('Sair da mesa fim da jogada com humanos na mesa')
-#                     humano = True
-#         else:
-#             if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=20):
-#                 for i in range(20):
-#                     # print(i)
-#                     time.sleep(0.3)
-#                     if not cadeiras_celular(x_origem, y_origem):
-#                         print('Sair da mesa fim da jogada com humanos na mesa')
-#                         humano = True
-#                         break
-#
-#         # else:
-#         time_sair = time.perf_counter()
-#         tempo_total = time_sair - time_entrou
-#         # print('tempo que esta esperando', tempo_total)
-#         if tempo_total > 60:  # troica de mesa se ficar muito tempo parado sem entrar alguem para jogar
-#             print("tempo limite atingido sem outro jogador, sai da mesa para tentar em outra")
-#             Limpa.limpa_total(x_origem, y_origem)
-#             Limpa.limpa_jogando(x_origem, y_origem)
-#             pular_sala = True
-#         # time.sleep(0.3)
-#
-#         if humano:
-#             print('Jogador humano na mesa, troca de mesa')
-#             jogou_uma_vez = False
-#             humano = False
-#             pular_sala = True
-#             Limpa.limpa_total(x_origem, y_origem)
-#             Limpa.limpa_jogando(x_origem, y_origem)
-#
-#         if sentou:
-#             # print("esta sentado")
-#             (jogou, humano) = passa_corre_joga(x_origem, y_origem, valor_aposta1, valor_aposta2)
-#             if jogou:
-#                 jogou_uma_vez = True
-#             # print('jogou_uma_vez: ', jogou_uma_vez)
-#             # print('humano: ', humano)
-#
-#         else:
-#             humano = False
-#             print("ainda nao esta sentado")
-#             for i in range(2):
-#                 for indice, dicionario in enumerate(lista_salas_jogar):
-#
-#                     if indice == sala_atual and pular_sala:
-#                         continue  # Pule a primeira iteração, começando pelo segundo item
-#
-#                     num_mesa = list(dicionario.keys())[0]  # Obtendo a chave do dicionário
-#                     valor_tupla = dicionario[num_mesa]  # Obtendo a tupla associada à chave
-#                     blind_mesa = valor_tupla[0]  # Obtendo a string da tupla
-#                     valor_aposta1 = valor_tupla[1]  # Obtendo o primeiro número da tupla
-#                     valor_aposta2 = valor_tupla[2]  # Obtendo o segundo número da tupla
-#
-#                     # print('procura mesa')
-#                     # print(lista_salas_jogar)
-#                     print('Mumero da mesa para tentar sentar: ', num_mesa)
-#                     IP.tem_internet()
-#                     Limpa.limpa_jogando(x_origem, y_origem)
-#                     Limpa.limpa_total(x_origem, y_origem)
-#                     blind_certo, sala_existe = sala_minima_niquel(x_origem, y_origem, num_mesa, blind_mesa)
-#
-#                     if not sala_existe:
-#                         # print(lista_salas_jogar)
-#                         # Remover o primeiro item da lista usando pop(0)
-#                         primeiro_item = lista_salas_jogar.pop(0)
-#                         # Adicionar o primeiro item de volta à lista usando append(), colocando-o no final
-#                         lista_salas_jogar.append(primeiro_item)
-#                         # print(lista_salas_jogar)
-#
-#                     if blind_certo:
-#                         sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa, True)
-#                         if sentou:
-#                             time_entrou = time.perf_counter()
-#                             print('esta tudo ok, slote e sentado')
-#                             sala_atual = indice
-#                             pular_sala = False
-#                             break
-#                         else:
-#                             time_entrou = 0
-#
-#                 if i == 1:
-#                     pular_sala = False
-#
-#                 if sentou:
-#                     break
-#                 else:
-#                     time_entrou = 0
-#
-#             if not sentou:
-#                 time_entrou = 0
-#                 print("rodou a lista de mesas 2x, da um F5 para recarregar as mesas")
-#                 IP.tem_internet()
-#                 print('f5')
-#                 pyautogui.press('f5')
-#                 time.sleep(15)
-#
-#     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-#         return "sair da conta"
-#
-#     Limpa.limpa_jogando(x_origem, y_origem)
-#     return
 
 
 def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False):
@@ -1432,6 +1108,121 @@ def dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, time_rodou, roleta, lev
         Limpa.iniciantes(x_origem, y_origem)
         Limpa.limpa_total(x_origem, y_origem)
     return
+
+
+def apostar_pagar(x_origem, y_origem):
+    jogou_uma_vez = False
+    # quando se tem que apostar, testa se tem a barra de ajustar a aposta
+    if pyautogui.pixelMatchesColor((x_origem + 513), (y_origem + 647), (180, 202, 224), 5):
+        # se tem a barra de ajustar a aposta
+
+        # testar se é a ultima carta
+        if pyautogui.pixelMatchesColor((x_origem + 652), (y_origem + 327), (249, 249, 249), 5):
+            print('ultima carta')
+            # cliaca no final da barra
+            pyautogui.click((x_origem + 660), (y_origem + 647))
+
+        else:
+            print('NÂO é a ultima carta')
+            # clicar no meio da barra de ajuste
+            pyautogui.click((x_origem + 595), (y_origem + 647))
+
+        for _ in range(150):
+            #  teste se a barra foi deslocada
+            if not pyautogui.pixelMatchesColor((x_origem + 652), (y_origem + 327), (184, 212, 237), 5):
+                break
+            time.sleep(0.01)
+        # clica no apostar
+        print('tem que aposta')
+        pyautogui.click((x_origem + 380), (y_origem + 650))
+        jogou_uma_vez = True
+        return jogou_uma_vez
+
+    elif pyautogui.pixelMatchesColor((x_origem + 342), (y_origem + 601), (255, 255, 255), 5):
+        # branco de interceção de pagar e passar sem o quadrado brando
+        print('tem que pagar')
+        # se nao tem a barra de ajusta a posta e se tem o pagar
+        pyautogui.click((x_origem + 380), (y_origem + 604))
+        jogou_uma_vez = True
+        return jogou_uma_vez
+    return jogou_uma_vez
+
+
+def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
+    print('mesa_recolher')
+
+    sentou = False
+    continua_jogando = True
+    jogou_uma_vez = False
+    apostar = False
+    cont_jogou = 0
+
+    cont_limpa_jogando = 0
+
+    valor_aposta1, valor_aposta2 = list(blinb_rolagem[blind])[-2:]
+    print('Valores das apostas')
+    print(valor_aposta1, valor_aposta2)
+
+    while continua_jogando:  # permanece joghando
+
+        # print('joga mesa')
+
+        if cont_limpa_jogando > 40:
+            cont_limpa_jogando = 0
+            Limpa.fecha_tarefa(x_origem, y_origem)
+            Limpa.limpa_jogando(x_origem, y_origem)
+        cont_limpa_jogando += 1
+
+        # print("Sentou :", sentou)
+
+        if jogou_uma_vez:
+            if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=20):
+                # testa se apareceu as mensagens verdes na parte de baixo
+                cont_jogou += 1
+                print("Jogou vezes igua a: ", cont_jogou)
+
+                if cont_jogou == numero_jogadas:
+                    apostar = True
+                jogou_uma_vez = False
+
+                if apostar and cont_jogou > numero_jogadas:
+                    apostar = False
+
+                if cont_jogou >= numero_jogadas + 2:
+                    break
+
+                if not cadeiras_celular(x_origem, y_origem):
+                    print('Sair da mesa fim da jogada com humanos na mesa')
+                    humano = True
+        else:
+            if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=20):
+                for i in range(20):
+                    time.sleep(0.3)
+                    if not cadeiras_celular(x_origem, y_origem):
+                        print('Sair da mesa fim da jogada com humanos na mesa')
+                        humano = True
+                        break
+
+        if apostar:
+            # print('\n\n         Hora de apostar         \n\n')
+            jogou = apostar_pagar(x_origem, y_origem)
+            if jogou:
+                jogou_uma_vez = True
+        else:
+            (jogou, apostar) = passa_corre_joga(x_origem, y_origem, valor_aposta1, valor_aposta2)
+            if jogou:
+                jogou_uma_vez = True
+
+    if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
+        return "sair da conta"
+
+    Limpa.limpa_jogando(x_origem, y_origem)
+    return
+
+# x_origem, y_origem = Origem_pg.x_y()
+# sentar_mesa(x_origem, y_origem, True, '20/40', True)
+# mesa_recolher(x_origem, y_origem, 2, '20/40')
+
 
 # def levantar_mesa(x_origem, y_origem):
 #     #Mesa

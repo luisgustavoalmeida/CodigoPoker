@@ -43,7 +43,7 @@ nome_usuario = os.getlogin()
 nome_completo = nome_computador + "_" + nome_usuario
 
 #  lista com os computadores que vao dar comando nos escravos, colocar nesta lista para funcionar como metre
-lista_PC_meste = ('PC-I7-9700KF', 'PC-i3-8145U', 'Thiago-PC')
+lista_PC_meste = ('xPC-I7-9700KF', 'PC-i3-8145U', 'Thiago-PC')
 
 
 def cria_caminho_resposta_fb():
