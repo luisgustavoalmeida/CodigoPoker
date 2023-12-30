@@ -1254,7 +1254,7 @@ def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
         else:
             (jogou, apostar) = passa_corre_joga(x_origem, y_origem, valor_aposta1, valor_aposta2)
             if apostar:
-                cont_jogou = numero_jogadas
+                cont_jogou = numero_jogadas + 1
             if jogou:
                 jogou_uma_vez = True
 
