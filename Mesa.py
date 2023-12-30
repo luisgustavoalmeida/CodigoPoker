@@ -1196,7 +1196,7 @@ def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
                 # testa se apareceu as mensagens verdes na parte de baixo
                 cont_jogou += 1
                 print("Jogou vezes igua a: ", cont_jogou)
-                status_comando = 'Jogada' + cont_jogou
+                status_comando = 'Jogada: ' + str(cont_jogou)
                 if cont_jogou == numero_jogadas:
                     apostar = True
                 jogou_uma_vez = False
