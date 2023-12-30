@@ -14,6 +14,7 @@ import Tarefas
 import HoraT
 import xp2
 import Origem_pg
+import Firebase
 
 nome_computador = socket.gethostname()
 
@@ -1156,6 +1157,9 @@ def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
     jogou_uma_vez = False
     apostar = False
     cont_jogou = 0
+    status_comando = 'Iniciado o recolhimento'
+    humano = False
+    status_comando_anterior = None
 
     cont_limpa_jogando = 0
 
@@ -1164,6 +1168,10 @@ def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
     print(valor_aposta1, valor_aposta2)
 
     while continua_jogando:  # permanece joghando
+
+        if status_comando_anterior != status_comando:
+            Firebase.confirmacao_comando_resposta(status_comando)
+            status_comando_anterior = status_comando
 
         # print('joga mesa')
 
@@ -1180,19 +1188,21 @@ def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
                 # testa se apareceu as mensagens verdes na parte de baixo
                 cont_jogou += 1
                 print("Jogou vezes igua a: ", cont_jogou)
-
+                status_comando = 'Jogada' + cont_jogou
                 if cont_jogou == numero_jogadas:
                     apostar = True
                 jogou_uma_vez = False
 
                 if apostar and cont_jogou > numero_jogadas:
                     apostar = False
+                    status_comando = 'Hora de apostar'
 
                 if cont_jogou >= numero_jogadas + 2:
                     break
 
                 if not cadeiras_celular(x_origem, y_origem):
                     print('Sair da mesa fim da jogada com humanos na mesa')
+                    status_comando = 'Humano na mesa'
                     humano = True
         else:
             if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=20):
@@ -1200,8 +1210,17 @@ def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
                     time.sleep(0.3)
                     if not cadeiras_celular(x_origem, y_origem):
                         print('Sair da mesa fim da jogada com humanos na mesa')
+                        status_comando = 'Humano na mesa'
                         humano = True
                         break
+
+        if humano:
+            print('Jogador humano na mesa, troca de mesa')
+            jogou_uma_vez = False
+            humano = False
+            Limpa.limpa_total(x_origem, y_origem)
+            Limpa.limpa_jogando(x_origem, y_origem)
+            return
 
         if apostar:
             # print('\n\n         Hora de apostar         \n\n')

@@ -222,6 +222,7 @@ while True:
                 recebido1 = None
                 recebido2 = None
                 comando = None
+                status_comando_anterior = None
                 while True:
                     time.sleep(1)
                     # Limpa.limpa_total(x_origem, y_origem)
@@ -266,8 +267,10 @@ while True:
                         comando = 'Executado'
                         Mesa.mesa_recolher(x_origem, y_origem, 2, blind)
 
+                    if status_comando_anterior != status_comando:
+                        Firebase.confirmacao_comando_resposta(status_comando)
+                        status_comando_anterior = status_comando
 
-                    Firebase.confirmacao_comando_resposta(status_comando)
 
                 Firebase.confirmacao_comando_resposta('Entrendo em uma nova conta')
 
