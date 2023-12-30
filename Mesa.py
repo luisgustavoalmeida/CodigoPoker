@@ -1227,7 +1227,7 @@ def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
             jogou_uma_vez = False
             humano = False
             levantar_mesa(x_origem, y_origem)
-            Firebase.comando_coleetivo_escravo_escravo("Levanta")
+            # Firebase.comando_coleetivo_escravo_escravo("Levanta")
             # Limpa.limpa_total(x_origem, y_origem)
             # Limpa.limpa_jogando(x_origem, y_origem)
             return
