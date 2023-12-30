@@ -191,8 +191,7 @@ while True:
 
                 Firebase.confirmacao_comando_resposta('Entrou')
 
-                pontos_disponiveis = 200
-                pontuacao_tarefas = 0
+                pontuacao_tarefas = ""
                 meta_atingida = False
                 conta_upad = True
                 valor_fichas = 0
@@ -266,22 +265,19 @@ while True:
                     elif comando == "Joga":
                         comando = 'Executado'
                         Mesa.mesa_recolher(x_origem, y_origem, 2, blind)
+                        valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem)
+                        status_comando = 'Valor ficha: ' + valor_fichas
 
                     if status_comando_anterior != status_comando:
                         Firebase.confirmacao_comando_resposta(status_comando)
                         status_comando_anterior = status_comando
 
-
-                Firebase.confirmacao_comando_resposta('Entrendo em uma nova conta')
+                Firebase.confirmacao_comando_resposta('Saindo da conta')
 
                 valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem)
                 hora_que_rodou = datetime.datetime.now().strftime('%H:%M:%S')
 
-                print('valor_fichas', valor_fichas)
-                print('pontuacao_tarefas', pontuacao_tarefas)
-                print('hora_que_rodou', hora_que_rodou)
-
-                Firebase.confirmacao_escravo('Entrendo em uma nova conta')
+                print('\n\nvalor_fichas', valor_fichas, '\n\n')
 
                 roda = False
                 break
@@ -289,6 +285,8 @@ while True:
         ip, com_internet = IP.meu_ip()  # obtem meu endereço de IP
         valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip, level_conta]
         Seleniun.sair_face(url, navegador)
+        Firebase.confirmacao_escravo('Entrendo em uma nova conta')
+
 
         # print('-----------------espera terminar tarefa independente----------------')
         # # Aguardar a tarefa terminar

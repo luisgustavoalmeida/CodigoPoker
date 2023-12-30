@@ -13,7 +13,6 @@ import IP
 import Tarefas
 import HoraT
 import xp2
-import Origem_pg
 import Firebase
 
 nome_computador = socket.gethostname()
@@ -1173,15 +1172,22 @@ def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
             Firebase.confirmacao_comando_resposta(status_comando)
             status_comando_anterior = status_comando
 
-        # print('joga mesa')
+        recebido1 = Firebase.comando_escravo()
+        if recebido1 != recebido2:
+            recebido2 = recebido1
+            comando = recebido1.strip().title()  # remove espaços vasiao e coloca a primeira letra amiusculo
+            print('comando :', comando)
+
+        if comando == 'Levanta':
+            levantar_mesa(x_origem, y_origem)
+            Firebase.comando_coleetivo_escravo_escravo("Levanta")
+            return
 
         if cont_limpa_jogando > 40:
             cont_limpa_jogando = 0
             Limpa.fecha_tarefa(x_origem, y_origem)
             Limpa.limpa_jogando(x_origem, y_origem)
         cont_limpa_jogando += 1
-
-        # print("Sentou :", sentou)
 
         if jogou_uma_vez:
             if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=20):
@@ -1218,8 +1224,10 @@ def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
             print('Jogador humano na mesa, troca de mesa')
             jogou_uma_vez = False
             humano = False
-            Limpa.limpa_total(x_origem, y_origem)
-            Limpa.limpa_jogando(x_origem, y_origem)
+            levantar_mesa(x_origem, y_origem)
+            Firebase.comando_coleetivo_escravo_escravo("Levanta")
+            # Limpa.limpa_total(x_origem, y_origem)
+            # Limpa.limpa_jogando(x_origem, y_origem)
             return
 
         if apostar:
@@ -1238,79 +1246,39 @@ def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
     Limpa.limpa_jogando(x_origem, y_origem)
     return
 
+
+def levantar_mesa(x_origem, y_origem):
+    print('levantar_mesa')
+    sentado = "manda levantar"
+    for i in range(50):
+        if pyautogui.pixelMatchesColor((x_origem + 619), (y_origem + 631), (67, 89, 136), tolerance=1):  # testa se esta dentro da mesa
+            print('Não esta sentado')
+            sentado = "levantou da mesa"
+            # Firebase.confirmacao_comando_resposta(sentado)
+            break
+
+        if (pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (27, 92, 155), tolerance=19)
+                or pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (19, 64, 109), tolerance=19)):
+            # testa se esta dentro da mesa
+
+            pyautogui.click(947 + x_origem, 78 + y_origem)  # setinha
+            time.sleep(0.3)
+            pyautogui.click(925 + x_origem, 204 + y_origem)  # Levantar
+
+            if pyautogui.pixelMatchesColor((x_origem + 455), (y_origem + 417), (25, 116, 184), tolerance=19):
+                # aviso do sistema "tem certesa de que quer sair da mesa?"
+                pyautogui.click(641 + x_origem, 278 + y_origem)  # clica no x do aviso do sistema "tem certesa de que quer sair da mesa?"
+                print("aviso do sistema")
+                time.sleep(0.3)
+                pyautogui.click(947 + x_origem, 78 + y_origem)  # setinha
+                time.sleep(0.3)
+                pyautogui.click(925 + x_origem, 204 + y_origem)  # Levantar
+
+    return sentado
+
 # x_origem, y_origem = Origem_pg.x_y()
 # sentar_mesa(x_origem, y_origem, True, '20/40', True)
 # mesa_recolher(x_origem, y_origem, 2, '20/40')
-
-
-# def levantar_mesa(x_origem, y_origem):
-#     #Mesa
-#     sentado = "sentado"
-#     for i in range(50):
-#         if pyautogui.pixelMatchesColor((x_origem + 619), (y_origem + 631), (67, 89, 136), tolerance=1):  # testa se esta dentro da mesa
-#             print('Não esta sentado')
-#             sentado = "levantou da mesa"
-#             break
-#
-#         if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (27, 92, 155),  tolerance=19) \
-#                 or pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (19, 64, 109),  tolerance=19) :  # testa se esta dentro da mesa
-#
-#             pyautogui.click(947 + x_origem, 78 + y_origem)#setinha
-#             time.sleep(0.3)
-#             pyautogui.click(925 + x_origem, 204 + y_origem)#Levantar
-#
-#             if pyautogui.pixelMatchesColor((x_origem + 455), (y_origem + 417), (25, 116, 184), tolerance=19):  # aviso do sistema "tem certesa de que quer sair da mesa?"
-#                 pyautogui.click(641 + x_origem, 278 + y_origem)  # clica no x do aviso do sistema "tem certesa de que quer sair da mesa?"
-#                 print("aviso do sistema")
-#                 time.sleep(0.3)
-#                 pyautogui.click(947 + x_origem, 78 + y_origem)  # setinha
-#                 time.sleep(0.3)
-#                 pyautogui.click(925 + x_origem, 204 + y_origem)  # Levantar
-#             print("Sai da Mesa")
-#     return sentado
-
-
-# level_conta = 0
-#
-#
-# def passa_ate_lv7(x_origem, y_origem): # para se fazer tarefas
-#     global level_conta
-#     # print("jogando")
-#     if pyautogui.pixelMatchesColor((x_origem + 619), (y_origem + 631), (67, 89, 136), tolerance=1):  # testa se esta dentro da mesa
-#         print("Levantou")
-#         return 'Levantou'
-#     else:
-#         Tarefas.recolher_tarefa_upando(x_origem, y_origem)
-#
-#         if pyautogui.pixelMatchesColor((x_origem + 480), (y_origem + 650), (43, 16, 9), tolerance=3):
-#             pyautogui.click((x_origem + 640), (y_origem + 72))
-#
-#         Limpa.limpa_jogando(x_origem, y_origem)
-#         if level_conta < 7:
-#             # se nao esta com v azul dentro do quadrado branco e se esta com quadrado branco
-#             if ((not pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (59, 171, 228), tolerance=1))
-#                     and (pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (255, 255, 255), tolerance=1))):
-#                 pyautogui.click((x_origem + 337), (y_origem + 605))
-#                 time.sleep(0.3)
-#                 print("foi encontado o quadrado")
-#                 level_conta = OCR_tela.level_conta(x_origem, y_origem)
-#                 return 'Passou'
-#
-#             elif pyautogui.pixelMatchesColor((x_origem + 480), (y_origem + 650), (255, 255, 255), tolerance=1): # testa se tem area branca
-#                 pyautogui.click((x_origem + 337), (y_origem + 605))
-#                 #time.sleep(0.3)
-#                 print("area de valor branco")
-#                 level_conta = OCR_tela.level_conta(x_origem, y_origem)
-#                 return 'Pagou'
-#         else:
-#             if pyautogui.pixelMatchesColor((x_origem + 480), (y_origem + 650), (255, 255, 255), tolerance=1): # testa se tem area branca
-#                 pyautogui.click((x_origem + 528), (y_origem + 605))  # clica no correr
-#                 #level_conta = OCR_tela.level_conta(x_origem, y_origem)
-#                 #time.sleep(0.3)
-#                 print("area de valor branco")
-#                 return 'Correu'
-#     return
-
 # x_origem, y_origem = Origem_pg.x_y()
 # cadeiras_celular(x_origem, y_origem)
 # conta_cadeiras_livres_celular(x_origem, y_origem)
