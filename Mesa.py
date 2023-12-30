@@ -1191,6 +1191,10 @@ def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
             levantar_mesa(x_origem, y_origem)
             # Firebase.comando_coleetivo_escravo_escravo("Levanta")
             return
+        elif comando == 'Limpa':
+            Limpa.limpa_total(x_origem, y_origem)
+            Limpa.limpa_jogando(x_origem, y_origem)
+            return
 
         if cont_limpa_jogando > 40:
             cont_limpa_jogando = 0
@@ -1201,18 +1205,20 @@ def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
         if jogou_uma_vez:
             if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=20):
                 # testa se apareceu as mensagens verdes na parte de baixo
+                jogou_uma_vez = False
                 cont_jogou += 1
                 print("Jogou vezes igua a: ", cont_jogou)
                 status_comando = 'Jogada: ' + str(cont_jogou)
                 if cont_jogou == numero_jogadas:
                     apostar = True
-                jogou_uma_vez = False
+                    status_comando = 'Hora de apostar'
 
                 if apostar and cont_jogou > numero_jogadas:
                     apostar = False
-                    status_comando = 'Hora de apostar'
+                    status_comando = 'Hora de jogar sem apostar'
 
                 if cont_jogou >= numero_jogadas + 2:
+                    print('Fim do recolher')
                     break
 
                 # if not cadeiras_celular(x_origem, y_origem):
@@ -1229,15 +1235,15 @@ def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
         #                 humano = True
         #                 break
 
-        if humano:
-            print('Jogador humano na mesa, troca de mesa')
-            jogou_uma_vez = False
-            humano = False
-            levantar_mesa(x_origem, y_origem)
-            # Firebase.comando_coleetivo_escravo_escravo("Levanta")
-            # Limpa.limpa_total(x_origem, y_origem)
-            # Limpa.limpa_jogando(x_origem, y_origem)
-            return
+        # if humano:
+        #     print('Jogador humano na mesa, troca de mesa')
+        #     jogou_uma_vez = False
+        #     humano = False
+        #     levantar_mesa(x_origem, y_origem)
+        #     # Firebase.comando_coleetivo_escravo_escravo("Levanta")
+        #     # Limpa.limpa_total(x_origem, y_origem)
+        #     # Limpa.limpa_jogando(x_origem, y_origem)
+        #     return
 
         # print('Apostar: ', apostar)
         if apostar:
@@ -1247,12 +1253,15 @@ def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
                 jogou_uma_vez = True
         else:
             (jogou, apostar) = passa_corre_joga(x_origem, y_origem, valor_aposta1, valor_aposta2)
+            if apostar:
+                cont_jogou = numero_jogadas
             if jogou:
                 jogou_uma_vez = True
 
     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
         return "sair da conta"
 
+    levantar_mesa(x_origem, y_origem)
     Limpa.limpa_jogando(x_origem, y_origem)
     return
 
