@@ -181,7 +181,7 @@ def comando_escravo():
         dado = db.child(caminho_resposta).get().val()
         if dado:
             # Faça algo com os dados
-            print(f"O dado em {caminho_resposta} é: {dado}")
+            # print(f"O dado em {caminho_resposta} é: {dado}")
             return dado
         else:
             print("Nenhum dado encontrado no caminho:", caminho_resposta)
@@ -262,7 +262,7 @@ def escreve_resposta_escravo(resposta_escravo):
     try:
         # Escreva a informação aleatória no banco de dados Firebase
         db.child(caminho_resposta1).set(resposta_escravo)
-        print(f"Informação {resposta_escravo} escrita com sucesso em {caminho_resposta1}")
+        # print(f"Informação {resposta_escravo} escrita com sucesso em {caminho_resposta1}")
     except Exception as e:
         print(f"Ocorreu um erro ao escrever a informação: {str(e)}")
 

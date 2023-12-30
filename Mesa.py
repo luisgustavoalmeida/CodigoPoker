@@ -710,46 +710,6 @@ def gira_10auto(x_origem, y_origem):
         return gira
 
 
-def passa_corre_joga(x_origem, y_origem, valor_aposta1=40, valor_aposta2=80):  # para se fazer tarefas
-    # print("passa_corre_joga")
-    jogou_uma_vez = False, False
-    # se esta com v azul dentro do quadrado branco
-    if pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (59, 171, 228), 3):
-        return jogou_uma_vez
-
-    # se esta com quadrado branco
-    elif pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (255, 255, 255), 3):
-        pyautogui.click((x_origem + 337), (y_origem + 605))
-        time.sleep(0.3)
-        print("Passar")
-        jogou_uma_vez = True, False
-        return jogou_uma_vez
-    # testa se tem a area de valores apostar
-    elif pyautogui.pixelMatchesColor((x_origem + 480), (y_origem + 650), (255, 255, 255), 5):  # testa se tem area branca
-        # print("area de valor branco")
-        valor = OCR_tela.valor_apostar(x_origem, y_origem)
-        print('Valor da aposta: ', valor)
-        if (valor == valor_aposta1) or (valor == valor_aposta2):
-            pyautogui.click((x_origem + 337), (y_origem + 605))  # clica no passar
-            print("Valor esprado, Paga")
-            jogou_uma_vez = True, False
-            return jogou_uma_vez
-        else:
-            # pyautogui.click((x_origem + 528), (y_origem + 605))  # clica no correr
-            print("Valor diferente do esperado")
-            # time.sleep(3)
-            jogou_uma_vez = True, True
-            return jogou_uma_vez
-
-    #  nao tem a area branca do apostar mas tem Pagar
-    # se tem o pagar com um valor ja escrito
-    elif pyautogui.pixelMatchesColor((x_origem + 342), (y_origem + 698), (255, 255, 255), 1):
-        jogou_uma_vez = True, True
-        return jogou_uma_vez
-
-    return jogou_uma_vez
-
-
 def joga(x_origem, y_origem, id, senha, url, navegador, ajusta_aposta):
     global lista_salas_niquel
     blind_mesa = None
@@ -1116,6 +1076,47 @@ def dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, time_rodou, roleta, lev
     return
 
 
+def passa_corre_joga(x_origem, y_origem, valor_aposta1=40, valor_aposta2=80):  # para se fazer tarefas
+    # print("passa_corre_joga")
+    jogou_uma_vez = False, False
+    # se esta com v azul dentro do quadrado branco
+    if pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (59, 171, 228), 3):
+        return jogou_uma_vez
+
+    # se esta com quadrado branco
+    elif pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (255, 255, 255), 3):
+        pyautogui.click((x_origem + 337), (y_origem + 605))
+        time.sleep(0.3)
+        print("Passar")
+        jogou_uma_vez = True, False
+        return jogou_uma_vez
+    # testa se tem a area de valores apostar
+    elif pyautogui.pixelMatchesColor((x_origem + 480), (y_origem + 650), (255, 255, 255), 5):  # testa se tem area branca
+        # print("area de valor branco")
+        valor = OCR_tela.valor_apostar(x_origem, y_origem)
+        print('Valor da aposta: ', valor)
+        if (valor == valor_aposta1) or (valor == valor_aposta2):
+            pyautogui.click((x_origem + 337), (y_origem + 605))  # clica no passar
+            print("Valor esprado, Paga")
+            jogou_uma_vez = True, False
+            return jogou_uma_vez
+        else:
+            # pyautogui.click((x_origem + 528), (y_origem + 605))  # clica no correr
+            print("Valor diferente do esperado")
+            # time.sleep(3)
+            jogou_uma_vez = True, True
+            return jogou_uma_vez
+
+    #  nao tem a area branca do apostar mas tem Pagar
+    # se tem o pagar com um valor ja escrito
+    elif pyautogui.pixelMatchesColor((x_origem + 342), (y_origem + 698), (255, 255, 255), 5):
+        print('Tem o botao de pagar sem o a area de ajudte de valor')
+        jogou_uma_vez = True, True
+        return jogou_uma_vez
+
+    return jogou_uma_vez
+
+
 def apostar_pagar(x_origem, y_origem):
     jogou_uma_vez = False
     # quando se tem que apostar, testa se tem a barra de ajustar a aposta
@@ -1238,6 +1239,7 @@ def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
             # Limpa.limpa_jogando(x_origem, y_origem)
             return
 
+        print('Apostar: ', apostar)
         if apostar:
             # print('\n\n         Hora de apostar         \n\n')
             jogou = apostar_pagar(x_origem, y_origem)
