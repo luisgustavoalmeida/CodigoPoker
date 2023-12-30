@@ -713,7 +713,7 @@ def gira_10auto(x_origem, y_origem):
 def passa_corre_joga(x_origem, y_origem, valor_aposta1=40, valor_aposta2=80):  # para se fazer tarefas
     # print("passa_corre_joga")
     jogou_uma_vez = False, False
-    # seesta com v azul dentro do quadrado branco
+    # se esta com v azul dentro do quadrado branco
     if pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (59, 171, 228), 3):
         return jogou_uma_vez
 
@@ -724,7 +724,7 @@ def passa_corre_joga(x_origem, y_origem, valor_aposta1=40, valor_aposta2=80):  #
         print("Passar")
         jogou_uma_vez = True, False
         return jogou_uma_vez
-
+    # testa se tem a area de valores apostar
     elif pyautogui.pixelMatchesColor((x_origem + 480), (y_origem + 650), (255, 255, 255), 5):  # testa se tem area branca
         # print("area de valor branco")
         valor = OCR_tela.valor_apostar(x_origem, y_origem)
@@ -740,6 +740,12 @@ def passa_corre_joga(x_origem, y_origem, valor_aposta1=40, valor_aposta2=80):  #
             # time.sleep(3)
             jogou_uma_vez = True, True
             return jogou_uma_vez
+
+    #  nao tem a area branca do apostar mas tem Pagar
+    # se tem o pagar com um valor ja escrito
+    elif pyautogui.pixelMatchesColor((x_origem + 342), (y_origem + 698), (255, 255, 255), 1):
+        jogou_uma_vez = True, True
+        return jogou_uma_vez
 
     return jogou_uma_vez
 
@@ -1128,7 +1134,7 @@ def apostar_pagar(x_origem, y_origem):
             pyautogui.click((x_origem + 595), (y_origem + 647))
 
         for _ in range(150):
-            #  teste se a barra foi deslocada
+            #  teste se a barra foi deslocada, nao esta mais na posição inicial
             if not pyautogui.pixelMatchesColor((x_origem + 652), (y_origem + 327), (184, 212, 237), 5):
                 break
             time.sleep(0.01)
@@ -1140,7 +1146,7 @@ def apostar_pagar(x_origem, y_origem):
 
     elif pyautogui.pixelMatchesColor((x_origem + 342), (y_origem + 601), (255, 255, 255), 5):
         # branco de interceção de pagar e passar sem o quadrado brando
-        print('tem que pagar')
+        print('clicou no Passar ou no Pagar')
         # se nao tem a barra de ajusta a posta e se tem o pagar
         pyautogui.click((x_origem + 380), (y_origem + 604))
         jogou_uma_vez = True
