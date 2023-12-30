@@ -1215,19 +1215,19 @@ def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
                 if cont_jogou >= numero_jogadas + 2:
                     break
 
-                if not cadeiras_celular(x_origem, y_origem):
-                    print('Sair da mesa fim da jogada com humanos na mesa')
-                    status_comando = 'Humano na mesa'
-                    humano = True
-        else:
-            if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=20):
-                for i in range(20):
-                    time.sleep(0.3)
-                    if not cadeiras_celular(x_origem, y_origem):
-                        print('Sair da mesa fim da jogada com humanos na mesa')
-                        status_comando = 'Humano na mesa'
-                        humano = True
-                        break
+                # if not cadeiras_celular(x_origem, y_origem):
+                #     print('Sair da mesa fim da jogada com humanos na mesa')
+                #     status_comando = 'Humano na mesa'
+                #     humano = True
+        # else:
+        #     if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=20):
+        #         for i in range(20):
+        #             time.sleep(0.3)
+        #             if not cadeiras_celular(x_origem, y_origem):
+        #                 print('Sair da mesa fim da jogada com humanos na mesa')
+        #                 status_comando = 'Humano na mesa'
+        #                 humano = True
+        #                 break
 
         if humano:
             print('Jogador humano na mesa, troca de mesa')
@@ -1239,7 +1239,7 @@ def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
             # Limpa.limpa_jogando(x_origem, y_origem)
             return
 
-        print('Apostar: ', apostar)
+        # print('Apostar: ', apostar)
         if apostar:
             # print('\n\n         Hora de apostar         \n\n')
             jogou = apostar_pagar(x_origem, y_origem)
