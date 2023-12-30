@@ -1159,6 +1159,8 @@ def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
     status_comando = 'Iniciado o recolhimento'
     humano = False
     status_comando_anterior = None
+    recebido1 = None
+    recebido2 = None
 
     cont_limpa_jogando = 0
 
