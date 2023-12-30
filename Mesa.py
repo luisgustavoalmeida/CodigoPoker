@@ -1182,7 +1182,7 @@ def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
 
         if comando == 'Levanta':
             levantar_mesa(x_origem, y_origem)
-            Firebase.comando_coleetivo_escravo_escravo("Levanta")
+            # Firebase.comando_coleetivo_escravo_escravo("Levanta")
             return
 
         if cont_limpa_jogando > 40:
