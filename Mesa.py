@@ -1109,8 +1109,8 @@ def passa_corre_joga(x_origem, y_origem, valor_aposta1=40, valor_aposta2=80):  #
 
     #  nao tem a area branca do apostar mas tem Pagar
     # se tem o pagar com um valor ja escrito
-    elif pyautogui.pixelMatchesColor((x_origem + 342), (y_origem + 698), (255, 255, 255), 5):
-        print('Tem o botao de pagar sem o a area de ajudte de valor')
+    elif pyautogui.pixelMatchesColor((x_origem + 343), (y_origem + 598), (255, 255, 255), 5):
+        print('Tem o botao de pagar sem o a area de ajuste de valor')
         jogou_uma_vez = True, True
         return jogou_uma_vez
 
