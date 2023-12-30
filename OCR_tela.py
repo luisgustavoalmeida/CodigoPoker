@@ -1116,21 +1116,32 @@ def valor_apostar(x_origem, y_origem):
     fator_ampliacao = 1
     contraste_pre = 1
     contraste_pos = 1
-    config = '--psm 7 --oem 3 -c tessedit_char_whitelist=0123456789'  #
     regiao = (x_origem + 420, y_origem + 644, x_origem + 474, y_origem + 658)
-    for _ in range(5):
-        # Extrai o valor da aposta usando OCR
-        try:
-            valor = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
 
-            if valor is not None:
-                print("Aposta: ", valor)
+    # config = '--psm 7 --oem 3 -c tessedit_char_whitelist=0123456789'  #
 
-                valor = int(valor)
-                return valor
+    configuracoes = [
+        r'--oem 3 --psm 6 outputbase digits',
+        r'--psm 7 --oem 3 -c tessedit_char_whitelist=0123456789',
+        r'--psm 6 --oem 3 -c tessedit_char_whitelist=0123456789',
+        r'--psm 6 --oem 1 -c tessedit_char_whitelist=0123456789',
+        r'--psm 6 -c tessedit_char_whitelist=0123456789',
+    ]
+    # Itera sobre cada configuração e realiza o OCR
+    for config in configuracoes:
+        for _ in range(3):
+            # Extrai o valor da aposta usando OCR
+            try:
+                valor = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
 
-        except Exception as e:
-            print(e)
+                if valor is not None:
+                    print("\n\nAposta: ", valor, "\n\n")
+
+                    valor = int(valor)
+                    return valor
+
+            except Exception as e:
+                print(e)
     return 0
 
 
