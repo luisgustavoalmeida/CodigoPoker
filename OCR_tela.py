@@ -1118,18 +1118,20 @@ def valor_apostar(x_origem, y_origem):
     contraste_pos = 1
     config = '--psm 7 --oem 3 -c tessedit_char_whitelist=0123456789'  #
     regiao = (x_origem + 420, y_origem + 644, x_origem + 474, y_origem + 658)
+    for _ in range(5):
+        # Extrai o valor da aposta usando OCR
+        try:
+            valor = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
 
-    # Extrai o valor da aposta usando OCR
-    valor = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
+            if valor is not None:
+                print("Aposta: ", valor)
 
-    if valor is not None:
-        print("Aposta: ", valor)
-        valor = int(valor)
-        return valor
-    else:
-        valor = 0
-        print("Apposta: ", valor)
-        return valor
+                valor = int(valor)
+                return valor
+
+        except Exception as e:
+            print(e)
+    return 0
 
 
 # def aviso_do_sistema():
