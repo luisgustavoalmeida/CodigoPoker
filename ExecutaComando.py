@@ -261,12 +261,14 @@ while True:
                                 status_comando = "Não sentou"
                         else:
                             status_comando = "Mesa ocupada"
+                        valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem)
+                        status_comando = 'Valor ficha: ' + str(valor_fichas)
 
                     elif comando == "Joga":
                         comando = 'Executado'
                         Mesa.mesa_recolher(x_origem, y_origem, 2, blind)
                         valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem)
-                        status_comando = 'Valor ficha: ' + valor_fichas
+                        status_comando = 'Valor ficha: ' + str(valor_fichas)
 
                     if status_comando_anterior != status_comando:
                         Firebase.confirmacao_comando_resposta(status_comando)
