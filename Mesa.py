@@ -13,7 +13,8 @@ import IP
 import Tarefas
 import HoraT
 import xp2
-import Firebase
+# import Firebase
+from Firebase import confirmacao_comando_resposta, comando_escravo, comando_coleetivo_escravo_escravo
 
 nome_computador = socket.gethostname()
 
@@ -95,13 +96,11 @@ dicionari_PC_cadeira = {'PC-I5-8600K': {'cadeira_1': (659, 127), 'cadeira_2': (8
                                          'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)}
                         }
 
-dicionario_cadeira = {'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_3': (847, 366),
-                      'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451),
-                      'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)}
+dicionario_cadeira = {'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452),
+                      'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)}
 
-dicionario_celular = {'cadeira_1': (645, 135), 'cadeira_2': (818, 217), 'cadeira_3': (814, 377),
-                      'cadeira_4': (675, 473), 'cadeira_5': (484, 473), 'cadeira_6': (290, 473),
-                      'cadeira_7': (144, 377), 'cadeira_8': (156, 217), 'cadeira_9': (334, 135)}
+dicionario_celular = {'cadeira_1': (645, 135), 'cadeira_2': (818, 217), 'cadeira_3': (814, 377), 'cadeira_4': (675, 473), 'cadeira_5': (484, 473),
+                      'cadeira_6': (290, 473), 'cadeira_7': (144, 377), 'cadeira_8': (156, 217), 'cadeira_9': (334, 135)}
 
 prioridade_cadeira = dicionari_PC_cadeira[nome_computador]
 
@@ -1109,7 +1108,8 @@ def passa_corre_joga(x_origem, y_origem, valor_aposta1=40, valor_aposta2=80):  #
 
     #  nao tem a area branca do apostar mas tem Pagar
     # se tem o pagar com um valor ja escrito
-    elif pyautogui.pixelMatchesColor((x_origem + 343), (y_origem + 598), (255, 255, 255), 5):
+    elif (pyautogui.pixelMatchesColor((x_origem + 343), (y_origem + 598), (255, 255, 255), 5)
+          and (not pyautogui.pixelMatchesColor((x_origem + 480), (y_origem + 650), (255, 255, 255), 5))):
         print('Tem o botao de pagar sem o a area de ajuste de valor')
         jogou_uma_vez = True, True
         return jogou_uma_vez
@@ -1178,10 +1178,10 @@ def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
     while continua_jogando:  # permanece joghando
 
         if status_comando_anterior != status_comando:
-            Firebase.confirmacao_comando_resposta(status_comando)
+            confirmacao_comando_resposta(status_comando)
             status_comando_anterior = status_comando
 
-        recebido1 = Firebase.comando_escravo()
+        recebido1 = comando_escravo()
         if recebido1 != recebido2:
             recebido2 = recebido1
             comando = recebido1.strip().title()  # remove espaços vasiao e coloca a primeira letra amiusculo
@@ -1209,6 +1209,7 @@ def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
                 cont_jogou += 1
                 print("Jogou vezes igua a: ", cont_jogou)
                 status_comando = 'Jogada: ' + str(cont_jogou)
+
                 if cont_jogou == numero_jogadas:
                     apostar = True
                     status_comando = 'Hora de apostar'
@@ -1219,33 +1220,9 @@ def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
 
                 if cont_jogou >= numero_jogadas + 2:
                     print('Fim do recolher')
+                    comando_coleetivo_escravo_escravo("Levanta")
                     break
 
-                # if not cadeiras_celular(x_origem, y_origem):
-                #     print('Sair da mesa fim da jogada com humanos na mesa')
-                #     status_comando = 'Humano na mesa'
-                #     humano = True
-        # else:
-        #     if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=20):
-        #         for i in range(20):
-        #             time.sleep(0.3)
-        #             if not cadeiras_celular(x_origem, y_origem):
-        #                 print('Sair da mesa fim da jogada com humanos na mesa')
-        #                 status_comando = 'Humano na mesa'
-        #                 humano = True
-        #                 break
-
-        # if humano:
-        #     print('Jogador humano na mesa, troca de mesa')
-        #     jogou_uma_vez = False
-        #     humano = False
-        #     levantar_mesa(x_origem, y_origem)
-        #     # Firebase.comando_coleetivo_escravo_escravo("Levanta")
-        #     # Limpa.limpa_total(x_origem, y_origem)
-        #     # Limpa.limpa_jogando(x_origem, y_origem)
-        #     return
-
-        # print('Apostar: ', apostar)
         if apostar:
             # print('\n\n         Hora de apostar         \n\n')
             jogou = apostar_pagar(x_origem, y_origem)
