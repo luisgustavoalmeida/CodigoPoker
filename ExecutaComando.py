@@ -3,9 +3,9 @@ import os
 import socket
 import threading
 import time
-import pyautogui
-import Google
+
 import Firebase
+import Google
 import IP
 import Limpa
 import Mesa
@@ -13,11 +13,10 @@ import OCR_tela
 import Origem_pg
 import Seleniun
 import Tarefas
-import Upar
-import xp2
-from Variaveis_Globais import alterar_global_aviso_sistema
 
-global aviso_sistema_global
+# from Variaveis_Globais import alterar_global_aviso_sistema
+#
+# global aviso_sistema_global
 
 # Obter o nome de usuário
 nome_usuario = os.getlogin()
@@ -67,7 +66,7 @@ def tarefa_independente():
             print("Executando tarefa independente...")
 
             # Atualizar as variáveis
-            id_novo, senha_novo, linha_novo, cont_IP_novo = Google.credenciais(guia)  # pega id e senha para o proximo login
+            id_novo, senha_novo, linha_novo, cont_IP_novo = Google.credenciais(guia, False)  # pega id e senha para o proximo login
             continuar_tarefa = False
 
             # Indicar que a tarefa terminou e está pronta para aguardar novo comando
@@ -87,21 +86,20 @@ url = str(Google.pega_valor('Dados', 'F1'))
 
 navegador = Seleniun.cria_nevegador()
 Seleniun.abrir_navegador(url, navegador)
+
 while True:
-    alterar_global_aviso_sistema(False)
+    # alterar_global_aviso_sistema(False)
 
     guia = 'Up'
-
-    url = str(Google.pega_valor('Dados', 'F1'))
 
     print("guia:", guia)
     if id == id_novo or id == "":
 
-        id, senha, linha, cont_IP = Google.credenciais(guia)
+        id, senha, linha, cont_IP = Google.credenciais(guia, False)
 
         if id == "":
             Seleniun.sair_face(url, navegador)
-            id, senha, linha, cont_IP = Google.credenciais(guia)
+            id, senha, linha, cont_IP = Google.credenciais(guia, False)
     else:
         id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
 
@@ -288,7 +286,6 @@ while True:
         valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip, level_conta]
         Seleniun.sair_face(url, navegador)
         Firebase.confirmacao_escravo('Entrendo em uma nova conta')
-
 
         # print('-----------------espera terminar tarefa independente----------------')
         # # Aguardar a tarefa terminar

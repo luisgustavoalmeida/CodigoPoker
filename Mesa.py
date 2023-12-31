@@ -652,6 +652,9 @@ def sala_minima_niquel(x_origem, y_origem, num_mesa, blind_mesa):
 
                     if num_sala == num_mesa:
                         print("Esta na sala certa")
+                        if not cadeiras_celular(x_origem, y_origem):
+                            print('Sai da mesa pq tem humanos')
+                            return False, False
                         return True, True
                     else:
                         print("Esta na sala errada")
@@ -907,6 +910,8 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False):
         tempo_total = time_sair - time_entrou
         # print('tempo que esta esperando', tempo_total)
         if tempo_total > 60:  # troica de mesa se ficar muito tempo parado sem entrar alguem para jogar
+            time_entrou = time.perf_counter()
+            cont_limpa_jogando = 45
             print("tempo limite atingido sem outro jogador, sai da mesa para tentar em outra")
             Limpa.limpa_total(x_origem, y_origem)
             Limpa.limpa_jogando(x_origem, y_origem)

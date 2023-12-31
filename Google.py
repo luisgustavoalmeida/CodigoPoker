@@ -362,7 +362,7 @@ def escrever_valores_lote(valores, guia, linha):
             service = build('sheets', 'v4', credentials=cred)
 
 
-def reservar_linha(guia, endereco):
+def reservar_linha(guia, endereco, salta_linhas=True):
     print("reservar_linha")
     global linha_vazia_anterior
 
@@ -385,11 +385,17 @@ def reservar_linha(guia, endereco):
                 return True, id, senha, linha, contagem_ip  # Retorna o valor testado, id, senha e linha
             else:
                 print("Pego por outro computador")
-                linha_vazia_anterior += 40
+                if salta_linhas:
+                    linha_vazia_anterior += 40
+                else:
+                    linha_vazia_anterior += 1
                 return False, id, senha, linha, contagem_ip
             # print("values :",values)
         except:
-            linha_vazia_anterior += 40
+            if salta_linhas:
+                linha_vazia_anterior += 40
+            else:
+                linha_vazia_anterior += 1
             return False, id, senha, linha, contagem_ip
 
     else:
@@ -717,7 +723,7 @@ def lista_ip_banidos():
             service = build('sheets', 'v4', credentials=cred)
 
 
-def credenciais(guia):
+def credenciais(guia, salta_linhas=True):
     print("credenciais")
     reservado = False
 
@@ -725,7 +731,7 @@ def credenciais(guia):
 
         endereco = primeira_celula_vazia(guia)
 
-        reservado, id, senha, linha, cont_IP = reservar_linha(guia, endereco)
+        reservado, id, senha, linha, cont_IP = reservar_linha(guia, endereco, salta_linhas)
 
         if reservado:
             try:
