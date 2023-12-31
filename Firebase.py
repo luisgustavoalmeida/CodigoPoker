@@ -9,8 +9,9 @@ import requests
 from requests.exceptions import ConnectionError
 
 # importa o dicionário com os nomes dos computadores e o námero referete a cada um
-from Parametros import dicionari_token_credencial_n
+# from Parametros import dicionari_token_credencial_n
 
+from Google import dicionari_token_credencial_n
 config = {
     "apiKey": "AIzaSyDDzQMVxpKKqBZrDlhA9E4sInXB5toVRT8",
     "authDomain": "pokerdados-6884e.firebaseapp.com",
@@ -52,9 +53,10 @@ def cria_caminho_resposta_fb():
 
     # Crie um dicionário com os valores formatados
     dicionari_pc = {}
-    for chave, (_, _, valor) in dicionari_token_credencial_n.items():
+    for chave, (_, _, terceiro_item, *_resto) in dicionari_token_credencial_n.items():
+
         # Formate o valor para ter dois dígitos e adicione "PC" antes
-        valor_formatado = f"PC{valor:02d}"
+        valor_formatado = f"PC{terceiro_item:02d}"
         dicionari_pc[chave] = valor_formatado
 
     # Verifique se o nome completo existe no dicionário
@@ -74,8 +76,12 @@ def cria_caminho_resposta_fb():
                 print("caminho_resposta :", caminho_resposta)  # Comandos2/PC23
                 caminho_resposta1 = f'Resposta1/{conteudo}'
                 print("caminho_resposta1 :", caminho_resposta1)  # Comandos2/PC23
-
                 return caminho_resposta, caminho_resposta1
+            else:
+                caminho_resposta = f'Comandos/PCXX'
+                caminho_resposta1 = f'Resposta1/PCXX'
+                return caminho_resposta, caminho_resposta1
+
         else:
             print(f"{conteudo} não está em nenhum dos grupos")
     else:
