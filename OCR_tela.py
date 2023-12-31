@@ -1162,7 +1162,7 @@ def numero_sala(x_origem, y_origem):
     fator_ampliacao = 4
     contraste_pre = 1.1
     contraste_pos = 1.3
-    regiao = (x_origem + 57, y_origem + 77, x_origem + 165, y_origem + 93)
+    regiao = (x_origem + 55, y_origem + 77, x_origem + 165, y_origem + 93)
 
     # Aguarda o número da sala ficar visível clicando no anel
     for _ in range(30):
@@ -1186,9 +1186,9 @@ def numero_sala(x_origem, y_origem):
         # Extrai o número da sala usando OCR
         # for _ in range(3):
         numero = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)  # pontuação
-        # print(numero)
 
         if numero is not None:
+            numero = str(numero)[:4]
             numero = tratar_valor_numerico(numero)
             print('Número da sala:', numero)
             return str(numero)

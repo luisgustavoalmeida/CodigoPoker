@@ -1223,7 +1223,7 @@ def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
                     apostar = False
                     status_comando = 'Hora de jogar sem apostar'
 
-                if cont_jogou >= numero_jogadas + 2:
+                if cont_jogou >= numero_jogadas + 3:
                     print('Fim do recolher')
                     comando_coleetivo_escravo_escravo("Levanta")
                     break
