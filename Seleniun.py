@@ -89,6 +89,7 @@ def abrir_navegador(url, navegador):
         IP.tem_internet()
         try:
             navegador.get(url)
+            sair_face(url, navegador)
             return
         except Exception as e:
             print(f"Erro ao abrir o navegador: {e}")
