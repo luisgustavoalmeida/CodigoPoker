@@ -19,6 +19,7 @@ import Roletas
 import Seleniun
 import Slot
 import Tarefas
+import Aneis
 from UparAuto import upar
 from Variaveis_Globais import alterar_global_aviso_sistema
 
@@ -291,6 +292,8 @@ while True:
                     else:
                         Mesa.dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, time_rodou, roleta, level_conta)
 
+                Aneis.recolhe_aneis(x_origem, y_origem)
+
                 Tarefas.recolher_tarefa_upando(x_origem, y_origem)
 
                 valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem)
@@ -318,6 +321,7 @@ while True:
                     break
 
                 for _ in range(2):
+                    Aneis.recolhe_aneis(x_origem, y_origem)
                     print('procura tarefa, tentativa:')
                     for i in range(3):
                         print('\n TAREFAS \n')
