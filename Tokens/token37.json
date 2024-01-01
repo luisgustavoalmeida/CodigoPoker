@@ -1,5 +1,5 @@
 {
-  "token": "ya29.a0AfB_byCpG8GNJ7HuLrgoGhjUvb6Wxm8_Pa4Ig_Lnjd7mAy4gX6mL_o7NBF926-nPQEzpIRmjg7PkQokFCAcb3njfRb-N7FfUjtzazE0ykIhDxcrKupHTNP0Ixh338eD6olle4yt6SXbqFLqahKOjeUVV85Igc9n6ztCJbwaCgYKAeASARISFQHGX2MiJsm-JZV3I60b08_RxlIs_A0173",
+  "token": "ya29.a0AfB_byDszgxQO5ykiE1NrMlvVmq091I99yAveCnfH6NhWQoi-zqlKPHu98DwPbGCQSKV5Rf1358bY6u4EIc3QOJnBb_kKi3OdsTMNCikx2xjGJ6JflbbLddKsF3v2BLyUe6PSWCSdAGM8uVJY3qnRdIp1v8dDULv58id6AaCgYKAUwSARISFQHGX2Mi6cftAYmDXXLj6h5IOQ61fw0173",
   "refresh_token": "1//0hxtNRKEt3x7JCgYIARAAGBESNwF-L9Ir0WQF-xg6QfBdvajP9BCREsP-4_gIm1jXSxnuA-_JJp0qALetfIIEG01HjC3bIdb91DI",
   "token_uri": "https://oauth2.googleapis.com/token",
   "client_id": "866061274168-3qih184lfm61vorhhbejoore5fgcak6i.apps.googleusercontent.com",
@@ -8,5 +8,5 @@
     "https://www.googleapis.com/auth/spreadsheets"
   ],
   "universe_domain": "googleapis.com",
-  "expiry": "2023-12-29T21:18:24.787579Z"
+  "expiry": "2024-01-01T22:01:13.391179Z"
 }
