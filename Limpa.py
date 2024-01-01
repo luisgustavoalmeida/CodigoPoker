@@ -15,7 +15,7 @@ def teste_limpo(x_origem, y_origem):
     pyautogui.click(490 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
     pyautogui.click(686 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
     # barra azul do looby
-    if pyautogui.pixelMatchesColor((x_origem + 685), (y_origem + 360), (215, 234, 244), tolerance=5):
+    if pyautogui.pixelMatchesColor((x_origem + 685), (y_origem + 360), (215, 234, 244), tolerance=1):
         print("teste_limpo: Esta no Lobby, ta limpo")
         return True
     else:
@@ -111,11 +111,11 @@ def limpa_pequeno(x_origem, y_origem):
     if ja_esta_logado(x_origem, y_origem) == "sair da conta":
         return "sair da conta"
 
-    pyautogui.click(490 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
-    pyautogui.click(686 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
+    # pyautogui.click(490 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
+    # pyautogui.click(686 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
 
     # voce ja recebeu seu premio, deixe um pouco para os outros
-    if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 435), (175, 23, 18), tolerance=15):
+    if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 435), (173, 23, 18), tolerance=15):
         pyautogui.click(x_origem + 490, y_origem + 435)
         print("voce ja recebeu seu premio, deixe um pouco para os outros")
 
@@ -442,7 +442,7 @@ def limpa_promocao(x_origem, y_origem):
 def limpa_total(x_origem, y_origem):
     print('limpa_total')
     cont_erro_limpa = 0
-    for i in range(50):
+    for _ in range(50):
         # pyautogui.click(490 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
         # pyautogui.click(686 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
 
@@ -472,6 +472,8 @@ def limpa_total(x_origem, y_origem):
         iniciantes(x_origem, y_origem)
         if teste_limpo(x_origem, y_origem):  # se ta limpo nem entra
             return None
+        limpa_jogando(x_origem, y_origem)
+    return None
 
 
 def limpa_total_fazendo_tarefa(x_origem, y_origem):

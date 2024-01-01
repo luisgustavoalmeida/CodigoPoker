@@ -1332,7 +1332,7 @@ def aviso_sistema(x_origem, y_origem):
             pyautogui.click(x_origem + 641, y_origem + 278)  # clica no x do aviso so sistema
             return False, resposta
     else:
-        print('nao tem caixa com aviso do sistema ')
+        # print('nao tem caixa com aviso do sistema ')
         return False, resposta
 
 

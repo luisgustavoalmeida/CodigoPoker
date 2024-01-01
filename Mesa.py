@@ -958,18 +958,15 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False):
                     blind_certo, sala_existe = sala_minima_niquel(x_origem, y_origem, num_mesa, blind_mesa)
 
                     if not sala_existe:
-                        # print(lista_salas_jogar)
                         # Remover o primeiro item da lista usando pop(0)
                         primeiro_item = lista_salas_jogar.pop(0)
                         # Adicionar o primeiro item de volta à lista usando append(), colocando-o no final
                         lista_salas_jogar.append(primeiro_item)
-                        # print(lista_salas_jogar)
-
                     if blind_certo:
                         sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa, True)
                         if sentou:
                             time_entrou = time.perf_counter()
-                            print('esta tudo ok, slote e sentado')
+                            print('esta tudo ok, sentado')
                             sala_atual = indice
                             pular_sala = False
                             break
@@ -991,6 +988,17 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False):
                 print('f5')
                 pyautogui.press('f5')
                 time.sleep(25)
+
+    print(lista_salas_jogar)
+    print(num_mesa)
+
+    # Se a chave alvo foi encontrada, mova o item para o início
+    if sala_atual is not None:
+        item_alvo = lista_salas_jogar.pop(sala_atual)
+        lista_salas_jogar.insert(0, item_alvo)
+
+    # Exemplo de impressão para verificar a mudança
+    print(lista_salas_jogar)
 
     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
         return "sair da conta"

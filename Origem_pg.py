@@ -152,6 +152,8 @@ def carregado_origem(id, senha, url, navegador):  # navegador
                     time.sleep(25)
                     continue
 
+                recolhe_fan()
+
             # Espera x segundos antes da próxima tentativa
             # time.sleep(1)
             IP.f5_quando_internete_ocila(id, senha, url, navegador)
@@ -204,6 +206,17 @@ def carregado_origem(id, senha, url, navegador):  # navegador
             time.sleep(15)
 
     return 0, 0, status_conta
+
+
+def recolhe_fan(x_origem=4, y_origem=266):
+    if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 435), (173, 23, 18), tolerance=15):
+        pyautogui.click(x_origem + 490, y_origem + 435)
+        print("voce ja recebeu seu premio, deixe um pouco para os outros")
+
+    # voce ganhou 2500
+    elif pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 179), (71, 0, 148), tolerance=15):
+        pyautogui.click(x_origem + 490, y_origem + 480, button='left')
+        print("Voce ganhou 2500")
 
 
 def x_y():  # apenas para testes
