@@ -1,0 +1,12 @@
+{
+  "token": "ya29.a0AfB_byBRiXEW-4ul3TATi5o2faYdFbOBQXavkib0FbcjSxF7iWKGptbO6aqyvTzQI1193dXj5f4HWqQ_71PYBlGqaBKXXgcYdCQbelSk2N8pvBxmscQhlX1Zgcbh-xGygWpoqBlUNQMP11KCbgticD0pWp6CWcWhLHwPaCgYKAWcSARESFQHGX2Mi9zzDIRh6_gt0yKofwY3K8g0171",
+  "refresh_token": "1//0hyyb_DGe_H-ECgYIARAAGBESNwF-L9Ir92axRhoAnNsxmShEZU95Mu51eK955Vqa9EjY-WOIclf_UdMFz764YlbXSgTtiOanJYs",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "client_id": "515765285217-00if3ko284voekojp1t7jd46a7o7g9p6.apps.googleusercontent.com",
+  "client_secret": "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",
+  "scopes": [
+    "https://www.googleapis.com/auth/spreadsheets"
+  ],
+  "universe_domain": "googleapis.com",
+  "expiry": "2024-01-01T21:58:43.343705Z"
+}

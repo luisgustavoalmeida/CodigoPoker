@@ -5,6 +5,17 @@ import time
 import pyrebase
 
 # Configuração dos bancos de dados
+# luis.gustavo@engenharia.ufjf.br
+config4 = firebaseConfig = {
+    "apiKey": "AIzaSyD0OgT6l5HcMVM4HKPFRD7BGbKbCRgDeaM",
+    "authDomain": "poker-dados-3-3e7cc.firebaseapp.com",
+    "databaseURL": "https://poker-dados-3-3e7cc-default-rtdb.firebaseio.com",
+    "projectId": "poker-dados-3-3e7cc",
+    "storageBucket": "poker-dados-3-3e7cc.appspot.com",
+    "messagingSenderId": "370013391029",
+    "appId": "1:370013391029:web:acaa0cfbe3e53d269116fc"
+}
+# lga.gustavo.a@gmail.com
 config3 = {
     "apiKey": "AIzaSyBMhul_wFoi-7LFtS6PP22vCi8Op3RYIlE",
     "authDomain": "poker-dados-2.firebaseapp.com",
@@ -14,7 +25,7 @@ config3 = {
     "messagingSenderId": "712512083103",
     "appId": "1:712512083103:web:6afab600554fdf1287beaa"
 }
-
+# gayaluisaalmeida@gmail.com
 config2 = {
     "apiKey": "AIzaSyDDzQMVxpKKqBZrDlhA9E4sInXB5toVRT8",
     "authDomain": "pokerdados-6884e.firebaseapp.com",
@@ -24,7 +35,7 @@ config2 = {
     "messagingSenderId": "240019464920",
     "appId": "1:240019464920:web:a746cddaf41f43642aadad"
 }
-
+# luis.almeida@estudante.ufjf.br
 config1 = {
     "apiKey": "AIzaSyBWJEh-hD6UIkpMz8J4V2Es4mP2AtuHx9k",
     "authDomain": "poker-dados.firebaseapp.com",
@@ -52,15 +63,18 @@ def escolher_configuracao_e_db():
     global configuracao_banco
     dia_atual = datetime.datetime.now().day
 
-    if dia_atual <= 10:
+    if dia_atual < 8:
         configuracao = config2
         print('Sera usado o banco 2')
-    elif 10 < dia_atual <= 20:
+    elif 8 <= dia_atual < 16:
         configuracao = config1
         print('Sera usado o banco 1')
-    else:
+    elif 16 <= dia_atual < 24:
         configuracao = config3
         print('Sera usado o banco 3')
+    else:
+        configuracao = config4
+        print('Sera usado o banco 4')
 
     # Inicializa o Firebase com a configuração escolhida
     firebase = pyrebase.initialize_app(configuracao)
@@ -75,6 +89,7 @@ configuracao_banco, db = escolher_configuracao_e_db()
 
 def unir_e_atualizar_dados():
     # Inicializa os bancos de dados
+    firebase_4 = pyrebase.initialize_app(config4)
     firebase_3 = pyrebase.initialize_app(config3)
     firebase_2 = pyrebase.initialize_app(config2)
     firebase_1 = pyrebase.initialize_app(config1)
@@ -83,12 +98,14 @@ def unir_e_atualizar_dados():
     db_1 = firebase_1.database()
     db_2 = firebase_2.database()
     db_3 = firebase_3.database()
+    db_4 = firebase_4.database()
 
     try:
         # Obtém os dados da referência 'ips' em ambos os bancos
         dados_1 = db_1.child('ips').get().val()
         dados_2 = db_2.child('ips').get().val()
         dados_3 = db_3.child('ips').get().val()
+        dados_4 = db_4.child('ips').get().val()
 
         # Se as listas de IPs estão vazias ou não existem, inicializa listas vazias
         if dados_1 is None:
@@ -97,9 +114,11 @@ def unir_e_atualizar_dados():
             dados_2 = []
         if dados_3 is None:
             dados_3 = []
+        if dados_4 is None:
+            dados_4 = []
 
         # Combina os dados de ambos os bancos
-        dados_combinados = dados_1 + dados_2 + dados_3
+        dados_combinados = dados_1 + dados_2 + dados_3 + dados_4
 
         # Remove IPs duplicados
         dados_combinados = [dict(t) for t in {tuple(d.items()) for d in dados_combinados}]
@@ -111,6 +130,7 @@ def unir_e_atualizar_dados():
         db_1.child('ips').set(dados_combinados)
         db_2.child('ips').set(dados_combinados)
         db_3.child('ips').set(dados_combinados)
+        db_4.child('ips').set(dados_combinados)
 
         print("Dados unidos, duplicatas removidas e IPs antigos removidos. Atualização concluída!")
 
