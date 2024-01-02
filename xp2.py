@@ -75,5 +75,5 @@ def pega_2xp(x_origem, y_origem):
 
 # import Origem_pg
 #
-(x_origem, y_origem) = Origem_pg.x_y()
-pega_2xp(x_origem, y_origem)
+# (x_origem, y_origem) = Origem_pg.x_y()
+# pega_2xp(x_origem, y_origem)
