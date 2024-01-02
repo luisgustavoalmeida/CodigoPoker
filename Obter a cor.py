@@ -12,8 +12,8 @@ x_origem, y_origem = Origem_pg.x_y_aviso_sistema()
 
 # pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 580), (47, 136, 196), tolerance=19)
 
-x = (x_origem + 685)
-y = (y_origem + 360)
+x = (x_origem + 230)
+y = (y_origem + 294)
 
 tolerancia = 0
 pyautogui.moveTo(x, y)

@@ -880,6 +880,7 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False):
                 cont_jogou += 1
                 print("Jogou vezes igua a: ", cont_jogou)
                 if upar:
+                    xp2.pega_2xp(x_origem, y_origem)
                     level_conta = OCR_tela.level_conta(x_origem, y_origem)
                     if level_conta >= 10:
                         level_conta = OCR_tela.level_conta(x_origem, y_origem)
