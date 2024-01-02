@@ -377,4 +377,4 @@ def comando_coleetivo_escravo_escravo(comando):
 # escreve_resposta_escravo("funciona")
 
 
-comando_escravo()
+# comando_escravo()
