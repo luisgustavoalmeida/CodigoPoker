@@ -880,7 +880,6 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False):
                 cont_jogou += 1
                 print("Jogou vezes igua a: ", cont_jogou)
                 if upar:
-                    xp2.pega_2xp(x_origem, y_origem)
                     level_conta = OCR_tela.level_conta(x_origem, y_origem)
                     if level_conta >= 10:
                         level_conta = OCR_tela.level_conta(x_origem, y_origem)
@@ -888,6 +887,7 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False):
                             break
 
                     if cont_jogou % 5 == 0:  # testa se tem que trocar ip a casa 5 jogadas
+                        xp2.pega_2xp(x_origem, y_origem)
                         IP.testa_trocar_IP()  # ve se tem que trocar ip
                 else:
                     if cont_jogou >= numero_jogadas:
