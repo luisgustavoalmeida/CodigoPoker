@@ -13,7 +13,8 @@ pyautogui.PAUSE = 0
 
 # Define o nome do arquivo da imagem a ser buscada
 origem = r'Imagens\Origem.png'
-origemB = r'Imagens\OrigemB.png'  # imagem do computador da AMD
+origem1 = r'Imagens\Origem1.png'
+origemB = r'Imagens\OrigemB.png'
 origem2 = r'Imagens\OrigemAvisoDoSistema.png'
 
 # Define a região da tela onde a imagem será buscada
@@ -52,6 +53,16 @@ def carregado_origem(id, senha, url, navegador):  # navegador
             # precisao = 0.997
             # precisao = 0.935
             posicao = localizar_imagem(origem, regiao_busca, precisao_origem)
+            if posicao is not None:  # Verifica se a imagem foi encontrada
+                x_origem, y_origem = posicao.left, posicao.top
+                x_origem = int(x_origem)
+                y_origem = int(y_origem)
+                print("x_origem: ", x_origem)
+                print("y_origem: ", y_origem)
+                if status_conta != 'Tutorial':
+                    status_conta = 'Carregada'
+                return x_origem, y_origem, status_conta
+            posicao = localizar_imagem(origem1, regiao_busca, precisao_origem)
             if posicao is not None:  # Verifica se a imagem foi encontrada
                 x_origem, y_origem = posicao.left, posicao.top
                 x_origem = int(x_origem)
@@ -217,6 +228,10 @@ def recolhe_fan(x_origem=4, y_origem=266):
     elif pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 179), (71, 0, 148), tolerance=15):
         pyautogui.click(x_origem + 490, y_origem + 480, button='left')
         print("Voce ganhou 2500")
+
+    # if pyautogui.pixelMatchesColor((x_origem + 681), (y_origem + 12), (254, 254, 42), tolerance=15):
+    #     print('\nClica para abrir a roleta\n')
+    #     pyautogui.doubleClick(x_origem + 683, y_origem + 14)  # clica no icone da roleta para abir
 
 
 def x_y():  # apenas para testes

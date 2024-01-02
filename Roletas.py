@@ -117,8 +117,8 @@ def roletas(x_origem, y_origem, id, senha, url, navegador):
             print('nao tem roleta 2')
             roleta = 'roleta_1'
             if ((not pyautogui.pixelMatchesColor((x_origem + 680), (y_origem + 14), (227, 235, 248), tolerance=15))
-                    and (not pyautogui.pixelMatchesColor((x_origem + 680), (y_origem + 14), (146, 172, 208),
-                                                         tolerance=15))):  # testa se o icone da roleta NÃO esta cinsa
+                    and (not pyautogui.pixelMatchesColor((x_origem + 680), (y_origem + 14), (146, 172, 208), tolerance=15))):
+                # testa se o icone da roleta NÃO esta cinsa
 
                 print("espera abrir a roleta 1")
                 for i in range(50):
