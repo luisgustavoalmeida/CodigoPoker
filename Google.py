@@ -376,7 +376,7 @@ def reservar_linha(guia, endereco, salta_linhas=True):
 
         escrever_celula(valor_pc, guia, endereco)
         linha = endereco[1:]
-        time.sleep(5)  # tempo entre pegar o id e testa se nao teve concorrencia
+        time.sleep(5.5)  # tempo entre pegar o id e testa se nao teve concorrencia
         values, id, senha, contagem_ip = lote_valor(guia, linha)
         try:
             values = int(values)

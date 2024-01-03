@@ -401,8 +401,7 @@ def recolher_tarefa_upando(x_origem, y_origem):
                         pyautogui.click(821 + x_origem, 138 + y_origem)  # fecha tarefa
                         status_tarefas = "Recolhido"
                         time.sleep(1)
-                        return status_tarefas
-
+                        break
                 else:
                     print('Tarefas abertas, conta Upada limpa tarefa...')
                     conta_upada = Limpa.limpa_abre_tarefa2(x_origem, y_origem)  # retorna se a conta ta upada ou nao
@@ -412,9 +411,19 @@ def recolher_tarefa_upando(x_origem, y_origem):
                     pyautogui.click(821 + x_origem, 138 + y_origem)  # fecha tarefa
                     time.sleep(1)
                     status_tarefas = "Recolhido"
-                    return status_tarefas
+                    break
 
-            time.sleep(1)
+        if (pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (73, 71, 76), tolerance=20)
+                or pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (22, 21, 23), tolerance=20)):
+            # testa se ja abriu a janela bora cinza da janela
+            # testa se nao fechou a janela
+
+            pyautogui.press('f5')
+            print('espera 25 segundos')
+            time.sleep(25)
+
+        return status_tarefas
+
     else:
         # print(status_tarefas)
         # pyautogui.click(821 + x_origem, 138 + y_origem)  # fecha tarefa
