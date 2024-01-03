@@ -374,6 +374,12 @@ def valor_fichas(x_origem, y_origem):
         r'--psm 7 --oem 1 -c tessedit_char_whitelist=0123456789.',
         r'--psm 8 --oem 0 -c tessedit_char_whitelist=0123456789.'
     ]
+    for _ in range(100):
+        if pyautogui.pixelMatchesColor((x_origem + 121), (y_origem + 15), (255, 210, 77), tolerance=5):
+            print('Valor de ficha no lugar correto')
+            time.sleep(0.3)
+            break
+        time.sleep(0.02)
 
     # Itera sobre cada configuração e realiza o OCR
     for config in configuracoes:
