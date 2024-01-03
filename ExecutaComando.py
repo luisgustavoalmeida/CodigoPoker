@@ -246,6 +246,10 @@ while True:
 
                     elif '/' in comando:
                         blind = comando
+                        if blind == '20K/40K':
+                            lugares = 5
+                        else:
+                            lugares = 9
                         comando = 'Executado'
                         status_comando = Mesa.escolher_blind(x_origem, y_origem, blind, lugares)
 
