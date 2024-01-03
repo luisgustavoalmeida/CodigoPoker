@@ -406,7 +406,7 @@ def sentar_mesa(x_origem, y_origem, senta_com_maximo=False, blind='2040', teste_
     return sentou
 
 
-def escolher_blind(x_origem, y_origem, blind):
+def escolher_blind(x_origem, y_origem, blind, lugares=9):
     """
     Escolhe o valor do blind em uma mesa de poker virtual com base nas coordenadas fornecidas.
 
@@ -454,21 +454,38 @@ def escolher_blind(x_origem, y_origem, blind):
 
     for _ in range(30):  # Marcar apenas as salas de 9 lugares
         if pyautogui.pixelMatchesColor((x_origem + 139), (y_origem + 492), (201, 201, 201), tolerance=2):
-            print('Sala de 9 lugares marcada')
-            break
+            if lugares == 9:
+                print('Sala de 9 lugares marcada')
+                break
+            else:
+                pyautogui.click(x_origem + 139, y_origem + 492)  # Marcar sala de nove
+                time.sleep(0.3)
+                print("Desmarca sala de 9 lugares")
         else:
-            pyautogui.click(x_origem + 139, y_origem + 492)  # Marcar sala de nove
-            time.sleep(0.3)
-            print("Marcar sala de 9 lugares")
-
+            if lugares == 9:
+                pyautogui.click(x_origem + 139, y_origem + 492)  # Marcar sala de nove
+                time.sleep(0.3)
+                print("Marcar sala de 9 lugares")
+            else:
+                print('Sala de 9 lugares desmarcada')
+                break
     for _ in range(30):
         if pyautogui.pixelMatchesColor((x_origem + 186), (y_origem + 492), (201, 201, 201), tolerance=2):
-            pyautogui.click(x_origem + 186, y_origem + 492)  # Desmarcar sala de 5
-            time.sleep(0.3)
-            print("Desmarcar sala de 5 lugares")
+            if lugares == 9:
+                pyautogui.click(x_origem + 186, y_origem + 492)  # Desmarcar sala de 5
+                time.sleep(0.3)
+                print("Desmarcar sala de 5 lugares")
+            else:
+                print('Sala de 5 lugares marcada')
+                break
         else:
-            print('Sala de 5 lugares desmarcada')
-            break
+            if lugares == 9:
+                print('Sala de 5 lugares marcada')
+                break
+            else:
+                pyautogui.click(x_origem + 186, y_origem + 492)  # Desmarcar sala de 5
+                time.sleep(0.3)
+                print("Marcar sala de 5 lugares")
 
     for _ in range(30):
         if pyautogui.pixelMatchesColor((x_origem + 233), (y_origem + 492), (201, 201, 201), tolerance=2):

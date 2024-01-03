@@ -196,6 +196,7 @@ while True:
                 parar_tarefas = False
                 lista_tarefas_fazer = []
                 blind = '2K/4K'
+                lugares = 9
 
                 if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
                     parar_tarefas = True
@@ -213,7 +214,7 @@ while True:
                 # Firebase.confirmacao_comando_resposta(status_comando)
 
                 # status_comando = 'Aguardando comando'
-                status_comando = Mesa.escolher_blind(x_origem, y_origem, blind)
+                status_comando = Mesa.escolher_blind(x_origem, y_origem, blind, lugares)
                 Firebase.confirmacao_comando_resposta(status_comando)
 
                 recebido1 = None
@@ -246,7 +247,7 @@ while True:
                     elif '/' in comando:
                         blind = comando
                         comando = 'Executado'
-                        status_comando = Mesa.escolher_blind(x_origem, y_origem, blind)
+                        status_comando = Mesa.escolher_blind(x_origem, y_origem, blind, lugares)
 
                     elif comando == "Senta":
                         comando = 'Executado'
