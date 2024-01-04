@@ -66,6 +66,8 @@ def cria_caminho_resposta_fb():
 
         # Verifique em qual grupo o conteúdo está
         for grupo, membros in global_variables.items():
+            print(grupo)
+            print(membros)
             if conteudo in membros:
                 # Use uma expressão regular para extrair o número após 'group'
                 numero_grupo = re.search(r'group(\d+)', grupo).group(1)
@@ -78,8 +80,10 @@ def cria_caminho_resposta_fb():
                 print("caminho_resposta1 :", caminho_resposta1)  # Comandos2/PC23
                 return caminho_resposta, caminho_resposta1
             else:
+                print("erro")
                 caminho_resposta = f'Comandos/PCXX'
                 caminho_resposta1 = f'Resposta1/PCXX'
+
                 return caminho_resposta, caminho_resposta1
 
         else:
