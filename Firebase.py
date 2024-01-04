@@ -59,6 +59,9 @@ def cria_caminho_resposta_fb():
         valor_formatado = f"PC{terceiro_item:02d}"
         dicionari_pc[chave] = valor_formatado
 
+    caminho_resposta = f'Comandos/PCXX'
+    caminho_resposta1 = f'Resposta1/PCXX'
+
     # Verifique se o nome completo existe no dicionário
     if nome_completo in dicionari_pc:
         conteudo = dicionari_pc[nome_completo]
@@ -79,17 +82,15 @@ def cria_caminho_resposta_fb():
                 caminho_resposta1 = f'Resposta1/{conteudo}'
                 print("caminho_resposta1 :", caminho_resposta1)  # Comandos2/PC23
                 return caminho_resposta, caminho_resposta1
-            else:
-                print("erro")
-                caminho_resposta = f'Comandos/PCXX'
-                caminho_resposta1 = f'Resposta1/PCXX'
-
-                return caminho_resposta, caminho_resposta1
-
+            # else:
+            #     print("erro")
         else:
             print(f"{conteudo} não está em nenhum dos grupos")
+            return caminho_resposta, caminho_resposta1
+
     else:
         print(f"{nome_completo} não encontrado no dicionário")
+        return caminho_resposta, caminho_resposta1
 
 
 if nome_computador in lista_PC_meste:
