@@ -264,7 +264,7 @@ while True:
                                 status_comando = "Não sentou"
                         else:
                             status_comando = "Mesa ocupada"
-                        time.sleep()
+                        time.sleep(2)
                         valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem)
                         status_comando = 'Valor ficha: ' + str(valor_fichas)
 
