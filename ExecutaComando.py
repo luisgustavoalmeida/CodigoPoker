@@ -226,7 +226,7 @@ while True:
                     # Limpa.limpa_total(x_origem, y_origem)
 
                     recebido1 = str(Firebase.comando_escravo())
-                    if recebido1 != recebido2:
+                    if (recebido1 != recebido2) and (recebido1 is not None):
                         recebido2 = recebido1
                         comando = recebido1.strip().title()  # remove espaços vasiao e coloca a primeira letra amiusculo
                     print('comando :', comando)
