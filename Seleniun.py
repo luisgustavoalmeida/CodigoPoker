@@ -478,31 +478,41 @@ def fechar_navegador(navegador):
     navegador.quit()
 
 
-def abrir_fechar_guia(navegador):
-    # Abrir uma nova guia
-    pyautogui.hotkey('ctrl', 't')
+def abrir_fechar_guia(navegador, max_tentativas=5):
+    print("abrir_fechar_guia")
+    tentativas = 0
 
-    try:
-        # Aguarde até que haja pelo menos duas guias abertas
-        WebDriverWait(navegador, 10).until(lambda x: len(x.window_handles) >= 2)
+    while tentativas < max_tentativas:
+        try:
+            pyautogui.hotkey('ctrl', 't')
 
-        # Mude para a primeira guia
-        navegador.switch_to.window(navegador.window_handles[0])
+            # Aguarde até que haja pelo menos duas guias abertas
+            WebDriverWait(navegador, 5).until(lambda x: len(x.window_handles) >= 2)
 
-        # Feche a primeira guia
-        navegador.close()
+            # Mude para a primeira guia
+            navegador.switch_to.window(navegador.window_handles[0])
 
-        # Mude para a segunda guia
-        navegador.switch_to.window(navegador.window_handles[0])
+            # Feche a primeira guia
+            navegador.close()
 
-        # Verifique se o foco está na primeira guia
-        if navegador.current_window_handle != navegador.window_handles[0]:
-            print("O foco não está na primeira guia.")
-        else:
-            print("O foco está na primeira guia.")
+            # Mude para a segunda guia
+            navegador.switch_to.window(navegador.window_handles[0])
 
-    except TimeoutException:
-        print("Tempo limite excedido ao aguardar guias abertas.")
+            # Aguarde até que a segunda guia esteja ativa
+            WebDriverWait(navegador, 5).until(EC.number_of_windows_to_be(1))
+
+            # Verifique se o foco está na primeira guia
+            if navegador.current_window_handle != navegador.window_handles[0]:
+                print("O foco não está na primeira guia.")
+            else:
+                print("O foco está na primeira guia.")
+                return
+
+        except TimeoutException as e:
+            print(f"Tentativa {tentativas + 1} falhou. {e}")
+            tentativas += 1
+
+    print(f"Atenção: Todas as {max_tentativas} tentativas falharam. Encerrando.")
 
 
 def recarregar_pagina(navegador, url):
