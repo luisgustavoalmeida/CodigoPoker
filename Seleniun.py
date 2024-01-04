@@ -513,6 +513,7 @@ def abrir_fechar_guia(navegador, max_tentativas=5):
             tentativas += 1
 
     print(f"Atenção: Todas as {max_tentativas} tentativas falharam. Encerrando.")
+    return
 
 
 def recarregar_pagina(navegador, url):
