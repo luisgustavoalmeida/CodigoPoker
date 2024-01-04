@@ -447,7 +447,7 @@ def limpa_total(x_origem, y_origem):
         # pyautogui.click(686 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
 
         cont_erro_limpa += 1
-        if cont_erro_limpa >= 30:
+        if cont_erro_limpa >= 20:
             cont_erro_limpa = 0
             print('Erro no limpa, da um F5')
             pyautogui.press('f5')
