@@ -99,6 +99,8 @@ dicionari_PC_cadeira = {'PC-I5-8600K': {'cadeira_1': (659, 127), 'cadeira_2': (8
 dicionario_cadeira = {'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452),
                       'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)}
 
+dicionario_cadeira5 = {'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452), 'cadeira_6': (276, 451), 'cadeira_7': (118, 360)}
+
 dicionario_celular = {'cadeira_1': (645, 135), 'cadeira_2': (818, 217), 'cadeira_3': (814, 377), 'cadeira_4': (675, 473), 'cadeira_5': (484, 473),
                       'cadeira_6': (290, 473), 'cadeira_7': (144, 377), 'cadeira_8': (156, 217), 'cadeira_9': (334, 135)}
 
@@ -140,7 +142,7 @@ def conta_cadeiras_livres(x_origem, y_origem, cor_cadeira=(254, 207, 0), toleran
     return cadeiras_livres
 
 
-def cadeiras_livres(x_origem, y_origem, cor_cadeira=(254, 207, 0), tolerancia=10):
+def cadeiras_livres(x_origem, y_origem, cor_cadeira=(254, 207, 0), tolerancia=10, lugares=9):
     """
     Verifica se todas as cadeiras em torno de uma mesa estão livres.
 
@@ -154,11 +156,18 @@ def cadeiras_livres(x_origem, y_origem, cor_cadeira=(254, 207, 0), tolerancia=10
     - True se todas as cadeiras estiverem livres, False se pelo menos uma cadeira estiver ocupada.
     """
     print('cadeiras_livres')
-    for x, y in dicionario_cadeira.values():
-        if not pyautogui.pixelMatchesColor(x_origem + x, y_origem + y, cor_cadeira, tolerance=tolerancia):
-            print('Pelo menos uma cadeira está ocupada.')
-            return False
-    print('Todas as cadeiras estão livres.')
+    if lugares == 9:
+        for x, y in dicionario_cadeira.values():
+            if not pyautogui.pixelMatchesColor(x_origem + x, y_origem + y, cor_cadeira, tolerance=tolerancia):
+                print('Pelo menos uma cadeira está ocupada.')
+                return False
+        print('Todas as cadeiras estão livres.')
+    else:
+        for x, y in dicionario_cadeira5.values():
+            if not pyautogui.pixelMatchesColor(x_origem + x, y_origem + y, cor_cadeira, tolerance=tolerancia):
+                print('Pelo menos uma cadeira está ocupada.')
+                return False
+        print('Todas as cadeiras estão livres.')
     return True
 
 
