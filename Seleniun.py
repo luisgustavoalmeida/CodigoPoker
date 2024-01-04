@@ -477,7 +477,7 @@ def fechar_navegador(navegador):
     navegador.quit()
 
 
-def abrir_fechar_guia(navegador, max_tentativas=5):
+def abrir_fechar_guia(navegador, url, max_tentativas=5):
     print("abrir_fechar_guia")
     tentativas = 0
 
@@ -505,6 +505,8 @@ def abrir_fechar_guia(navegador, max_tentativas=5):
                 print("O foco não está na primeira guia.")
             else:
                 print("O foco está na primeira guia.")
+                # Recarregue a página
+                navegador.get(url)
                 return
 
         except TimeoutException as e:
@@ -515,19 +517,19 @@ def abrir_fechar_guia(navegador, max_tentativas=5):
     return
 
 
-def recarregar_pagina(navegador, url):
-    try:
-        # Aguarde até que haja uma única guia aberta
-        WebDriverWait(navegador, 10).until(lambda x: len(x.window_handles) == 1)
-
-        # Mude para a única guia aberta
-        navegador.switch_to.window(navegador.window_handles[0])
-
-        # Recarregue a página
-        navegador.get(url)
-
-    except TimeoutException:
-        print("Tempo limite excedido ao aguardar única guia aberta.")
+# def recarregar_pagina(navegador, url):
+#     try:
+#         # Aguarde até que haja uma única guia aberta
+#         WebDriverWait(navegador, 10).until(lambda x: len(x.window_handles) == 1)
+#
+#         # Mude para a única guia aberta
+#         navegador.switch_to.window(navegador.window_handles[0])
+#
+#         # Recarregue a página
+#         navegador.get(url)
+#
+#     except TimeoutException:
+#         print("Tempo limite excedido ao aguardar única guia aberta.")
 
 
 def sair_face(url, navegador):
@@ -543,14 +545,16 @@ def sair_face(url, navegador):
         script = """javascript:void(function(){ function deleteAllCookiesFromCurrentDomain() { var cookies = document.cookie.split("; "); for (var c = 0; c < cookies.length; c++) { var d = window.location.hostname.split("."); while (d.length > 0) { var cookieBase = encodeURIComponent(cookies[c].split(";")[0].split("=")[0]) + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT; domain=' + d.join('.') + ' ;path='; var p = location.pathname.split('/'); document.cookie = cookieBase + '/'; while (p.length > 0) { document.cookie = cookieBase + p.join('/'); p.pop(); }; d.shift(); } } } deleteAllCookiesFromCurrentDomain(); location.href = '""" + url_sair + """'; })();"""
 
         try:
-
+            print('inicia a execução do script sair')
             navegador.execute_script(script)
+            print('script sair executado sem erros')
 
             # Exclui todos os cookies
             # navegador.delete_all_cookies()
 
-            abrir_fechar_guia(navegador)
-            recarregar_pagina(navegador, url)
+            abrir_fechar_guia(navegador, url)
+            print("nova guia ok")
+            # recarregar_pagina(navegador, url)
 
             # print('abre novaguia')
             # # Abrir uma nova guia
