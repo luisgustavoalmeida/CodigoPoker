@@ -90,7 +90,6 @@ def abrir_navegador(url, navegador):
         try:
             print('coloca o url no navegador')
             navegador.get(url)
-            time.sleep(1)
             print('manda sair do facebook')
             sair_face(url, navegador)
             return
