@@ -1212,7 +1212,7 @@ def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
             confirmacao_comando_resposta(status_comando)
             status_comando_anterior = status_comando
 
-        recebido1 = comando_escravo()
+        recebido1 = str(comando_escravo())
         if recebido1 != recebido2:
             recebido2 = recebido1
             comando = recebido1.strip().title()  # remove espaços vasiao e coloca a primeira letra amiusculo

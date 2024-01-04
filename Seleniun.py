@@ -88,13 +88,16 @@ def abrir_navegador(url, navegador):
         print("abrir navegador")
         IP.tem_internet()
         try:
+            print('coloca o url no navegador')
             navegador.get(url)
+            time.sleep(1)
+            print('manda sair do facebook')
             sair_face(url, navegador)
             return
         except Exception as e:
             print(f"Erro ao abrir o navegador: {e}")
-            navegador.quit()
-            time.sleep(10)
+            # navegador.quit()
+            time.sleep(2)
             continue
 
 

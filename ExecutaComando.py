@@ -225,7 +225,7 @@ while True:
                     time.sleep(1)
                     # Limpa.limpa_total(x_origem, y_origem)
 
-                    recebido1 = Firebase.comando_escravo()
+                    recebido1 = str(Firebase.comando_escravo())
                     if recebido1 != recebido2:
                         recebido2 = recebido1
                         comando = recebido1.strip().title()  # remove espaços vasiao e coloca a primeira letra amiusculo
