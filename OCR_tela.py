@@ -392,7 +392,7 @@ def valor_fichas(x_origem, y_origem):
             # Converte o valor lido para um formato numérico
             valor = tratar_valor_numerico(lido)
             # Verifica se o valor está dentro da faixa desejada
-            if 500 < valor < 40000000:
+            if 500 < valor < 50000000:
                 print(f"Valor das fichas: {valor}")
                 return valor
             else:
