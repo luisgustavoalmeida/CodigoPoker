@@ -271,7 +271,7 @@ def sentar_mesa(x_origem, y_origem, senta_com_maximo=False, blind='2040', teste_
         # print("Está dentro da mesa")
 
         if not (pyautogui.pixelMatchesColor(495 + x_origem, 627 + y_origem, (15, 160, 220), tolerance=10)):
-            # test se tem o botao jogar agoar apara seber se ja ta sentado
+            # testa se tem o botao jogar agoar apara seber se ja ta sentado
             # print('Já está sentado')
             sentou = True
             return sentou
@@ -1195,6 +1195,36 @@ def apostar_pagar(x_origem, y_origem):
     return jogou_uma_vez
 
 
+def testa_blind(x_origem, y_origem, blind):
+    ''' Recebe uma estring com o valor do blind da mesa e retorna se esta no blind certo ou não e retorna o numero da mesa '''
+    dentro_mesa = False
+    numero = 0
+    blind_certo = False
+    if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (27, 92, 155), tolerance=5):
+        # testa se esta dentro da mesa
+        print('Esta dentro de uma mesa')
+        dentro_mesa = True
+        blind_sala = OCR_tela.blind_sala(x_origem, y_origem)
+        try:
+            blind = (blind.replace("/", "")).upper()
+        except:
+            print('erro blind')
+
+        if blind == blind_sala:
+            blind_certo = True
+            print("Sentar mesa: Está na sala certa")
+            numero = OCR_tela.numero_sala(x_origem, y_origem)
+            return dentro_mesa, blind_certo, numero
+        else:
+            blind_certo = False
+            print("Sentar mesa: Está na sala errada")
+            numero = OCR_tela.numero_sala(x_origem, y_origem)
+            return dentro_mesa, blind_certo, numero
+
+    else:
+        print('Não esta dentro de uma mesa')
+        return dentro_mesa, blind_certo, numero
+
 def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
     print('mesa_recolher')
 
@@ -1235,6 +1265,9 @@ def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
             Limpa.limpa_total(x_origem, y_origem)
             Limpa.limpa_jogando(x_origem, y_origem)
             return
+        if comando == 'Aposta':
+            apostar = True
+            cont_jogou = numero_jogadas
 
         if cont_limpa_jogando > 40:
             cont_limpa_jogando = 0

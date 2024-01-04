@@ -11,7 +11,6 @@ import pytesseract
 from fuzzywuzzy import fuzz
 
 import IP
-import Origem_pg
 import Variaveis_Globais
 
 # Desabilitar o fail-safe
@@ -1053,6 +1052,8 @@ def tarefas_diaris_upando(x_origem, y_origem):
 #         return str(blind)
 #     else:
 #         return '0'
+lista_blind = ('500K1M', '100K200K', '50K100K', '20K40K', '10K20K', '5K10K', '2K4K', '1K2K',
+               '5001K', '200400', '100200', '50100', '2550', '2040', '1020', '510', '24', '12')
 
 
 def blind_sala(x_origem, y_origem):
@@ -1074,7 +1075,7 @@ def blind_sala(x_origem, y_origem):
     contraste_pre = 1
     contraste_pos = 1.5
     # Define a região onde a informação da blind está localizada
-    regiao = (x_origem + 54, y_origem + 99, x_origem + 115, y_origem + 115)
+    regiao = (x_origem + 54, y_origem + 99, x_origem + 132, y_origem + 115)
 
     configuracoes = [
         r'--psm 7 --oem 3 -c tessedit_char_whitelist=/0123456789KM',
@@ -1086,13 +1087,17 @@ def blind_sala(x_origem, y_origem):
     # Itera sobre cada configuração e realiza o OCR
     for config in configuracoes:
         # Realiza a leitura da região para obter a informação da blind
-        blind = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
-        # print(blind)
+        blind = (OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)).upper()
+        print(blind)
         if blind is not None:
             # mantém apenas os dígitos (0-9), 'K' e 'M' na string blind e descarta os outros caracteres.
-            blind = ''.join(c for c in blind if c.isdigit() or c in ['K', 'M'])
-            print('O valor de blind da mesa : ', blind)
-            return str(blind)
+            blind = str(''.join(c for c in blind if c.isdigit() or c in ['K', 'M']))
+            if blind in lista_blind:
+                print(f"{blind} está na lista.")
+                print('blind da mesa : ', blind)
+                return blind
+            else:
+                print(f"{blind} não está na lista.")
         else:
             print("Valor fora da faixa desejada")
     return '0'

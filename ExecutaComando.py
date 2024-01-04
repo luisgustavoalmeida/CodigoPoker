@@ -268,9 +268,19 @@ while True:
                         valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem)
                         status_comando = 'Valor ficha: ' + str(valor_fichas)
 
-                    elif comando == "Joga":
+                    elif comando == "Senta2":
+                        # Começa ja apostando na primeira jogada
                         comando = 'Executado'
-                        Mesa.mesa_recolher(x_origem, y_origem, 2, blind)
+                        if Mesa.cadeiras_livres(x_origem, y_origem, lugares=lugares):
+                            sentou = Mesa.sentar_mesa(x_origem, y_origem, True, blind, True)
+                            if sentou:
+                                status_comando = "Sentou"
+                                Mesa.mesa_recolher(x_origem, y_origem, 1, blind)
+                            else:
+                                status_comando = "Não sentou"
+                        else:
+                            status_comando = "Mesa ocupada"
+                        time.sleep(2)
                         valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem)
                         status_comando = 'Valor ficha: ' + str(valor_fichas)
 
