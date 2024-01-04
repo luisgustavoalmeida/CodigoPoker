@@ -273,6 +273,8 @@ while True:
                             break
                         time.sleep(0.3)
 
+                Aneis.recolhe_aneis(x_origem, y_origem)
+
                 if roleta == 'roleta_1':
                     # Joga mesa
                     level_conta = OCR_tela.level_conta(x_origem, y_origem)

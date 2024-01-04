@@ -34,6 +34,19 @@ orderem_chave = {
     'group3': ['PC03', 'PC06', 'PC09', 'PC12', 'PC15', 'PC18', 'PC21', 'PC24', 'PC27'],
 }
 
+# Define listas de arranjos de computadores cada arranjo será uma mesa diferente
+arranjo1_pc = ('Comandos1/PC01', 'Comandos1/PC04', 'Comandos1/PC07',
+               'Comandos1/PC10', 'Comandos1/PC13', 'Comandos1/PC16',
+               'Comandos1/PC19', 'Comandos1/PC22', 'Comandos1/PC25')
+
+arranjo2_pc = ('Comandos2/PC02', 'Comandos2/PC05', 'Comandos2/PC08',
+               'Comandos2/PC11', 'Comandos2/PC14', 'Comandos2/PC17',
+               'Comandos2/PC20', 'Comandos2/PC23', 'Comandos2/PC26')
+
+arranjo3_pc = ('Comandos3/PC03', 'Comandos3/PC06', 'Comandos3/PC09',
+               'Comandos3/PC12', 'Comandos3/PC15', 'Comandos3/PC18',
+               'Comandos3/PC21', 'Comandos3/PC24', 'Comandos3/PC27')
+
 teve_atualizacao = False
 comando_escravo = None
 
@@ -44,12 +57,15 @@ nome_usuario = os.getlogin()
 nome_completo = nome_computador + "_" + nome_usuario
 
 #  lista com os computadores que vao dar comando nos escravos, colocar nesta lista para funcionar como metre
-lista_PC_meste = ('PC-I7-9700KF', 'PC-i3-8145U', 'Thiago-PC')
+lista_PC_meste = ('xPC-I7-9700KF', 'PC-i3-8145U', 'Thiago-PC')
 
 
 def cria_caminho_resposta_fb():
     """Função destinada a manipular o dicionário com os nomes dos computadores
     e criar um caminho para apontar na função callback """
+
+    caminho_resposta = f'Comandos/PCXX'
+    caminho_resposta1 = f'Resposta1/PCXX'
 
     # Crie um dicionário com os valores formatados
     dicionari_pc = {}
@@ -58,9 +74,6 @@ def cria_caminho_resposta_fb():
         # Formate o valor para ter dois dígitos e adicione "PC" antes
         valor_formatado = f"PC{terceiro_item:02d}"
         dicionari_pc[chave] = valor_formatado
-
-    caminho_resposta = f'Comandos/PCXX'
-    caminho_resposta1 = f'Resposta1/PCXX'
 
     # Verifique se o nome completo existe no dicionário
     if nome_completo in dicionari_pc:
@@ -82,8 +95,6 @@ def cria_caminho_resposta_fb():
                 caminho_resposta1 = f'Resposta1/{conteudo}'
                 print("caminho_resposta1 :", caminho_resposta1)  # Comandos2/PC23
                 return caminho_resposta, caminho_resposta1
-            # else:
-            #     print("erro")
         else:
             print(f"{conteudo} não está em nenhum dos grupos")
             return caminho_resposta, caminho_resposta1
@@ -99,19 +110,6 @@ if nome_computador in lista_PC_meste:
 else:
     print(f"O nome do computador ({nome_computador}) não está na lista de PCs mestres.")
     caminho_resposta, caminho_resposta1 = cria_caminho_resposta_fb()
-
-# Define listas de arranjos de computadores cada arranjo será uma mesa diferente
-arranjo1_pc = ('Comandos1/PC01', 'Comandos1/PC04', 'Comandos1/PC07',
-               'Comandos1/PC10', 'Comandos1/PC13', 'Comandos1/PC16',
-               'Comandos1/PC19', 'Comandos1/PC22', 'Comandos1/PC25')
-
-arranjo2_pc = ('Comandos2/PC02', 'Comandos2/PC05', 'Comandos2/PC08',
-               'Comandos2/PC11', 'Comandos2/PC14', 'Comandos2/PC17',
-               'Comandos2/PC20', 'Comandos2/PC23', 'Comandos2/PC26')
-
-arranjo3_pc = ('Comandos3/PC03', 'Comandos3/PC06', 'Comandos3/PC09',
-               'Comandos3/PC12', 'Comandos3/PC15', 'Comandos3/PC18',
-               'Comandos3/PC21', 'Comandos3/PC24', 'Comandos3/PC27')
 
 
 def inicializar_firebase():

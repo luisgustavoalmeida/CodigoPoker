@@ -15,7 +15,6 @@ def recolhe_aneis(x_origem, y_origem):
     for i in range(2):
         if (pyautogui.pixelMatchesColor((x_origem + 900), (y_origem + 288), (33, 145, 18), tolerance=30)
                 or pyautogui.pixelMatchesColor((x_origem + 900), (y_origem + 288), (133, 232, 92), tolerance=30)):
-            # testa se esta dentro da mesa
             print("Tem aneis para recolhar")
             Limpa.limpa_total(x_origem, y_origem)
             for i in range(20):
