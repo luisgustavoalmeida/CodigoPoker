@@ -1088,9 +1088,10 @@ def blind_sala(x_origem, y_origem):
     # Itera sobre cada configuração e realiza o OCR
     for config in configuracoes:
         # Realiza a leitura da região para obter a informação da blind
-        blind = (OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)).upper()
-        print(blind)
+        blind = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
+
         if blind is not None:
+            blind = blind.upper()
             # mantém apenas os dígitos (0-9), 'K' e 'M' na string blind e descarta os outros caracteres.
             blind = str(''.join(c for c in blind if c.isdigit() or c in ['K', 'M']))
             if blind in lista_blind:
