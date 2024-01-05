@@ -546,6 +546,7 @@ def sair_face(url, navegador):
 
         try:
             print('inicia a execução do script sair')
+            navegador.switch_to.window(navegador.window_handles[0])
             navegador.execute_script(script)
             print('script sair executado sem erros')
 
