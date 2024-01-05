@@ -246,6 +246,7 @@ while True:
                     if comando == "Sair":
                         status_comando = "Saindo"
                         comando = 'Executado'
+                        Firebase.confirmacao_escravo('Saindo')  # troca o ultimo comando enviado
                         break
 
                     elif comando == "Limpa":
