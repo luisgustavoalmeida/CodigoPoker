@@ -566,7 +566,9 @@ def escolher_blind(x_origem, y_origem, blind, lugares=9):
                     Limpa.limpa_total(x_origem, y_origem)
                     break
 
-        elif pyautogui.pixelMatchesColor((x_origem + 435), (y_origem + 264), (203, 107, 7), tolerance=5):
+        elif (pyautogui.pixelMatchesColor((x_origem + 435), (y_origem + 264), (246, 126, 0), tolerance=5)
+              or pyautogui.pixelMatchesColor((x_origem + 435), (y_origem + 264), (80, 178, 0), tolerance=5)):
+            # barra verde ou barra laranja
             print("Não tem sala vazia")
             return "Não tem sala vazia"
 
