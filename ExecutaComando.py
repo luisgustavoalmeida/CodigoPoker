@@ -202,7 +202,7 @@ while True:
                 blind = '2K/4K'
                 lugares = 9
 
-                Firebase.confirmacao_comando_resposta('Limpa tudo')
+
 
                 if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
                     parar_tarefas = True
@@ -310,7 +310,7 @@ while True:
         ip, com_internet = IP.meu_ip()  # obtem meu endereço de IP
         valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip, level_conta]
         Seleniun.sair_face(url, navegador)
-        Firebase.confirmacao_comando_resposta('Entrendo em uma nova conta')
+        Firebase.confirmacao_escravo('Entrendo em uma nova conta')
 
         # print('-----------------espera terminar tarefa independente----------------')
         # # Aguardar a tarefa terminar
