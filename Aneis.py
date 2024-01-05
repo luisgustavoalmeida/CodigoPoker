@@ -3,6 +3,7 @@ import time
 import pyautogui
 
 import Limpa
+import Origem_pg
 
 # Desabilitar o fail-safe
 pyautogui.FAILSAFE = False
@@ -13,8 +14,9 @@ def recolhe_aneis(x_origem, y_origem):
     # testa se tem aneis para serem recolhidos
 
     for i in range(2):
-        if (pyautogui.pixelMatchesColor((x_origem + 900), (y_origem + 288), (33, 145, 18), tolerance=30)
-                or pyautogui.pixelMatchesColor((x_origem + 900), (y_origem + 288), (133, 232, 92), tolerance=30)):
+        if (pyautogui.pixelMatchesColor((x_origem + 954), (y_origem + 288), (33, 145, 18), tolerance=30)
+                or (not pyautogui.pixelMatchesColor((x_origem + 954), (y_origem + 288), (32, 17, 20), tolerance=30))):
+            # testa se tem o verde do anel ou se nao esta visivel a parte atras do verde
             print("Tem aneis para recolhar")
             Limpa.limpa_total(x_origem, y_origem)
             for i in range(20):
@@ -45,6 +47,7 @@ def recolhe_aneis(x_origem, y_origem):
                 time.sleep(0.5)
     return
 
-# x_origem, y_origem = Origem_pg.x_y()
+
+x_origem, y_origem = Origem_pg.x_y()
 # #
-# recolhe_aneis(x_origem, y_origem)
+recolhe_aneis(x_origem, y_origem)
