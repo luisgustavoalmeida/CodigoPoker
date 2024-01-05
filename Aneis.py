@@ -47,7 +47,7 @@ def recolhe_aneis(x_origem, y_origem):
                 time.sleep(0.5)
     return
 
-
-x_origem, y_origem = Origem_pg.x_y()
-# #
-recolhe_aneis(x_origem, y_origem)
+#
+# x_origem, y_origem = Origem_pg.x_y()
+# # #
+# recolhe_aneis(x_origem, y_origem)
