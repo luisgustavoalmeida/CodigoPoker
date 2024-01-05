@@ -103,7 +103,7 @@ while True:
     else:
         id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
 
-        Firebase.confirmacao_escravo('Pegou ID e senha')
+        Firebase.confirmacao_comando_resposta('Pegou ID e senha')
 
     # login
     while True:
@@ -131,7 +131,7 @@ while True:
             if entrou_corretamente is False:  # se nao entrou no face
                 print("conta nao entou no Facebook")
                 # Google.marca_caida(stataus_facebook, guia, linha)
-                Firebase.confirmacao_escravo('conta nao entou no Facebook')
+                Firebase.confirmacao_comando_resposta('conta nao entou no Facebook')
                 break
 
             while True:
@@ -145,7 +145,7 @@ while True:
                 entrou_corretamente, stataus_facebook = Seleniun.teste_logado(id, senha, url, navegador)
                 if entrou_corretamente is False:  # se nao entrou no face
                     print("conta nao entou no Facebook")
-                    Firebase.confirmacao_escravo('conta nao entou no Facebook')
+                    Firebase.confirmacao_comando_resposta('conta nao entou no Facebook')
                     # Google.marca_caida(stataus_facebook, guia, linha)
                     break
 
@@ -186,7 +186,7 @@ while True:
             if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
                 break
 
-            Firebase.confirmacao_escravo('Entrou')
+            Firebase.confirmacao_comando_resposta('Entrou')
 
             #######################Tarefas
             if guia == "Up":
@@ -202,7 +202,7 @@ while True:
                 blind = '2K/4K'
                 lugares = 9
 
-                Firebase.confirmacao_escravo('Limpa tudo')
+                Firebase.confirmacao_comando_resposta('Limpa tudo')
 
                 if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
                     parar_tarefas = True
@@ -215,7 +215,8 @@ while True:
                     Limpa.limpa_total(x_origem, y_origem)
                     time.sleep(2)
 
-                Firebase.confirmacao_escravo('Terminou de limpar')
+                Firebase.confirmacao_comando_resposta('Terminou de limpar')
+
 
                 # codigo deve ser escrito aqui dentro ...
                 # status_comando = xp2.pega_2xp(x_origem, y_origem)
@@ -309,7 +310,7 @@ while True:
         ip, com_internet = IP.meu_ip()  # obtem meu endereço de IP
         valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip, level_conta]
         Seleniun.sair_face(url, navegador)
-        Firebase.confirmacao_escravo('Entrendo em uma nova conta')
+        Firebase.confirmacao_comando_resposta('Entrendo em uma nova conta')
 
         # print('-----------------espera terminar tarefa independente----------------')
         # # Aguardar a tarefa terminar
