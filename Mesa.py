@@ -13,6 +13,7 @@ import IP
 import Tarefas
 import HoraT
 import xp2
+import Origem_pg
 # import Firebase
 from Firebase import confirmacao_comando_resposta, comando_escravo, comando_coleetivo_escravo_escravo
 
@@ -516,46 +517,63 @@ def escolher_blind(x_origem, y_origem, blind, lugares=9):
 
     pyautogui.click(71 + x_origem, 619 + y_origem, button='left')  # clica para fechar o blind
 
-    pyautogui.doubleClick(405 + x_origem, 233 + y_origem)  # clica para fechar o blind
+    pyautogui.doubleClick(405 + x_origem, 233 + y_origem)  # clica em organizar vazias para cima
     blind_sala = None
 
     cont_erro_entrar_mesa = 0
+    for j in range(20):
 
-    if pyautogui.pixelMatchesColor((x_origem + 358), (y_origem + 264), (26, 29, 33), tolerance=5):
-        # testa se tem sala com pelo menos um lugar vazio, olha se tem preto no inicio da barra de ocupação
-        pyautogui.doubleClick(490 + x_origem, 263 + y_origem)  # clica para entar na sala vazia
+        if pyautogui.pixelMatchesColor((x_origem + 310), (y_origem + 264), (95, 106, 122), tolerance=5):
+            # erro ao buscar sala, fica uma faixa cinza na linha da sala
+            print('Erro ao buscar sala, vai ser dado um F5')
+            pyautogui.press('f5')
+            time.sleep(35)
+            return "Erro ao buscar sala, vai ser dado um F5"
 
-        for i in range(40):
-            if pyautogui.pixelMatchesColor((x_origem + 435), (y_origem + 264), (26, 29, 33), tolerance=5):
-                # testa se tem sala com pelo menos um lugar vazio, olha se tem preto no fim da barra de ocupação
-                pyautogui.doubleClick(490 + x_origem, 263 + y_origem)  # clica para entar na sala vazia
-                cont_erro_entrar_mesa += 1
+        if pyautogui.pixelMatchesColor((x_origem + 358), (y_origem + 264), (29, 32, 37), tolerance=5):
+            # testa se tem sala com pelo menos um lugar vazio, olha se tem preto no inicio da barra de ocupação
+            pyautogui.doubleClick(490 + x_origem, 263 + y_origem)  # clica para entar na sala vazia
 
-            Limpa.limpa_jogando(x_origem, y_origem)
+            for i in range(40):
+                if pyautogui.pixelMatchesColor((x_origem + 435), (y_origem + 264), (26, 29, 33), tolerance=5):
+                    # testa se tem sala com pelo menos um lugar vazio, olha se tem preto no fim da barra de ocupação
+                    pyautogui.doubleClick(490 + x_origem, 263 + y_origem)  # clica para entar na sala vazia
+                    cont_erro_entrar_mesa += 1
 
-            if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (27, 92, 155), tolerance=19):
-                # testa se esta dentro da mesa
-                # Limpa.limpa_jogando(x_origem, y_origem)
-                blind_sala = OCR_tela.blind_sala(x_origem, y_origem)
-                try:
-                    blind = blind.replace("/", "")
-                except:
-                    print('erro blind')
+                Limpa.limpa_jogando(x_origem, y_origem)
 
-                num_sala = OCR_tela.numero_sala(x_origem, y_origem)
-                print("num_sala", num_sala)
+                if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (27, 92, 155), tolerance=19):
+                    # testa se esta dentro da mesa
+                    # Limpa.limpa_jogando(x_origem, y_origem)
+                    blind_sala = OCR_tela.blind_sala(x_origem, y_origem)
+                    try:
+                        blind = blind.replace("/", "")
+                    except:
+                        print('erro blind')
 
-                if blind == blind_sala:
-                    print("Esta na sala certa")
-                    return num_sala
-                else:
-                    print("Esta na sala errada")
-                    return num_sala
+                    num_sala = OCR_tela.numero_sala(x_origem, y_origem)
+                    print("num_sala", num_sala)
 
-            time.sleep(1)
-            if cont_erro_entrar_mesa >= 5:
-                Limpa.limpa_total(x_origem, y_origem)
-                break
+                    if blind == blind_sala:
+                        print("Esta na sala certa")
+                        return num_sala
+                    else:
+                        print("Esta na sala errada")
+                        return num_sala
+
+                time.sleep(1)
+                if cont_erro_entrar_mesa >= 5:
+                    Limpa.limpa_total(x_origem, y_origem)
+                    break
+        elif pyautogui.pixelMatchesColor((x_origem + 435), (y_origem + 264), (203, 107, 7), tolerance=5):
+            print("Não tem sala vazia")
+            return "Não tem sala vazia"
+
+        elif pyautogui.pixelMatchesColor((x_origem + 205), (y_origem + 265), (46, 87, 132), tolerance=3):  # testa se existe sala com este numero
+            print("Não existe sala com esse numero")
+            if j > 15:
+                return "Não existe sala com esse numero"
+        time.sleep(0.1)
     return "Não entrou na sala"
 
 
@@ -1364,6 +1382,7 @@ def levantar_mesa(x_origem, y_origem):
     return sentado
 
 # x_origem, y_origem = Origem_pg.x_y()
+# escolher_blind(x_origem, y_origem, blind='2K/4K', lugares=9)
 # sentar_mesa(x_origem, y_origem, True, '20/40', True)
 # mesa_recolher(x_origem, y_origem, 2, '20/40')
 # x_origem, y_origem = Origem_pg.x_y()
