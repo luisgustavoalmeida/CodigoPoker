@@ -455,6 +455,7 @@ while True:
                         if parar_tarefas:
                             break
 
+                Aneis.recolhe_aneis(x_origem, y_origem)
                 hora_que_rodou = datetime.datetime.now().strftime('%H:%M:%S')
 
                 print('valor_fichas', valor_fichas)
