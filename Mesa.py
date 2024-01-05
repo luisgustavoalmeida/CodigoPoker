@@ -565,6 +565,7 @@ def escolher_blind(x_origem, y_origem, blind, lugares=9):
                 if cont_erro_entrar_mesa >= 5:
                     Limpa.limpa_total(x_origem, y_origem)
                     break
+
         elif pyautogui.pixelMatchesColor((x_origem + 435), (y_origem + 264), (203, 107, 7), tolerance=5):
             print("Não tem sala vazia")
             return "Não tem sala vazia"
