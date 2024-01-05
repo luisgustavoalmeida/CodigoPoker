@@ -12,6 +12,7 @@ from fuzzywuzzy import fuzz
 
 import IP
 import Variaveis_Globais
+import Origem_pg
 
 # Desabilitar o fail-safe
 pyautogui.FAILSAFE = False
@@ -1197,7 +1198,7 @@ def numero_sala(x_origem, y_origem):
         # Extrai o número da sala usando OCR
         # for _ in range(3):
         numero = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)  # pontuação
-
+        print('numero mesa sem tratamento: ', numero)
         if numero is not None:
             numero = numero.split(' ')[0] if ' ' in numero else numero
             # se a string contiver espaços, ele pegará a parte antes do espaço. Caso contrário, retornará a própria string original.
