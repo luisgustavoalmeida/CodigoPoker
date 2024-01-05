@@ -519,7 +519,7 @@ def escolher_blind(x_origem, y_origem, blind, lugares=9):
 
     pyautogui.doubleClick(405 + x_origem, 233 + y_origem)  # clica em organizar vazias para cima
     blind_sala = None
-
+    time.sleep(1)
     cont_erro_entrar_mesa = 0
     for j in range(20):
 
@@ -1382,7 +1382,7 @@ def levantar_mesa(x_origem, y_origem):
     return sentado
 
 # x_origem, y_origem = Origem_pg.x_y()
-# escolher_blind(x_origem, y_origem, blind='2K/4K', lugares=9)
+# escolher_blind(x_origem, y_origem, blind='2K/4K', lugares=5)
 # sentar_mesa(x_origem, y_origem, True, '20/40', True)
 # mesa_recolher(x_origem, y_origem, 2, '20/40')
 # x_origem, y_origem = Origem_pg.x_y()
