@@ -226,6 +226,7 @@ while True:
                 # status_comando = 'Aguardando comando'
                 status_comando = Mesa.escolher_blind(x_origem, y_origem, blind, lugares)
                 Firebase.confirmacao_comando_resposta(status_comando)
+                Firebase.confirmacao_escravo('Entrou')  # troca o ultimo comando enviado
 
                 recebido1 = "padrao"
                 recebido2 = "padrao"
