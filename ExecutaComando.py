@@ -104,7 +104,7 @@ while True:
         id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
 
         Firebase.confirmacao_comando_resposta('Pegou ID e senha')
-        Firebase.confirmacao_escravo('Entrendo em uma nova conta')  # troca o ultimo comando enviado
+        Firebase.confirmacao_escravo('ok')  # troca o ultimo comando enviado
 
     # login
     while True:
@@ -311,7 +311,7 @@ while True:
         ip, com_internet = IP.meu_ip()  # obtem meu endereço de IP
         valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip, level_conta]
         Seleniun.sair_face(url, navegador)
-        Firebase.confirmacao_escravo('Entrendo em uma nova conta')  # troca o ultimo comando enviado
+        # Firebase.confirmacao_escravo('Entrando em uma nova conta')  # troca o ultimo comando enviado
 
         # print('-----------------espera terminar tarefa independente----------------')
         # # Aguardar a tarefa terminar
