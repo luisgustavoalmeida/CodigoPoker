@@ -1181,6 +1181,7 @@ def numero_sala(x_origem, y_origem):
         # printa se esta disponivel o numero
         if (pyautogui.pixelMatchesColor((x_origem + 86), (y_origem + 66), (43, 14, 10), tolerance=5)
                 or pyautogui.pixelMatchesColor((x_origem + 86), (y_origem + 66), (54, 27, 8), tolerance=5)):
+            time.sleep(0.5)
             break
         time.sleep(1)
         print('Esperando o número da sala ficar visível...')
