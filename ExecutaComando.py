@@ -311,7 +311,7 @@ while True:
         ip, com_internet = IP.meu_ip()  # obtem meu endereço de IP
         valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip, level_conta]
         Seleniun.sair_face(url, navegador)
-        # Firebase.confirmacao_escravo('Entrando em uma nova conta')  # troca o ultimo comando enviado
+        Firebase.confirmacao_escravo('Entrando em uma nova conta')  # troca o ultimo comando enviado
 
         # print('-----------------espera terminar tarefa independente----------------')
         # # Aguardar a tarefa terminar
