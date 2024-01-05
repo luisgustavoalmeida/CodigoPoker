@@ -1199,6 +1199,8 @@ def numero_sala(x_origem, y_origem):
         numero = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)  # pontuação
 
         if numero is not None:
+            numero = numero.split(' ')[0] if ' ' in numero else numero
+            # se a string contiver espaços, ele pegará a parte antes do espaço. Caso contrário, retornará a própria string original.
             numero = str(numero)[:4]
             numero = tratar_valor_numerico(numero)
             print('Número da sala:', numero)
