@@ -256,6 +256,12 @@ while True:
                         for i in range(5):
                             Limpa.limpa_total(x_origem, y_origem)
 
+                    elif comando == 'Levanta':
+                        status_comando = "levantando"
+                        comando = 'Executado'
+                        Mesa.levantar_mesa(x_origem, y_origem)
+                        Limpa.limpa_jogando(x_origem, y_origem)
+
                     elif '/' in comando:
                         blind = comando
                         if blind == '20K/40K':

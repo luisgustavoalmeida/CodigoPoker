@@ -25,30 +25,33 @@ config = {
 
 # Dicionário global para armazenar as variáveis com seus respectivos valores
 global_variables = {
-    'group1': {'PC01': None, 'PC04': None, 'PC07': None, 'PC10': None, 'PC13': None, 'PC16': None, 'PC19': None, 'PC22': None, 'PC25': None},
-    'group2': {'PC02': None, 'PC05': None, 'PC08': None, 'PC11': None, 'PC14': None, 'PC17': None, 'PC20': None, 'PC23': None, 'PC26': None},
-    'group3': {'PC03': None, 'PC06': None, 'PC09': None, 'PC12': None, 'PC15': None, 'PC18': None, 'PC21': None, 'PC24': None, 'PC27': None}
+    'group1': {'PC01': None, 'PC04': None, 'PC07': None, 'PC10': None, 'PC13': None, 'PC16': None, 'PC19': None, 'PC22': None, 'PC25': None,
+               'PC28': None},
+    'group2': {'PC02': None, 'PC05': None, 'PC08': None, 'PC11': None, 'PC14': None, 'PC17': None, 'PC20': None, 'PC23': None, 'PC26': None,
+               'PC29': None},
+    'group3': {'PC03': None, 'PC06': None, 'PC09': None, 'PC12': None, 'PC15': None, 'PC18': None, 'PC21': None, 'PC24': None, 'PC27': None,
+               'PC30': None}
 }
 orderem_chave = {
-    'group1': ['PC01', 'PC04', 'PC07', 'PC10', 'PC13', 'PC16', 'PC19', 'PC22', 'PC25'],
-    'group2': ['PC02', 'PC05', 'PC08', 'PC11', 'PC14', 'PC17', 'PC20', 'PC23', 'PC26'],
-    'group3': ['PC03', 'PC06', 'PC09', 'PC12', 'PC15', 'PC18', 'PC21', 'PC24', 'PC27']
+    'group1': ['PC01', 'PC04', 'PC07', 'PC10', 'PC13', 'PC16', 'PC19', 'PC22', 'PC25', 'PC28'],
+    'group2': ['PC02', 'PC05', 'PC08', 'PC11', 'PC14', 'PC17', 'PC20', 'PC23', 'PC26', 'PC29'],
+    'group3': ['PC03', 'PC06', 'PC09', 'PC12', 'PC15', 'PC18', 'PC21', 'PC24', 'PC27', 'PC30']
 }
 
 # Define listas de arranjos de computadores cada arranjo será uma mesa diferente
 arranjo1_pc = (
     'Comandos1/PC01', 'Comandos1/PC04', 'Comandos1/PC07', 'Comandos1/PC10', 'Comandos1/PC13', 'Comandos1/PC16', 'Comandos1/PC19', 'Comandos1/PC22',
-    'Comandos1/PC25'
+    'Comandos1/PC25', 'Comandos1/PC28'
 )
 
 arranjo2_pc = (
     'Comandos2/PC02', 'Comandos2/PC05', 'Comandos2/PC08', 'Comandos2/PC11', 'Comandos2/PC14', 'Comandos2/PC17', 'Comandos2/PC20', 'Comandos2/PC23',
-    'Comandos2/PC26',
+    'Comandos2/PC26', 'Comandos1/PC29'
 )
 
 arranjo3_pc = (
     'Comandos3/PC03', 'Comandos3/PC06', 'Comandos3/PC09', 'Comandos3/PC12', 'Comandos3/PC15', 'Comandos3/PC18', 'Comandos3/PC21', 'Comandos3/PC24',
-    'Comandos3/PC27',
+    'Comandos3/PC27', 'Comandos1/PC30'
 )
 
 #  lista com os computadores que vao dar comando nos escravos, colocar nesta lista para funcionar como metre
