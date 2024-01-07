@@ -52,7 +52,7 @@ arranjo3_pc = (
 )
 
 #  lista com os computadores que vao dar comando nos escravos, colocar nesta lista para funcionar como metre
-lista_PC_meste = ('xPC-I7-9700KF', 'PC-i3-8145U', 'Thiago-PC')
+lista_PC_meste = ('PC-I7-9700KF', 'PC-i3-8145U', 'Thiago-PC')
 
 teve_atualizacao = False
 comando_escravo = None

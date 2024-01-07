@@ -89,9 +89,10 @@ def limpa_jogando(x_origem, y_origem):
         print("aviso do sistema dentro da mesa")
 
     # Laranja
-    elif (pyautogui.pixelMatchesColor((x_origem + 237), (y_origem + 165), (224, 9, 5), tolerance=20)) or \
-            (pyautogui.pixelMatchesColor((x_origem + 240), (y_origem + 167), (228, 22, 5), tolerance=20)):
-        pyautogui.click(771 + x_origem, 156 + y_origem, button='left')
+    elif (pyautogui.pixelMatchesColor((x_origem + 237), (y_origem + 165), (224, 9, 5), tolerance=20)
+          or pyautogui.pixelMatchesColor((x_origem + 240), (y_origem + 167), (228, 22, 5), tolerance=20)
+          or pyautogui.pixelMatchesColor((x_origem + 237), (y_origem + 167), (239, 68, 3), tolerance=20)):
+        pyautogui.click(768 + x_origem, 160 + y_origem, button='left')
         print("promoçao laranja")
 
     # Fecha promoçoes
