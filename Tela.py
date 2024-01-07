@@ -119,7 +119,7 @@ janela = tk.Tk()
 janela.state('zoomed')
 
 # Defina o número de colunas e linhas
-numero_colunas = 10
+numero_colunas = 11
 numero_linhas = 15
 
 # Crie as áreas de informações
@@ -137,7 +137,10 @@ for i in range(3):
 
     # Loop para criar as colunas e botões dentro de cada arranjo
     for j in range(numero_colunas):
-        if 1 <= j <= 9:
+        # ajustar as colunas conforne a faixa de computadores 1 ao 9
+        if j == 1:
+            continue  # Pula o primeiro item
+        if 1 <= j <= 10:
             # Aplica a regra de mapeamento para os valores de j
             j = (j - 1) * 3 + 1 + i
 
