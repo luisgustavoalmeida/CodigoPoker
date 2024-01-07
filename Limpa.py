@@ -105,6 +105,13 @@ def limpa_jogando(x_origem, y_origem):
         pyautogui.click(x_origem + 164, y_origem + 161)
         print("Clica no Normal")
 
+    # Gostaria de começar a Liga do Finde?
+    elif pyautogui.pixelMatchesColor((x_origem + 538), (y_origem + 408), (217, 184, 50), tolerance=5):
+        pyautogui.click(x_origem + 407, y_origem + 354)  # não mostar novamente hoje
+        time.sleep(1)
+        pyautogui.click(x_origem + 407, y_origem + 408)  # clica no NÃO
+        print("Gostaria de começar a Liga do Finde?")
+
 
 def limpa_pequeno(x_origem, y_origem):
     print('limpa_pequeno')
