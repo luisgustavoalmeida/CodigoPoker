@@ -1008,8 +1008,6 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False):
                         # troca o valor para que na proxima interação possamos iniciar do inicios da lista
                         continue
 
-                    print("inicia em :", indice)
-
                     if indice == sala_atual and pular_sala:
                         continue  # Pule a primeira iteração, começando pelo segundo item
 
@@ -1028,11 +1026,6 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False):
                     blind_certo, sala_existe = sala_minima_niquel(x_origem, y_origem, num_mesa, blind_mesa)
 
                     if not sala_existe:
-                        # # Remover o primeiro item da lista usando pop(0)
-                        # primeiro_item = lista_salas_jogar.pop(0)
-                        # # Adicionar o primeiro item de volta à lista usando append(), colocando-o no final
-                        # lista_salas_jogar.append(primeiro_item)
-
                         # Remova o item da posição específica
                         item_removido = lista_salas_jogar.pop(indice)
                         # Adicione o item ao final da lista
@@ -1066,7 +1059,6 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False):
                 time.sleep(25)
 
     indice_inicial = indice
-    print('\n\nindice_inicial', indice_inicial)
 
     # print(lista_salas_jogar)
     # print(num_mesa)
