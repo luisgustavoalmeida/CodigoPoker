@@ -105,7 +105,7 @@ while True:
     else:
         id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
 
-    Firebase.confirmacao_comando_resposta('ID: ' + id + 'Senha: ' + senha + 'Linha :' + linha + 'Cont IP: ' + cont_IP)
+    Firebase.confirmacao_comando_resposta('ID: ' + str(id) + 'Senha: ' + str(senha) + 'Linha :' + str(linha) + 'Cont IP: ' + str(cont_IP))
 
     Firebase.confirmacao_escravo('Entrando em uma nova conta')  # troca o ultimo comando enviado
 
