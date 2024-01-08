@@ -260,9 +260,9 @@ while True:
                             Limpa.limpa_total(x_origem, y_origem)
 
                     elif comando == 'Levanta':
-                        status_comando = "levantando"
+                        # status_comando = "levantando"
                         comando = 'Executado'
-                        Firebase.confirmacao_comando_resposta(status_comando)
+                        Firebase.confirmacao_comando_resposta("Levantando")
                         Mesa.levantar_mesa(x_origem, y_origem)
                         Limpa.limpa_jogando(x_origem, y_origem)
                         valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem)

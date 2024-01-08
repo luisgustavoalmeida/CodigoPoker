@@ -1,7 +1,7 @@
 import pyautogui
 
 import Limpa
-from Firebase import confirmacao_comando_resposta, comando_escravo, comando_coleetivo_escravo_escravo
+from Firebase import confirmacao_comando_resposta, comando_escravo, comando_coleetivo_escravo_escravo, confirmacao_escravo
 from Mesa import blinb_rolagem, levantar_mesa, apostar_pagar, passa_corre_joga
 
 
@@ -40,6 +40,7 @@ def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
         if comando == 'Levanta':
             levantar_mesa(x_origem, y_origem)
             Limpa.limpa_jogando(x_origem, y_origem)
+            confirmacao_escravo('Levantou')
             # Firebase.comando_coleetivo_escravo_escravo("Levanta")
             return
         elif comando == 'Limpa':
