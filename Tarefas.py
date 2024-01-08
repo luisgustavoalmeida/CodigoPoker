@@ -357,7 +357,7 @@ def recolher_tarefa_upando(x_origem, y_origem):
         status_tarefas = "Recolhido"
         time.sleep(4)
 
-        for i in range(11):
+        for i in range(15):
             pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias para abrir
             print('Click para abrir o tarefas')
 
