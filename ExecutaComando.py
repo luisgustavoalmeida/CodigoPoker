@@ -104,8 +104,9 @@ while True:
     else:
         id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
 
-        Firebase.confirmacao_comando_resposta('Pegou ID e senha')
-        Firebase.confirmacao_escravo('ok')  # troca o ultimo comando enviado
+    Firebase.confirmacao_comando_resposta('ID: ' + id + 'Senha: ' + senha + 'Linha :' + linha + 'Cont IP: ' + cont_IP)
+
+    Firebase.confirmacao_escravo('Entrando em uma nova conta')  # troca o ultimo comando enviado
 
     # login
     while True:
@@ -133,7 +134,8 @@ while True:
             if entrou_corretamente is False:  # se nao entrou no face
                 print("conta nao entou no Facebook")
                 # Google.marca_caida(stataus_facebook, guia, linha)
-                Firebase.confirmacao_comando_resposta('conta nao entou no Facebook')
+                Firebase.confirmacao_comando_resposta('Conta não entou no Facebook: ' + stataus_facebook)
+
                 break
 
             while True:
@@ -147,13 +149,15 @@ while True:
                 entrou_corretamente, stataus_facebook = Seleniun.teste_logado(id, senha, url, navegador)
                 if entrou_corretamente is False:  # se nao entrou no face
                     print("conta nao entou no Facebook")
-                    Firebase.confirmacao_comando_resposta('conta nao entou no Facebook')
+                    Firebase.confirmacao_comando_resposta('Conta não entou no Facebook: ' + stataus_facebook)
                     # Google.marca_caida(stataus_facebook, guia, linha)
                     break
 
             if entrou_corretamente is False:  # se nao entrou no face
                 # Google.marca_caida(stataus_facebook, guia, linha)
                 break
+
+            Firebase.confirmacao_comando_resposta('Facebook: ' + stataus_facebook)
 
             ja_fez_tutorial = True
 
@@ -188,12 +192,12 @@ while True:
             if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
                 break
 
-            Firebase.confirmacao_comando_resposta('Entrou')
+            Firebase.confirmacao_comando_resposta('Facebook: ' + stataus_facebook)
 
             #######################Tarefas
             if guia == "Up":
 
-                Firebase.confirmacao_comando_resposta('Entrou')
+                Firebase.confirmacao_comando_resposta('Iniciou o limpa')
 
                 pontuacao_tarefas = ""
                 meta_atingida = False
@@ -203,8 +207,6 @@ while True:
                 lista_tarefas_fazer = []
                 blind = '2K/4K'
                 lugares = 9
-
-
 
                 if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
                     parar_tarefas = True
@@ -217,7 +219,7 @@ while True:
                     Limpa.limpa_total(x_origem, y_origem)
                     time.sleep(2)
 
-                Firebase.confirmacao_comando_resposta('Terminou de limpar')
+                Firebase.confirmacao_comando_resposta('Terminou de limpa')
 
 
                 # codigo deve ser escrito aqui dentro ...
@@ -227,7 +229,6 @@ while True:
                 # status_comando = 'Aguardando comando'
                 status_comando = Mesa.escolher_blind(x_origem, y_origem, blind, lugares)
                 Firebase.confirmacao_comando_resposta(status_comando)
-                Firebase.confirmacao_escravo('Entrou')  # troca o ultimo comando enviado
 
                 recebido1 = "padrao"
                 recebido2 = "padrao"
