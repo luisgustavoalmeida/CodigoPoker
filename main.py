@@ -278,23 +278,25 @@ while True:
 
                 if roleta == 'roleta_1':
                     # Joga mesa
-                    if level_conta == "":
-                        level_conta = OCR_tela.level_conta(x_origem, y_origem)
-                    # Mesa.dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, time_rodou, roleta, level_conta)
-                    if not conta_upada:
-                        Limpa.limpa_total(x_origem, y_origem)
-                        Tarefas.recolher_tarefa_upando(x_origem, y_origem)
-                        Limpa.limpa_total(x_origem, y_origem)
-                        # chama o modulo de UparAutomatico
-                        upar(x_origem, y_origem)
-                        Mesa.dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, time_rodou, roleta, level_conta)
-                        level_conta = OCR_tela.level_conta(x_origem, y_origem)
-                    elif (10 > level_conta >= 4) and (datetime.datetime.now().time() < datetime.time(19, 0, 0)):
-                        # testa se a conta nao esta upada e se o hoprario atuial é menor que 23h
-                        Mesa.mesa_upar_jogar(x_origem, y_origem, 0, True)
-                        level_conta = OCR_tela.level_conta(x_origem, y_origem)
-                    else:
-                        Mesa.dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, time_rodou, roleta, level_conta)
+                    if datetime.datetime.now().time() < datetime.time(19, 0, 0):
+                        if level_conta == "":
+                            level_conta = OCR_tela.level_conta(x_origem, y_origem)
+                        # Mesa.dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, time_rodou, roleta, level_conta)
+
+                        if not conta_upada:
+                            Limpa.limpa_total(x_origem, y_origem)
+                            Tarefas.recolher_tarefa_upando(x_origem, y_origem)
+                            Limpa.limpa_total(x_origem, y_origem)
+                            # chama o modulo de UparAutomatico
+                            upar(x_origem, y_origem)
+                            Mesa.dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, time_rodou, roleta, level_conta)
+                            level_conta = OCR_tela.level_conta(x_origem, y_origem)
+                        elif 10 > level_conta >= 4:
+                            # testa se a conta nao esta upada e se o hoprario atuial é menor que 23h
+                            Mesa.mesa_upar_jogar(x_origem, y_origem, 0, True)
+                            level_conta = OCR_tela.level_conta(x_origem, y_origem)
+                        else:
+                            Mesa.dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, time_rodou, roleta, level_conta)
 
                 Aneis.recolhe_aneis(x_origem, y_origem)
 

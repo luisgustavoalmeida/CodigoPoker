@@ -5,7 +5,7 @@ import IP
 
 hora_roleta = 4  # defina o tempo disponivel para a roleta em horas
 
-minutos_roleta = 40  # defina o tempo disponivel para a roleta em minutos
+minutos_roleta = 59  # defina o tempo disponivel para a roleta em minutos
 
 tempo_roletas = (hora_roleta * 3600) + (minutos_roleta * 60)  # 4h
 
