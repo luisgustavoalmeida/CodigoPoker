@@ -245,6 +245,7 @@ while True:
                     hora_que_rodou = datetime.datetime.now().strftime('%H:%M:%S')
 
                 if roleta == 'roleta_1':  # saber se roleta R1 ja terminou de rodar para sair da conta
+                    level_conta = OCR_tela.level_conta(x_origem, y_origem)
                     for i in range(50):
                         time_sair = time.perf_counter()
                         tempo_total = time_sair - time_rodou
@@ -277,7 +278,8 @@ while True:
 
                 if roleta == 'roleta_1':
                     # Joga mesa
-                    level_conta = OCR_tela.level_conta(x_origem, y_origem)
+                    if level_conta == "":
+                        level_conta = OCR_tela.level_conta(x_origem, y_origem)
                     # Mesa.dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, time_rodou, roleta, level_conta)
                     if not conta_upada:
                         Limpa.limpa_total(x_origem, y_origem)

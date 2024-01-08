@@ -13,6 +13,7 @@ import OCR_tela
 import Origem_pg
 import Seleniun
 import Tarefas
+import Aneis
 
 # from Variaveis_Globais import alterar_global_aviso_sistema
 #
@@ -305,6 +306,8 @@ while True:
                     if status_comando_anterior != status_comando:
                         Firebase.confirmacao_comando_resposta(status_comando)
                         status_comando_anterior = status_comando
+
+                Aneis.recolhe_aneis(x_origem, y_origem)
 
                 Firebase.confirmacao_comando_resposta('Saindo da conta')
 

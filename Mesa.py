@@ -19,6 +19,8 @@ from Firebase import confirmacao_comando_resposta, comando_escravo, comando_cole
 
 nome_computador = socket.gethostname()
 
+indice_inicial = 0
+
 blinb_rolagem = {'1/2': (534, 478, 2, 4), '2/4': (534, 504, 4, 8), '5/10': (534, 530, 10, 20), '10/20': (534, 556, 20, 40),
                  '20/40': (534, 582, 40, 80), '25/50': (548, 478, 50, 100), '50/100': (548, 504, 100, 200), '100/200': (548, 530, 200, 400),
                  '200/400': (548, 556, 400, 800), '500/1K': (548, 582, 1000, 2000), '1K/2K': (563, 478, 2000, 4000), '2K/4K': (563, 504, 4000, 8000),
@@ -580,10 +582,6 @@ def escolher_blind(x_origem, y_origem, blind, lugares=9):
     return "Não entrou na sala"
 
 
-
-
-
-
 def ajuste_valor_niquel(x_origem, y_origem, ajusta_aposta):
     """
     Ajusta o valor da aposta no jogo de Niquel em uma máquina virtual.
@@ -717,7 +715,7 @@ def sala_minima_niquel(x_origem, y_origem, num_mesa, blind_mesa):
                         print("Esta na sala certa")
                         if not cadeiras_celular(x_origem, y_origem):
                             print('Sai da mesa pq tem humanos')
-                            return False, False
+                            return False, True
                         return True, True
                     else:
                         print("Esta na sala errada")
@@ -834,7 +832,8 @@ def joga(x_origem, y_origem, id, senha, url, navegador, ajusta_aposta):
         else:
             print("ainda nao esta sentado")
             for i in range(2):
-                for dicionario in lista_salas_niquel:
+                # for dicionario in lista_salas_niquel:
+                for indice, dicionario in enumerate(lista_salas_niquel):
                     num_mesa = list(dicionario.keys())[0]  # Obtendo a chave do dicionário
                     valor_tupla = dicionario[num_mesa]  # Obtendo a tupla associada à chave
                     blind_mesa = valor_tupla[0]  # Obtendo a string da tupla
@@ -848,12 +847,10 @@ def joga(x_origem, y_origem, id, senha, url, navegador, ajusta_aposta):
                     # blind_certo = escolher_blind(x_origem, y_origem, '20/40')
                     blind_certo, sala_existe = sala_minima_niquel(x_origem, y_origem, num_mesa, blind_mesa)
                     if not sala_existe:
-                        print(lista_salas_niquel)
-                        # Remover o primeiro item da lista usando pop(0)
-                        primeiro_item = lista_salas_niquel.pop(0)
-                        # Adicionar o primeiro item de volta à lista usando append(), colocando-o no final
-                        lista_salas_niquel.append(primeiro_item)
-                        print(lista_salas_niquel)
+                        # Remova o item da posição específica
+                        item_removido = lista_salas_niquel.pop(indice)
+                        # Adicione o item ao final da lista
+                        lista_salas_niquel.append(item_removido)
 
                     if blind_certo:
                         aposta, auto10 = ajuste_valor_niquel(x_origem, y_origem, ajusta_aposta)
@@ -898,7 +895,7 @@ def joga(x_origem, y_origem, id, senha, url, navegador, ajusta_aposta):
 def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False):
     print('mesa_upar_jogar')
 
-    global lista_salas_jogar
+    global lista_salas_jogar, indice_inicial
     valor_aposta1 = 100
     valor_aposta2 = 50
     blind_mesa = '2550'
@@ -1004,6 +1001,15 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False):
             for i in range(2):
                 for indice, dicionario in enumerate(lista_salas_jogar):
 
+                    if indice_inicial > indice:
+                        print('pula: ', indice)
+                        # faz o for interagir ate chegar na ultima sala que foi usada anteriormente
+                        indice_inicial = 0
+                        # troca o valor para que na proxima interação possamos iniciar do inicios da lista
+                        continue
+
+                    print("inicia em :", indice)
+
                     if indice == sala_atual and pular_sala:
                         continue  # Pule a primeira iteração, começando pelo segundo item
 
@@ -1022,10 +1028,16 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False):
                     blind_certo, sala_existe = sala_minima_niquel(x_origem, y_origem, num_mesa, blind_mesa)
 
                     if not sala_existe:
-                        # Remover o primeiro item da lista usando pop(0)
-                        primeiro_item = lista_salas_jogar.pop(0)
-                        # Adicionar o primeiro item de volta à lista usando append(), colocando-o no final
-                        lista_salas_jogar.append(primeiro_item)
+                        # # Remover o primeiro item da lista usando pop(0)
+                        # primeiro_item = lista_salas_jogar.pop(0)
+                        # # Adicionar o primeiro item de volta à lista usando append(), colocando-o no final
+                        # lista_salas_jogar.append(primeiro_item)
+
+                        # Remova o item da posição específica
+                        item_removido = lista_salas_jogar.pop(indice)
+                        # Adicione o item ao final da lista
+                        lista_salas_jogar.append(item_removido)
+
                     if blind_certo:
                         sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa, True)
                         if sentou:
@@ -1053,16 +1065,22 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False):
                 pyautogui.press('f5')
                 time.sleep(25)
 
-    print(lista_salas_jogar)
-    print(num_mesa)
+    indice_inicial = indice
+    print('\n\nindice_inicial', indice_inicial)
 
-    # Se a chave alvo foi encontrada, mova o item para o início
-    if sala_atual is not None:
-        item_alvo = lista_salas_jogar.pop(sala_atual)
-        lista_salas_jogar.insert(0, item_alvo)
+    # print(lista_salas_jogar)
+    # print(num_mesa)
+    #
+    # # Se a chave alvo foi encontrada, mova o item para o início
+    # if sala_atual is not None:
+    #     item_alvo = lista_salas_jogar.pop(sala_atual)
+    #     #  Remove o item da posição especificada
+    #     lista_salas_jogar.insert(0, item_alvo)
+    #     #   Insere o item removido no passo anterior de volta no início da lista (posição 0).
 
-    # Exemplo de impressão para verificar a mudança
-    print(lista_salas_jogar)
+    #
+    # # Exemplo de impressão para verificar a mudança
+    # print(lista_salas_jogar)
 
     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
         return "sair da conta"
@@ -1262,6 +1280,7 @@ def testa_blind(x_origem, y_origem, blind):
         print('Não esta dentro de uma mesa')
         return dentro_mesa, blind_certo, numero
 
+
 def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
     print('mesa_recolher')
 
@@ -1308,7 +1327,7 @@ def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
             apostar = True
             cont_jogou = numero_jogadas
 
-        if cont_limpa_jogando > 40:
+        if cont_limpa_jogando > 20:
             cont_limpa_jogando = 0
             Limpa.fecha_tarefa(x_origem, y_origem)
             Limpa.limpa_jogando(x_origem, y_origem)
