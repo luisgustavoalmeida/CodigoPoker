@@ -1344,7 +1344,9 @@ def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
                 if cont_jogou >= numero_jogadas + 3:
                     print('Fim do recolher')
                     comando_coleetivo_escravo_escravo("Levanta")
-                    break
+                    levantar_mesa(x_origem, y_origem)
+                    Limpa.limpa_jogando(x_origem, y_origem)
+                    return
 
         if apostar:
             # print('\n\n         Hora de apostar         \n\n')

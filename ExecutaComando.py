@@ -260,8 +260,11 @@ while True:
                     elif comando == 'Levanta':
                         status_comando = "levantando"
                         comando = 'Executado'
+                        Firebase.confirmacao_comando_resposta(status_comando)
                         Mesa.levantar_mesa(x_origem, y_origem)
                         Limpa.limpa_jogando(x_origem, y_origem)
+                        valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem)
+                        status_comando = 'Valor ficha: ' + str(valor_fichas)
 
                     elif '/' in comando:
                         blind = comando
