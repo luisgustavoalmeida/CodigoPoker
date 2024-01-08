@@ -14,6 +14,7 @@ import Origem_pg
 import Seleniun
 import Tarefas
 import Aneis
+import Recolher
 
 # from Variaveis_Globais import alterar_global_aviso_sistema
 #
@@ -282,7 +283,8 @@ while True:
                             sentou = Mesa.sentar_mesa(x_origem, y_origem, True, blind, True)
                             if sentou:
                                 status_comando = "Sentou"
-                                Mesa.mesa_recolher(x_origem, y_origem, 2, blind)
+                                # Mesa.mesa_recolher(x_origem, y_origem, 2, blind)
+                                Recolher.mesa_recolher(x_origem, y_origem, 2, blind)
                             else:
                                 status_comando = "Não sentou"
                         else:
@@ -298,7 +300,8 @@ while True:
                             sentou = Mesa.sentar_mesa(x_origem, y_origem, True, blind, True)
                             if sentou:
                                 status_comando = "Sentou"
-                                Mesa.mesa_recolher(x_origem, y_origem, 1, blind)
+                                # Mesa.mesa_recolher(x_origem, y_origem, 1, blind)
+                                Recolher.mesa_recolher(x_origem, y_origem, 1, blind)
                             else:
                                 status_comando = "Não sentou"
                         else:
