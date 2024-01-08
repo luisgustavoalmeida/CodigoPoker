@@ -1019,40 +1019,7 @@ def tarefas_diaris_upando(x_origem, y_origem):
         return lista_tarefas
 
 
-# def blind_sala(x_origem, y_origem):
-#     """
-#         Obtém informações sobre as blinds de uma sala em um jogo.
-#
-#         Parameters:
-#         - x_origem (int): Coordenada x da origem da janela.
-#         - y_origem (int): Coordenada y da origem da janela.
-#
-#         Returns:
-#         - str: Valor da blind da sala ou '0' se não for possível obter a informação.
-#         """
-#
-#     # Configurações para o processo OCR
-#     inveter_cor = True
-#     esca_ciza = True
-#     fator_ampliacao = 3
-#     contraste_pre = 1
-#     contraste_pos = 1.5
-#     config = '--psm 7 --oem 3 -c tessedit_char_whitelist=/0123456789KM'
-#
-#     # Define a região onde a informação da blind está localizada
-#     regiao = (x_origem + 54, y_origem + 99, x_origem + 95, y_origem + 115)
-#
-#     # Realiza a leitura da região para obter a informação da blind
-#     blind = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
-#
-#     if blind is not None:
-#         # Remove espaços em branco e barras para obter o valor da blind
-#         blind = blind.replace(' ', '')
-#         blind = blind.replace('/', '')
-#         print('O valor de blind da mesa : ', blind)
-#         return str(blind)
-#     else:
-#         return '0'
+
 lista_blind = ('500K1M', '100K200K', '50K100K', '20K40K', '10K20K', '5K10K', '2K4K', '1K2K',
                '5001K', '200400', '100200', '50100', '2550', '2040', '1020', '510', '24', '12')
 
@@ -1105,57 +1072,6 @@ def blind_sala(x_origem, y_origem):
     return '0'
 
 
-# def numero_sala(x_origem, y_origem):
-#     """
-#     Extrai e retorna o número da sala de uma aplicação gráfica.
-#
-#     Parameters:
-#     - x_origem (int): Coordenada x da origem da janela.
-#     - y_origem (int): Coordenada y da origem da janela.
-#
-#     Returns:
-#     - str: Número da sala ou "0" se não for encontrado.
-#     """
-#     print('numero_sala')
-#
-#     # Configurações para o processo OCR
-#     inveter_cor = True
-#     esca_ciza = True
-#     fator_ampliacao = 4
-#     contraste_pre = 1.1
-#     contraste_pos = 1.3
-#     config = '--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789'
-#     regiao = (x_origem + 56, y_origem + 77, x_origem + 89, y_origem + 93)
-#
-#     # Aguarda o número da sala ficar visível clicando no anel
-#     for _ in range(30):
-#         # printa se esta disponivel o numero
-#         if (pyautogui.pixelMatchesColor((x_origem + 86), (y_origem + 66), (43, 14, 10), tolerance=5)
-#                 or pyautogui.pixelMatchesColor((x_origem + 86), (y_origem + 66), (54, 27, 8), tolerance=5)):
-#             break
-#         time.sleep(1)
-#         print('Esperando o número da sala ficar visível...')
-#         pyautogui.click(x_origem + 43, y_origem + 388)  # clica no anel
-#
-#     # Extrai o número da sala usando OCR
-#     for _ in range(5):
-#         numero = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)  # pontuação
-#         print('Número da sala:', numero)
-#
-#         if numero is not None:
-#             if numero[-2:] == "12":
-#                 # Remove os dois últimos dígitos
-#                 numero = numero[:-2]
-#
-#             numero = tratar_valor_numerico(numero)
-#             return str(numero)
-#         else:
-#             print("Valor fora da faixa desejada")
-#
-#         time.sleep(1)
-#     return "0"
-
-
 def numero_sala(x_origem, y_origem):
     """
     Extrai e retorna o número da sala de uma aplicação gráfica.
@@ -1175,7 +1091,7 @@ def numero_sala(x_origem, y_origem):
     fator_ampliacao = 4
     contraste_pre = 1.1
     contraste_pos = 1.3
-    regiao = (x_origem + 55, y_origem + 77, x_origem + 165, y_origem + 93)
+    regiao = (x_origem + 55, y_origem + 77, x_origem + 188, y_origem + 93)
 
     # Aguarda o número da sala ficar visível clicando no anel
     for _ in range(30):
@@ -1188,13 +1104,16 @@ def numero_sala(x_origem, y_origem):
         print('Esperando o número da sala ficar visível...')
         pyautogui.click(x_origem + 43, y_origem + 388)  # clica no anel
 
-    configuracoes = [
-        r'--oem 3 --psm 6 outputbase digits',
-        r'--psm 7 --oem 3 -c tessedit_char_whitelist=0123456789',
-        r'--psm 6 --oem 3 -c tessedit_char_whitelist=0123456789',
-        r'--psm 6 --oem 1 -c tessedit_char_whitelist=0123456789',
-        r'--psm 6 -c tessedit_char_whitelist=0123456789',
-    ]
+    # configuracoes = [
+    #     r'--oem 3 --psm 6 outputbase digits',
+    #     r'--psm 7 --oem 3 -c tessedit_char_whitelist=0123456789',
+    #     r'--psm 6 --oem 3 -c tessedit_char_whitelist=0123456789',
+    #     r'--psm 6 --oem 1 -c tessedit_char_whitelist=0123456789',
+    #     r'--psm 6 -c tessedit_char_whitelist=0123456789',
+    # ]
+
+    configuracoes = ['--psm 6 --oem 1']
+
     # Itera sobre cada configuração e realiza o OCR
     for config in configuracoes:
         # Extrai o número da sala usando OCR
@@ -1258,35 +1177,6 @@ def valor_apostar(x_origem, y_origem):
             except Exception as e:
                 print(e)
     return 0
-
-
-# def aviso_do_sistema():
-#     '''Retona True se caso tivert aviso do sistema :
-#     Aviso do sistema
-#     Jocê já está logado no jogo em outra página, esta
-#     Sessão foi cancelada!'''
-#
-#     x_origem, y_origem = Origem_pg.x_y_aviso_sistema()  # tenta encontar a origem quando tem aviso do sistema
-#     if x_origem is not None:  # se tem aviso do sistema
-#         inveter_cor = False
-#         esca_ciza = True
-#         fator_ampliacao = 1
-#         contraste_pre = 1
-#         contraste_pos = 1
-#         config = '--psm 3'
-#         regiao = (x_origem + 321, y_origem + 268, x_origem + 658, y_origem + 433)
-#         valor = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
-#         if valor is not None:
-#             if 'Aviso do sistema' in valor:
-#                 print('foi encontrado um: Aviso do sistema')
-#                 if 'cancelada' in valor:
-#                     print("Mesagem: ", valor)
-#                     Variaveis_Globais.alterar_global_aviso_sistema(True)  # muda o valor da variavel global destinado a sair da cont
-#                     return True
-#         else:
-#             return False
-#     else:
-#         return False
 
 
 def aviso_sistema(x_origem, y_origem):

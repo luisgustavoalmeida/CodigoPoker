@@ -348,6 +348,7 @@ def testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador
 
 
 def recolher_tarefa_upando(x_origem, y_origem):
+    print('recolher_tarefa_upando')
     status_tarefas = "Não tem missão"
     # print("recolher_tarefa_upando")
     if (pyautogui.pixelMatchesColor((x_origem + 627), (y_origem + 35), (228, 194, 31), tolerance=5)
@@ -357,13 +358,15 @@ def recolher_tarefa_upando(x_origem, y_origem):
         status_tarefas = "Recolhido"
         time.sleep(4)
 
-        for i in range(15):
+        for i in range(200):
             pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias para abrir
             print('Click para abrir o tarefas')
+            time.sleep(0.2)
 
             if (pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (73, 71, 76), tolerance=20)
                     or pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (22, 21, 23), tolerance=20)):
                 # testa se ja abriu a janela bora cinza da janela
+                print('Tarefas abertas')
                 time.sleep(3)
 
                 if pyautogui.pixelMatchesColor((x_origem + 495), (y_origem + 125), (0, 51, 248), tolerance=10):
