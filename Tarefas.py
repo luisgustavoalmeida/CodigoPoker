@@ -357,7 +357,7 @@ def recolher_tarefa_upando(x_origem, y_origem):
         status_tarefas = "Recolhido"
         time.sleep(4)
 
-        for i in range(5):
+        for i in range(10):
             pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias para abrir
             print('Click para abrir o tarefas')
 
@@ -415,13 +415,14 @@ def recolher_tarefa_upando(x_origem, y_origem):
 
         if (pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (73, 71, 76), tolerance=20)
                 or pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (22, 21, 23), tolerance=20)):
-            # testa se ja abriu a janela bora cinza da janela
+            # testa se ja abriu a janela borda cinza da janela
             # testa se nao fechou a janela
 
             pyautogui.press('f5')
             print('espera 25 segundos')
             time.sleep(25)
             Limpa.limpa_total(x_origem, y_origem)
+
         return status_tarefas
 
     else:
