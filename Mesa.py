@@ -682,6 +682,12 @@ def sala_minima_niquel(x_origem, y_origem, num_mesa, blind_mesa):
     # time.sleep(0.5)
     cont_erro_entrar_mesa = 0
     blind_sala = None
+
+    if pyautogui.pixelMatchesColor((x_origem + 685), (y_origem + 360), (215, 234, 244), tolerance=1):
+        print("teste_limpo: Esta no Lobby, ta limpo")
+    else:
+        Limpa.limpa_promocao(x_origem,y_origem)
+
     for j in range(20):
         # print(j)
         if pyautogui.pixelMatchesColor((x_origem + 310), (y_origem + 264), (95, 106, 122), tolerance=5):

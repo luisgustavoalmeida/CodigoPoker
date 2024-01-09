@@ -358,10 +358,10 @@ def recolher_tarefa_upando(x_origem, y_origem):
         status_tarefas = "Recolhido"
         time.sleep(4)
 
-        for i in range(200):
+        for i in range(8):
             pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias para abrir
             print('Click para abrir o tarefas')
-            time.sleep(0.2)
+            time.sleep(2)
 
             if (pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (73, 71, 76), tolerance=20)
                     or pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (22, 21, 23), tolerance=20)):
