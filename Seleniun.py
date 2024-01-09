@@ -90,8 +90,8 @@ def abrir_navegador(url, navegador):
         try:
             print('coloca o url no navegador')
             navegador.get(url)
-            print('manda sair do facebook')
-            sair_face(url, navegador)
+            # print('manda sair do facebook')
+            # sair_face(url, navegador)
             return
         except Exception as e:
             print(f"Erro ao abrir o navegador: {e}")

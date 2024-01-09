@@ -234,28 +234,28 @@ def recolhe_fan(x_origem=4, y_origem=266):
     #     pyautogui.doubleClick(x_origem + 683, y_origem + 14)  # clica no icone da roleta para abir
 
 
-def x_y():  # apenas para testes
-    while True:
-        posicao = None
-        print("Procurando coodenada 0 x 0...")
-        for i in range(50):
-            posicao = localizar_imagem(origem, regiao_busca, precisao_origem)
-            if posicao is not None:  # Verifica se a imagem foi encontrada
-                x_origem, y_origem = posicao.left, posicao.top
-                x_origem = int(x_origem)
-                y_origem = int(y_origem)
-                print("x_origem: ", x_origem)
-                print("y_origem: ", y_origem)
-
-                return x_origem, y_origem
-
-            # posicao = localizar_imagem(origemB, regiao_busca, precisao_origem)
-            # if posicao is not None:# Verifica se a imagem foi encontrada
-            #     x_origem, y_origem = posicao.left, posicao.top
-            #     x_origem = int(x_origem)
-            #     y_origem = int(y_origem)
-            #
-            #     return x_origem, y_origem
+# def x_y():  # apenas para testes
+#     while True:
+#         posicao = None
+#         print("Procurando coodenada 0 x 0...")
+#         for i in range(50):
+#             posicao = localizar_imagem(origem, regiao_busca, precisao_origem)
+#             if posicao is not None:  # Verifica se a imagem foi encontrada
+#                 x_origem, y_origem = posicao.left, posicao.top
+#                 x_origem = int(x_origem)
+#                 y_origem = int(y_origem)
+#                 print("x_origem: ", x_origem)
+#                 print("y_origem: ", y_origem)
+#
+#                 return x_origem, y_origem
+#
+#             # posicao = localizar_imagem(origemB, regiao_busca, precisao_origem)
+#             # if posicao is not None:# Verifica se a imagem foi encontrada
+#             #     x_origem, y_origem = posicao.left, posicao.top
+#             #     x_origem = int(x_origem)
+#             #     y_origem = int(y_origem)
+#             #
+#             #     return x_origem, y_origem
 
 
 def x_y_aviso_sistema():

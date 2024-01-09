@@ -120,29 +120,29 @@ def localizar_imagem(imagem, regiao, precisao):
         return None
 
 
-def conta_cadeiras_livres(x_origem, y_origem, cor_cadeira=(254, 207, 0), tolerancia=10):
-    """
-    Conta o número de cadeiras livres ao redor de uma mesa.
-
-    Parâmetros:
-    - x_origem: A coordenada X da origem da mesa.
-    - y_origem: A coordenada Y da origem da mesa.
-    - cor_cadeira: A cor da cadeira em formato RGB.
-    - tolerancia: A tolerância para correspondência de cor.
-
-    Retorna:
-    - O número de cadeiras livres ao redor da mesa.
-    """
-
-    # Usando uma list comprehension e a função sum para contar cadeiras livres
-    cadeiras_livres = sum(
-        1 for valor in dicionario_cadeira.values()
-        if pyautogui.pixelMatchesColor(x_origem + valor[0], y_origem + valor[1], cor_cadeira, tolerance=tolerancia)
-    )
-
-    # Exibindo a mensagem com o número de cadeiras livres
-    print(f"Esta mesa tem {cadeiras_livres} cadeiras livres.")
-    return cadeiras_livres
+# def conta_cadeiras_livres(x_origem, y_origem, cor_cadeira=(254, 207, 0), tolerancia=10):
+#     """
+#     Conta o número de cadeiras livres ao redor de uma mesa.
+#
+#     Parâmetros:
+#     - x_origem: A coordenada X da origem da mesa.
+#     - y_origem: A coordenada Y da origem da mesa.
+#     - cor_cadeira: A cor da cadeira em formato RGB.
+#     - tolerancia: A tolerância para correspondência de cor.
+#
+#     Retorna:
+#     - O número de cadeiras livres ao redor da mesa.
+#     """
+#
+#     # Usando uma list comprehension e a função sum para contar cadeiras livres
+#     cadeiras_livres = sum(
+#         1 for valor in dicionario_cadeira.values()
+#         if pyautogui.pixelMatchesColor(x_origem + valor[0], y_origem + valor[1], cor_cadeira, tolerance=tolerancia)
+#     )
+#
+#     # Exibindo a mensagem com o número de cadeiras livres
+#     print(f"Esta mesa tem {cadeiras_livres} cadeiras livres.")
+#     return cadeiras_livres
 
 
 def cadeiras_livres(x_origem, y_origem, cor_cadeira=(254, 207, 0), tolerancia=10, lugares=9):
@@ -174,29 +174,29 @@ def cadeiras_livres(x_origem, y_origem, cor_cadeira=(254, 207, 0), tolerancia=10
     return True
 
 
-def conta_cadeiras_livres_celular(x_origem, y_origem, cor_celular=(136, 137, 137), tolerancia=8):
-    """
-    Conta o número de cadeiras livres ao redor de uma mesa.
-
-    Parâmetros:
-    - x_origem: A coordenada X da origem da mesa.
-    - y_origem: A coordenada Y da origem da mesa.
-    - cor_cadeira: A cor da cadeira em formato RGB.
-    - tolerancia: A tolerância para correspondência de cor.
-
-    Retorna:
-    - O número de cadeiras livres ao redor da mesa.
-    """
-
-    # Usando uma list comprehension e a função sum para contar cadeiras livres
-    cadeiras_livres = sum(
-        1 for valor in dicionario_celular.values()
-        if pyautogui.pixelMatchesColor(x_origem + valor[0], y_origem + valor[1], cor_celular, tolerance=tolerancia)
-    )
-
-    # Exibindo a mensagem com o número de cadeiras livres
-    print(f"Esta mesa tem {cadeiras_livres} cadeiras com celular.")
-    return cadeiras_livres
+# def conta_cadeiras_livres_celular(x_origem, y_origem, cor_celular=(136, 137, 137), tolerancia=8):
+#     """
+#     Conta o número de cadeiras livres ao redor de uma mesa.
+#
+#     Parâmetros:
+#     - x_origem: A coordenada X da origem da mesa.
+#     - y_origem: A coordenada Y da origem da mesa.
+#     - cor_cadeira: A cor da cadeira em formato RGB.
+#     - tolerancia: A tolerância para correspondência de cor.
+#
+#     Retorna:
+#     - O número de cadeiras livres ao redor da mesa.
+#     """
+#
+#     # Usando uma list comprehension e a função sum para contar cadeiras livres
+#     cadeiras_livres = sum(
+#         1 for valor in dicionario_celular.values()
+#         if pyautogui.pixelMatchesColor(x_origem + valor[0], y_origem + valor[1], cor_celular, tolerance=tolerancia)
+#     )
+#
+#     # Exibindo a mensagem com o número de cadeiras livres
+#     print(f"Esta mesa tem {cadeiras_livres} cadeiras com celular.")
+#     return cadeiras_livres
 
 
 def cadeiras_celular(x_origem, y_origem, cor_celular=(136, 137, 137), tolerancia=8):
@@ -1242,35 +1242,35 @@ def apostar_pagar(x_origem, y_origem):
     return jogou_uma_vez
 
 
-def testa_blind(x_origem, y_origem, blind):
-    ''' Recebe uma estring com o valor do blind da mesa e retorna se esta no blind certo ou não e retorna o numero da mesa '''
-    dentro_mesa = False
-    numero = 0
-    blind_certo = False
-    if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (27, 92, 155), tolerance=5):
-        # testa se esta dentro da mesa
-        print('Esta dentro de uma mesa')
-        dentro_mesa = True
-        blind_sala = OCR_tela.blind_sala(x_origem, y_origem)
-        try:
-            blind = (blind.replace("/", "")).upper()
-        except:
-            print('erro blind')
-
-        if blind == blind_sala:
-            blind_certo = True
-            print("Sentar mesa: Está na sala certa")
-            numero = OCR_tela.numero_sala(x_origem, y_origem)
-            return dentro_mesa, blind_certo, numero
-        else:
-            blind_certo = False
-            print("Sentar mesa: Está na sala errada")
-            numero = OCR_tela.numero_sala(x_origem, y_origem)
-            return dentro_mesa, blind_certo, numero
-
-    else:
-        print('Não esta dentro de uma mesa')
-        return dentro_mesa, blind_certo, numero
+# def testa_blind(x_origem, y_origem, blind):
+#     ''' Recebe uma estring com o valor do blind da mesa e retorna se esta no blind certo ou não e retorna o numero da mesa '''
+#     dentro_mesa = False
+#     numero = 0
+#     blind_certo = False
+#     if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (27, 92, 155), tolerance=5):
+#         # testa se esta dentro da mesa
+#         print('Esta dentro de uma mesa')
+#         dentro_mesa = True
+#         blind_sala = OCR_tela.blind_sala(x_origem, y_origem)
+#         try:
+#             blind = (blind.replace("/", "")).upper()
+#         except:
+#             print('erro blind')
+#
+#         if blind == blind_sala:
+#             blind_certo = True
+#             print("Sentar mesa: Está na sala certa")
+#             numero = OCR_tela.numero_sala(x_origem, y_origem)
+#             return dentro_mesa, blind_certo, numero
+#         else:
+#             blind_certo = False
+#             print("Sentar mesa: Está na sala errada")
+#             numero = OCR_tela.numero_sala(x_origem, y_origem)
+#             return dentro_mesa, blind_certo, numero
+#
+#     else:
+#         print('Não esta dentro de uma mesa')
+#         return dentro_mesa, blind_certo, numero
 
 
 # def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):

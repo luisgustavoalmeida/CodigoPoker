@@ -1,5 +1,5 @@
-import time
 import random
+import time
 
 import pyautogui
 
@@ -332,63 +332,62 @@ def genius_joga_valor(x_origem, y_origem, id, senha, url, navegador, lista_taref
         abre_genius(x_origem, y_origem)
     return
 
-
-def genius_joga_vezes_upando(x_origem, y_origem):
-    abre_genius(x_origem, y_origem)
-    continua_jogando = True
-    regiao = (473 + x_origem, 101 + y_origem, 20, 32)  # (x, y, largura, altura)
-    imagem1 = r'Imagens\Genius\tempo6.png'
-    precisao = 0.9
-
-    while continua_jogando:  # permanece joghando cartas premiadas ate nao ter mais a mição jogar x vezes
-
-        genius_aberto = abre_genius(x_origem, y_origem)
-
-        if genius_aberto:
-            print('espera espera pelo valor de tempo certo')
-
-            for i in range(80):
-                # espera o time
-                posicao = localizar_imagem(imagem1, regiao, precisao)
-                if posicao is not None:  # Verifica se a imagem foi encontrada
-                    print("faz a aposta")
-                    if pyautogui.pixelMatchesColor((x_origem + 449), (y_origem + 655), (193, 119, 70), tolerance=5):
-                        # Testa se tem uma setinha para cima
-                        print("Faz uma aposta aletoria ente Stace e David")
-                        valor_aleatorio = random.choice([True, False])
-                        if valor_aleatorio:
-                            pyautogui.click(x_origem + 603, y_origem + 223)  # clica em Staci ganha
-                            print('Stace')
-                        else:
-                            pyautogui.click(x_origem + 366, y_origem + 223)  # clica em David ganha
-                            print('David')
-                        print('Espera o tempo passar ate sair o premio')
-
-                    else:
-                        for i in range(5):
-                            pyautogui.click(x_origem + 603, y_origem + 223)  # clica em Staci ganha
-                            time.sleep(0.1)
-
-                    time.sleep(10)
-                    break
-
-                time.sleep(0.3)
-
-            status_tarefa = Tarefas.recolher_tarefa_upando(x_origem, y_origem)
-            print(status_tarefa)
-            if status_tarefa == "Não tem missão":
-                continua_jogando = True
-            elif status_tarefa == "Recolhido":
-                continua_jogando = False
-            else:
-                continua_jogando = False
-
-            if not continua_jogando:
-                print("FIM")
-                if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-                    return "sair da conta"
-                return
-    return
+# def genius_joga_vezes_upando(x_origem, y_origem):
+#     abre_genius(x_origem, y_origem)
+#     continua_jogando = True
+#     regiao = (473 + x_origem, 101 + y_origem, 20, 32)  # (x, y, largura, altura)
+#     imagem1 = r'Imagens\Genius\tempo6.png'
+#     precisao = 0.9
+#
+#     while continua_jogando:  # permanece joghando cartas premiadas ate nao ter mais a mição jogar x vezes
+#
+#         genius_aberto = abre_genius(x_origem, y_origem)
+#
+#         if genius_aberto:
+#             print('espera espera pelo valor de tempo certo')
+#
+#             for i in range(80):
+#                 # espera o time
+#                 posicao = localizar_imagem(imagem1, regiao, precisao)
+#                 if posicao is not None:  # Verifica se a imagem foi encontrada
+#                     print("faz a aposta")
+#                     if pyautogui.pixelMatchesColor((x_origem + 449), (y_origem + 655), (193, 119, 70), tolerance=5):
+#                         # Testa se tem uma setinha para cima
+#                         print("Faz uma aposta aletoria ente Stace e David")
+#                         valor_aleatorio = random.choice([True, False])
+#                         if valor_aleatorio:
+#                             pyautogui.click(x_origem + 603, y_origem + 223)  # clica em Staci ganha
+#                             print('Stace')
+#                         else:
+#                             pyautogui.click(x_origem + 366, y_origem + 223)  # clica em David ganha
+#                             print('David')
+#                         print('Espera o tempo passar ate sair o premio')
+#
+#                     else:
+#                         for i in range(5):
+#                             pyautogui.click(x_origem + 603, y_origem + 223)  # clica em Staci ganha
+#                             time.sleep(0.1)
+#
+#                     time.sleep(10)
+#                     break
+#
+#                 time.sleep(0.3)
+#
+#             status_tarefa = Tarefas.recolher_tarefa_upando(x_origem, y_origem)
+#             print(status_tarefa)
+#             if status_tarefa == "Não tem missão":
+#                 continua_jogando = True
+#             elif status_tarefa == "Recolhido":
+#                 continua_jogando = False
+#             else:
+#                 continua_jogando = False
+#
+#             if not continua_jogando:
+#                 print("FIM")
+#                 if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
+#                     return "sair da conta"
+#                 return
+#     return
 
 # x_origem, y_origem = Origem_pg.x_y()
 # genius_joga_vezes_upando(x_origem, y_origem)

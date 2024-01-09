@@ -474,82 +474,82 @@ def pega_valor(guia, endereco):
             service = build('sheets', 'v4', credentials=cred)
 
 
-def pega_valores_em_lote(guia, enderecos):
-    '''
-    # Para um único endereço
-    valor = pega_valores_em_lote("Planilha1", "A1")
-    print("Valor obtido:", valor)
+# def pega_valores_em_lote(guia, enderecos):
+#     '''
+#     # Para um único endereço
+#     valor = pega_valores_em_lote("Planilha1", "A1")
+#     print("Valor obtido:", valor)
+#
+#     # Para uma lista de endereços
+#     enderecos = ["A1", "B1", "C1"]
+#     valores = pega_valores_em_lote("Planilha1", enderecos)
+#     print("Valores obtidos:", valores)'''
+#
+#     print('pega_valores_em_lote')
+#     global cred
+#     global service
+#
+#     if isinstance(enderecos, str):
+#         enderecos = [enderecos]  # Se for um único endereço, coloca em uma lista
+#
+#     regioes = [f"{guia}!{endereco}" for endereco in enderecos]
+#
+#     while True:
+#         try:
+#             # Faz a requisição para obter os valores das células em lote
+#             result = service.spreadsheets().values().batchGet(
+#                 spreadsheetId=planilha_id,
+#                 ranges=regioes).execute()
+#
+#             # Extrai os valores das células e retorna como uma lista de valores
+#             valores_retornados = []
+#             for value_range in result.get('valueRanges', []):
+#                 valores_range = value_range.get('values', [])
+#                 if valores_range:
+#                     valores_retornados.append(valores_range[0][0])
+#                 else:
+#                     valores_retornados.append(None)
+#
+#             print("Valores obtidos em lote:", valores_retornados)
+#
+#             if len(valores_retornados) == 1:
+#                 return valores_retornados[0]  # Retorna o único valor quando a lista tem um item
+#             else:
+#                 return valores_retornados  # Retorna a lista completa quando tem mais de um item
+#
+#         except Exception as error:
+#             print(f"pega_valores_em_lote Ocorreu um erro ao obter os valores das células:")
+#             print(f"Erro: {str(error)}")
+#             IP.tem_internet()
+#             cred = credencial()
+#             service = build('sheets', 'v4', credentials=cred)
 
-    # Para uma lista de endereços
-    enderecos = ["A1", "B1", "C1"]
-    valores = pega_valores_em_lote("Planilha1", enderecos)
-    print("Valores obtidos:", valores)'''
 
-    print('pega_valores_em_lote')
-    global cred
-    global service
-
-    if isinstance(enderecos, str):
-        enderecos = [enderecos]  # Se for um único endereço, coloca em uma lista
-
-    regioes = [f"{guia}!{endereco}" for endereco in enderecos]
-
-    while True:
-        try:
-            # Faz a requisição para obter os valores das células em lote
-            result = service.spreadsheets().values().batchGet(
-                spreadsheetId=planilha_id,
-                ranges=regioes).execute()
-
-            # Extrai os valores das células e retorna como uma lista de valores
-            valores_retornados = []
-            for value_range in result.get('valueRanges', []):
-                valores_range = value_range.get('values', [])
-                if valores_range:
-                    valores_retornados.append(valores_range[0][0])
-                else:
-                    valores_retornados.append(None)
-
-            print("Valores obtidos em lote:", valores_retornados)
-
-            if len(valores_retornados) == 1:
-                return valores_retornados[0]  # Retorna o único valor quando a lista tem um item
-            else:
-                return valores_retornados  # Retorna a lista completa quando tem mais de um item
-
-        except Exception as error:
-            print(f"pega_valores_em_lote Ocorreu um erro ao obter os valores das células:")
-            print(f"Erro: {str(error)}")
-            IP.tem_internet()
-            cred = credencial()
-            service = build('sheets', 'v4', credentials=cred)
-
-
-def celula_esta_vazia(guia, endereco):
-    print('celula_esta_vazia')
-    global cred
-    global service
-    celula = f"{guia}!{endereco}"
-    print(celula)
-
-    try:
-        result = service.spreadsheets().values().get(
-            spreadsheetId=planilha_id,
-            range=celula,
-            valueRenderOption="UNFORMATTED_VALUE"
-        ).execute()
-
-        # Verifica se a lista de valores não está vazia antes de acessar o primeiro elemento
-        values = result.get('values', [])
-        print(values)
-        if len(values) == 0:
-            return True
-        else:
-            return False
-
-    except Exception as e:
-        print(f"celula_esta_vazia Ocorreu um erro celula esta vasia:", e)
-        return False
+# def celula_esta_vazia(guia, endereco):
+#     print('celula_esta_vazia')
+#     global cred
+#     global service
+#     celula = f"{guia}!{endereco}"
+#     print(celula)
+#
+#     try:
+#         result = service.spreadsheets().values().get(
+#             spreadsheetId=planilha_id,
+#             range=celula,
+#             valueRenderOption="UNFORMATTED_VALUE"
+#         ).execute()
+#
+#         # Verifica se a lista de valores não está vazia antes de acessar o primeiro elemento
+#         values = result.get('values', [])
+#         print(values)
+#         if len(values) == 0:
+#             return True
+#         else:
+#             return False
+#
+#     except Exception as e:
+#         print(f"celula_esta_vazia Ocorreu um erro celula esta vasia:", e)
+#         return False
 
 
 def zera_cont_IP(endereco):
@@ -591,33 +591,33 @@ def zera_cont_IP(endereco):
             service = build('sheets', 'v4', credentials=cred)
 
 
-def pega_ID_senha(guia, endereco):
-    global cred
-    global service
-    linha = re.sub("[^0-9]", "", endereco)  # pega a linha
-    regiao = f"{guia}!B{linha}:C{linha}"  # 'R1!B2:C2'
-    while True:
-        try:
-            # Faz a requisição para obter os valores das células
-            result = service.spreadsheets().values().get(
-                spreadsheetId=planilha_id,
-                range=regiao).execute()
-            # Extrai os valores das células B2 e C2
-            values = result.get('values', [])
-            print("O ID e senhas são :", values)
-            if len(values) == 1:
-                id = values[0][0]
-                senha = values[0][1]
-                return id, senha, linha
-        # except (socket.gaierror, TransportError, ServerNotFoundError) as error:
-        except Exception as error:
-            print(f"pega_ID_senha Ocorreu um erro ao obter o valor da célula:")
-            print(f"Erro: {str(error)}")
-            print("Erro pega_ID_senha. Tentando novamente em 5 segundos...")
-            time.sleep(5)
-            IP.tem_internet()
-            cred = credencial()
-            service = build('sheets', 'v4', credentials=cred)
+# def pega_ID_senha(guia, endereco):
+#     global cred
+#     global service
+#     linha = re.sub("[^0-9]", "", endereco)  # pega a linha
+#     regiao = f"{guia}!B{linha}:C{linha}"  # 'R1!B2:C2'
+#     while True:
+#         try:
+#             # Faz a requisição para obter os valores das células
+#             result = service.spreadsheets().values().get(
+#                 spreadsheetId=planilha_id,
+#                 range=regiao).execute()
+#             # Extrai os valores das células B2 e C2
+#             values = result.get('values', [])
+#             print("O ID e senhas são :", values)
+#             if len(values) == 1:
+#                 id = values[0][0]
+#                 senha = values[0][1]
+#                 return id, senha, linha
+#         # except (socket.gaierror, TransportError, ServerNotFoundError) as error:
+#         except Exception as error:
+#             print(f"pega_ID_senha Ocorreu um erro ao obter o valor da célula:")
+#             print(f"Erro: {str(error)}")
+#             print("Erro pega_ID_senha. Tentando novamente em 5 segundos...")
+#             time.sleep(5)
+#             IP.tem_internet()
+#             cred = credencial()
+#             service = build('sheets', 'v4', credentials=cred)
 
 
 def escrever_IP_banido():
@@ -745,17 +745,17 @@ def credenciais(guia, salta_linhas=True):
         print('tentar credenciaias')
 
 
-def marca_horario(guia, linha):
-    endereco = f"G{linha}"
-    hora_atual = datetime.datetime.now().strftime('%H:%M:%S')
-    escrever_celula(hora_atual, guia, endereco)
+# def marca_horario(guia, linha):
+#     endereco = f"G{linha}"
+#     hora_atual = datetime.datetime.now().strftime('%H:%M:%S')
+#     escrever_celula(hora_atual, guia, endereco)
 
 
-def marca_banida(status, guia, linha):
-    endereco = f"G{linha}"
-    escrever_celula(status, guia, endereco)
-    endereco = f"L{linha}"
-    escrever_celula(status, guia, endereco)
+# def marca_banida(status, guia, linha):
+#     endereco = f"G{linha}"
+#     escrever_celula(status, guia, endereco)
+#     endereco = f"L{linha}"
+#     escrever_celula(status, guia, endereco)
 
 
 def marca_caida(status, guia, linha):
@@ -768,25 +768,25 @@ def marca_caida(status, guia, linha):
     # escrever_celula(status, guia, endereco)
 
 
-def marca_ip(guia, linha):
-    endereco = f"H{linha}"
-    ip, com_internete = IP.tem_internet()
-    escrever_celula(ip, guia, endereco)
+# def marca_ip(guia, linha):
+#     endereco = f"H{linha}"
+#     ip, com_internete = IP.tem_internet()
+#     escrever_celula(ip, guia, endereco)
 
 
-def marca_ficha(guia, linha, valor_fichas):
-    endereco = f"E{linha}"
-    escrever_celula(valor_fichas, guia, endereco)
+# def marca_ficha(guia, linha, valor_fichas):
+#     endereco = f"E{linha}"
+#     escrever_celula(valor_fichas, guia, endereco)
 
 
-def marca_pontuacao(guia, linha, pontuacao_tarefas):
-    endereco = f"F{linha}"
-    escrever_celula(pontuacao_tarefas, guia, endereco)
+# def marca_pontuacao(guia, linha, pontuacao_tarefas):
+#     endereco = f"F{linha}"
+#     escrever_celula(pontuacao_tarefas, guia, endereco)
 
 
-def marca_informacoes(valores, guia, linha):
-    endereco = f"E{linha}"
-    escrever_valores(valores, guia, endereco)
+# def marca_informacoes(valores, guia, linha):
+#     endereco = f"E{linha}"
+#     escrever_valores(valores, guia, endereco)
 
 
 def apagar_numerodo_pc(valores, guia, linha):

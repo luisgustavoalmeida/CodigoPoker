@@ -88,6 +88,8 @@ url = str(Google.pega_valor('Dados', 'F1'))
 
 navegador = Seleniun.cria_nevegador()
 Seleniun.abrir_navegador(url, navegador)
+print('manda sair do facebook')
+Seleniun.sair_face(url, navegador)
 
 while True:
     # alterar_global_aviso_sistema(False)

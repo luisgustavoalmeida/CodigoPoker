@@ -102,14 +102,14 @@ dicionario_tarefas_fazer_sabado = {  # caça-níquel da mesa
 }
 
 
-def localizar_imagem(imagem, regiao, precisao):  # ainda tem que implementar
-    try:
-        posicao = pyautogui.locateOnScreen(imagem, region=regiao, confidence=precisao, grayscale=True)
-        return posicao
-    except:
-        print("Ocorreu um erro ao localizar a imagem")
-        time.sleep(2)
-        return None
+# def localizar_imagem(imagem, regiao, precisao):  # ainda tem que implementar
+#     try:
+#         posicao = pyautogui.locateOnScreen(imagem, region=regiao, confidence=precisao, grayscale=True)
+#         return posicao
+#     except:
+#         print("Ocorreu um erro ao localizar a imagem")
+#         time.sleep(2)
+#         return None
 
 
 def comparar_listas(x_origem, y_origem, dia_da_semana):
@@ -156,47 +156,47 @@ def comparar_listas_fazendo_tarefa(tarefas_fazer, x_origem, y_origem):
     return continua_jogando, None
 
 
-def comparar_imagens(tarefas_fazer, x_origem, y_origem):
-    lista_comum = []
-    regiao_tarefas = (x_origem + 270, y_origem + 260, 325, 290)
-    #  print(regiao_tarefas)
-    caminho_tarefas = "Imagens\\TarefasFazer\\"
-    for i in range(2):
-        for nome_tarefa in tarefas_fazer:
-            caminho_tarefa = os.path.join(caminho_tarefas + nome_tarefa + ".png")
-            #  print(caminho_tarefa)
-            tarefa_encontrada = pyautogui.locateOnScreen(caminho_tarefa, region=regiao_tarefas, confidence=0.985, grayscale=True)
-            if tarefa_encontrada is not None:
-                lista_comum.append(nome_tarefa)
-        pyautogui.click(708 + x_origem, 419 + y_origem, button='left')
-        time.sleep(0.2)
+# def comparar_imagens(tarefas_fazer, x_origem, y_origem):
+#     lista_comum = []
+#     regiao_tarefas = (x_origem + 270, y_origem + 260, 325, 290)
+#     #  print(regiao_tarefas)
+#     caminho_tarefas = "Imagens\\TarefasFazer\\"
+#     for i in range(2):
+#         for nome_tarefa in tarefas_fazer:
+#             caminho_tarefa = os.path.join(caminho_tarefas + nome_tarefa + ".png")
+#             #  print(caminho_tarefa)
+#             tarefa_encontrada = pyautogui.locateOnScreen(caminho_tarefa, region=regiao_tarefas, confidence=0.985, grayscale=True)
+#             if tarefa_encontrada is not None:
+#                 lista_comum.append(nome_tarefa)
+#         pyautogui.click(708 + x_origem, 419 + y_origem, button='left')
+#         time.sleep(0.2)
+#
+#     return lista_comum
 
-    return lista_comum
 
-
-def comparar_imagens_tarefa(tarefas_fazer, x_origem, y_origem):  # procura as tares, faz baseado na imagems que sao passada na lista
-
-    lista_comum = []
-    regiao_tarefas = (x_origem + 270, y_origem + 260, 342, 290)
-    precisao = 0.94
-    # print(regiao_tarefas)
-    caminho_tarefas = "Imagens\\TarefasFazer\\"
-    # assim que encontra a plimeira tarefa da lista ele retona como True
-    for nome_tarefa in tarefas_fazer:
-        caminho_tarefa = os.path.join(caminho_tarefas + nome_tarefa + ".png")
-        # print(caminho_tarefa)
-        tarefa_encontrada = localizar_imagem(caminho_tarefa, regiao_tarefas, precisao)
-        if tarefa_encontrada is not None:
-            return True, nome_tarefa
-    pyautogui.click(708 + x_origem, 419 + y_origem, button='left')  # rola para ver se a tarefa esta na segunda parte
-    time.sleep(0.2)
-    for nome_tarefa in tarefas_fazer:
-        caminho_tarefa = os.path.join(caminho_tarefas + nome_tarefa + ".png")
-        # print(caminho_tarefa)
-        tarefa_encontrada = localizar_imagem(caminho_tarefa, regiao_tarefas, precisao)
-        if tarefa_encontrada is not None:
-            return True, nome_tarefa
-    return False, None
+# def comparar_imagens_tarefa(tarefas_fazer, x_origem, y_origem):  # procura as tares, faz baseado na imagems que sao passada na lista
+#
+#     lista_comum = []
+#     regiao_tarefas = (x_origem + 270, y_origem + 260, 342, 290)
+#     precisao = 0.94
+#     # print(regiao_tarefas)
+#     caminho_tarefas = "Imagens\\TarefasFazer\\"
+#     # assim que encontra a plimeira tarefa da lista ele retona como True
+#     for nome_tarefa in tarefas_fazer:
+#         caminho_tarefa = os.path.join(caminho_tarefas + nome_tarefa + ".png")
+#         # print(caminho_tarefa)
+#         tarefa_encontrada = localizar_imagem(caminho_tarefa, regiao_tarefas, precisao)
+#         if tarefa_encontrada is not None:
+#             return True, nome_tarefa
+#     pyautogui.click(708 + x_origem, 419 + y_origem, button='left')  # rola para ver se a tarefa esta na segunda parte
+#     time.sleep(0.2)
+#     for nome_tarefa in tarefas_fazer:
+#         caminho_tarefa = os.path.join(caminho_tarefas + nome_tarefa + ".png")
+#         # print(caminho_tarefa)
+#         tarefa_encontrada = localizar_imagem(caminho_tarefa, regiao_tarefas, precisao)
+#         if tarefa_encontrada is not None:
+#             return True, nome_tarefa
+#     return False, None
 
 
 posicao_recolher_tarefa_y = (542, 463, 384, 305)

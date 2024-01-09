@@ -67,18 +67,18 @@ lista_negra_ip = []
 cont_lista_negra = 0
 
 
-def usuario_IP_nao():
-    # nome_usuario = os.getlogin()
-    if nome_usuario != "PokerIP":
-        ip(LIMITE_IP)
-        return
+# def usuario_IP_nao():
+#     # nome_usuario = os.getlogin()
+#     if nome_usuario != "PokerIP":
+#         ip(LIMITE_IP)
+#         return
 
 
-def usuario_IP_sim():
-    # nome_usuario = os.getlogin()
-    if nome_usuario == "PokerIP":
-        ip(LIMITE_IP)
-        return
+# def usuario_IP_sim():
+#     # nome_usuario = os.getlogin()
+#     if nome_usuario == "PokerIP":
+#         ip(LIMITE_IP)
+#         return
 
 
 def testa_trocar_IP():
@@ -94,7 +94,7 @@ def testa_trocar_IP():
 
 
 def f5_quando_internete_ocila(id, senha, url, navegador):
-    print('f5_quando_internete_ocila')
+    # print('f5_quando_internete_ocila')
     conectado = True
     while True:
         try:
@@ -135,7 +135,7 @@ def tem_internet():
             # response = requests.get(site_aleatorio, timeout=10)
             response = requests.get('http://www.google.com', timeout=5)
             if response.status_code == 200 or response.status_code == 429:
-                print("Conexão com a internet ativa.")
+                print("Conexão com a internet ativa...")
                 cont_erro = 0
                 cont_erro2 = 0
                 com_internete = False
@@ -213,7 +213,7 @@ def nao_tem_internet():
         try:
             response = requests.get('http://www.google.com', timeout=3)
             if response.status_code == 200:
-                print("Conexão com a internet ativa.")
+                print("Conexão com a internet ativa..")
                 time.sleep(0.5)  # Espera por 5 segundos antes de fazer o próximo teste
         except Exception as e:
             print("Sem conexão com a internet. Encerrando os testes...")
@@ -252,15 +252,15 @@ def ip_troca_agora():
             return
 
 
-def contagem_IP():
-    while True:
-        try:
-            cont_IP = int(Google.pega_valor('IP', celula))  # pega o valor de contas que ja rodaram no IP atual
-            print("A contagem atual de IP é:", cont_IP)
-            return cont_IP
-        except Exception as e:
-            print(e)
-            continue
+# def contagem_IP():
+#     while True:
+#         try:
+#             cont_IP = int(Google.pega_valor('IP', celula))  # pega o valor de contas que ja rodaram no IP atual
+#             print("A contagem atual de IP é:", cont_IP)
+#             return cont_IP
+#         except Exception as e:
+#             print(e)
+#             continue
 
 
 def ip(LIMITE_IP):
@@ -478,7 +478,6 @@ def conexao():
         # app_top_window.minimize()  # minimiza a janela
         # return None
 
-
     elif tipo_conexao == "modem":
         print('modem')
         celular = r"Imagens\Conexao\celular.png"
@@ -582,11 +581,11 @@ def obter_status_conexao(nome_conexao):
         return "Conexão não encontrada"
 
 
-def obter_nomes_conexoes():
-    conexoes = psutil.net_if_stats()
-    nomes = conexoes.keys()
-    print(nomes)
-    return nomes
+# def obter_nomes_conexoes():
+#     conexoes = psutil.net_if_stats()
+#     nomes = conexoes.keys()
+#     print(nomes)
+#     return nomes
 
 
 def testa_lista_negra_ip(meu_ip_agora):

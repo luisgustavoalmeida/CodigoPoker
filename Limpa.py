@@ -24,11 +24,11 @@ def teste_limpo(x_origem, y_origem):
 
 
 def ja_esta_logado(x_origem, y_origem):
-    print('Testa aviso do sistema')
+    # print('ja_esta_logado')
     # testa se tem as cores da caixa de mensagem de aviso do sistema
 
     resultado_aviso_sistema = ocr_aviso_sistema(x_origem, y_origem)
-    print(resultado_aviso_sistema)
+    # print(resultado_aviso_sistema)
     aviso_sistema, resposta = resultado_aviso_sistema
 
     if aviso_sistema:
@@ -583,23 +583,23 @@ def limpa_abre_tarefa2(x_origem, y_origem):
     return False
 
 
-def forca_iniciante(x_origem, y_origem):
-    print('forca_iniciante')
-    limpa_total(x_origem, y_origem)
-    # testa se esta visivel o começar ja
-    for i in range(30):
-        print('procura começar ja')
-        if pyautogui.pixelMatchesColor((x_origem + 672), (y_origem + 146), (179, 216, 127), tolerance=5):
-            print('clique começar ja ')
-            pyautogui.click(672 + x_origem, 146 + y_origem)  # clica no começar ja
-            time.sleep(4)
-            limpa_tarefas(x_origem, y_origem)
-            time.sleep(1)
-            iniciantes(x_origem, y_origem)
-            limpa_total(x_origem, y_origem)
-            return
-        time.sleep(1)
-    return
+# def forca_iniciante(x_origem, y_origem):
+#     print('forca_iniciante')
+#     limpa_total(x_origem, y_origem)
+#     # testa se esta visivel o começar ja
+#     for i in range(30):
+#         print('procura começar ja')
+#         if pyautogui.pixelMatchesColor((x_origem + 672), (y_origem + 146), (179, 216, 127), tolerance=5):
+#             print('clique começar ja ')
+#             pyautogui.click(672 + x_origem, 146 + y_origem)  # clica no começar ja
+#             time.sleep(4)
+#             limpa_tarefas(x_origem, y_origem)
+#             time.sleep(1)
+#             iniciantes(x_origem, y_origem)
+#             limpa_total(x_origem, y_origem)
+#             return
+#         time.sleep(1)
+#     return
 
 
 def iniciantes(x_origem, y_origem):
@@ -700,46 +700,46 @@ def faz_tutorial(x_origem, y_origem):
             break
 
 
-def premio_r1(x_origem, y_origem):
-    print('premio_r1')
-    fecha_tarefa(x_origem, y_origem)
-    for i in range(100):
-        # print('espera...')
-        # Roleta 1 aberta esperando bater o premio
-        if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 611), (255, 196, 255), tolerance=20):
-            # testa de roleta 1 ta aberta
-            print("terminou de rodar o R1 da um time")
-            time.sleep(2)
-            print("sai do R1")
-            return True
-        time.sleep(0.05)
-        fecha_tarefa(x_origem, y_origem)
-        limpa_pequeno(x_origem, y_origem)
-        limpa_promocao(x_origem, y_origem)
-        limpa_tarefas(x_origem, y_origem)
-        if teste_limpo(x_origem, y_origem):  # se ta limpo nem entra
-            return True
-    print('deu o tempo')
-    return True
+# def premio_r1(x_origem, y_origem):
+#     print('premio_r1')
+#     fecha_tarefa(x_origem, y_origem)
+#     for i in range(100):
+#         # print('espera...')
+#         # Roleta 1 aberta esperando bater o premio
+#         if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 611), (255, 196, 255), tolerance=20):
+#             # testa de roleta 1 ta aberta
+#             print("terminou de rodar o R1 da um time")
+#             time.sleep(2)
+#             print("sai do R1")
+#             return True
+#         time.sleep(0.05)
+#         fecha_tarefa(x_origem, y_origem)
+#         limpa_pequeno(x_origem, y_origem)
+#         limpa_promocao(x_origem, y_origem)
+#         limpa_tarefas(x_origem, y_origem)
+#         if teste_limpo(x_origem, y_origem):  # se ta limpo nem entra
+#             return True
+#     print('deu o tempo')
+#     return True
 
 
-def premio_r2(x_origem, y_origem):
-    print('premio_r2')
-    for i in range(100):
-        if pyautogui.pixelMatchesColor((x_origem + 365), (y_origem + 580), (22, 0, 100), tolerance=20):
-            # espera o premio sair
-            print("roleta 2 aberta pegou o pemio pode sair")
-            return True
-        time.sleep(0.05)
-        fecha_tarefa(x_origem, y_origem)
-        limpa_pequeno(x_origem, y_origem)
-        limpa_promocao(x_origem, y_origem)
-        limpa_tarefas(x_origem, y_origem)
-        iniciantes(x_origem, y_origem)
-        if teste_limpo(x_origem, y_origem):  # se ta limpo nem entra
-            return True
-    print('deu o tempo')
-    return True
+# def premio_r2(x_origem, y_origem):
+#     print('premio_r2')
+#     for i in range(100):
+#         if pyautogui.pixelMatchesColor((x_origem + 365), (y_origem + 580), (22, 0, 100), tolerance=20):
+#             # espera o premio sair
+#             print("roleta 2 aberta pegou o pemio pode sair")
+#             return True
+#         time.sleep(0.05)
+#         fecha_tarefa(x_origem, y_origem)
+#         limpa_pequeno(x_origem, y_origem)
+#         limpa_promocao(x_origem, y_origem)
+#         limpa_tarefas(x_origem, y_origem)
+#         iniciantes(x_origem, y_origem)
+#         if teste_limpo(x_origem, y_origem):  # se ta limpo nem entra
+#             return True
+#     print('deu o tempo')
+#     return True
 
 
 def aviso_canto_lobby(x_origem, y_origem):

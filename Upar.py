@@ -217,68 +217,67 @@ def levantar_mesa(x_origem, y_origem):
 
     return sentado
 
-
-def passa_ate_lv7(x_origem, y_origem):  # para se fazer tarefas
-    print('passa_ate_lv7')
-    # Firebase.confirmacao_comando_resposta("Jogando mesa")
-    level = 0
-    status_comando = "Jogando mesa"
-
-    while True:
-        # comando = Firebase.comando_escravo
-        # if comando == "Levanta":
-        #     status_comando = levantar_mesa(x_origem, y_origem)
-        #     return
-        #
-        # Firebase.confirmacao_comando_resposta(status_comando)
-
-        limpa_jogando(x_origem, y_origem)
-
-        status_tarefas = recolher_tarefa_upando(x_origem, y_origem)
-
-        if status_tarefas == "Recolhido":
-            lista, so_tem_gire = tarefas_diaris_upando(x_origem, y_origem)
-
-        if pyautogui.pixelMatchesColor((x_origem + 480), (y_origem + 650), (43, 16, 9), tolerance=3):
-            pyautogui.click((x_origem + 640), (y_origem + 72))  # clica para passar animação de recolher
-
-        if pyautogui.pixelMatchesColor((x_origem + 619), (y_origem + 631), (67, 89, 136), tolerance=1):  # testa se esta sentado
-            print("Levantou")
-            print("Emvia um comando para levantar os outros escravos")
-            # Firebase.comando_coleetivo_escravo_escravo("Levanta")
-            return
-
-        else:
-
-            if level < 7:
-                # se nao esta com v azul dentro do quadrado branco e se esta com quadrado branco
-                if ((not pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (59, 171, 228), tolerance=1))
-                        and (pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (255, 255, 255), tolerance=1))):
-                    pyautogui.click((x_origem + 337), (y_origem + 605))
-                    # sleep(0.3)
-                    print("Passou")
-                    try:
-                        level = level_conta(x_origem, y_origem)
-                    except:
-                        print("erro level")
-                    status_comando = "Passou" + " " + so_tem_gire
-
-                elif pyautogui.pixelMatchesColor((x_origem + 480), (y_origem + 650), (255, 255, 255), tolerance=1):  # testa se tem area branca
-                    pyautogui.click((x_origem + 337), (y_origem + 605))
-                    print("Pagou")
-                    try:
-                        level = level_conta(x_origem, y_origem)
-                    except:
-                        print("erro level")
-                    status_comando = "Pagou" + " " + so_tem_gire
-
-            else:
-                if pyautogui.pixelMatchesColor((x_origem + 480), (y_origem + 650), (255, 255, 255), tolerance=1):  # testa se tem area branca
-                    pyautogui.click((x_origem + 528), (y_origem + 605))  # clica no correr
-                    print("Correu")
-                    status_comando = "Correu" + " " + so_tem_gire
-                    if limpa_abre_tarefa2(x_origem, y_origem):
-                        so_tem_gire = 'caonta Upada'
-                    else:
-                        so_tem_gire = 'upando'
-                    pyautogui.click(821 + x_origem, 138 + y_origem)  # fecha tarefa
+# def passa_ate_lv7(x_origem, y_origem):  # para se fazer tarefas
+#     print('passa_ate_lv7')
+#     # Firebase.confirmacao_comando_resposta("Jogando mesa")
+#     level = 0
+#     status_comando = "Jogando mesa"
+#
+#     while True:
+#         # comando = Firebase.comando_escravo
+#         # if comando == "Levanta":
+#         #     status_comando = levantar_mesa(x_origem, y_origem)
+#         #     return
+#         #
+#         # Firebase.confirmacao_comando_resposta(status_comando)
+#
+#         limpa_jogando(x_origem, y_origem)
+#
+#         status_tarefas = recolher_tarefa_upando(x_origem, y_origem)
+#
+#         if status_tarefas == "Recolhido":
+#             lista, so_tem_gire = tarefas_diaris_upando(x_origem, y_origem)
+#
+#         if pyautogui.pixelMatchesColor((x_origem + 480), (y_origem + 650), (43, 16, 9), tolerance=3):
+#             pyautogui.click((x_origem + 640), (y_origem + 72))  # clica para passar animação de recolher
+#
+#         if pyautogui.pixelMatchesColor((x_origem + 619), (y_origem + 631), (67, 89, 136), tolerance=1):  # testa se esta sentado
+#             print("Levantou")
+#             print("Emvia um comando para levantar os outros escravos")
+#             # Firebase.comando_coleetivo_escravo_escravo("Levanta")
+#             return
+#
+#         else:
+#
+#             if level < 7:
+#                 # se nao esta com v azul dentro do quadrado branco e se esta com quadrado branco
+#                 if ((not pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (59, 171, 228), tolerance=1))
+#                         and (pyautogui.pixelMatchesColor((x_origem + 333), (y_origem + 610), (255, 255, 255), tolerance=1))):
+#                     pyautogui.click((x_origem + 337), (y_origem + 605))
+#                     # sleep(0.3)
+#                     print("Passou")
+#                     try:
+#                         level = level_conta(x_origem, y_origem)
+#                     except:
+#                         print("erro level")
+#                     status_comando = "Passou" + " " + so_tem_gire
+#
+#                 elif pyautogui.pixelMatchesColor((x_origem + 480), (y_origem + 650), (255, 255, 255), tolerance=1):  # testa se tem area branca
+#                     pyautogui.click((x_origem + 337), (y_origem + 605))
+#                     print("Pagou")
+#                     try:
+#                         level = level_conta(x_origem, y_origem)
+#                     except:
+#                         print("erro level")
+#                     status_comando = "Pagou" + " " + so_tem_gire
+#
+#             else:
+#                 if pyautogui.pixelMatchesColor((x_origem + 480), (y_origem + 650), (255, 255, 255), tolerance=1):  # testa se tem area branca
+#                     pyautogui.click((x_origem + 528), (y_origem + 605))  # clica no correr
+#                     print("Correu")
+#                     status_comando = "Correu" + " " + so_tem_gire
+#                     if limpa_abre_tarefa2(x_origem, y_origem):
+#                         so_tem_gire = 'caonta Upada'
+#                     else:
+#                         so_tem_gire = 'upando'
+#                     pyautogui.click(821 + x_origem, 138 + y_origem)  # fecha tarefa

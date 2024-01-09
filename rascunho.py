@@ -514,31 +514,31 @@
 #
 # # Exibir a lista ordenada
 # print(lista_salas_ordenada)
-
-
-lista_salas_jogar = [{'134': ('2550', 100, 50)}, {'135': ('2550', 100, 50)}, {'999': ('2550', 100, 50)},
-                     {'1003': ('2550', 100, 50)}, {'1004': ('2550', 100, 50)}, {'1243': ('2550', 100, 50)},
-                     {'1245': ('2550', 100, 50)}, {'1246': ('2550', 100, 50)}, {'1247': ('2550', 100, 50)},
-                     {'1673': ('2550', 100, 50)}, {'1674': ('2550', 100, 50)}, {'1675': ('2550', 100, 50)},
-                     {'1676': ('2550', 100, 50)}, {'1677': ('2550', 100, 50)}, {'1678': ('2550', 100, 50)}]
-
-# Especifica o índice de início como 2 para começar do segundo item
-indice_inicial = 0
-
-print(lista_salas_jogar)
-
-for indice, dicionario in enumerate(lista_salas_jogar, start=indice_inicial):
-    print(indice, dicionario)
-
-    if indice == 1:
-        # # Remover o primeiro item da lista usando pop(0)
-        # primeiro_item = lista_salas_jogar.pop(0)
-        # # Adicionar o primeiro item de volta à lista usando append(), colocando-o no final
-        # lista_salas_jogar.append(primeiro_item)
-
-        # Remova o item da posição específica
-        item_removido = lista_salas_jogar.pop(indice)
-        # Adicione o item ao final da lista
-        lista_salas_jogar.append(item_removido)
-
-print(lista_salas_jogar)
+#
+#
+# lista_salas_jogar = [{'134': ('2550', 100, 50)}, {'135': ('2550', 100, 50)}, {'999': ('2550', 100, 50)},
+#                      {'1003': ('2550', 100, 50)}, {'1004': ('2550', 100, 50)}, {'1243': ('2550', 100, 50)},
+#                      {'1245': ('2550', 100, 50)}, {'1246': ('2550', 100, 50)}, {'1247': ('2550', 100, 50)},
+#                      {'1673': ('2550', 100, 50)}, {'1674': ('2550', 100, 50)}, {'1675': ('2550', 100, 50)},
+#                      {'1676': ('2550', 100, 50)}, {'1677': ('2550', 100, 50)}, {'1678': ('2550', 100, 50)}]
+#
+# # Especifica o índice de início como 2 para começar do segundo item
+# indice_inicial = 0
+#
+# print(lista_salas_jogar)
+#
+# for indice, dicionario in enumerate(lista_salas_jogar, start=indice_inicial):
+#     print(indice, dicionario)
+#
+#     if indice == 1:
+#         # # Remover o primeiro item da lista usando pop(0)
+#         # primeiro_item = lista_salas_jogar.pop(0)
+#         # # Adicionar o primeiro item de volta à lista usando append(), colocando-o no final
+#         # lista_salas_jogar.append(primeiro_item)
+#
+#         # Remova o item da posição específica
+#         item_removido = lista_salas_jogar.pop(indice)
+#         # Adicione o item ao final da lista
+#         lista_salas_jogar.append(item_removido)
+#
+# print(lista_salas_jogar)

@@ -3,7 +3,6 @@ import time
 import pyautogui
 
 import Limpa
-import Origem_pg
 
 # Desabilitar o fail-safe
 pyautogui.FAILSAFE = False
