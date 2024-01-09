@@ -21,3 +21,9 @@ pip install -r requirements.txt
 para atualizar
 
 python.exe -m pip install --upgrade pip
+
+
+
+# não att PyScreeze==0.1.29
+# não att requests-toolbelt==0.9.1
+# não att urllib3==1.26.16
