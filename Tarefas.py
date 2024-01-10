@@ -421,8 +421,9 @@ def recolher_tarefa_upando(x_origem, y_origem):
             # testa se ja abriu a janela borda cinza da janela
             # testa se nao fechou a janela
 
-            pyautogui.press('f5')
-            print('espera 25 segundos')
+            # pyautogui.press('f5')
+            print('espera 30 segundos clica no atualizar')
+            pyautogui.click(94, 63)  # clica no atualizar
             time.sleep(30)
             Limpa.limpa_total(x_origem, y_origem)
 

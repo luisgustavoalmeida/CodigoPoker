@@ -197,7 +197,8 @@ def limpa_pequeno(x_origem, y_origem):
             if limpo:
                 tem_internet()
                 print("erro no torneio semanal, Da um F5")
-                pyautogui.press('f5')
+                # pyautogui.press('f5')
+                pyautogui.click(94, 63)  # clica no atualizar
                 time.sleep(25)
 
     # voce esta convidado a participar de uma festa em las vegasuma surpresa esta esperando por vc
@@ -245,8 +246,9 @@ def limpa_pequeno(x_origem, y_origem):
                         print("Falha na pagina e a tela esta branca, da um F5")
                         tem_internet()
                         # navegador.get(url)
-                        pyautogui.press('f5')
-                        time.sleep(15)
+                        pyautogui.click(94, 63)  # clica no atualizar
+                        # pyautogui.press('f5')
+                        time.sleep(25)
                 except Exception as e:
                     # Lide com o erro aqui, por exemplo, exiba uma mensagem de erro ou registre-o em um arquivo de log
                     print(f'Erro: {e}')
@@ -457,8 +459,9 @@ def limpa_total(x_origem, y_origem):
         cont_erro_limpa += 1
         if cont_erro_limpa >= 20:
             cont_erro_limpa = 0
-            print('Erro no limpa, da um F5')
-            pyautogui.press('f5')
+            print('clica no atualizar')
+            # pyautogui.press('f5')
+            pyautogui.click(94, 63)  # clica no atualizar
             print('espera 25 segundos')
             time.sleep(25)
             print('esperou 25 segundos')
