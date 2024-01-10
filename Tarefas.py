@@ -13,6 +13,9 @@ import OCR_tela
 pyautogui.FAILSAFE = False
 pyautogui.PAUSE = 0
 
+posicao_recolher_presentes = (215, 400, 585, 770)
+posicao_recolher_tarefa_y = (361, 457, 553)
+
 # import Origem_pg
 # from fuzzywuzzy import fuzz #pip install fuzzywuzzy
 # import Levenshtein #pip install python-Levenshtein
@@ -361,19 +364,18 @@ def recolher_tarefa_upando(x_origem, y_origem):
         for i in range(8):
             pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias para abrir
             print('Click para abrir o tarefas')
-            time.sleep(2)
+            time.sleep(0.5)
 
             if (pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (73, 71, 76), tolerance=20)
                     or pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 118), (22, 21, 23), tolerance=20)):
                 # testa se ja abriu a janela bora cinza da janela
                 print('Tarefas abertas')
-                time.sleep(3)
+                time.sleep(0.5)
 
                 if pyautogui.pixelMatchesColor((x_origem + 495), (y_origem + 125), (0, 51, 248), tolerance=10):
                     # testa se esta aberto a lista de tarefas
                     print('Tarefas abertas, conta sem Upar')
-
-                    posicao_recolher_tarefa_y = (361, 457, 553)
+                    time.sleep(3)
 
                     clique_recolher = []
 
@@ -387,11 +389,9 @@ def recolher_tarefa_upando(x_origem, y_origem):
                         for recolhe in clique_recolher:
                             pyautogui.click(x_origem + 767, y_origem + recolhe)  # clica no recolher
                         print("Recoulheu as missões")
-                        time.sleep(4)
+                        time.sleep(3)
                     else:
                         print('Não conseguiu reconhecer o recolhecer escrito em branco')
-
-                    posicao_recolher_presentes = (215, 400, 585, 770)
 
                     for recolhe in posicao_recolher_presentes:
                         pyautogui.click(x_origem + recolhe, y_origem + 246)  # clica nos presentes
