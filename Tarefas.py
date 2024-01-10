@@ -433,7 +433,6 @@ def recolher_tarefa_upando(x_origem, y_origem):
         # print(status_tarefas)
         # pyautogui.click(821 + x_origem, 138 + y_origem)  # fecha tarefa
         return status_tarefas
-
 #
 # #
 # x_origem, y_origem = Origem_pg.x_y()
