@@ -278,7 +278,7 @@ while True:
 
                 if roleta == 'roleta_1':
                     # Joga mesa
-                    if datetime.datetime.now().time() < datetime.time(19, 0, 0):
+                    if datetime.datetime.now().time() < datetime.time(23, 0, 0):
                         if level_conta == "":
                             level_conta = OCR_tela.level_conta(x_origem, y_origem)
                         # Mesa.dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, time_rodou, roleta, level_conta)
