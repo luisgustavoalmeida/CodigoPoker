@@ -381,8 +381,9 @@ def recolher_tarefa_upando(x_origem, y_origem):
 
                     for recolher_y in posicao_recolher_tarefa_y:
                         # print(recolher_y)
-                        if pyautogui.pixelMatchesColor((x_origem + 767), (y_origem + recolher_y), (240, 249, 240), tolerance=25):
-                            # testa se tem "Retirar" em braco
+                        if (pyautogui.pixelMatchesColor((x_origem + 767), (y_origem + recolher_y), (240, 249, 240), tolerance=25)
+                                or pyautogui.pixelMatchesColor((x_origem + 722), (y_origem + recolher_y), (34, 170, 33), tolerance=25)):
+                            # testa se tem "Retirar" em braco ou se a tela ta verde
                             clique_recolher.append(recolher_y)  # adiciona as coordenada de y que deve ser clicadas
 
                     if len(clique_recolher) > 0:
