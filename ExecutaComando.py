@@ -87,9 +87,9 @@ tarefa.start()
 url = str(Google.pega_valor('Dados', 'F1'))
 
 navegador = Seleniun.cria_nevegador()
-Seleniun.abrir_navegador(url, navegador)
+Seleniun.abrir_navegador(url)
 print('manda sair do facebook')
-Seleniun.sair_face(url, navegador)
+Seleniun.sair_face(url)
 
 while True:
     # alterar_global_aviso_sistema(False)
@@ -102,7 +102,7 @@ while True:
         id, senha, linha, cont_IP = Google.credenciais(guia, False)
 
         if id == "":
-            Seleniun.sair_face(url, navegador)
+            Seleniun.sair_face(url)
             id, senha, linha, cont_IP = Google.credenciais(guia, False)
     else:
         id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
@@ -132,7 +132,7 @@ while True:
             # if cont_IP >= LIMITE_IP or cont_IP < 0:  # se a contagem de ip ta fora da faixa vai para a função
             IP.ip(LIMITE_IP)  # testa se o numero de contas esta dentro do limite antes de trocar ip
 
-            entrou_corretamente, stataus_facebook = Seleniun.fazer_login(id, senha, url, navegador)
+            entrou_corretamente, stataus_facebook = Seleniun.fazer_login(id, senha, url)
 
             print('____________________ manda iniciar a tarefa independete_________________')
             # Comando para iniciar a tarefa independente
@@ -149,12 +149,12 @@ while True:
             while True:
 
                 if entrou_corretamente is True:
-                    x_origem, y_origem, status_poker = Origem_pg.carregado_origem(id, senha, url, navegador)
+                    x_origem, y_origem, status_poker = Origem_pg.carregado_origem()
                     print(status_poker)
                     if status_poker is not None:
                         break
 
-                entrou_corretamente, stataus_facebook = Seleniun.teste_logado(id, senha, url, navegador)
+                entrou_corretamente, stataus_facebook = Seleniun.teste_logado()
                 if entrou_corretamente is False:  # se nao entrou no face
                     print("conta nao entou no Facebook")
                     Firebase.confirmacao_comando_resposta('Conta não entou no Facebook: ' + stataus_facebook)
@@ -178,7 +178,7 @@ while True:
                 elif status_poker == 'Tutorial':
                     ja_fez_tutorial = False
                     print('vai fazer tutorial')
-                    entrou_corretamente, stataus_facebook = Seleniun.teste_logado(id, senha, url, navegador)
+                    entrou_corretamente, stataus_facebook = Seleniun.teste_logado()
                     if entrou_corretamente is False:  # se nao entrou no face
                         # Google.marca_caida(stataus_facebook, guia, linha)
                         break
@@ -192,7 +192,7 @@ while True:
                 elif status_poker == 'Atualizar':
                     break
 
-            entrou_corretamente, stataus_facebook = Seleniun.teste_logado(id, senha, url, navegador)
+            entrou_corretamente, stataus_facebook = Seleniun.teste_logado()
             if entrou_corretamente is False:  # se nao entrou no face
                 # Google.marca_caida(stataus_facebook, guia, linha)
                 break
@@ -335,7 +335,7 @@ while True:
 
         ip, com_internet = IP.meu_ip()  # obtem meu endereço de IP
         valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip, level_conta]
-        Seleniun.sair_face(url, navegador)
+        Seleniun.sair_face(url)
         Firebase.confirmacao_escravo('Entrando em uma nova conta')  # troca o ultimo comando enviado
 
         print('-----------------espera terminar tarefa independente----------------')
@@ -358,23 +358,23 @@ while True:
             print("Conta não entou, o Statos é: ", stataus_facebook)
             Google.marca_caida(stataus_facebook, guia, linha)
             id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
-            break
+
 
         elif status_poker == 'Banida':
 
             print("Conta não entou, o Statos é: ", status_poker)
             Google.marca_caida(status_poker, guia, linha)
             id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
-            break
+
 
         elif status_poker == 'Atualizar':
 
             print("Conta não entou, o Statos é: ", status_poker)
             id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
-            break
+
 
         elif entrou_corretamente:  # se nao entrou no face
 
             Google.escrever_valores_lote(valores, guia, linha)  # escreve as informaçoes na planilha apartir da coluna E
             id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
-            break
+

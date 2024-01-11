@@ -497,7 +497,7 @@ def limpa_total_fazendo_tarefa(x_origem, y_origem):
     # fecha_tarefa(x_origem, y_origem) # fecha a lista de tarefas diarias
 
 
-def limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador):  # abre o tarefas
+def limpa_abre_tarefa(x_origem, y_origem):  # abre o tarefas
     print('limpa_abre_tarefa')
     # testa se a tarefa diaria é de conta sem upar cadeado na cartas premidas
     if (pyautogui.pixelMatchesColor((x_origem + 750), (y_origem + 38), (245, 218, 96), tolerance=10)
@@ -513,7 +513,7 @@ def limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador):  # abre o 
         for _ in range(60):
             for _ in range(20):
 
-                f5_quando_internete_ocila(id, senha, url, navegador)
+                f5_quando_internete_ocila()
 
                 pyautogui.doubleClick(x_origem + 635, y_origem + 25)  # clica no tarefas diarias
                 print("Limpa Tarefas diarias")
@@ -545,9 +545,10 @@ def limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador):  # abre o 
                 tem_internet()
                 print("limpa tarefa Da um F5")
                 # pyautogui.press('f5')
-                navegador.get(url)
+                # navegador.get(url)
+                pyautogui.click(86, 59)  # clica no atualizar
                 time.sleep(25)
-                entrou_corretamente, stataus = teste_logado(id, senha, url, navegador)
+                entrou_corretamente, stataus = teste_logado()
                 limpa_total(x_origem, y_origem)
 
             time.sleep(1)

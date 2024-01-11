@@ -46,7 +46,7 @@ url = 'https://www.facebook.com/login.php?next=https%3A%2F%2Fwww.facebook.com%2F
 urlpkrl = "https://apps.facebook.com/rallyacespoker/?fb_source=appcenter&fb_appcenter=1"
 
 navegador = Seleniun.cria_nevegador()
-Seleniun.abrir_navegador(url, navegador)
+Seleniun.abrir_navegador(url)
 while True:
     alterar_global_aviso_sistema(False)
 
@@ -58,7 +58,7 @@ while True:
         id, senha, linha, cont_IP = Google.credenciais(guia)
 
         if id == "":
-            Seleniun.sair_face(url, navegador)
+            Seleniun.sair_face(url)
             id, senha, linha, cont_IP = Google.credenciais(guia)
     else:
         id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
@@ -91,7 +91,7 @@ while True:
             # if cont_IP >= LIMITE_IP or cont_IP < 0:  # se a contagem de ip ta fora da faixa vai para a função
             IP.ip(LIMITE_IP)  # testa se o numero de contas esta dentro do limite antes de trocar ip
 
-            entrou_corretamente, stataus_facebook = Seleniun.fazer_login(id, senha, url, navegador, False)
+            entrou_corretamente, stataus_facebook = Seleniun.fazer_login(id, senha, url, False)
 
             if entrou_corretamente is False:  # se nao entrou no face
                 print("Conta nao entou no Facebook")
@@ -113,12 +113,12 @@ while True:
             while True:
 
                 if entrou_corretamente is True:
-                    x_origem, y_origem, status_poker = Origem_pg.carregado_origem(id, senha, urlpkrl, navegador)
+                    x_origem, y_origem, status_poker = Origem_pg.carregado_origem()
                     print(status_poker)
                     if status_poker is not None:
                         break
 
-                entrou_corretamente, stataus_facebook = Seleniun.teste_logado(id, senha, urlpkrl, navegador)
+                entrou_corretamente, stataus_facebook = Seleniun.teste_logado()
                 if entrou_corretamente is False:  # se nao entrou no face
                     print("conta nao entou no Facebook")
                     # Google.marca_caida(stataus_facebook, guia, linha)
@@ -139,7 +139,7 @@ while True:
                 elif status_poker == 'Tutorial':
                     ja_fez_tutorial = False
                     print('vai fazer tutorial')
-                    entrou_corretamente, stataus_facebook = Seleniun.teste_logado(id, senha, url, navegador)
+                    entrou_corretamente, stataus_facebook = Seleniun.teste_logado()
                     if entrou_corretamente is False:  # se nao entrou no face
                         # Google.marca_caida(stataus_facebook, guia, linha)
                         break
@@ -153,7 +153,7 @@ while True:
                 elif status_poker == 'Atualizar':
                     break
 
-            entrou_corretamente, stataus_facebook = Seleniun.teste_logado(id, senha, url, navegador)
+            entrou_corretamente, stataus_facebook = Seleniun.teste_logado()
             if entrou_corretamente is False:  # se nao entrou no face
                 # Google.marca_caida(stataus_facebook, guia, linha)
                 break
@@ -170,7 +170,7 @@ while True:
                 # valor_fichas = OCR_tela.valor_fichas_perfil(x_origem, y_origem)
                 # level_conta = OCR_tela.level_conta(x_origem, y_origem)
 
-                roleta, hora_que_rodou, time_rodou = Roletas.roletas(x_origem, y_origem, id, senha, url, navegador)
+                roleta, hora_que_rodou, time_rodou = Roletas.roletas(x_origem, y_origem)
                 print("roleta: ", roleta)
 
                 if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
@@ -182,17 +182,17 @@ while True:
 
                         print("dia da semana", dia_da_semana)
 
-                        conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)  # retorna se a conta ta upada ou nao
+                        conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem)  # retorna se a conta ta upada ou nao
                         if conta_upada:
-                            IP.f5_quando_internete_ocila(id, senha, url, navegador)
-                            entrou_corretamente, stataus_facebook = Seleniun.teste_logado(id, senha, url, navegador)
+                            IP.f5_quando_internete_ocila()
+                            entrou_corretamente, stataus_facebook = Seleniun.teste_logado()
                             if not entrou_corretamente:  # se nao entrou no face
                                 # Google.marca_caida(stataus_facebook, guia, linha)
                                 break
                             pontuacao_tarefas = OCR_tela.pontuacao_tarefas(x_origem, y_origem)
                             Limpa.fecha_tarefa(x_origem, y_origem)
 
-                entrou_corretamente, stataus_facebook = Seleniun.teste_logado(id, senha, url, navegador)
+                entrou_corretamente, stataus_facebook = Seleniun.teste_logado()
                 if entrou_corretamente is False:  # se nao entrou no face
                     # Google.marca_caida(stataus_facebook, guia, linha)
                     break
@@ -239,7 +239,7 @@ while True:
 
         ip, com_internet = IP.meu_ip()  # obtem meu endereço de IP
         valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip, level_conta]
-        Seleniun.sair_face(url, navegador)
+        Seleniun.sair_face(url)
 
         id = ""
 

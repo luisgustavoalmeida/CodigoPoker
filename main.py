@@ -31,7 +31,7 @@ nome_usuario = os.getlogin()
 nome_computador = socket.gethostname()
 LIMITE_IP = 6
 
-print("limite de troca de IP: ", LIMITE_IP)
+# print("limite de troca de IP: ", LIMITE_IP)
 
 id = "x"
 senha = ""
@@ -90,22 +90,27 @@ tarefa = threading.Thread(target=tarefa_independente)
 tarefa.start()
 
 url = str(Google.pega_valor('Dados', 'F1'))
+pega_url = False
 
 navegador = Seleniun.cria_nevegador()
-Seleniun.abrir_navegador(url, navegador)
+Seleniun.abrir_navegador(url)
+
 while True:
     alterar_global_aviso_sistema(False)
 
     guia = HoraT.mudar_guia(id, guia)
 
-    url = str(Google.pega_valor('Dados', 'F1'))
+    if pega_url:
+        url = str(Google.pega_valor('Dados', 'F1'))
+    pega_url = True
 
     print("guia:", guia)
+
     if id == id_novo or id == "":
         id, senha, linha, cont_IP = Google.credenciais(guia)
 
         if id == "":
-            Seleniun.sair_face(url, navegador)
+            Seleniun.sair_face(url)
             guia = HoraT.mudar_guia(id, guia)
             id, senha, linha, cont_IP = Google.credenciais(guia)
 
@@ -140,7 +145,7 @@ while True:
             # if cont_IP >= LIMITE_IP or cont_IP < 0:  # se a contagem de ip ta fora da faixa vai para a função
             IP.ip(LIMITE_IP)  # testa se o numero de contas esta dentro do limite antes de trocar ip
 
-            entrou_corretamente, stataus_facebook = Seleniun.fazer_login(id, senha, url, navegador)
+            entrou_corretamente, stataus_facebook = Seleniun.fazer_login(id, senha, url)
 
             print('____________________ manda iniciar a tarefa independete_________________')
             # Comando para iniciar a tarefa independente
@@ -155,12 +160,12 @@ while True:
             while True:
 
                 if entrou_corretamente is True:
-                    x_origem, y_origem, status_poker = Origem_pg.carregado_origem(id, senha, url, navegador)
+                    x_origem, y_origem, status_poker = Origem_pg.carregado_origem()
                     print(status_poker)
                     if status_poker is not None:
                         break
 
-                entrou_corretamente, stataus_facebook = Seleniun.teste_logado(id, senha, url, navegador)
+                entrou_corretamente, stataus_facebook = Seleniun.teste_logado()
                 if entrou_corretamente is False:  # se nao entrou no face
                     print("conta nao entou no Facebook")
                     # Google.marca_caida(stataus_facebook, guia, linha)
@@ -183,7 +188,7 @@ while True:
                 elif status_poker == 'Tutorial':
                     ja_fez_tutorial = False
                     print('vai fazer tutorial')
-                    entrou_corretamente, stataus_facebook = Seleniun.teste_logado(id, senha, url, navegador)
+                    entrou_corretamente, stataus_facebook = Seleniun.teste_logado()
                     if entrou_corretamente is False:  # se nao entrou no face
                         break
                     time.sleep(2)
@@ -196,7 +201,7 @@ while True:
                 elif status_poker == 'Atualizar':
                     break
 
-            entrou_corretamente, stataus_facebook = Seleniun.teste_logado(id, senha, url, navegador)
+            entrou_corretamente, stataus_facebook = Seleniun.teste_logado()
             if entrou_corretamente is False:  # se nao entrou no face
                 # Google.marca_caida(stataus_facebook, guia, linha)
                 break
@@ -214,7 +219,7 @@ while True:
                 # valor_fichas = OCR_tela.valor_fichas_perfil(x_origem, y_origem)
                 # level_conta = OCR_tela.level_conta(x_origem, y_origem)
 
-                roleta, hora_que_rodou, time_rodou = Roletas.roletas(x_origem, y_origem, id, senha, url, navegador)
+                roleta, hora_que_rodou, time_rodou = Roletas.roletas(x_origem, y_origem)
                 print("roleta: ", roleta)
 
                 if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
@@ -226,17 +231,17 @@ while True:
 
                         print("dia da semana", dia_da_semana)
 
-                        conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)  # retorna se a conta ta upada ou nao
+                        conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem)  # retorna se a conta ta upada ou nao
                         if conta_upada:
-                            IP.f5_quando_internete_ocila(id, senha, url, navegador)
-                            entrou_corretamente, stataus_facebook = Seleniun.teste_logado(id, senha, url, navegador)
+                            IP.f5_quando_internete_ocila()
+                            entrou_corretamente, stataus_facebook = Seleniun.teste_logado()
                             if not entrou_corretamente:  # se nao entrou no face
                                 # Google.marca_caida(stataus_facebook, guia, linha)
                                 break
                             pontuacao_tarefas = OCR_tela.pontuacao_tarefas(x_origem, y_origem)
                             Limpa.fecha_tarefa(x_origem, y_origem)
 
-                entrou_corretamente, stataus_facebook = Seleniun.teste_logado(id, senha, url, navegador)
+                entrou_corretamente, stataus_facebook = Seleniun.teste_logado()
                 if entrou_corretamente is False:  # se nao entrou no face
                     # Google.marca_caida(stataus_facebook, guia, linha)
                     break
@@ -333,7 +338,7 @@ while True:
                         print('\n TAREFAS \n')
 
                         (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas, lista_tarefas_fazer, pontos_disponiveis,
-                         hora_fim_tarefa) = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador, dia_da_semana)
+                         hora_fim_tarefa) = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, dia_da_semana)
 
                         time.sleep(2)
 
@@ -353,7 +358,7 @@ while True:
                             Mesa.joga(x_origem, y_origem, id, senha, url, navegador, 200)
 
                             (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas, lista_tarefas_fazer, pontos_disponiveis,
-                             hora_fim_tarefa) = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador, dia_da_semana)
+                             hora_fim_tarefa) = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, dia_da_semana)
 
                         print("--------------parte 2---------------")
                         if parar_tarefas:
@@ -367,7 +372,7 @@ while True:
                             Cartas.cartas_premidas_joga_vezes(x_origem, y_origem, id, senha, url, navegador)
 
                             (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas, lista_tarefas_fazer, pontos_disponiveis,
-                             hora_fim_tarefa) = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador, dia_da_semana)
+                             hora_fim_tarefa) = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, dia_da_semana)
 
                         print("--------------parte 3---------------")
                         if parar_tarefas:
@@ -381,7 +386,7 @@ while True:
                             Cartas.cartas_premidas_joga_valor(x_origem, y_origem, id, senha, url, navegador, lista_tarefas_fazer, valor_fichas)
 
                             (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas, lista_tarefas_fazer, pontos_disponiveis,
-                             hora_fim_tarefa) = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador, dia_da_semana)
+                             hora_fim_tarefa) = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, dia_da_semana)
 
                         if parar_tarefas:
                             break
@@ -394,7 +399,7 @@ while True:
                             Genius.genius_joga_vezes(x_origem, y_origem, id, senha, url, navegador)
 
                             (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas, lista_tarefas_fazer, pontos_disponiveis,
-                             hora_fim_tarefa) = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador, dia_da_semana)
+                             hora_fim_tarefa) = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, dia_da_semana)
 
                         print("--------------parte 4---------------")
                         if parar_tarefas:
@@ -408,7 +413,7 @@ while True:
                             Genius.genius_joga_valor(x_origem, y_origem, id, senha, url, navegador, lista_tarefas_fazer)
 
                             (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas, lista_tarefas_fazer, pontos_disponiveis,
-                             hora_fim_tarefa) = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador, dia_da_semana)
+                             hora_fim_tarefa) = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, dia_da_semana)
 
                         print("--------------parte 5---------------")
                         if parar_tarefas:
@@ -423,7 +428,7 @@ while True:
                             Slot.solot_joga_vezes(x_origem, y_origem, id, senha, url, navegador, True)
 
                             (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas, lista_tarefas_fazer, pontos_disponiveis,
-                             hora_fim_tarefa) = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador, dia_da_semana)
+                             hora_fim_tarefa) = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, dia_da_semana)
 
                         print("--------------parte 6---------------")
                         if parar_tarefas:
@@ -438,7 +443,7 @@ while True:
                             Slot.solot_joga_vezes(x_origem, y_origem, id, senha, url, navegador, False)
 
                             (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas, lista_tarefas_fazer, pontos_disponiveis,
-                             hora_fim_tarefa) = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador, dia_da_semana)
+                             hora_fim_tarefa) = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, dia_da_semana)
 
                         print("--------------parte 7---------------")
                         if parar_tarefas:
@@ -453,7 +458,7 @@ while True:
                             Mesa.joga(x_origem, y_origem, id, senha, url, navegador, 2000)
 
                             (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas, lista_tarefas_fazer, pontos_disponiveis,
-                             hora_fim_tarefa) = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador, dia_da_semana)
+                             hora_fim_tarefa) = Tarefas.testa_continuar_fazendo_tarefa(x_origem, y_origem, id, dia_da_semana)
 
                         print("--------------parte 8---------------")
                         if parar_tarefas:
@@ -471,7 +476,7 @@ while True:
 
         ip, com_internet = IP.meu_ip()  # obtem meu endereço de IP
         valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip, level_conta]
-        Seleniun.sair_face(url, navegador)
+        Seleniun.sair_face(url)
 
         print('-----------------espera terminar tarefa independente----------------')
         # Aguardar a tarefa terminar
@@ -520,9 +525,9 @@ while True:
         if guia != guia_recebida:
 
             if (nome_computador == "PC-I5-8600K") and (nome_usuario == "PokerIP"):
-                Seleniun.busca_link(navegador)
+                Seleniun.busca_link()
             elif nome_computador == "PC-I7-9700KF":
-                Seleniun.busca_link(navegador)
+                Seleniun.busca_link()
 
             dia_da_semana = datetime.datetime.now().weekday()  # busca o dia da semana 0 segunda 1 terça ... 6 domeingo
             url = str(Google.pega_valor('Dados', 'F1'))

@@ -32,7 +32,7 @@ def localizar_imagem(imagem, regiao, precisao):
         return None
 
 
-def carregado_origem(id, senha, url, navegador):  # navegador
+def carregado_origem():  # navegador
     status_conta = None
     cont_erro = 0
 
@@ -158,7 +158,8 @@ def carregado_origem(id, senha, url, navegador):  # navegador
                     print('manda trocar IP')
                     IP.ip_troca_agora()
                     print('origem da um f5 e espera 15 segundos ')
-                    navegador.get(url)
+                    # navegador.get(url)
+                    pyautogui.click(86, 59)  # clica no atualizar
                     # pyautogui.press('f5')
                     time.sleep(25)
                     continue
@@ -167,8 +168,8 @@ def carregado_origem(id, senha, url, navegador):  # navegador
 
             # Espera x segundos antes da próxima tentativa
             # time.sleep(1)
-            IP.f5_quando_internete_ocila(id, senha, url, navegador)
-            entrou_corretamente, stataus = Seleniun.teste_logado(id, senha, url, navegador)
+            IP.f5_quando_internete_ocila()
+            entrou_corretamente, stataus = Seleniun.teste_logado()
             try:
                 if (pyautogui.pixelMatchesColor(215, 1000, (36, 37, 38),
                                                 tolerance=5)  # mensagem do canto inferior esquedo " Você esta offiline no momento."
@@ -189,7 +190,8 @@ def carregado_origem(id, senha, url, navegador):  # navegador
                                 or pyautogui.pixelMatchesColor(700, 650, (238, 238, 238), tolerance=7)):  # tela cinza clara com cara triste
                             print("Falha na pagina e a tela esta branca, da um F5")
                             IP.tem_internet()
-                            navegador.get(url)
+                            # navegador.get(url)
+                            pyautogui.click(86, 59)  # clica no atualizar
                             # pyautogui.press('f5')
                             time.sleep(15)
                     except Exception as e:
@@ -212,7 +214,8 @@ def carregado_origem(id, senha, url, navegador):  # navegador
             # Seleniun.atualizar_pagina(navegador, url)
             IP.tem_internet()
             print('origem da um f5 ')
-            navegador.get(url)
+            # navegador.get(url)
+            pyautogui.click(86, 59)  # clica no atualizar
             # pyautogui.press('f5')
             time.sleep(15)
 

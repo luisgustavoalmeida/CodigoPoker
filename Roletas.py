@@ -13,7 +13,7 @@ pyautogui.FAILSAFE = False  # Desabilitar o fail-safe
 pyautogui.PAUSE = 0
 
 
-def roletas(x_origem, y_origem, id, senha, url, navegador):
+def roletas(x_origem, y_origem):
     cont_roleta1 = 0
     TEMPO_ESPERA = 1200  # tempo de tolerancia para esperar em, segundos
     roleta = "sem_roleta"
@@ -58,9 +58,9 @@ def roletas(x_origem, y_origem, id, senha, url, navegador):
 
                     time.sleep(0.5)
                     pyautogui.click(490 + x_origem, 70 + y_origem, )  # clique bobo para passar alguma naimação
-                    IP.f5_quando_internete_ocila(id, senha, url, navegador)
+                    IP.f5_quando_internete_ocila()
 
-                IP.f5_quando_internete_ocila(id, senha, url, navegador)
+                IP.f5_quando_internete_ocila()
 
             elif (pyautogui.pixelMatchesColor((x_origem + 680), (y_origem + 14), (227, 235, 248), tolerance=20)
                   or pyautogui.pixelMatchesColor((x_origem + 680), (y_origem + 14), (146, 172, 208), tolerance=20)):
@@ -141,9 +141,9 @@ def roletas(x_origem, y_origem, id, senha, url, navegador):
                         time_rodou = time.perf_counter()
                         return roleta, None, time_rodou
 
-                    IP.f5_quando_internete_ocila(id, senha, url, navegador)
+                    IP.f5_quando_internete_ocila()
                     time.sleep(1)
-                IP.f5_quando_internete_ocila(id, senha, url, navegador)
+                IP.f5_quando_internete_ocila()
 
         # testa se apareceu os premios
         if pyautogui.pixelMatchesColor((x_origem + 490), (y_origem + 612), (255, 196, 255), tolerance=20):
@@ -170,7 +170,7 @@ def roletas(x_origem, y_origem, id, senha, url, navegador):
                 print("Jarodou todas as roletas do dia")
                 break
 
-        entrou_corretamente, stataus = Seleniun.teste_logado(id, senha, url, navegador)
+        entrou_corretamente, stataus = Seleniun.teste_logado()
         # fazer restes se tem mesagem de duas pessoas logado
 
         Aneis.recolhe_aneis(x_origem, y_origem)
@@ -182,11 +182,11 @@ def roletas(x_origem, y_origem, id, senha, url, navegador):
         if cont_roleta1 >= 5:
             print("da um atualizar na pagina")
             IP.tem_internet()
-            Seleniun.atualizar_pagina(navegador, url)
+            Seleniun.atualizar_pagina()
             cont_roleta1 = 0
             time.sleep(15)
             # da um F5
 
-        IP.f5_quando_internete_ocila(id, senha, url, navegador)
+        IP.f5_quando_internete_ocila()
         Limpa.limpa_total(x_origem, y_origem)
     return roleta, "00:00:00", 0

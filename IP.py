@@ -93,7 +93,7 @@ def testa_trocar_IP():
         return
 
 
-def f5_quando_internete_ocila(id, senha, url, navegador):
+def f5_quando_internete_ocila():
     # print('f5_quando_internete_ocila')
     conectado = True
     while True:
@@ -106,12 +106,13 @@ def f5_quando_internete_ocila(id, senha, url, navegador):
                     try:
                         print("------------------F5-----------------")
                         # pyautogui.press('f5')
-                        navegador.get(url)
+                        # navegador.get(url)
+                        pyautogui.click(86, 59)  # clica no atualizar
                         time.sleep(15)
                     except Exception as e:
                         print('erro autogui: ', e)
 
-                    entrou_corretamente, stataus = Seleniun.teste_logado(id, senha, url, navegador)
+                    entrou_corretamente, stataus = Seleniun.teste_logado()
                 return True
         except Exception as e:
             print("Sem conexão com a internet...")

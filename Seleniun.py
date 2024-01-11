@@ -66,24 +66,24 @@ options.add_experimental_option("detach", True)  # para manter o navegador abert
 # navegador = webdriver.Chrome(service=servico, options=options)  # Inicializar o driver do navegador
 # print(navegador)
 
+navegador = None
+url = None
+id = ''
+senha = ''
+
 
 def cria_nevegador():
+    global navegador  # Referenciar a variável global
     print('Criando o navegador')
     navegador = webdriver.Chrome(service=servico, options=options)  # Inicializar o driver do navegador
     # Redefina o tempo limite para 10 segundos para a segunda parte do código
     navegador.set_page_load_timeout(80)
     return navegador
-    # while True:
-    #     try:
-    #         navegador = webdriver.Chrome(service=servico, options=options)  # Inicializar o driver do navegador
-    #         return navegador
-    #     except Exception as e:
-    #         print("Ocorreu um erro ao criar o navegador:")
-    #         print(e)
-    #         time.sleep(5)
 
 
-def abrir_navegador(url, navegador):
+def abrir_navegador(urli):
+    global navegador, url  # Referenciar a variável global
+    url = urli
     while True:
         print("abrir navegador")
         IP.tem_internet()
@@ -100,7 +100,8 @@ def abrir_navegador(url, navegador):
             continue
 
 
-def se_esta_lagado(navegador):
+def se_esta_lagado():
+    global navegador
     # Especifique o nome do cookie associado ao estado de login do Facebook
     nome_cookie = "c_user"
 
@@ -124,7 +125,8 @@ def se_esta_lagado(navegador):
     #     return False
 
 
-def pega_url(navegador, url):
+def pega_url():
+    global navegador
     while True:
         IP.tem_internet()
         try:
@@ -140,8 +142,8 @@ def pega_url(navegador, url):
             time.sleep(15)
 
 
-def teste_logado(id, senha, url, navegador):
-    url_atual = pega_url(navegador, url)
+def teste_logado():
+    url_atual = pega_url()
     if ("/pokerbrasil?" in url_atual) or ("/rallyacespoker" in url_atual):
         # print("teste_logado ok")
         entrou = True
@@ -151,20 +153,29 @@ def teste_logado(id, senha, url, navegador):
     elif ("/pokerbrasil?" not in url_atual) or ("/rallyacespoker" in url_atual):  # se nao esta logado
         print("teste_logado deslogado")
         IP.tem_internet()
-        entrou, status = fazer_login(id, senha, url, navegador)
+        entrou, status = fazer_login()
         return entrou, status
 
 
-def fazer_login(id, senha, url, navegador, loga_pk=True):
+def fazer_login(id_novo='', senha_novo='', url_novo='', loga_pk=True):
+    global navegador, url, id, senha
+
+    if url != url_novo and url_novo != '':
+        url = url_novo
+
+    if id_novo != '':
+        id = id_novo
+        senha = senha_novo
+
     while True:
 
-        if se_esta_lagado(navegador) is True:
-            sair_face(url, navegador)
+        if se_esta_lagado() is True:
+            sair_face(url)
 
         print("faz login")
         IP.tem_internet()
         print('continua login')
-        url_atual = pega_url(navegador, url)
+        url_atual = pega_url()
 
         # print(url_atual)
 
@@ -184,7 +195,7 @@ def fazer_login(id, senha, url, navegador, loga_pk=True):
                 for i in range(20):
 
                     for _ in range(100):
-                        url_atual = pega_url(navegador, url)
+                        url_atual = pega_url()
                         if "/login/" not in url_atual:
                             break
                         time.sleep(0.02)
@@ -435,7 +446,7 @@ def fazer_login(id, senha, url, navegador, loga_pk=True):
                     elif ("/login/?privacy" in url_atual) or ("/device-based/regular/login/?" in url_atual):
                         print("senha incorreta")
                         print('manda sair')
-                        sair_face(url, navegador)
+                        sair_face(url)
 
                         entrou = False
                         status = "Senha incorreta"
@@ -464,20 +475,23 @@ def fazer_login(id, senha, url, navegador, loga_pk=True):
 
                 print("Tempo limite excedido ao procurar o elemento faz_login.")
                 print(e)
-                sair_face(url, navegador)
+                sair_face(url)
                 continue
 
         else:
             print('Padrao de URL não esperado')
+            sair_face(url)
 
-        abrir_navegador(url, navegador)
-
-
-def fechar_navegador(navegador):
-    navegador.quit()
+        # abrir_navegador()
 
 
-def abrir_fechar_guia(navegador, url, max_tentativas=5):
+# def fechar_navegador():
+#     global navegador
+#     navegador.quit()
+
+
+def abrir_fechar_guia(max_tentativas=5):
+    global navegador, url
     print("abrir_fechar_guia")
     tentativas = 0
 
@@ -532,7 +546,11 @@ def abrir_fechar_guia(navegador, url, max_tentativas=5):
 #         print("Tempo limite excedido ao aguardar única guia aberta.")
 
 
-def sair_face(url, navegador):
+def sair_face(url_novo=''):
+    global navegador, url
+    if url != url_novo and url_novo != '':
+        url = url_novo
+
     for _ in range(30):
 
         print("sair do facebook\n\n\n")
@@ -553,7 +571,7 @@ def sair_face(url, navegador):
             # Exclui todos os cookies
             # navegador.delete_all_cookies()
 
-            abrir_fechar_guia(navegador, url)
+            abrir_fechar_guia()
             print("nova guia ok")
             # recarregar_pagina(navegador, url)
 
@@ -639,7 +657,8 @@ def sair_face(url, navegador):
                 print("Elemento não encontrado na página.", e)
 
 
-def atualizar_pagina(navegador, url):
+def atualizar_pagina():
+    global navegador, url
     while True:
         IP.tem_internet()  # testa se tem internete enste de atualizar a pagina
         try:
@@ -648,11 +667,12 @@ def atualizar_pagina(navegador, url):
         except Exception as e:
             print("Erro de conexão com a internet. Tentando novamente em 5 segundos...")
             print(e)
-            time.sleep(10)
+            time.sleep(2)
             continue
 
 
-def busca_link(navegador):
+def busca_link():
+    global navegador
     print('busca_link')
 
     if nome_usuario == "PokerIP":  # and (nome_computador == "PC-I5-8600K"):
@@ -676,8 +696,8 @@ def busca_link(navegador):
 
     time.sleep(3)
 
-    if se_esta_lagado(navegador) is True:
-        sair_face(url, navegador)
+    if se_esta_lagado() is True:
+        sair_face(url)
 
     print('faz login')
     email_field = WebDriverWait(navegador, 10).until(EC.presence_of_element_located((By.NAME, 'email')))

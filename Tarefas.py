@@ -1,5 +1,4 @@
 import datetime
-import os
 import time
 
 import pyautogui
@@ -262,12 +261,12 @@ def meta_tarefas(x_origem, y_origem):
         return False, pontuacao_tarefas
 
 
-def tem_tarefa_para_recolher(x_origem, y_origem, id, senha, url, navegador):
-    if pyautogui.pixelMatchesColor((x_origem + 627), (y_origem + 35), (228, 194, 31),
-                                   tolerance=30):  # testa se tem que recolher icone das tarefas amarelo
-        Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
+def tem_tarefa_para_recolher(x_origem, y_origem):
+    if pyautogui.pixelMatchesColor((x_origem + 627), (y_origem + 35), (228, 194, 31), tolerance=30):
+        # testa se tem que recolher icone das tarefas amarelo
+        Limpa.limpa_abre_tarefa(x_origem, y_origem)
         recolher_tarefa(x_origem, y_origem)
-        Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
+        Limpa.limpa_abre_tarefa(x_origem, y_origem)
         meta, pontos = meta_tarefas(x_origem, y_origem)
         return meta, pontos
 
@@ -275,7 +274,7 @@ def tem_tarefa_para_recolher(x_origem, y_origem, id, senha, url, navegador):
         return None, None
 
 
-def testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador, dia_da_semana):
+def testa_continuar_fazendo_tarefa(x_origem, y_origem, dia_da_semana):
     parar_tarefas = False
     hora_fim_tarefa = False
     lista_tarefas_fazer = []
@@ -287,17 +286,16 @@ def testa_continuar_fazendo_tarefa(x_origem, y_origem, id, senha, url, navegador
 
     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
         parar_tarefas = True
-        return (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas, lista_tarefas_fazer,
-                pontos_disponiveis, hora_fim_tarefa)
+        return (parar_tarefas, valor_fichas, conta_upada, meta_atingida, pontuacao_tarefas, lista_tarefas_fazer, pontos_disponiveis, hora_fim_tarefa)
 
     valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem)
     Aneis.recolhe_aneis(x_origem, y_origem)
-    conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)  # retorna se a conta ta upada ou nao
+    conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem)  # retorna se a conta ta upada ou nao
     if conta_upada:
         recolher_tarefa(x_origem, y_origem)  # recolhe se tiver alguma tarefa batida
-        Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)  # retorna se a conta ta upada ou nao
+        Limpa.limpa_abre_tarefa(x_origem, y_origem)  # retorna se a conta ta upada ou nao
         OCR_tela.tarefas_diaris_trocar(x_origem, y_origem)
-        Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
+        Limpa.limpa_abre_tarefa(x_origem, y_origem)
         meta_atingida, pontuacao_tarefas = meta_tarefas(x_origem, y_origem)
         lista_tarefas_fazer, pontos_disponiveis = comparar_listas(x_origem, y_origem, dia_da_semana)
 
@@ -424,7 +422,7 @@ def recolher_tarefa_upando(x_origem, y_origem):
 
             # pyautogui.press('f5')
             print('espera 30 segundos clica no atualizar')
-            pyautogui.click(94, 63)  # clica no atualizar
+            pyautogui.click(86, 59)  # clica no atualizar
             time.sleep(30)
             Limpa.limpa_total(x_origem, y_origem)
 
