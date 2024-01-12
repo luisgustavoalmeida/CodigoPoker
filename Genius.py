@@ -119,7 +119,7 @@ def ajustar_valor(x_origem, y_origem, valor=200):
     return False
 
 
-def genius_joga_vezes(x_origem, y_origem, id, senha, url, navegador):
+def genius_joga_vezes(x_origem, y_origem):
     regiao = (473 + x_origem, 101 + y_origem, 20, 32)  # (x, y, largura, altura)
     imagem1 = r'Imagens\Genius\tempo6.png'
     precisao = 0.9
@@ -169,7 +169,7 @@ def genius_joga_vezes(x_origem, y_origem, id, senha, url, navegador):
                     break
                 time.sleep(0.3)
 
-        Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
+        Limpa.limpa_abre_tarefa(x_origem, y_origem)
         # Limpa.limpa_abre_tarefa2(x_origem, y_origem)
         Tarefas.recolher_tarefa(x_origem, y_origem)
         meta_atigida, pontos = Tarefas.meta_tarefas(x_origem, y_origem)
@@ -180,7 +180,7 @@ def genius_joga_vezes(x_origem, y_origem, id, senha, url, navegador):
             time.sleep(0.5)
 
             # Limpa.limpa_abre_tarefa2(x_origem, y_origem)
-            Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
+            Limpa.limpa_abre_tarefa(x_origem, y_origem)
             continua_jogando, tarefa = Tarefas.comparar_listas_fazendo_tarefa(tarefas_fazer, x_origem, y_origem)  # procura com ocr
             meta_atigida, pontos = Tarefas.meta_tarefas(x_origem, y_origem)
             if (not continua_jogando) or meta_atigida:
@@ -194,7 +194,7 @@ def genius_joga_vezes(x_origem, y_origem, id, senha, url, navegador):
     return
 
 
-def genius_joga_valor(x_origem, y_origem, id, senha, url, navegador, lista_tarefas_disponivel):
+def genius_joga_valor(x_origem, y_origem, lista_tarefas_disponivel):
     regiao = (473 + x_origem, 101 + y_origem, 20, 32)  # (x, y, largura, altura)
     imagem1 = r'Imagens\Genius\tempo6.png'
     precisao = 0.9
@@ -309,7 +309,7 @@ def genius_joga_valor(x_origem, y_origem, id, senha, url, navegador, lista_taref
                     break
                 time.sleep(0.3)
 
-        Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
+        Limpa.limpa_abre_tarefa(x_origem, y_origem)
         # Limpa.limpa_abre_tarefa2(x_origem, y_origem)
         Tarefas.recolher_tarefa(x_origem, y_origem)
         meta_atigida, pontos = Tarefas.meta_tarefas(x_origem, y_origem)
@@ -318,7 +318,7 @@ def genius_joga_valor(x_origem, y_origem, id, senha, url, navegador, lista_taref
 
         if (not continua_jogando) or meta_atigida:
             time.sleep(0.5)
-            Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
+            Limpa.limpa_abre_tarefa(x_origem, y_origem)
 
             continua_jogando, tarefa = Tarefas.comparar_listas_fazendo_tarefa(tarefas_fazer, x_origem, y_origem)  # procura com ocr
             meta_atigida, pontos = Tarefas.meta_tarefas(x_origem, y_origem)

@@ -779,7 +779,7 @@ def gira_10auto(x_origem, y_origem):
         return gira
 
 
-def joga(x_origem, y_origem, id, senha, url, navegador, ajusta_aposta):
+def joga(x_origem, y_origem, ajusta_aposta):
     global lista_salas_niquel
     blind_mesa = None
     sentou = False
@@ -815,7 +815,7 @@ def joga(x_origem, y_origem, id, senha, url, navegador, ajusta_aposta):
             auto10 = gira_10auto(x_origem, y_origem)
             if auto10:
                 # Limpa.limpa_abre_tarefa2(x_origem, y_origem)
-                Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
+                Limpa.limpa_abre_tarefa(x_origem, y_origem)
                 print('manda recolher')
                 Tarefas.recolher_tarefa(x_origem, y_origem)
                 print('procura se aidna tem tarefa')
@@ -876,7 +876,7 @@ def joga(x_origem, y_origem, id, senha, url, navegador, ajusta_aposta):
                 pyautogui.press('f5')
                 time.sleep(15)
 
-        meta, pontos = Tarefas.tem_tarefa_para_recolher(x_origem, y_origem, id, senha, url, navegador)
+        meta, pontos = Tarefas.tem_tarefa_para_recolher(x_origem, y_origem)
         if meta:
             meta_atigida = True
 
@@ -884,7 +884,7 @@ def joga(x_origem, y_origem, id, senha, url, navegador, ajusta_aposta):
             continua_jogando = False
 
         if (not continua_jogando) or meta_atigida:
-            Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
+            Limpa.limpa_abre_tarefa(x_origem, y_origem)
             continua_jogando, tarefa = Tarefas.comparar_listas_fazendo_tarefa(tarefas_fazer, x_origem, y_origem)
             meta_atigida, pontos = Tarefas.meta_tarefas(x_origem, y_origem)
             if (not continua_jogando) or meta_atigida:

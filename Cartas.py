@@ -30,7 +30,7 @@ def abre_cartas_premidas(x_origem, y_origem):
         time.sleep(0.2)
 
 
-def cartas_premidas_joga_vezes(x_origem, y_origem, id, senha, url, navegador):
+def cartas_premidas_joga_vezes(x_origem, y_origem):
     tarefas_fazer = ('Jogar 100 vezes nas Cartas Premiadas',
                      'Jogar 50 vezes nas Cartas Premiadas',
                      'Jogar 10 vezes nas Cartas Premiadas')
@@ -104,7 +104,7 @@ def cartas_premidas_joga_vezes(x_origem, y_origem, id, senha, url, navegador):
                 return "sair da conta"
 
         # Limpa.limpa_abre_tarefa2(x_origem, y_origem)
-        Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
+        Limpa.limpa_abre_tarefa(x_origem, y_origem)
         Tarefas.recolher_tarefa(x_origem, y_origem)
         meta_atigida, pontos = Tarefas.meta_tarefas(x_origem, y_origem)
 
@@ -113,7 +113,7 @@ def cartas_premidas_joga_vezes(x_origem, y_origem, id, senha, url, navegador):
         if (not continua_jogando) or (meta_atigida):
             time.sleep(0.5)
             # Limpa.limpa_abre_tarefa2(x_origem, y_origem)
-            Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
+            Limpa.limpa_abre_tarefa(x_origem, y_origem)
             continua_jogando, tarefa = Tarefas.comparar_listas_fazendo_tarefa(tarefas_fazer, x_origem, y_origem)  # procura com ocr
             meta_atigida, pontos = Tarefas.meta_tarefas(x_origem, y_origem)
             if (not continua_jogando) or (meta_atigida):
@@ -127,7 +127,7 @@ def cartas_premidas_joga_vezes(x_origem, y_origem, id, senha, url, navegador):
     return
 
 
-def cartas_premidas_joga_valor(x_origem, y_origem, id, senha, url, navegador, lista_tarefas_disponivel, valor_fichas):
+def cartas_premidas_joga_valor(x_origem, y_origem, lista_tarefas_disponivel, valor_fichas):
     tarefas_fazer = ('Ganhar 100.000 fichas nas Cartas Premiadas',
                      'Ganhar 30.000 fichas nas Cartas Premiadas',
                      'Ganhar 4.000 fichas nas Cartas Premiadas')
@@ -234,7 +234,7 @@ def cartas_premidas_joga_valor(x_origem, y_origem, id, senha, url, navegador, li
                 return "sair da conta"
 
         # Limpa.limpa_abre_tarefa2(x_origem, y_origem)
-        Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
+        Limpa.limpa_abre_tarefa(x_origem, y_origem)
         Tarefas.recolher_tarefa(x_origem, y_origem)
         meta_atigida, pontos = Tarefas.meta_tarefas(x_origem, y_origem)
 
@@ -243,7 +243,7 @@ def cartas_premidas_joga_valor(x_origem, y_origem, id, senha, url, navegador, li
         if (not continua_jogando) or (meta_atigida):
             time.sleep(0.5)
             # Limpa.limpa_abre_tarefa2(x_origem, y_origem)
-            Limpa.limpa_abre_tarefa(x_origem, y_origem, id, senha, url, navegador)
+            Limpa.limpa_abre_tarefa(x_origem, y_origem)
             continua_jogando, tarefa = Tarefas.comparar_listas_fazendo_tarefa(tarefas_fazer, x_origem, y_origem)  # procura com ocr
             meta_atigida, pontos = Tarefas.meta_tarefas(x_origem, y_origem)
             if (not continua_jogando) or (meta_atigida):
