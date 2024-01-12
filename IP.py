@@ -506,6 +506,7 @@ def conexao():
                         print('esperando desconectar')
                         if status == "Desconectado":
                             print(status)
+                            time.sleep(1)
                             break
                         time.sleep(0.5)
                     app_top_window.set_focus()
@@ -524,39 +525,39 @@ def conexao():
                         time.sleep(0.5)
                     app_top_window.set_focus()
 
-    elif tipo_conexao == "vpn":
-        conexao_vpn_x = 930
-        conexao_vpn_y = 440
-        while True:
-            print('refazendo conexao')
-            # testa se esta verde e ligado
-            if pyautogui.pixelMatchesColor((conexao_vpn_vpn_x + 189), (conexao_vpn_vpn_y + 186), (15, 134, 108), tolerance=10) \
-                    or pyautogui.pixelMatchesColor((conexao_vpn_x + 189), (conexao_vpn_y + 186), (77, 182, 172), tolerance=10):
-                pyautogui.click(conexao_vpn_x + 189, conexao_vpn_y + 186)
-                print('desligou')
-                for i in range(100):
-                    # testa se esta vermelho e desligado
-                    if pyautogui.pixelMatchesColor((conexao_vpn_x + 189), (conexao_vpn_y + 186), (126, 15, 83), tolerance=10) \
-                            or pyautogui.pixelMatchesColor((conexao_vpn_x + 189), (conexao_vpn_y + 186), (164, 17, 94), tolerance=10):
-                        time.sleep(0.5)
-                        print('VPN Desconectado')
-                        break
-                    time.sleep(0.5)
-
-            # testa se esta vermelho e desligado
-            elif pyautogui.pixelMatchesColor((conexao_vpn_x + 189), (conexao_vpn_y + 186), (126, 15, 83), tolerance=10) \
-                    or pyautogui.pixelMatchesColor((conexao_vpn_x + 189), (conexao_vpn_y + 186), (164, 17, 94), tolerance=10):
-                pyautogui.click(conexao_vpn_x + 189, conexao_vpn_y + 186)
-                print('ligou')
-                for i in range(100):
-                    # testa se esta vermelho e desligado
-                    if pyautogui.pixelMatchesColor((conexao_vpn_x + 189), (conexao_vpn_y + 186), (15, 134, 108), tolerance=10) \
-                            or pyautogui.pixelMatchesColor((conexao_vpn_x + 189), (conexao_vpn_y + 186), (77, 182, 172), tolerance=10):
-                        print('VPN Conectado')
-                        # Minimizar a janela
-                        vpn_window.minimize()
-                        return None
-                    time.sleep(0.5)
+    # elif tipo_conexao == "vpn":
+    #     conexao_vpn_x = 930
+    #     conexao_vpn_y = 440
+    #     while True:
+    #         print('refazendo conexao')
+    #         # testa se esta verde e ligado
+    #         if pyautogui.pixelMatchesColor((conexao_vpn_vpn_x + 189), (conexao_vpn_vpn_y + 186), (15, 134, 108), tolerance=10) \
+    #                 or pyautogui.pixelMatchesColor((conexao_vpn_x + 189), (conexao_vpn_y + 186), (77, 182, 172), tolerance=10):
+    #             pyautogui.click(conexao_vpn_x + 189, conexao_vpn_y + 186)
+    #             print('desligou')
+    #             for i in range(100):
+    #                 # testa se esta vermelho e desligado
+    #                 if pyautogui.pixelMatchesColor((conexao_vpn_x + 189), (conexao_vpn_y + 186), (126, 15, 83), tolerance=10) \
+    #                         or pyautogui.pixelMatchesColor((conexao_vpn_x + 189), (conexao_vpn_y + 186), (164, 17, 94), tolerance=10):
+    #                     time.sleep(0.5)
+    #                     print('VPN Desconectado')
+    #                     break
+    #                 time.sleep(0.5)
+    #
+    #         # testa se esta vermelho e desligado
+    #         elif pyautogui.pixelMatchesColor((conexao_vpn_x + 189), (conexao_vpn_y + 186), (126, 15, 83), tolerance=10) \
+    #                 or pyautogui.pixelMatchesColor((conexao_vpn_x + 189), (conexao_vpn_y + 186), (164, 17, 94), tolerance=10):
+    #             pyautogui.click(conexao_vpn_x + 189, conexao_vpn_y + 186)
+    #             print('ligou')
+    #             for i in range(100):
+    #                 # testa se esta vermelho e desligado
+    #                 if pyautogui.pixelMatchesColor((conexao_vpn_x + 189), (conexao_vpn_y + 186), (15, 134, 108), tolerance=10) \
+    #                         or pyautogui.pixelMatchesColor((conexao_vpn_x + 189), (conexao_vpn_y + 186), (77, 182, 172), tolerance=10):
+    #                     print('VPN Conectado')
+    #                     # Minimizar a janela
+    #                     vpn_window.minimize()
+    #                     return None
+    #                 time.sleep(0.5)
 
 
 def localizar_imagem(imagem, regiao, precisao):
