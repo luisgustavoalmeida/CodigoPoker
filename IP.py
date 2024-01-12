@@ -506,7 +506,7 @@ def conexao():
                         print('esperando desconectar')
                         if status == "Desconectado":
                             print(status)
-                            time.sleep(1)
+                            time.sleep(0.5)
                             break
                         time.sleep(0.5)
                     app_top_window.set_focus()
@@ -520,7 +520,8 @@ def conexao():
                         print('esperando conectar')
                         if status == "Conectado":
                             print(status)
-                            app_top_window.minimize()  # minimiza a janela
+                            # app_top_window.minimize()  # minimiza a janela
+                            app_top_window.close()  # fecha a janela
                             return None
                         time.sleep(0.5)
                     app_top_window.set_focus()
