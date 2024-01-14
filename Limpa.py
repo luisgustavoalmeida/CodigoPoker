@@ -113,6 +113,7 @@ def limpa_jogando(x_origem, y_origem):
         pyautogui.click(x_origem + 407, y_origem + 408)  # clica no NÃO
         print("Gostaria de começar a Liga do Finde?")
 
+    # clica na casinha par voltar par o lob quando esta dentro de uma mesa
     elif pyautogui.pixelMatchesColor(x_origem + 859, y_origem + 40, (116, 139, 171), tolerance=5):
         pyautogui.click(x_origem + 859, y_origem + 40)
         print('Voltar ao Lobby')
@@ -315,6 +316,7 @@ def limpa_tarefas(x_origem, y_origem):  # fecha todas as tarefas que sao feitas
         pyautogui.click(910 + x_origem, 80 + y_origem)
         print("Slot Classico")
 
+    # clica na casinha par voltar par o lob quando esta dentro de uma mesa
     elif pyautogui.pixelMatchesColor(x_origem + 859, y_origem + 40, (116, 139, 171), tolerance=5):
         pyautogui.click(x_origem + 859, y_origem + 40)
         print('Voltar ao Lobby')
