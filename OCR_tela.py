@@ -12,7 +12,6 @@ from fuzzywuzzy import fuzz
 
 import IP
 import Variaveis_Globais
-import Origem_pg
 
 # Desabilitar o fail-safe
 pyautogui.FAILSAFE = False
@@ -1019,9 +1018,9 @@ def tarefas_diaris_upando(x_origem, y_origem):
         return lista_tarefas
 
 
-
-lista_blind = ('500K1M', '100K200K', '50K100K', '20K40K', '10K20K', '5K10K', '2K4K', '1K2K',
-               '5001K', '200400', '100200', '50100', '2550', '2040', '1020', '510', '24', '12')
+lista_blind = (
+'500K1M', '100K200K', '50K100K', '20K40K', '10K20K', '5K10K', '2K4K', '1K2K', '5001K', '200400', '100200', '50100', '2550', '2040', '1020', '510',
+'24', '12')
 
 
 def blind_sala(x_origem, y_origem):
@@ -1094,13 +1093,13 @@ def numero_sala(x_origem, y_origem):
     regiao = (x_origem + 55, y_origem + 77, x_origem + 188, y_origem + 93)
 
     # Aguarda o número da sala ficar visível clicando no anel
-    for _ in range(30):
+    for _ in range(50):
         # printa se esta disponivel o numero
         if (pyautogui.pixelMatchesColor((x_origem + 86), (y_origem + 66), (43, 14, 10), tolerance=5)
                 or pyautogui.pixelMatchesColor((x_origem + 86), (y_origem + 66), (54, 27, 8), tolerance=5)):
-            time.sleep(0.5)
+            time.sleep(0.1)
             break
-        time.sleep(1)
+        time.sleep(0.1)
         print('Esperando o número da sala ficar visível...')
         pyautogui.click(x_origem + 43, y_origem + 388)  # clica no anel
 
@@ -1370,7 +1369,6 @@ def level_conta(x_origem, y_origem):
         pyautogui.click(771 + x_origem, 162 + y_origem)  # clica para fechar a tela do perfil
     print('Erro na leitura do nivel da comta')
     return lido
-
 
 # aviso_do_sistema()
 # x_origem, y_origem = Origem_pg.x_y()

@@ -443,7 +443,8 @@ def conexao():
             posicao_conectado = localizar_imagem(conectado, regiao_conectado, precisao)
             if posicao_conectado is not None:
                 print("esta conectado")
-                app_top_window.minimize()  # minimiza a janela
+                # app_top_window.minimize()  # minimiza a janela
+                app_top_window.close()  # fecha a janela
                 return None
                 # break
 
