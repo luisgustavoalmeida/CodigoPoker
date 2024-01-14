@@ -12,14 +12,14 @@ pyautogui.PAUSE = 0
 
 
 def teste_limpo(x_origem, y_origem):
-    pyautogui.click(490 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
+    # pyautogui.click(490 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
     pyautogui.click(686 + x_origem, 70 + y_origem)  # clique bobo para passar alguma naimação
     # barra azul do looby
     if pyautogui.pixelMatchesColor((x_origem + 685), (y_origem + 360), (215, 234, 244), tolerance=1):
         print("teste_limpo: Esta no Lobby, ta limpo")
         return True
     else:
-        print('teste_limpo: não esta limpo')
+        print('\n\n teste_limpo: Não esta limpo!!! \n\n ')
         return False
 
 
@@ -484,6 +484,10 @@ def limpa_total(x_origem, y_origem):
         if teste_limpo(x_origem, y_origem):  # se ta limpo nem entra
             return None
         limpa_jogando(x_origem, y_origem)
+        if teste_limpo(x_origem, y_origem):  # se ta limpo nem entra
+            return None
+        teste_logado()
+
     return None
 
 
@@ -548,7 +552,7 @@ def limpa_abre_tarefa(x_origem, y_origem):  # abre o tarefas
                 # navegador.get(url)
                 pyautogui.click(86, 59)  # clica no atualizar
                 time.sleep(25)
-                entrou_corretamente, stataus = teste_logado()
+                teste_logado()
                 limpa_total(x_origem, y_origem)
 
             time.sleep(1)
