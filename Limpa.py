@@ -109,9 +109,13 @@ def limpa_jogando(x_origem, y_origem):
     # Gostaria de começar a Liga do Finde?
     elif pyautogui.pixelMatchesColor((x_origem + 538), (y_origem + 408), (217, 184, 50), tolerance=5):
         pyautogui.click(x_origem + 407, y_origem + 354)  # não mostar novamente hoje
-        time.sleep(1)
+        time.sleep(0.5)
         pyautogui.click(x_origem + 407, y_origem + 408)  # clica no NÃO
         print("Gostaria de começar a Liga do Finde?")
+
+    elif pyautogui.pixelMatchesColor(x_origem + 859, y_origem + 40, (116, 139, 171), tolerance=5):
+        pyautogui.click(x_origem + 859, y_origem + 40)
+        print('Voltar ao Lobby')
 
 
 def limpa_pequeno(x_origem, y_origem):
@@ -310,6 +314,10 @@ def limpa_tarefas(x_origem, y_origem):  # fecha todas as tarefas que sao feitas
           or pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 668), (18, 9, 4), tolerance=5)):
         pyautogui.click(910 + x_origem, 80 + y_origem)
         print("Slot Classico")
+
+    elif pyautogui.pixelMatchesColor(x_origem + 859, y_origem + 40, (116, 139, 171), tolerance=5):
+        pyautogui.click(x_origem + 859, y_origem + 40)
+        print('Voltar ao Lobby')
 
     fecha_tarefa(x_origem, y_origem)
 
