@@ -2,7 +2,6 @@ import datetime
 import os
 import random
 import socket
-import subprocess
 import time
 
 import psutil
@@ -19,6 +18,36 @@ import Seleniun
 pyautogui.FAILSAFE = False
 
 LIMITE_IP = 6
+
+conexao_x = 930
+conexao_y = 710
+
+# Título e nome da classe da janela que você deseja verificar
+window_title = 'Configurações'
+window_class = 'ApplicationFrameWindow'
+
+precisao = 0.9
+
+# Vero
+telefone = r"Imagens\Conexao\telefone.png"
+regiao_telefone = (conexao_x + 22, conexao_y + 109, 59, 56)
+desconectar = r"Imagens\Conexao\desconectar.png"
+regiao_desconectar = (conexao_x + 361, conexao_y + 185, 109, 36)
+conectar = r"Imagens\Conexao\conectar.png"
+regiao_conectar = (conexao_x + 124, conexao_y + 185, 92, 34)
+conectado = r"Imagens\Conexao\conectado.png"
+regiao_conectado = (conexao_x + 70, conexao_y + 133, 92, 34)
+fechar = r"Imagens\Conexao\fechar.png"
+regiao_fechar = (conexao_x + 380, conexao_y + 236, 91, 80)
+cancelar = r"Imagens\Conexao\cancelar.png"
+regiao_cancelar = (conexao_x + 358, conexao_y + 204, 111, 36)
+
+# Modem
+celular = r"Imagens\Conexao\celular.png"
+regiao_celular = (conexao_x + 19, conexao_y + 261, 55, 22)
+ativado = r"Imagens\Conexao\ativado.png"
+desativado = r"Imagens\Conexao\desativado.png"
+regiao_ativado_desativado = (conexao_x + 75, conexao_y + 292, 73, 22)
 
 # chave nome do computador : tupla( valor 1 celula , valor 2 tipo de conexão)
 # "F3" de 3 em 3       #"modem" ou "vero"
@@ -312,254 +341,246 @@ def ip(LIMITE_IP):
 
 
 def conexao():
-    if tipo_conexao == "vero" or tipo_conexao == "modem":
-
-        # Título e nome da classe da janela que você deseja verificar
-        window_title = 'Configurações'
-        window_class = 'ApplicationFrameWindow'
-
-        print("manda a jenela de conexao abrir")
-        if tipo_conexao == "vero":
-            os.system("start ms-settings:network-dialup")  # abre a conexão discada
-        elif tipo_conexao == "modem":
-            os.system("start ms-settings:network-airplanemode")  # modo aviao
-
+    while True:
         while True:
+            # Tempo máximo para esperar (em segundos)
+            tempo_passado = 0
+
+            # Loop até que a janela esteja ativa ou o tempo máximo seja atingido
+            while tempo_passado < 3:
+                # Encontre a janela pelo título
+                target_window = gw.getWindowsWithTitle("Configurações")
+
+                # Verifique se a janela foi encontrada e está ativa
+                if target_window and target_window[0].isActive:
+                    print("Janela encontrada e ativa.")
+                    break
+                else:
+                    print("Manda a jenela de conexao abrir")
+                    if tipo_conexao == "vero":
+                        os.system("start ms-settings:network-dialup")  # abre a conexão discada
+                    elif tipo_conexao == "modem":
+                        os.system("start ms-settings:network-airplanemode")  # modo aviao
+
+                # Aguarde um curto período antes de verificar novamente
+                time.sleep(0.2)
+                tempo_passado += 0.2
+
             try:
                 app = pywinauto.Application().connect(title=window_title, class_name=window_class)
                 # A janela já está aberta, ative-a
                 app_top_window = app.top_window()
                 app_top_window.restore()
-                app_top_window.move_window(x=930, y=710, width=500, height=330)
-                conexao_x = app_top_window.rectangle().left
-                conexao_y = app_top_window.rectangle().top
+                app_top_window.move_window(x=conexao_x, y=conexao_y, width=500, height=330)
+                # conexao_x = app_top_window.rectangle().left
+                # conexao_y = app_top_window.rectangle().top
                 app_top_window.set_focus()
-                break
+                # Verifique se a janela está respondendo
+                if app_top_window.is_active():
+                    print("A janela está ativa.")
+                    break
+                time.sleep(0.5)
             except:
                 # A janela não está aberta, abra-a
-                print("conexao abrir")
-                if tipo_conexao == "vero":
-                    os.system("start ms-settings:network-dialup")  # abre a conexão discada
-                elif tipo_conexao == "modem":
-                    os.system("start ms-settings:network-airplanemode")  # modo aviao
-                # Aguarde a janela abrir
-                time.sleep(1)
-                continue
-        time.sleep(0.5)
+                target_window = gw.getWindowsWithTitle("Configurações")
 
-    elif tipo_conexao == "vpn":
-        # Caminho para o executável da VPN
-
-        caminho_executavel_vpn = "C:/Program Files (x86)/ExpressVPN/expressvpn-ui/ExpressVPN.exe"
-        conexao_vpn_x = 930
-        conexao_vpn_y = 440
-        while True:
-
-            print('abre a vpn')
-            try:
-                vpn_window = gw.getWindowsWithTitle('ExpressVPN')[0]
-                print(vpn_window)
-                # vpn_window.activate()
-                # Verificar se a janela está visível antes de movê-la
-                if vpn_window.left == 930 and vpn_window.top == 440:
-                    conexao_vpn_vpn_x = vpn_window.left
-                    conexao_vpn_vpn_y = vpn_window.top
-                    print("A posição da janela é (930, 440).")
-                    break
-                if vpn_window.left < 0 and vpn_window.top < 0:
-                    print('esta minizada')
-                    subprocess.Popen(caminho_executavel_vpn)
+                # Verifique se a janela foi encontrada
+                if target_window:
+                    # Feche a janela
+                    target_window[0].close()
+                    print("Janela configuraçoes ativa.")
+                    time.sleep(1)
                 else:
-                    vpn_window.activate()
-                    # Mover a janela da VPN para a posição desejada (x, y) da tela
-                    conexao_vpn_vpn_x = 930
-                    conexao_vpn_vpn_y = 440
-
-                    vpn_window.moveTo(conexao_vpn_vpn_x, conexao_vpn_vpn_y)
-            except Exception as e:
-                print("Erro ao abrir a VPN:", e)
-                subprocess.Popen(caminho_executavel_vpn)
-                time.sleep(5)
+                    print("Janela não encontrada.")
+                time.sleep(0.5)
                 continue
-            time.sleep(0.5)
+        # time.sleep(0.5)
+        if tipo_conexao == "vero":
+            print("conexão vero")
+            cont_erro = 0
+            clicou_conecar = False
 
-    if tipo_conexao == "vero":
-        precisao = 0.9
-        print("conexão vero")
+            for _ in range(200):
+                posicao_telefone = localizar_imagem(telefone, regiao_telefone, precisao)
+                if posicao_telefone is not None:
+                    centro_discada = pyautogui.center(posicao_telefone)  # Obtém o centro da posição da imagem encontrada
+                    pyautogui.click(centro_discada)  # Clica no centro da posição encontrada
+                    print("clica no telefoen")
 
-        telefone = r"Imagens\Conexao\telefone.png"
-        regiao_telefone = (conexao_x + 22, conexao_y + 109, 59, 56)
-        desconectar = r"Imagens\Conexao\desconectar.png"
-        regiao_desconectar = (conexao_x + 361, conexao_y + 185, 109, 36)
-        conectar = r"Imagens\Conexao\conectar.png"
-        regiao_conectar = (conexao_x + 124, conexao_y + 185, 92, 34)
-        conectado = r"Imagens\Conexao\conectado.png"
-        regiao_conectado = (conexao_x + 70, conexao_y + 133, 92, 34)
-        fechar = r"Imagens\Conexao\fechar.png"
-        regiao_fechar = (conexao_x + 380, conexao_y + 236, 91, 80)
-        cancelar = r"Imagens\Conexao\cancelar.png"
-        regiao_cancelar = (conexao_x + 358, conexao_y + 204, 111, 36)
-        cont_erro = 0
+                    posicao_desconectar = localizar_imagem(desconectar, regiao_desconectar, precisao)
+                    if posicao_desconectar is not None:
+                        centro_desconectar = pyautogui.center(posicao_desconectar)  # Obtém o centro da posição da imagem encontrada
+                        pyautogui.click(centro_desconectar)  # Clica no centro da posição encontrada
+                        print("clica no desconectar")
+                        time.sleep(1)
 
-        while True:
+                    posicao_fechar = localizar_imagem(fechar, regiao_fechar, precisao)
+                    if posicao_fechar is not None:
+                        centro_fechar = pyautogui.center(posicao_fechar)  # Obtém o centro da posição da imagem encontrada
+                        pyautogui.click(centro_fechar)  # Clica no centro da posição encontrada
+                        print("clica no fechar 1")
+                        time.sleep(2)
 
-            # posicao_telefone = pyautogui.locateOnScreen(telefone, region=regiao_telefone, confidence=0.9, grayscale=True)
-            posicao_telefone = localizar_imagem(telefone, regiao_telefone, precisao)
-            if posicao_telefone is not None:
-                centro_discada = pyautogui.center(posicao_telefone)  # Obtém o centro da posição da imagem encontrada
-                pyautogui.click(centro_discada)  # Clica no centro da posição encontrada
-                print("clica no telefoen")
+                    posicao_conectar = localizar_imagem(conectar, regiao_conectar, precisao)
+                    if posicao_conectar is not None:
+                        centro_conectar = pyautogui.center(posicao_conectar)  # Obtém o centro da posição da imagem encontrada
+                        pyautogui.click(centro_conectar)  # Clica no centro da posição encontrada
+                        time.sleep(1)
+                        print("clica no conectar")
+                        clicou_conecar = True
+                        break
+                time.sleep(0.3)
 
-                # posicao_desconectar = pyautogui.locateOnScreen(desconectar, region=regiao_desconectar, confidence=0.9, grayscale=True)
-                posicao_desconectar = localizar_imagem(desconectar, regiao_desconectar, precisao)
-                if posicao_desconectar is not None:
-                    centro_desconectar = pyautogui.center(posicao_desconectar)  # Obtém o centro da posição da imagem encontrada
-                    pyautogui.click(centro_desconectar)  # Clica no centro da posição encontrada
-                    time.sleep(1)
-                    print("clica no desconectar")
+            if clicou_conecar:
+                for _ in range(200):
+                    cont_erro += 1
+                    posicao_conectado = localizar_imagem(conectado, regiao_conectado, precisao)
+                    if posicao_conectado is not None:
+                        print("Esta conectado")
+                        # app_top_window.minimize()  # minimiza a janela
+                        app_top_window.close()  # fecha a janela
+                        return None
 
-                # posicao_fechar = pyautogui.locateOnScreen(fechar, region=regiao_fechar, confidence=0.9, grayscale=True)
-                posicao_fechar = localizar_imagem(fechar, regiao_fechar, precisao)
-                if posicao_fechar is not None:
-                    cont_erro = 0
-                    centro_fechar = pyautogui.center(posicao_fechar)  # Obtém o centro da posição da imagem encontrada
-                    pyautogui.click(centro_fechar)  # Clica no centro da posição encontrada
-                    print("clica no fechar 1")
-                    time.sleep(2)
+                    posicao_conectar = localizar_imagem(conectar, regiao_conectar, precisao)
+                    if posicao_conectar is not None:
+                        centro_conectar = pyautogui.center(posicao_conectar)  # Obtém o centro da posição da imagem encontrada
+                        pyautogui.click(centro_conectar)  # Clica no centro da posição encontrada
+                        print("clica no conectar 2")
+                        time.sleep(1)
 
-                # posicao_conectar = pyautogui.locateOnScreen(conectar, region=regiao_conectar, confidence=0.9, grayscale=True)
-                posicao_conectar = localizar_imagem(conectar, regiao_conectar, precisao)
-                if posicao_conectar is not None:
-                    centro_conectar = pyautogui.center(posicao_conectar)  # Obtém o centro da posição da imagem encontrada
-                    pyautogui.click(centro_conectar)  # Clica no centro da posição encontrada
-                    time.sleep(1)
-                    print("clica no conectar")
-                    break
+                    # se deu algum erro e nao conectou aparece um mensagem de erro e opção de fechar
+                    posicao_fechar = localizar_imagem(fechar, regiao_fechar, precisao)
+                    if posicao_fechar is not None:
+                        cont_erro = 0
+                        centro_fechar = pyautogui.center(posicao_fechar)  # Obtém o centro da posição da imagem encontrada
+                        pyautogui.click(centro_fechar)  # Clica no centro da posição encontrada
+                        print("clica no fechar 2")
+                        time.sleep(2)
 
-        while True:
-            cont_erro += 1
+                    # se esta demorando muito para conectar clia em cancelar e tenta novamente
+                    if cont_erro >= 60:
+                        posicao_cancelar = localizar_imagem(cancelar, regiao_cancelar, precisao)
+                        if posicao_cancelar is not None:
+                            cont_erro = 0
+                            centro_cancelar = pyautogui.center(posicao_cancelar)  # Obtém o centro da posição da imagem encontrada
+                            pyautogui.click(centro_cancelar)  # Clica no centro da posição encontrada
+                            time.sleep(2)
+                    time.sleep(0.5)
 
-            # posicao_conectado = pyautogui.locateOnScreen(conectado, region=regiao_conectado, confidence=0.9, grayscale=True)
-            posicao_conectado = localizar_imagem(conectado, regiao_conectado, precisao)
-            if posicao_conectado is not None:
-                print("esta conectado")
-                # app_top_window.minimize()  # minimiza a janela
-                app_top_window.close()  # fecha a janela
-                return None
-                # break
+        elif tipo_conexao == "modem":
+            print('modem')
 
-            # posicao_conectar = pyautogui.locateOnScreen(conectar, region=regiao_conectar, confidence=0.9, grayscale=True)
-            posicao_conectar = localizar_imagem(conectar, regiao_conectar, precisao)
-            if posicao_conectar is not None:
-                centro_conectar = pyautogui.center(posicao_conectar)  # Obtém o centro da posição da imagem encontrada
-                pyautogui.click(centro_conectar)  # Clica no centro da posição encontrada
-                print("clica no conectar 2")
-                time.sleep(1)
-
-            # se deu algum erro e nao conectou aparece um mensagem de erro e opção de fechar
-            # posicao_fechar = pyautogui.locateOnScreen(fechar, region=regiao_fechar, confidence=0.9, grayscale=True)
-            posicao_fechar = localizar_imagem(fechar, regiao_fechar, precisao)
-            if posicao_fechar is not None:
-                cont_erro = 0
-                centro_fechar = pyautogui.center(posicao_fechar)  # Obtém o centro da posição da imagem encontrada
-                pyautogui.click(centro_fechar)  # Clica no centro da posição encontrada
-                print("clica no fechar 2")
-                time.sleep(2)
-
-            # se esta demorando muito para conectar clia em cancelar e tenta novamente
-            if cont_erro >= 60:
-                # posicao_cancelar = pyautogui.locateOnScreen(cancelar, region=regiao_cancelar, confidence=0.9, grayscale=True)
-                posicao_cancelar = localizar_imagem(cancelar, regiao_cancelar, precisao)
-                if posicao_cancelar is not None:
-                    cont_erro = 0
-                    centro_cancelar = pyautogui.center(posicao_cancelar)  # Obtém o centro da posição da imagem encontrada
-                    pyautogui.click(centro_cancelar)  # Clica no centro da posição encontrada
-                    time.sleep(2)
-            time.sleep(0.5)
-
-        # app_top_window.minimize()  # minimiza a janela
-        # return None
-
-    elif tipo_conexao == "modem":
-        print('modem')
-        celular = r"Imagens\Conexao\celular.png"
-        regiao_celular = (conexao_x + 19, conexao_y + 261, 55, 22)
-        ativado = r"Imagens\Conexao\ativado.png"
-        desativado = r"Imagens\Conexao\desativado.png"
-        regiao_ativado_desativado = (conexao_x + 75, conexao_y + 292, 73, 22)
-        precisao = 0.9
-
-        while True:
-            app_top_window.set_focus()
-            posicao_celular = localizar_imagem(celular, regiao_celular, precisao)
-            if posicao_celular is not None:
-                centro_celular = pyautogui.center(posicao_celular)  # Obtém o centro da posição da imagem encontrada
-                posicao_botao = pyautogui.Point(centro_celular.x, centro_celular.y + 30)
-
-                posicao_ativado = localizar_imagem(ativado, regiao_ativado_desativado, precisao)
-                if posicao_ativado is not None:
-                    time.sleep(0.3)
-                    pyautogui.click(posicao_botao)  # Clica para desativar a coneção
-                    print("foi desativado")
-                    time.sleep(0.3)
-                    for i in range(50):
-                        status = obter_status_conexao("Celular")
-                        print('esperando desconectar')
-                        if status == "Desconectado":
-                            print(status)
+            for _ in range(400):
+                # app_top_window.set_focus()
+                posicao_celular = localizar_imagem(celular, regiao_celular, precisao)
+                if posicao_celular is not None:
+                    centro_celular = pyautogui.center(posicao_celular)  # Obtém o centro da posição da imagem encontrada
+                    posicao_botao = pyautogui.Point(centro_celular.x, centro_celular.y + 30)
+                    posicao_ativado = localizar_imagem(ativado, regiao_ativado_desativado, precisao)
+                    if posicao_ativado is not None:
+                        time.sleep(0.3)
+                        pyautogui.click(posicao_botao)  # Clica para desativar a coneção
+                        print("foi desativado")
+                        time.sleep(0.3)
+                        for _ in range(50):
+                            status = obter_status_conexao("Celular")
+                            print('esperando desconectar')
+                            if status == "Desconectado":
+                                print(status)
+                                time.sleep(0.5)
+                                break
                             time.sleep(0.5)
-                            break
-                        time.sleep(0.5)
-                    app_top_window.set_focus()
+                        app_top_window.set_focus()
 
-                posicao_desativado = localizar_imagem(desativado, regiao_ativado_desativado, precisao)
-                if posicao_desativado is not None:
-                    pyautogui.click(posicao_botao)  # Clica para ativar a coneção
-                    print("foi ativado")
-                    for i in range(100):
-                        status = obter_status_conexao("Celular")
-                        print('esperando conectar')
-                        if status == "Conectado":
-                            print(status)
-                            # app_top_window.minimize()  # minimiza a janela
-                            app_top_window.close()  # fecha a janela
-                            return None
-                        time.sleep(0.5)
-                    app_top_window.set_focus()
+                    posicao_desativado = localizar_imagem(desativado, regiao_ativado_desativado, precisao)
+                    if posicao_desativado is not None:
+                        pyautogui.click(posicao_botao)  # Clica para ativar a coneção
+                        print("foi ativado")
+                        for _ in range(100):
+                            status = obter_status_conexao("Celular")
+                            print('esperando conectar')
+                            if status == "Conectado":
+                                print(status)
+                                # app_top_window.minimize()  # minimiza a janela
+                                app_top_window.close()  # fecha a janela
+                                return None
+                            time.sleep(0.5)
+                        app_top_window.set_focus()
+                time.sleep(0.3)
 
-    # elif tipo_conexao == "vpn":
-    #     conexao_vpn_x = 930
-    #     conexao_vpn_y = 440
-    #     while True:
-    #         print('refazendo conexao')
-    #         # testa se esta verde e ligado
-    #         if pyautogui.pixelMatchesColor((conexao_vpn_vpn_x + 189), (conexao_vpn_vpn_y + 186), (15, 134, 108), tolerance=10) \
-    #                 or pyautogui.pixelMatchesColor((conexao_vpn_x + 189), (conexao_vpn_y + 186), (77, 182, 172), tolerance=10):
-    #             pyautogui.click(conexao_vpn_x + 189, conexao_vpn_y + 186)
-    #             print('desligou')
-    #             for i in range(100):
-    #                 # testa se esta vermelho e desligado
-    #                 if pyautogui.pixelMatchesColor((conexao_vpn_x + 189), (conexao_vpn_y + 186), (126, 15, 83), tolerance=10) \
-    #                         or pyautogui.pixelMatchesColor((conexao_vpn_x + 189), (conexao_vpn_y + 186), (164, 17, 94), tolerance=10):
-    #                     time.sleep(0.5)
-    #                     print('VPN Desconectado')
-    #                     break
-    #                 time.sleep(0.5)
-    #
-    #         # testa se esta vermelho e desligado
-    #         elif pyautogui.pixelMatchesColor((conexao_vpn_x + 189), (conexao_vpn_y + 186), (126, 15, 83), tolerance=10) \
-    #                 or pyautogui.pixelMatchesColor((conexao_vpn_x + 189), (conexao_vpn_y + 186), (164, 17, 94), tolerance=10):
-    #             pyautogui.click(conexao_vpn_x + 189, conexao_vpn_y + 186)
-    #             print('ligou')
-    #             for i in range(100):
-    #                 # testa se esta vermelho e desligado
-    #                 if pyautogui.pixelMatchesColor((conexao_vpn_x + 189), (conexao_vpn_y + 186), (15, 134, 108), tolerance=10) \
-    #                         or pyautogui.pixelMatchesColor((conexao_vpn_x + 189), (conexao_vpn_y + 186), (77, 182, 172), tolerance=10):
-    #                     print('VPN Conectado')
-    #                     # Minimizar a janela
-    #                     vpn_window.minimize()
-    #                     return None
-    #                 time.sleep(0.5)
+        app_top_window.set_focus()
+        app_top_window.close()  # fecha a janela
+        print('Não consegiu realizar a abertura da janela de conexão para a troca de ip')
+        time.sleep(1)
+
+        # elif tipo_conexao == "vpn":
+        #     conexao_vpn_x = 930
+        #     conexao_vpn_y = 440
+        #     while True:
+        #         print('refazendo conexao')
+        #         # testa se esta verde e ligado
+        #         if pyautogui.pixelMatchesColor((conexao_vpn_vpn_x + 189), (conexao_vpn_vpn_y + 186), (15, 134, 108), tolerance=10) \
+        #                 or pyautogui.pixelMatchesColor((conexao_vpn_x + 189), (conexao_vpn_y + 186), (77, 182, 172), tolerance=10):
+        #             pyautogui.click(conexao_vpn_x + 189, conexao_vpn_y + 186)
+        #             print('desligou')
+        #             for i in range(100):
+        #                 # testa se esta vermelho e desligado
+        #                 if pyautogui.pixelMatchesColor((conexao_vpn_x + 189), (conexao_vpn_y + 186), (126, 15, 83), tolerance=10) \
+        #                         or pyautogui.pixelMatchesColor((conexao_vpn_x + 189), (conexao_vpn_y + 186), (164, 17, 94), tolerance=10):
+        #                     time.sleep(0.5)
+        #                     print('VPN Desconectado')
+        #                     break
+        #                 time.sleep(0.5)
+        #
+        #         # testa se esta vermelho e desligado
+        #         elif pyautogui.pixelMatchesColor((conexao_vpn_x + 189), (conexao_vpn_y + 186), (126, 15, 83), tolerance=10) \
+        #                 or pyautogui.pixelMatchesColor((conexao_vpn_x + 189), (conexao_vpn_y + 186), (164, 17, 94), tolerance=10):
+        #             pyautogui.click(conexao_vpn_x + 189, conexao_vpn_y + 186)
+        #             print('ligou')
+        #             for i in range(100):
+        #                 # testa se esta vermelho e desligado
+        #                 if pyautogui.pixelMatchesColor((conexao_vpn_x + 189), (conexao_vpn_y + 186), (15, 134, 108), tolerance=10) \
+        #                         or pyautogui.pixelMatchesColor((conexao_vpn_x + 189), (conexao_vpn_y + 186), (77, 182, 172), tolerance=10):
+        #                     print('VPN Conectado')
+        #                     # Minimizar a janela
+        #                     vpn_window.minimize()
+        #                     return None
+        #                 time.sleep(0.5)
+        # elif tipo_conexao == "vpn":
+        #     # Caminho para o executável da VPN
+        #
+        #     caminho_executavel_vpn = "C:/Program Files (x86)/ExpressVPN/expressvpn-ui/ExpressVPN.exe"
+        #     conexao_vpn_x = 930
+        #     conexao_vpn_y = 440
+        #     while True:
+        #
+        #         print('abre a vpn')
+        #         try:
+        #             vpn_window = gw.getWindowsWithTitle('ExpressVPN')[0]
+        #             print(vpn_window)
+        #             # vpn_window.activate()
+        #             # Verificar se a janela está visível antes de movê-la
+        #             if vpn_window.left == 930 and vpn_window.top == 440:
+        #                 conexao_vpn_vpn_x = vpn_window.left
+        #                 conexao_vpn_vpn_y = vpn_window.top
+        #                 print("A posição da janela é (930, 440).")
+        #                 break
+        #             if vpn_window.left < 0 and vpn_window.top < 0:
+        #                 print('esta minizada')
+        #                 subprocess.Popen(caminho_executavel_vpn)
+        #             else:
+        #                 vpn_window.activate()
+        #                 # Mover a janela da VPN para a posição desejada (x, y) da tela
+        #                 conexao_vpn_vpn_x = 930
+        #                 conexao_vpn_vpn_y = 440
+        #
+        #                 vpn_window.moveTo(conexao_vpn_vpn_x, conexao_vpn_vpn_y)
+        #         except Exception as e:
+        #             print("Erro ao abrir a VPN:", e)
+        #             subprocess.Popen(caminho_executavel_vpn)
+        #             time.sleep(5)
+        #             continue
+        #         time.sleep(0.5)
 
 
 def localizar_imagem(imagem, regiao, precisao):
