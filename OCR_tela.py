@@ -8,6 +8,7 @@ import cv2
 import numpy
 import pyautogui
 import pytesseract
+# import Origem_pg
 from fuzzywuzzy import fuzz
 
 import IP
@@ -297,9 +298,9 @@ def OCR_regiao(regiao, config, inveter_cor=True, fator_ampliacao=1, contraste_pr
             imagem_recortada = cv2.convertScaleAbs(imagem_recortada, alpha=contraste_pos, beta=0)
 
         # print("iamgem cor invertida pos contraste")
-        # cv2.imshow("Imagem", imagem_recortada)
-        # cv2.waitKey(0)
-        # cv2.destroyAllWindows()
+        cv2.imshow("Imagem", imagem_recortada)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
         # Passa o OCR na imagem recortada
         pytesseract.pytesseract.tesseract_cmd = caminho_tesseract
@@ -368,10 +369,10 @@ def valor_fichas(x_origem, y_origem):
 
     # Define a lista de configurações a serem testadas
     configuracoes = [
-        r'--oem 3 --psm 6 outputbase digits',
         r'--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789.',
         r'--psm 7 --oem 1 -c tessedit_char_whitelist=0123456789.',
-        r'--psm 8 --oem 0 -c tessedit_char_whitelist=0123456789.'
+        r'--psm 8 --oem 0 -c tessedit_char_whitelist=0123456789.',
+        r'--oem 3 --psm 6 outputbase digits',
     ]
     for _ in range(100):
         if pyautogui.pixelMatchesColor((x_origem + 121), (y_origem + 15), (255, 210, 77), tolerance=5):
@@ -385,7 +386,7 @@ def valor_fichas(x_origem, y_origem):
         # print(config)
         # Realiza o OCR com a configuração atual
         lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
-        # print(lido)
+        print(lido)
 
         if lido is not None:
             # Converte o valor lido para um formato numérico
@@ -396,10 +397,12 @@ def valor_fichas(x_origem, y_origem):
                 return valor
             else:
                 print('Valor fora sa feixa esperado')
-                valor = 0
+                # valor = 0
         else:
             print('OCR nao recolheceu a imagem')
-            valor = 0
+            # valor = 0
+
+    valor = valor_fichas_perfil(x_origem, y_origem)
     return valor
 
 
@@ -1103,20 +1106,11 @@ def numero_sala(x_origem, y_origem):
         print('Esperando o número da sala ficar visível...')
         pyautogui.click(x_origem + 43, y_origem + 388)  # clica no anel
 
-    # configuracoes = [
-    #     r'--oem 3 --psm 6 outputbase digits',
-    #     r'--psm 7 --oem 3 -c tessedit_char_whitelist=0123456789',
-    #     r'--psm 6 --oem 3 -c tessedit_char_whitelist=0123456789',
-    #     r'--psm 6 --oem 1 -c tessedit_char_whitelist=0123456789',
-    #     r'--psm 6 -c tessedit_char_whitelist=0123456789',
-    # ]
-
     configuracoes = ['--psm 6 --oem 1']
 
     # Itera sobre cada configuração e realiza o OCR
     for config in configuracoes:
-        # Extrai o número da sala usando OCR
-        # for _ in range(3):
+
         numero = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)  # pontuação
         print('numero mesa sem tratamento: ', numero)
         if numero is not None:
@@ -1260,7 +1254,7 @@ def valor_fichas_perfil(x_origem, y_origem):
         # testa se a tela do perfil esta aberta
         if (pyautogui.pixelMatchesColor((x_origem + 241), (y_origem + 170), (227, 18, 5), tolerance=1)
                 and pyautogui.pixelMatchesColor((x_origem + 406), (y_origem + 273), (116, 130, 139), tolerance=1)):
-            time.sleep(1)
+            time.sleep(0.3)
             break
         time.sleep(0.2)
 
@@ -1286,12 +1280,14 @@ def valor_fichas_perfil(x_origem, y_origem):
         # print(config)
         # Realiza o OCR com a configuração atual
         lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
-        # print(lido)
+        print(lido)
         if lido is not None:
             lido = tratar_valor_numerico(lido)
             # Verifica se o valor está na faixa desejada
-            if 500 < lido < 15000000:
-                print("\n   Fichas da conta:", lido, '\n')
+            if 500 < lido < 50000000:
+                print("\n Fichas da conta:", lido, '\n')
+                # clica para fechar a tela do perfil
+                pyautogui.click(772 + x_origem, 160 + y_origem)
                 return lido
                 # break
             else:
@@ -1300,11 +1296,6 @@ def valor_fichas_perfil(x_origem, y_origem):
         else:
             print("Erro na leitura do OCR")
             lido = 0
-
-    if lido == 0:
-        # se nao foi possivel ler o valor tenta outra tecnica
-        lido = valor_fichas(x_origem, y_origem)
-
     return lido
 
 
@@ -1372,6 +1363,8 @@ def level_conta(x_origem, y_origem):
 
 # aviso_do_sistema()
 # x_origem, y_origem = Origem_pg.x_y()
+# valor_fichas(x_origem, y_origem)
+# valor_fichas_perfil(x_origem, y_origem)
 # numero_sala(x_origem, y_origem)
 # blind_sala(x_origem, y_origem)
 # valor_fichas_perfil(x_origem, y_origem)
