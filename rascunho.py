@@ -598,3 +598,28 @@
 # ips_banidos_firebase = ListaIpFirebase.lista_ip_banidos()
 # print("Lista de IPs banidos do Firebase:", ips_banidos_firebase)
 
+
+# # Cria uma lista com os IPs banidos
+# ips_banidos = [{'ip': '192.168.1.1', 'timestamp': 123456789, 'data_hora': '2024-01-15 12:34:56'},
+#                {'ip': '192.168.1.2', 'timestamp': 123456790, 'data_hora': '2024-01-15 12:35:00'},
+#                {'ip': '192.168.1.1', 'timestamp': 123456791, 'data_hora': '2024-01-15 12:35:05'},
+#                {'ip': '192.168.1.3', 'timestamp': 123456792, 'data_hora': '2024-01-15 12:35:10'}]
+#
+# # Dicionário temporário para verificar duplicatas
+# temp_dict = {}
+#
+# # Lista resultante sem IPs duplicados
+# ips_banidos_sem_duplicatas = []
+#
+# for ip_info in ips_banidos:
+#     ip = ip_info['ip']
+#     # Verifica se o IP já foi adicionado
+#     if ip not in temp_dict:
+#         # Adiciona o IP ao dicionário temporário
+#         temp_dict[ip] = True
+#         # Adiciona o registro completo à lista resultante
+#         ips_banidos_sem_duplicatas.append(ip_info)
+#
+# # Exibe a lista resultante
+# print(ips_banidos_sem_duplicatas)
+

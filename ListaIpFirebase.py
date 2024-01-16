@@ -1,7 +1,11 @@
 # Importa a biblioteca necessária
 import datetime  # Adicionado para manipulação de datas
+
 import time
+
 import pyrebase
+
+
 
 # Configuração dos bancos de dados
 # luis.gustavo@engenharia.ufjf.br
@@ -279,10 +283,6 @@ def lista_ip_banidos():
             print(f"Erro ao obter lista de IPs banidos do Firebase: {e}")
             time.sleep(1)
             # return []
-
-
-
-
 
 # # Chama a função para verificar e adicionar IP (substitua pelo IP desejado)
 # verifica_e_adiciona_ip('1.1.1.1')

@@ -1,7 +1,7 @@
 import time
-
 import pyautogui
-
+import os
+import socket
 # import Google
 import IP
 from Seleniun import teste_logado
@@ -11,6 +11,11 @@ from ListaIpFirebase import escrever_IP_banido
 pyautogui.FAILSAFE = False
 
 pyautogui.PAUSE = 0
+
+# Obter o nome do computador
+nome_computador = socket.gethostname()
+# Obter o nome de usuário
+nome_usuario = os.getlogin()
 
 # Define o nome do arquivo da imagem a ser buscada
 origem = r'Imagens\Origem.png'
@@ -74,10 +79,10 @@ def carregado_origem():  # navegador
                     status_conta = 'Carregada'
                 return x_origem, y_origem, status_conta
             else:
-                imagem = r'Imagens\Aceite.png'
-                regiao = (380, 400, 250, 350)
-                precisao = 0.8
-                localizado = localizar_imagem(imagem, regiao, precisao)
+                # imagem = r'Imagens\Aceite.png'
+                # regiao = (380, 400, 250, 350)
+                # precisao = 0.8
+                localizado = localizar_imagem(imagem=r'Imagens\Aceite.png', regiao=(380, 400, 250, 350), precisao=0.8)
                 if localizado is not None:
                     centro = pyautogui.center(localizado)
                     pyautogui.doubleClick(centro.x, centro.y, button='left')
@@ -85,19 +90,19 @@ def carregado_origem():  # navegador
                     status_conta = 'Tutorial'
                     time.sleep(2)
 
-                regiao = (250, 400, 300, 300)
-                imagem = r'Imagens\Banida.png'
-                precisao = 0.8
-                localizado = localizar_imagem(imagem, regiao, precisao)
+                # regiao = (250, 400, 300, 300)
+                # imagem = r'Imagens\Banida.png'
+                # precisao = 0.8
+                localizado = localizar_imagem(imagem=r'Imagens\Banida.png', regiao=(250, 400, 300, 300), precisao=0.8)
                 if localizado is not None:
                     print("comta banida para o poker")
                     status_conta = 'Banida'
                     return 0, 0, status_conta
 
-                regiao = (540, 180, 200, 80)
-                imagem = r'Imagens\Temporariamente.png'
-                precisao = 0.8
-                localizado = localizar_imagem(imagem, regiao, precisao)
+                # regiao = (540, 180, 200, 80)
+                # imagem = r'Imagens\Temporariamente.png'
+                # precisao = 0.8
+                localizado = localizar_imagem(imagem=r'Imagens\Temporariamente.png', regiao=(540, 180, 200, 80), precisao=0.8)
                 if localizado is not None:
                     print("Você está bloquadao temporariamente imagem reconhecida")
                     status_conta = 'Bloqueado Temporariamente'
@@ -111,30 +116,30 @@ def carregado_origem():  # navegador
                     return 0, 0, status_conta
 
                 # tutorial
-                regiao = (440, 480, 330, 270)
-                imagem = r'Imagens\Continuar2.png'
-                precisao = 0.8
-                localizado = localizar_imagem(imagem, regiao, precisao)
+                # regiao = (440, 480, 330, 270)
+                # imagem = r'Imagens\Continuar2.png'
+                # precisao = 0.8
+                localizado = localizar_imagem(imagem=r'Imagens\Continuar2.png', regiao=(440, 480, 330, 270), precisao=0.8)
                 if localizado is not None:
                     centro = pyautogui.center(localizado)
                     pyautogui.doubleClick(centro.x, centro.y, button='left')
                     print("clica no continuar")
                     time.sleep(2)
 
-                regiao = (620, 640, 360, 170)
-                imagem = r'Imagens\Continuar3.png'
-                precisao = 0.8
-                localizado = localizar_imagem(imagem, regiao, precisao)
+                # regiao = (620, 640, 360, 170)
+                # imagem = r'Imagens\Continuar3.png'
+                # precisao = 0.8
+                localizado = localizar_imagem(imagem=r'Imagens\Continuar3.png', regiao=(620, 640, 360, 170), precisao=0.8)
                 if localizado is not None:
                     centro = pyautogui.center(localizado)
                     pyautogui.doubleClick(centro.x, centro.y, button='left')
                     print("clica no continuar")
                     time.sleep(2)
 
-                regiao = (410, 400, 580, 300)
-                imagem = r'Imagens\Atualizar.png'
-                precisao = 0.8
-                localizado = localizar_imagem(imagem, regiao, precisao)
+                # regiao = (410, 400, 580, 300)
+                # imagem = r'Imagens\Atualizar.png'
+                # precisao = 0.8
+                localizado = localizar_imagem(imagem=r'Imagens\Atualizar.png', regiao=(410, 400, 580, 300), precisao=0.8)
                 if localizado is not None:
                     # centro = pyautogui.center(localizado)
                     # pyautogui.doubleClick(centro.x, centro.y, button='left')
@@ -142,10 +147,10 @@ def carregado_origem():  # navegador
                     status_conta = 'Atualizar'
                     return 0, 0, status_conta
 
-                regiao = (340, 800, 385, 105)
-                imagem = r'Imagens\CarosJogadores.png'
-                precisao = 0.995
-                localizado = localizar_imagem(imagem, regiao, precisao)
+                # regiao = (340, 800, 385, 105)
+                # imagem = r'Imagens\CarosJogadores.png'
+                # precisao = 0.995
+                localizado = localizar_imagem(imagem=r'Imagens\CarosJogadores.png', regiao=(340, 800, 385, 105), precisao=0.995)
                 if localizado is not None:
                     # centro = pyautogui.center(localizado)
                     # pyautogui.doubleClick(centro.x, centro.y, button='left')
@@ -153,13 +158,18 @@ def carregado_origem():  # navegador
                           "manutenção. Durante esse período, talvez voçê não consiga acessar o jogo. Pedimos desculpas "
                           "por qualquer inconveniente. E obrigado pelo seu apoio e compreensão!\n")
 
-                    ip, com_internet = IP.meu_ip()
-                    # Google.escrever_IP_banido(ip)
-                    escrever_IP_banido(ip)
-                    print("time 30s para todos os computadores escreverem o ip banido na planilha")
-                    time.sleep(30)
-                    print('manda trocar IP')
-                    IP.ip_troca_agora()
+                    if (nome_usuario == "PokerIP") or ((nome_usuario == "lgagu") and (nome_computador == "PC-I7-9700KF")):
+                        # teste se o usuario do computador é o que troca IP se nao for fica esperando esta livre
+                        print('computador principarl vai marcar o IP banido')
+                        ip, com_internet = IP.meu_ip()
+                        # Google.escrever_IP_banido(ip)
+                        escrever_IP_banido(ip)
+                        print('manda trocar IP')
+                        IP.ip_troca_agora()
+                    else:
+                        print('Não é um computador prncipal, apenas espera liberar um novo ip')
+                        time.sleep(30)
+
                     print('origem da um f5 e espera 15 segundos ')
                     # navegador.get(url)
                     pyautogui.click(86, 59)  # clica no atualizar

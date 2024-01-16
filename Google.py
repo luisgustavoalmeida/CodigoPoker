@@ -3,10 +3,8 @@
 
 from __future__ import print_function
 
-import datetime
 import os
 import os.path
-import re
 import socket
 import time
 
@@ -29,7 +27,7 @@ planilha_id = '1cEeMrBRVLnw7qtjiA63dK5q_HNvmJaCC5kNudzDjLgM'
 # Obter o nome do computador
 nome_computador = socket.gethostname()
 # Obter o nome de usuário
-nome_usuario = os.getlogin()
+# nome_usuario = os.getlogin()
 # nome do computador e do usuario
 nome_completo = socket.gethostname() + "_" + os.getlogin()
 
