@@ -620,11 +620,13 @@ def testa_lista_negra_ip(meu_ip_agora):
     cont_lista_negra += 1
 
     if not lista_negra_ip:
-        lista_negra_ip = Google.lista_ip_banidos()
+        # lista_negra_ip = Google.lista_ip_banidos()
+        lista_negra_ip = ListaIpFirebase.lista_ip_banidos()
 
-    if cont_lista_negra >= 30:
+    if cont_lista_negra >= 20:
         cont_lista_negra = 0
-        lista_negra_ip = Google.lista_ip_banidos()
+        # lista_negra_ip = Google.lista_ip_banidos()
+        lista_negra_ip = ListaIpFirebase.lista_ip_banidos()
 
     print('testa lista negra')
     # meu_ip_agora, teste = meu_ip()

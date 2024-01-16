@@ -542,3 +542,59 @@
 #         lista_salas_jogar.append(item_removido)
 #
 # print(lista_salas_jogar)
+
+#
+# #
+# import pygetwindow as gw
+# import pywinauto
+# import time
+# import os
+#
+# # Execute o comando para abrir a janela de configurações
+# # os.system("start ms-settings:network-airplanemode")
+# time.sleep(2)  # Aguarde um pouco para a janela abrir
+#
+# # Obtenha a janela ativa usando pygetwindow
+# target_window = gw.getActiveWindow()
+# if target_window.title == "Configurações":
+#     print("A janela é 'Configurações'")
+# else:
+#     print("A janela não é 'Configurações'")
+
+# # Use pywinauto para obter informações detalhadas da janela
+# try:
+#     app = pywinauto.Application().connect(handle=target_window._hWnd)
+#     target_window = app.top_window()
+#     print(f"Título: {target_window.window_text()}")
+#     print(f"Classe: {target_window.class_name()}")
+#     print(f"Estilo: {hex(target_window.style())}")
+#     print(f"ExStyle: {hex(target_window.exstyle())}")
+#     # Obter informações sobre sub-janelas, se houver
+#     for child_window in target_window.children():
+#         print("\n--- Sub-janela ---")
+#         print(f"Título: {child_window.window_text()}")
+#         print(f"Classe: {child_window.class_name()}")
+#         print(f"Estilo: {hex(child_window.style())}")
+#         print(f"ExStyle: {hex(child_window.exstyle())}")
+# except Exception as e:
+#     print(f"Erro ao obter informações da janela: {e}")
+#
+#
+# import ListaIpFirebase
+# import IP
+# import Google
+#
+# # ip, com_internet = IP.meu_ip()
+#
+#
+# # lista_negra_ip = Google.lista_ip_banidos()
+# #
+# # print(lista_negra_ip)
+# #
+# # # Iterando sobre a lista e chamando a função para cada IP
+# # for ip in lista_negra_ip:
+# #     ListaIpFirebase.escrever_IP_banido(ip)
+#
+# ips_banidos_firebase = ListaIpFirebase.lista_ip_banidos()
+# print("Lista de IPs banidos do Firebase:", ips_banidos_firebase)
+

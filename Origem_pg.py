@@ -2,9 +2,10 @@ import time
 
 import pyautogui
 
-import Google
+# import Google
 import IP
 from Seleniun import teste_logado
+from ListaIpFirebase import escrever_IP_banido
 
 # Desabilitar o fail-safe
 pyautogui.FAILSAFE = False
@@ -152,7 +153,9 @@ def carregado_origem():  # navegador
                           "manutenção. Durante esse período, talvez voçê não consiga acessar o jogo. Pedimos desculpas "
                           "por qualquer inconveniente. E obrigado pelo seu apoio e compreensão!\n")
 
-                    Google.escrever_IP_banido()
+                    ip, com_internet = IP.meu_ip()
+                    # Google.escrever_IP_banido(ip)
+                    escrever_IP_banido(ip)
                     print("time 30s para todos os computadores escreverem o ip banido na planilha")
                     time.sleep(30)
                     print('manda trocar IP')

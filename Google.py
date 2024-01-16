@@ -620,107 +620,106 @@ def zera_cont_IP(endereco):
 #             service = build('sheets', 'v4', credentials=cred)
 
 
-def escrever_IP_banido():
-    ip, com_internet = IP.meu_ip()
+# def escrever_IP_banido(ip):
+#
+#     # nome_computador = socket.gethostname()
+#     # nome_usuario = os.getlogin()
+#     print('\n\n ip banido \n')
+#     print(ip)
+#     print('\n\n')
+#
+#     print("espera 30 para nao ter concorrencia por recurso do googles")
+#     time.sleep(30)
+#     print('continua')
+#
+#     if (nome_usuario == "PokerIP") or ((nome_usuario == "lgagu") and (
+#             nome_computador == "PC-I7-9700KF")):  # teste se o usuario do computador é o que troca IP se nao for fica esperando esta livre
+#         print('computador principarl vai marcar o IP banido')
+#     else:
+#         print('Não é um computador prncipal, apenas espera liberar um novo ip')
+#         return
+#
+#     global cred
+#     global service
+#
+#     # cred = credencial()
+#     # service = build('sheets', 'v4', credentials=cred)
+#
+#     data_hora_atual = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+#
+#     while True:
+#         try:
+#             # Define o corpo da solicitação de pesquisa da célula vazia
+#             range_ = 'Ban!A:A'
+#             result = service.spreadsheets().values().get(
+#                 spreadsheetId=planilha_id,
+#                 range=range_).execute()
+#             values = result.get('values', [])
+#
+#             # Encontra a primeira célula vazia na coluna A
+#             primeira_celula_vazia = len(values) + 1
+#
+#             # Define o intervalo da célula a ser atualizada
+#             range_atualizar = f'Ban!A{primeira_celula_vazia}:D{primeira_celula_vazia}'
+#
+#             # Define o corpo da solicitação de atualização
+#             value_input_option = 'USER_ENTERED'
+#             values = [[ip, data_hora_atual, nome_usuario, nome_computador]]  # valores que deseja adicionar
+#             data = {'values': values}
+#             result = service.spreadsheets().values().update(
+#                 spreadsheetId=planilha_id,
+#                 range=range_atualizar,
+#                 valueInputOption=value_input_option,
+#                 body=data).execute()
+#
+#             # Exibe a quantidade de células atualizadas
+#             print('{0} células atualizadas.'.format(result.get('updatedCells')))
+#             return
+#         except Exception as error:
+#             print("escrever_IP_banido Ocorreu um erro ao escrever na célula:")
+#             print(f"Erro: {str(error)}")
+#             print("Tentando novamente em 5 segundos...")
+#             # time.sleep(5)
+#             IP.tem_internet()
+#             cred = credencial()
+#             service = build('sheets', 'v4', credentials=cred)
 
-    # nome_computador = socket.gethostname()
-    # nome_usuario = os.getlogin()
-    print('\n\n ip banido \n')
-    print(ip)
-    print('\n\n')
 
-    print("espera 30 para nao ter concorrencia por recurso do googles")
-    time.sleep(30)
-    print('continua')
-
-    if (nome_usuario == "PokerIP") or ((nome_usuario == "lgagu") and (
-            nome_computador == "PC-I7-9700KF")):  # teste se o usuario do computador é o que troca IP se nao for fica esperando esta livre
-        print('computador principarl vai marcar o IP banido')
-    else:
-        print('Não é um computador prncipal, apenas espera liberar um novo ip')
-        return
-
-    global cred
-    global service
-
-    # cred = credencial()
-    # service = build('sheets', 'v4', credentials=cred)
-
-    data_hora_atual = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-
-    while True:
-        try:
-            # Define o corpo da solicitação de pesquisa da célula vazia
-            range_ = 'Ban!A:A'
-            result = service.spreadsheets().values().get(
-                spreadsheetId=planilha_id,
-                range=range_).execute()
-            values = result.get('values', [])
-
-            # Encontra a primeira célula vazia na coluna A
-            primeira_celula_vazia = len(values) + 1
-
-            # Define o intervalo da célula a ser atualizada
-            range_atualizar = f'Ban!A{primeira_celula_vazia}:D{primeira_celula_vazia}'
-
-            # Define o corpo da solicitação de atualização
-            value_input_option = 'USER_ENTERED'
-            values = [[ip, data_hora_atual, nome_usuario, nome_computador]]  # valores que deseja adicionar
-            data = {'values': values}
-            result = service.spreadsheets().values().update(
-                spreadsheetId=planilha_id,
-                range=range_atualizar,
-                valueInputOption=value_input_option,
-                body=data).execute()
-
-            # Exibe a quantidade de células atualizadas
-            print('{0} células atualizadas.'.format(result.get('updatedCells')))
-            return
-        except Exception as error:
-            print("escrever_IP_banido Ocorreu um erro ao escrever na célula:")
-            print(f"Erro: {str(error)}")
-            print("Tentando novamente em 5 segundos...")
-            # time.sleep(5)
-            IP.tem_internet()
-            cred = credencial()
-            service = build('sheets', 'v4', credentials=cred)
-
-
-def lista_ip_banidos():
-    global cred
-    global service
-    guia = 'Ban'
-    coluna = 'A'
-    # Construa o intervalo da coluna desejada (por exemplo, "Ban!A:A" para a coluna A da guia "Ban")
-    intervalo = f"{guia}!{coluna}2:{coluna}"
-    while True:
-        try:
-            # Faz a requisição para obter os valores da coluna
-            result = service.spreadsheets().values().get(
-                spreadsheetId=planilha_id,
-                range=intervalo).execute()
-
-            # Extrai os valores da coluna
-            valores_coluna = result.get('values', [])
-
-            if not valores_coluna:
-                return []  # Retorna uma lista vazia se a coluna estiver vazia
-
-            # Converte a lista de tuplas em uma lista simples de endereços IP
-            enderecos_ip = [item[0] for item in valores_coluna]
-
-            # Remove valores duplicados usando um conjunto (set) e, em seguida, converte de volta para uma lista
-            valores_unicos = list(set(enderecos_ip))
-            print(valores_unicos)
-            print('a lista de IP banido tem: ', len(valores_unicos))
-            return valores_unicos
-
-        except Exception as error:
-            print(f"lista_ip_banidos: Ocorreu um erro ao obter os valores da coluna:")
-            print(f"Erro: {str(error)}")
-            IP.tem_internet()
-            cred = credencial()
-            service = build('sheets', 'v4', credentials=cred)
+# def lista_ip_banidos():
+#     global cred
+#     global service
+#     guia = 'Ban'
+#     coluna = 'A'
+#     # Construa o intervalo da coluna desejada (por exemplo, "Ban!A:A" para a coluna A da guia "Ban")
+#     intervalo = f"{guia}!{coluna}2:{coluna}"
+#     while True:
+#         try:
+#             # Faz a requisição para obter os valores da coluna
+#             result = service.spreadsheets().values().get(
+#                 spreadsheetId=planilha_id,
+#                 range=intervalo).execute()
+#
+#             # Extrai os valores da coluna
+#             valores_coluna = result.get('values', [])
+#
+#             if not valores_coluna:
+#                 return []  # Retorna uma lista vazia se a coluna estiver vazia
+#
+#             # Converte a lista de tuplas em uma lista simples de endereços IP
+#             enderecos_ip = [item[0] for item in valores_coluna]
+#
+#             # Remove valores duplicados usando um conjunto (set) e, em seguida, converte de volta para uma lista
+#             valores_unicos = list(set(enderecos_ip))
+#             print(valores_unicos)
+#             print('a lista de IP banido tem: ', len(valores_unicos))
+#             return valores_unicos
+#
+#         except Exception as error:
+#             print(f"lista_ip_banidos: Ocorreu um erro ao obter os valores da coluna:")
+#             print(f"Erro: {str(error)}")
+#             IP.tem_internet()
+#             cred = credencial()
+#             service = build('sheets', 'v4', credentials=cred)
 
 
 def credenciais(guia, salta_linhas=True):

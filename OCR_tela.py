@@ -1168,7 +1168,7 @@ def valor_apostar(x_origem, y_origem):
                 valor = OCR_regiao(regiao, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
 
                 if valor is not None:
-                    print("\n\nAposta: ", valor, "\n\n")
+                    # print("\nAposta: ", valor, "\n")
 
                     valor = int(valor)
                     return valor

@@ -19,7 +19,7 @@ def teste_limpo(x_origem, y_origem):
         print("teste_limpo: Esta no Lobby, ta limpo")
         return True
     else:
-        print('\n\n teste_limpo: Não esta limpo!!! \n\n ')
+        print('\nteste_limpo: Não esta limpo!!!\n ')
         return False
 
 

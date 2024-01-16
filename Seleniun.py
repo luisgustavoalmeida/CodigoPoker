@@ -552,11 +552,9 @@ def sair_face(url_novo=''):
         url = url_novo
 
     for _ in range(30):
-
-        print("sair do facebook\n\n\n")
         IP.tem_internet()
 
-        print("\n\n\n sair do facebook\n\n\n")
+        print("\n   Sair do facebook    \n")
 
         url_sair = ''
 

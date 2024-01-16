@@ -215,7 +215,7 @@ def cadeiras_celular(x_origem, y_origem, cor_celular=(136, 137, 137), tolerancia
     # print('cadeiras_livres')
     for x, y in dicionario_celular.values():
         if pyautogui.pixelMatchesColor(x_origem + x, y_origem + y, cor_celular, tolerance=tolerancia):
-            print('Pelo menos uma cadeira está com celular.')
+            print('\nPelo menos uma cadeira está com celular.\n')
             return False
     # print('Todas as cadeiras estão livres de celular.')
     return True
@@ -265,7 +265,8 @@ def sentar_mesa(x_origem, y_origem, senta_com_maximo=False, blind='2040', teste_
     if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (19, 65, 109), tolerance=5):
         print('possivel aviso so sistema, roda um limpa jogando')
         Limpa.limpa_jogando(x_origem, y_origem)
-        time.sleep(0.5)
+        Limpa.limpa_promocao(x_origem, y_origem)
+        # time.sleep(0.5)
 
     # testa se esta aparecendo o botao azul "Jogar agora"
     if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (27, 92, 155), tolerance=5):
@@ -297,8 +298,16 @@ def sentar_mesa(x_origem, y_origem, senta_com_maximo=False, blind='2040', teste_
                     sentou = False
                     return sentou
 
-            for _ in range(10):
+            for _ in range(2):
                 print('Tentando sentar')
+
+                if (pyautogui.pixelMatchesColor((x_origem + 534), (y_origem + 357), (70, 126, 56), tolerance=10)
+                        or pyautogui.pixelMatchesColor((x_origem + 534), (y_origem + 357), (23, 121, 166), tolerance=10)):
+                    print('mesa esta limpa')
+                else:
+                    Limpa.fecha_tarefa(x_origem, y_origem)
+                    Limpa.limpa_jogando(x_origem, y_origem)
+                    Limpa.limpa_promocao(x_origem, y_origem)
 
                 clica_seta = clica_seta_sentar(x_origem, y_origem)
 
@@ -543,6 +552,7 @@ def escolher_blind(x_origem, y_origem, blind, lugares=9):
                     cont_erro_entrar_mesa += 1
 
                 Limpa.limpa_jogando(x_origem, y_origem)
+                Limpa.limpa_promocao(x_origem, y_origem)
 
                 if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (27, 92, 155), tolerance=19):
                     # testa se esta dentro da mesa
@@ -686,7 +696,7 @@ def sala_minima_niquel(x_origem, y_origem, num_mesa, blind_mesa):
     if pyautogui.pixelMatchesColor((x_origem + 685), (y_origem + 360), (215, 234, 244), tolerance=1):
         print("teste_limpo: Esta no Lobby, ta limpo")
     else:
-        Limpa.limpa_promocao(x_origem,y_origem)
+        Limpa.limpa_promocao(x_origem, y_origem)
 
     for j in range(20):
         # print(j)
@@ -708,6 +718,7 @@ def sala_minima_niquel(x_origem, y_origem, num_mesa, blind_mesa):
                     cont_erro_entrar_mesa += 1
 
                 Limpa.limpa_jogando(x_origem, y_origem)
+                Limpa.limpa_promocao(x_origem, y_origem)
 
                 if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (27, 92, 155), tolerance=19):
                     # testa se esta dentro da mesa
@@ -803,8 +814,13 @@ def joga(x_origem, y_origem, ajusta_aposta):
     while continua_jogando:  # permanece joghando
         senta_com_maximo = False
         # print('joga mesa')
-        Limpa.fecha_tarefa(x_origem, y_origem)
-        Limpa.limpa_jogando(x_origem, y_origem)
+        if (pyautogui.pixelMatchesColor((x_origem + 534), (y_origem + 357), (70, 126, 56), tolerance=10)
+                or pyautogui.pixelMatchesColor((x_origem + 534), (y_origem + 357), (23, 121, 166), tolerance=10)):
+            print('mesa esta limpa')
+        else:
+            Limpa.fecha_tarefa(x_origem, y_origem)
+            Limpa.limpa_jogando(x_origem, y_origem)
+            Limpa.limpa_promocao(x_origem, y_origem)
 
         sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa)
         # print("Sentou : ", sentou)
@@ -925,6 +941,7 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False):
 
     Limpa.fecha_tarefa(x_origem, y_origem)
     Limpa.limpa_jogando(x_origem, y_origem)
+    Limpa.limpa_promocao(x_origem, y_origem)
     sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa, True)
 
     while continua_jogando:  # permanece joghando
@@ -933,8 +950,14 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False):
 
         if cont_limpa_jogando > 40:
             cont_limpa_jogando = 0
-            Limpa.fecha_tarefa(x_origem, y_origem)
-            Limpa.limpa_jogando(x_origem, y_origem)
+            # testa se a mesa esta limpa
+            if (pyautogui.pixelMatchesColor((x_origem + 534), (y_origem + 357), (70, 126, 56), tolerance=10)
+                    or pyautogui.pixelMatchesColor((x_origem + 534), (y_origem + 357), (23, 121, 166), tolerance=10)):
+                print('mesa esta limpa')
+            else:
+                Limpa.fecha_tarefa(x_origem, y_origem)
+                Limpa.limpa_jogando(x_origem, y_origem)
+                Limpa.limpa_promocao(x_origem, y_origem)
             sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa, True)
         cont_limpa_jogando += 1
 
