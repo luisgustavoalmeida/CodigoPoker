@@ -104,18 +104,23 @@ def se_esta_lagado():
     global navegador
     # Especifique o nome do cookie associado ao estado de login do Facebook
     nome_cookie = "c_user"
+    while True:
+        IP.tem_internet()
+        try:
+            # Obtém todos os cookies
+            cookies = navegador.get_cookies()
 
-    # Obtém todos os cookies
-    cookies = navegador.get_cookies()
+            # Verifica se o cookie está presente
+            for cookie in cookies:
+                if cookie["name"] == nome_cookie:
+                    print("Está logado no Facebook.")
+                    return True
 
-    # Verifica se o cookie está presente
-    for cookie in cookies:
-        if cookie["name"] == nome_cookie:
-            print("Está logado no Facebook.")
-            return True
-
-    print("Não está logado no Facebook.")
-    return False
+            print("Não está logado no Facebook.")
+            return False
+        except Exception as e:
+            print("Erro ao obter o URL do navegador, erro: ", e)
+            time.sleep(1)
 
     # if navegador.get_cookie("c_user"):
     #     print("Está logado no Facebook.")
