@@ -213,6 +213,52 @@ def verifica_e_adiciona_ip(ip):
     return True  # O IP não estava na lista, retorna True e foi adicionado
 
 
+# def escrever_IP_banido(ip):
+#     global db
+#
+#     print('escrever_IP_banido')
+#
+#     print(ip)
+#
+#     data_hora_atual = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+#
+#     print(data_hora_atual)
+#
+#     # Crie uma estrutura de dados para o IP banido
+#     ip_banido_info = {
+#         'ip': ip,
+#         'timestamp': time.time(),
+#         'data_hora': data_hora_atual
+#     }
+#     while True:
+#         try:
+#             # Obtém os dados da referência 'ips_banidos' no Firebase
+#             dados_banidos = db.child('ips_banidos').get().val()
+#
+#             # Se a lista de IPs banidos está vazia ou não existe, inicializa uma lista vazia
+#             if dados_banidos is None:
+#                 dados_banidos = []
+#
+#             # Verifica se o IP já está na lista
+#             for ip_info in dados_banidos:
+#                 if ip_info['ip'] == ip:
+#                     print(f"IP {ip} já está na lista de IPs banidos.")
+#                     return
+#
+#             # Adiciona o IP banido à lista
+#             dados_banidos.append(ip_banido_info)
+#
+#             # Remove IPs duplicados
+#             dados_banidos = [dict(t) for t in {tuple(d.items()) for d in dados_banidos}]
+#
+#             # Atualiza a referência 'ips_banidos' no Firebase
+#             db.child('ips_banidos').set(dados_banidos)
+#
+#             print(f"IP {ip} adicionado à lista de IPs banidos.")
+#         except Exception as e:
+#             print(f"Erro ao adicionar IP banido do Firebase: {e}")
+#             time.sleep(1)
+
 def escrever_IP_banido(ip):
     global db
 
@@ -248,8 +294,8 @@ def escrever_IP_banido(ip):
             # Adiciona o IP banido à lista
             dados_banidos.append(ip_banido_info)
 
-            # Remove IPs duplicados
-            dados_banidos = [dict(t) for t in {tuple(d.items()) for d in dados_banidos}]
+            # Ordena a lista com base no timestamp em ordem crescente
+            dados_banidos = sorted(dados_banidos, key=lambda x: x['timestamp'])
 
             # Atualiza a referência 'ips_banidos' no Firebase
             db.child('ips_banidos').set(dados_banidos)
@@ -258,6 +304,8 @@ def escrever_IP_banido(ip):
         except Exception as e:
             print(f"Erro ao adicionar IP banido do Firebase: {e}")
             time.sleep(1)
+
+
 
 
 def lista_ip_banidos():
@@ -277,6 +325,7 @@ def lista_ip_banidos():
             # Mostra quantos itens existem na lista sem duplicatas
             quantidade_ips_banidos = len(ips_banidos)
             print(f"Quantidade de IPs banidos: {quantidade_ips_banidos}")
+            print(ips_banidos)
 
             return ips_banidos
         except Exception as e:
@@ -289,4 +338,9 @@ def lista_ip_banidos():
 
 # unir_e_atualizar_dados()
 #
+# unir_e_atualizar_dados()
+
+# lista_ip_banidos()
+# escrever_IP_banido("0.1.1.1")
+# verifica_e_adiciona_ip('1.1.1.1')
 # unir_e_atualizar_dados()
