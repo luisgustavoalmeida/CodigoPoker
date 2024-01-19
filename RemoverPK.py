@@ -55,13 +55,13 @@ while True:
     print("guia:", guia)
     if id == id_novo or id == "":
 
-        id, senha, linha, cont_IP = Google.credenciais(guia)
+        id, senha, fichas, linha, cont_IP = Google.credenciais(guia)
 
         if id == "":
             Seleniun.sair_face(url)
-            id, senha, linha, cont_IP = Google.credenciais(guia)
+            id, senha, fichas, linha, cont_IP  = Google.credenciais(guia)
     else:
-        id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
+        id, senha, fichas, linha, cont_IP = id_novo, senha_novo, fichas_novo, linha_novo, cont_IP_novo
 
     dia_da_semana = int(datetime.datetime.now().weekday())
     # 0 segunda, 1 terça, 2 quarta, 3 quinta, 4 sexta, 5 sabado,6 domingo

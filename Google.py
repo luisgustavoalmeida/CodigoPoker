@@ -368,6 +368,7 @@ def reservar_linha(guia, endereco, salta_linhas=True):
     id = ""
     senha = ""
     linha = ""
+    fichas = ""
     contagem_ip = ""
     # print(valor)
     if valor_pc is not None:
@@ -375,26 +376,26 @@ def reservar_linha(guia, endereco, salta_linhas=True):
         escrever_celula(valor_pc, guia, endereco)
         linha = endereco[1:]
         time.sleep(5.5)  # tempo entre pegar o id e testa se nao teve concorrencia
-        values, id, senha, contagem_ip = lote_valor(guia, linha)
+        values, id, senha, fichas, contagem_ip = lote_valor(guia, linha)
         try:
             values = int(values)
             if valor_pc == values:
                 print("Não teve concorrencia pela celula")
-                return True, id, senha, linha, contagem_ip  # Retorna o valor testado, id, senha e linha
+                return True, id, senha, fichas, linha, contagem_ip  # Retorna o valor testado, id, senha e linha
             else:
                 print("Pego por outro computador")
                 if salta_linhas:
                     linha_vazia_anterior += 40
                 else:
                     linha_vazia_anterior += 1
-                return False, id, senha, linha, contagem_ip
+                return False, id, senha, fichas, linha, contagem_ip
             # print("values :",values)
         except:
             if salta_linhas:
                 linha_vazia_anterior += 40
             else:
                 linha_vazia_anterior += 1
-            return False, id, senha, linha, contagem_ip
+            return False, id, senha, fichas, linha, contagem_ip
 
     else:
         print('A chave não existe no dicionário')
@@ -403,7 +404,7 @@ def reservar_linha(guia, endereco, salta_linhas=True):
 def lote_valor(guia, linha):
     global cred
     global service
-    regiao1 = f"{guia}!B{linha}:D{linha}"  # regiao com a informação id senha e numero computador
+    regiao1 = f"{guia}!B{linha}:E{linha}"  # regiao com a informação id senha e numero computador
     # print(regiao1)
     regiao2 = f"{dicionari_PC_IP[nome_computador]}"  # pega a contagem de ip
     # print(regiao2)
@@ -433,9 +434,10 @@ def lote_valor(guia, linha):
                 id = values[0]
                 senha = values[1]
                 valor = values[2]
-                cont_IP = values[3]
+                fichas = values[3]
+                cont_IP = values[4]
                 # print(cont_IP)
-                return valor, id, senha, cont_IP
+                return valor, id, senha, fichas, cont_IP
 
         except Exception as error:
             print(f"lote_valor Ocorreu um erro ao obter o valor da célula:")
@@ -728,17 +730,14 @@ def credenciais(guia, salta_linhas=True):
 
         endereco = primeira_celula_vazia(guia)
 
-        reservado, id, senha, linha, cont_IP = reservar_linha(guia, endereco, salta_linhas)
+        reservado, id, senha, fichas, linha, cont_IP = reservar_linha(guia, endereco, salta_linhas)
 
         if reservado:
             try:
                 cont_IP = int(cont_IP)
-                return id, senha, linha, cont_IP
+                return id, senha, fichas, linha, cont_IP
             except Exception as error:
                 print(error)
-                time.sleep(5)
-                continue
-
         print('tentar credenciaias')
 
 

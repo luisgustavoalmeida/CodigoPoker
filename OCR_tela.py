@@ -344,7 +344,8 @@ def tratar_valor_numerico(texto):
         return 0
 
 
-def valor_fichas(x_origem, y_origem):
+def valor_fichas(x_origem, y_origem, fichas=""):
+
     """
     Esta função realiza a leitura do valor das fichas em uma determinada região da tela.
 
@@ -394,15 +395,35 @@ def valor_fichas(x_origem, y_origem):
             # Verifica se o valor está dentro da faixa desejada
             if 500 < valor < 50000000:
                 print(f"Valor das fichas: {valor}")
-                return valor
+                break
+                # return valor
             else:
                 print('Valor fora sa feixa esperado')
                 # valor = 0
-        else:
+        elif lido is None:
             print('OCR nao recolheceu a imagem')
-            # valor = 0
+            valor = valor_fichas_perfil(x_origem, y_origem)
 
-    valor = valor_fichas_perfil(x_origem, y_origem)
+    if fichas != "":
+        print('fichas diferente se vazio')
+        valor_planilha = tratar_valor_numerico(fichas)
+        print(valor_planilha)
+
+        if (valor < valor_planilha + 10000) and (valor >= valor_planilha):
+            print('\n valor compativel com fichas da planilha \n')
+            return valor
+
+        valor_perfil = valor_fichas_perfil(x_origem, y_origem)
+        if (valor_perfil < valor_planilha + 10000) and (valor_perfil >= valor_planilha):
+            print('\n valor perfil compativel com fichas da planilha \n')
+            return valor_perfil
+
+        if valor_perfil == valor:
+            print('\n valor igual a valor perfil \n')
+            return valor
+
+        return valor_planilha
+
     return valor
 
 

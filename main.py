@@ -35,6 +35,7 @@ LIMITE_IP = 6
 
 id = "x"
 senha = ""
+fichas = ""
 linha = ""
 cont_IP = 10
 guia = ""
@@ -45,6 +46,7 @@ ja_fez_tutorial = True
 # Variáveis globais para as variáveis e controle da tarefa independente
 id_novo = "x"
 senha_novo = ""
+fichas_novo = ""
 linha_novo = ""
 cont_IP_novo = ""
 continuar_tarefa = False
@@ -61,6 +63,7 @@ def tarefa_independente():
     global guia
     global id_novo
     global senha_novo
+    global fichas_novo
     global linha_novo
     global cont_IP_novo
 
@@ -73,7 +76,7 @@ def tarefa_independente():
             print("Executando tarefa independente...")
 
             # Atualizar as variáveis
-            id_novo, senha_novo, linha_novo, cont_IP_novo = Google.credenciais(guia)  # pega id e senha para o proximo login
+            id_novo, senha_novo, fichas_novo, linha_novo, cont_IP_novo = Google.credenciais(guia)  # pega id e senha para o proximo login
             continuar_tarefa = False
 
             # Indicar que a tarefa terminou e está pronta para aguardar novo comando
@@ -107,15 +110,15 @@ while True:
     print("guia:", guia)
 
     if id == id_novo or id == "":
-        id, senha, linha, cont_IP = Google.credenciais(guia)
+        id, senha, fichas, linha, cont_IP = Google.credenciais(guia)
 
         if id == "":
             Seleniun.sair_face(url)
             guia = HoraT.mudar_guia(id, guia)
-            id, senha, linha, cont_IP = Google.credenciais(guia)
+            id, senha, fichas, linha, cont_IP = Google.credenciais(guia)
 
     else:
-        id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
+        id, senha, fichas, linha, cont_IP = id_novo, senha_novo, fichas_novo, linha_novo, cont_IP_novo
 
     dia_da_semana = int(datetime.datetime.now().weekday())
     # 0 segunda, 1 terça, 2 quarta, 3 quinta, 4 sexta, 5 sabado,6 domingo
@@ -154,7 +157,7 @@ while True:
 
             if entrou_corretamente is False:  # se nao entrou no face
                 print("conta nao entou no Facebook")
-                # Google.marca_caida(stataus_facebook, guia, linha)
+
                 break
 
             while True:
@@ -168,11 +171,11 @@ while True:
                 entrou_corretamente, stataus_facebook = Seleniun.teste_logado()
                 if entrou_corretamente is False:  # se nao entrou no face
                     print("conta nao entou no Facebook")
-                    # Google.marca_caida(stataus_facebook, guia, linha)
+
                     break
 
             if entrou_corretamente is False:  # se nao entrou no face
-                # Google.marca_caida(stataus_facebook, guia, linha)
+
                 break
 
             ja_fez_tutorial = True
@@ -203,7 +206,7 @@ while True:
 
             entrou_corretamente, stataus_facebook = Seleniun.teste_logado()
             if entrou_corretamente is False:  # se nao entrou no face
-                # Google.marca_caida(stataus_facebook, guia, linha)
+
                 break
 
             if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
@@ -236,14 +239,14 @@ while True:
                             IP.f5_quando_internete_ocila()
                             entrou_corretamente, stataus_facebook = Seleniun.teste_logado()
                             if not entrou_corretamente:  # se nao entrou no face
-                                # Google.marca_caida(stataus_facebook, guia, linha)
+
                                 break
                             pontuacao_tarefas = OCR_tela.pontuacao_tarefas(x_origem, y_origem)
                             Limpa.fecha_tarefa(x_origem, y_origem)
 
                 entrou_corretamente, stataus_facebook = Seleniun.teste_logado()
                 if entrou_corretamente is False:  # se nao entrou no face
-                    # Google.marca_caida(stataus_facebook, guia, linha)
+
                     break
 
                 if hora_que_rodou is None:
@@ -307,7 +310,7 @@ while True:
 
                 Tarefas.recolher_tarefa_upando(x_origem, y_origem)
 
-                valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem)
+                valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem, fichas)
 
                 # valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
                 roda = False
@@ -495,18 +498,18 @@ while True:
 
             print("Conta não entou, o Statos é: ", stataus_facebook)
             Google.marca_caida(stataus_facebook, guia, linha)
-            id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
+            id, senha, fichas, linha, cont_IP = id_novo, senha_novo, fichas_novo, linha_novo, cont_IP_novo
 
         elif status_poker == 'Banida' or status_poker == 'Bloqueado Temporariamente':
 
             print("Conta não entou, o Statos é: ", status_poker)
             Google.marca_caida(status_poker, guia, linha)
-            id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
+            id, senha, fichas, linha, cont_IP = id_novo, senha_novo, fichas_novo, linha_novo, cont_IP_novo
 
         elif status_poker == 'Atualizar':
 
             print("Conta não entou, o Statos é: ", status_poker)
-            id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
+            id, senha, fichas, linha, cont_IP = id_novo, senha_novo, fichas_novo, linha_novo, cont_IP_novo
 
         elif entrou_corretamente:  # se nao entrou no face
 
@@ -519,7 +522,7 @@ while True:
             else:
                 # escre os valores na planilha
                 Google.escrever_valores_lote(valores, guia, linha)  # escreve as informaçoes na planilha apartir da coluna E
-                id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
+                id, senha, fichas, linha, cont_IP = id_novo, senha_novo, fichas_novo, linha_novo, cont_IP_novo
 
         guia_recebida = HoraT.mudar_guia(id, guia)
         if guia != guia_recebida:
@@ -532,7 +535,7 @@ while True:
             dia_da_semana = datetime.datetime.now().weekday()  # busca o dia da semana 0 segunda 1 terça ... 6 domeingo
             url = str(Google.pega_valor('Dados', 'F1'))
             guia = guia_recebida
-            id, senha, linha, cont_IP = Google.credenciais(guia)  # pega id e senha par o proximo login
+            id, senha, fichas, linha, cont_IP = Google.credenciais(guia)  # pega id e senha par o proximo login
         guia = guia_recebida
 
         # cont_IP = IP.contagem_IP()

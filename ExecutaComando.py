@@ -30,6 +30,7 @@ print("limite de troca de IP: ", LIMITE_IP)
 
 id = "x"
 senha = ""
+fichas = ""
 linha = ""
 cont_IP = 10
 guia = ""
@@ -40,6 +41,7 @@ ja_fez_tutorial = True
 # Variáveis globais para as variáveis e controle da tarefa independente
 id_novo = "x"
 senha_novo = ""
+fichas_novo = ""
 linha_novo = ""
 cont_IP_novo = ""
 continuar_tarefa = False
@@ -56,6 +58,7 @@ def tarefa_independente():
     global guia
     global id_novo
     global senha_novo
+    global fichas_novo
     global linha_novo
     global cont_IP_novo
 
@@ -68,7 +71,8 @@ def tarefa_independente():
             print("Executando tarefa independente...")
 
             # Atualizar as variáveis
-            id_novo, senha_novo, linha_novo, cont_IP_novo = Google.credenciais(guia, False)  # pega id e senha para o proximo login
+            id_novo, senha_novo, fichas_novo, linha_novo, cont_IP_novo = Google.credenciais(guia, False)  # pega id e senha para o proximo login
+
             continuar_tarefa = False
 
             # Indicar que a tarefa terminou e está pronta para aguardar novo comando
@@ -99,13 +103,13 @@ while True:
     print("guia:", guia)
     if id == id_novo or id == "":
 
-        id, senha, linha, cont_IP = Google.credenciais(guia, False)
+        id, senha, fichas, linha, cont_IP = Google.credenciais(guia, False)
 
         if id == "":
             Seleniun.sair_face(url)
-            id, senha, linha, cont_IP = Google.credenciais(guia, False)
+            id, senha, fichas, linha, cont_IP = Google.credenciais(guia, False)
     else:
-        id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
+        id, senha, fichas, linha, cont_IP = id_novo, senha_novo, fichas_novo, linha_novo, cont_IP_novo
 
     Firebase.confirmacao_comando_resposta('Cont IP: ' + str(cont_IP))
 
@@ -272,7 +276,7 @@ while True:
                         Firebase.confirmacao_comando_resposta("Levantando")
                         Mesa.levantar_mesa(x_origem, y_origem)
                         Limpa.limpa_jogando(x_origem, y_origem)
-                        valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem)
+                        valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem, fichas)
                         status_comando = 'Valor ficha: ' + str(valor_fichas)
 
                     elif '/' in comando:
@@ -297,7 +301,7 @@ while True:
                         else:
                             status_comando = "Mesa ocupada"
                         time.sleep(2)
-                        valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem)
+                        valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem, fichas)
                         status_comando = 'Valor ficha: ' + str(valor_fichas)
 
                     elif comando == "Senta2":
@@ -314,7 +318,7 @@ while True:
                         else:
                             status_comando = "Mesa ocupada"
                         time.sleep(2)
-                        valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem)
+                        valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem, fichas)
                         status_comando = 'Valor ficha: ' + str(valor_fichas)
 
                     if status_comando_anterior != status_comando:
@@ -325,7 +329,7 @@ while True:
 
                 Firebase.confirmacao_comando_resposta('Saindo da conta')
 
-                valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem)
+                valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem, fichas)
                 hora_que_rodou = datetime.datetime.now().strftime('%H:%M:%S')
 
                 print('\n\nvalor_fichas', valor_fichas, '\n\n')
@@ -357,24 +361,24 @@ while True:
 
             print("Conta não entou, o Statos é: ", stataus_facebook)
             Google.marca_caida(stataus_facebook, guia, linha)
-            id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
+            id, senha, fichas, linha, cont_IP = id_novo, senha_novo, fichas_novo, linha_novo, cont_IP_novo
 
 
         elif status_poker == 'Banida':
 
             print("Conta não entou, o Statos é: ", status_poker)
             Google.marca_caida(status_poker, guia, linha)
-            id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
+            id, senha, fichas, linha, cont_IP = id_novo, senha_novo, fichas_novo, linha_novo, cont_IP_novo
 
 
         elif status_poker == 'Atualizar':
 
             print("Conta não entou, o Statos é: ", status_poker)
-            id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
+            id, senha, fichas, linha, cont_IP = id_novo, senha_novo, fichas_novo, linha_novo, cont_IP_novo
 
 
         elif entrou_corretamente:  # se nao entrou no face
 
             Google.escrever_valores_lote(valores, guia, linha)  # escreve as informaçoes na planilha apartir da coluna E
-            id, senha, linha, cont_IP = id_novo, senha_novo, linha_novo, cont_IP_novo
+            id, senha, fichas, linha, cont_IP = id_novo, senha_novo, fichas_novo, linha_novo, cont_IP_novo
 
