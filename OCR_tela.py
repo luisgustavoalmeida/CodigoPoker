@@ -356,7 +356,7 @@ def valor_fichas(x_origem, y_origem, fichas=""):
     Returns:
     - int: O valor das fichas lido, ou 0 se nenhum valor válido for encontrado.
     """
-    print('valor_fichas')
+    print('\n\n valor_fichas')
 
     # Configurações para o processo OCR
     inveter_cor = True
@@ -407,14 +407,14 @@ def valor_fichas(x_origem, y_origem, fichas=""):
     if fichas != "":
         print('fichas diferente se vazio')
         valor_planilha = tratar_valor_numerico(fichas)
-        print(valor_planilha)
+        print('Valor planilha: ', valor_planilha)
 
-        if (valor < valor_planilha + 10000) and (valor >= valor_planilha):
+        if (valor < valor_planilha + 15000) and (valor >= valor_planilha):
             print('\n valor compativel com fichas da planilha \n')
             return valor
 
         valor_perfil = valor_fichas_perfil(x_origem, y_origem)
-        if (valor_perfil < valor_planilha + 10000) and (valor_perfil >= valor_planilha):
+        if (valor_perfil < valor_planilha + 15000) and (valor_perfil >= valor_planilha):
             print('\n valor perfil compativel com fichas da planilha \n')
             return valor_perfil
 
@@ -425,6 +425,69 @@ def valor_fichas(x_origem, y_origem, fichas=""):
         return valor_planilha
 
     return valor
+
+def valor_fichas_perfil(x_origem, y_origem):
+    """
+    Extrai e retorna o valor de fichas da conta.
+
+    Parameters:
+    - x_origem (int): Coordenada x da origem da janela.
+    - y_origem (int): Coordenada y da origem da janela.
+
+    Returns:
+    - int: valor de fichas da conta ou 0 se não for encontrado ou estiver fora da faixa desejada.
+    """
+    print('valor_fichas_perfil')
+    lido = 0
+    for _ in range(50):
+        # clica para abrir a tela do perfil
+        pyautogui.click(16 + x_origem, 24 + y_origem)
+        # testa se a tela do perfil esta aberta
+        if (pyautogui.pixelMatchesColor((x_origem + 241), (y_origem + 170), (227, 18, 5), tolerance=1)
+                and pyautogui.pixelMatchesColor((x_origem + 406), (y_origem + 273), (116, 130, 139), tolerance=1)):
+            time.sleep(0.3)
+            break
+        time.sleep(0.2)
+
+    # Configurações para o processo OCR
+    inveter_cor = False
+    esca_ciza = True
+    fator_ampliacao = 2
+    contraste_pre = 1
+    contraste_pos = 1
+    regiao_ficha = (x_origem + 416, y_origem + 262, x_origem + 493, y_origem + 283)  # leval
+
+    # Define a lista de configurações a serem testadas
+    configuracoes = [
+        r'--psm 6 --oem 3  outputbase digits',
+        r'--psm 7 --oem 1 -c tessedit_char_whitelist=0123456789.',
+        r'--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789.',
+        r'--psm 3 --oem 0 -c tessedit_char_whitelist=0123456789.',
+        r'--psm 8 --oem 0 -c tessedit_char_whitelist=0123456789.',
+    ]
+
+    # Itera sobre cada configuração e realiza o OCR
+    for config in configuracoes:
+        # print(config)
+        # Realiza o OCR com a configuração atual
+        lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
+        print(lido)
+        if lido is not None:
+            lido = tratar_valor_numerico(lido)
+            # Verifica se o valor está na faixa desejada
+            if 500 < lido < 50000000:
+                print(f"Valor das fichas perfil: {lido}")
+                # clica para fechar a tela do perfil
+                pyautogui.click(772 + x_origem, 160 + y_origem)
+                return lido
+                # break
+            else:
+                print("Valor fora da faixa desejada")
+                lido = 0
+        else:
+            print("Erro na leitura do OCR")
+            lido = 0
+    return lido
 
 
 def tempo_roleta(x_origem, y_origem):
@@ -1254,70 +1317,6 @@ def aviso_sistema(x_origem, y_origem):
     else:
         # print('nao tem caixa com aviso do sistema ')
         return False, resposta
-
-
-def valor_fichas_perfil(x_origem, y_origem):
-    """
-    Extrai e retorna o valor de fichas da conta.
-
-    Parameters:
-    - x_origem (int): Coordenada x da origem da janela.
-    - y_origem (int): Coordenada y da origem da janela.
-
-    Returns:
-    - int: valor de fichas da conta ou 0 se não for encontrado ou estiver fora da faixa desejada.
-    """
-    print('valor_fichas_perfil')
-    lido = 0
-    for _ in range(50):
-        # clica para abrir a tela do perfil
-        pyautogui.click(16 + x_origem, 24 + y_origem)
-        # testa se a tela do perfil esta aberta
-        if (pyautogui.pixelMatchesColor((x_origem + 241), (y_origem + 170), (227, 18, 5), tolerance=1)
-                and pyautogui.pixelMatchesColor((x_origem + 406), (y_origem + 273), (116, 130, 139), tolerance=1)):
-            time.sleep(0.3)
-            break
-        time.sleep(0.2)
-
-    # Configurações para o processo OCR
-    inveter_cor = False
-    esca_ciza = True
-    fator_ampliacao = 2
-    contraste_pre = 1
-    contraste_pos = 1
-    regiao_ficha = (x_origem + 416, y_origem + 262, x_origem + 493, y_origem + 283)  # leval
-
-    # Define a lista de configurações a serem testadas
-    configuracoes = [
-        r'--psm 6 --oem 3  outputbase digits',
-        r'--psm 7 --oem 1 -c tessedit_char_whitelist=0123456789.',
-        r'--psm 7 --oem 0 -c tessedit_char_whitelist=0123456789.',
-        r'--psm 3 --oem 0 -c tessedit_char_whitelist=0123456789.',
-        r'--psm 8 --oem 0 -c tessedit_char_whitelist=0123456789.',
-    ]
-
-    # Itera sobre cada configuração e realiza o OCR
-    for config in configuracoes:
-        # print(config)
-        # Realiza o OCR com a configuração atual
-        lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
-        print(lido)
-        if lido is not None:
-            lido = tratar_valor_numerico(lido)
-            # Verifica se o valor está na faixa desejada
-            if 500 < lido < 50000000:
-                print("\n Fichas da conta:", lido, '\n')
-                # clica para fechar a tela do perfil
-                pyautogui.click(772 + x_origem, 160 + y_origem)
-                return lido
-                # break
-            else:
-                print("Valor fora da faixa desejada")
-                lido = 0
-        else:
-            print("Erro na leitura do OCR")
-            lido = 0
-    return lido
 
 
 def level_conta(x_origem, y_origem):
