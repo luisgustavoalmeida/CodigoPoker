@@ -223,7 +223,7 @@ def limpa_pequeno(x_origem, y_origem):
         print("o novo banco esta aberto")
 
     if not teste_limpo(x_origem, y_origem):  # se ta limpo nem entra
-
+        teste_logado()
         try:
             if (pyautogui.pixelMatchesColor(215, 1000, (36, 37, 38), tolerance=5)
                     or pyautogui.pixelMatchesColor(700, 650, (32, 33, 36), tolerance=5)

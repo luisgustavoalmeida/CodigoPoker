@@ -633,16 +633,19 @@ def sair_face(url_novo=''):
             return
 
         except Exception as e:
+            try:
+                print("ERRO ao executar o script sair ")
+                print(e)
+                # Exclui todos os cookies
+                # navegador.delete_all_cookies()
+                navegador.delete_cookie("xs")
+                navegador.delete_cookie("c_user")
+                IP.tem_internet()
+                navegador.get(url)
+                print("testa se tem nao é vc")
 
-            print("ERRO ao executar o script sair ")
-            print(e)
-            # Exclui todos os cookies
-            # navegador.delete_all_cookies()
-            navegador.delete_cookie("xs")
-            navegador.delete_cookie("c_user")
-            IP.tem_internet()
-            navegador.get(url)
-            print("testa se tem nao é vc")
+            except Exception as e:
+                print("Erro ao sair.", e)
 
             try:
                 # Esperar até que o elemento "Não é você?" seja clicável
@@ -655,7 +658,6 @@ def sair_face(url_novo=''):
                 time.sleep(2)
 
             except Exception as e:
-
                 print("Elemento não encontrado na página.", e)
 
 
