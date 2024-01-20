@@ -5,7 +5,7 @@ from Firebase import confirmacao_comando_resposta, comando_escravo, comando_cole
 from Mesa import blinb_rolagem, levantar_mesa, apostar_pagar, passa_corre_joga
 
 
-def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
+def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K', sorte=True):
     print('mesa_recolher')
 
     sentou = False
@@ -83,7 +83,7 @@ def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
 
         if apostar:
             # print('\n\n         Hora de apostar         \n\n')
-            jogou = apostar_pagar(x_origem, y_origem)
+            jogou = apostar_pagar(x_origem, y_origem, sorte)
             if jogou:
                 jogou_uma_vez = True
         else:

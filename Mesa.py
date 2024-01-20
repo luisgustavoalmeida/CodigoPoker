@@ -427,7 +427,7 @@ def sentar_mesa(x_origem, y_origem, senta_com_maximo=False, blind='2040', teste_
     return sentou
 
 
-def escolher_blind(x_origem, y_origem, blind, lugares=9):
+def escolher_blind(x_origem, y_origem, blind, lugares=9, posi_lista=0):
     """
     Escolhe o valor do blind em uma mesa de poker virtual com base nas coordenadas fornecidas.
 
@@ -532,6 +532,10 @@ def escolher_blind(x_origem, y_origem, blind, lugares=9):
     blind_sala = None
     time.sleep(1)
     cont_erro_entrar_mesa = 0
+
+    dicionari_posi_lista_mesa = {0: 264, 1: 298, 2: 332, 3: 366, 4: 400, 5: 434, 6: 468}
+    posi = dicionari_posi_lista_mesa[posi_lista]
+
     for j in range(20):
 
         if pyautogui.pixelMatchesColor((x_origem + 310), (y_origem + 264), (95, 106, 122), tolerance=5):
@@ -541,14 +545,14 @@ def escolher_blind(x_origem, y_origem, blind, lugares=9):
             time.sleep(35)
             return "Erro ao buscar sala, vai ser dado um F5"
 
-        if pyautogui.pixelMatchesColor((x_origem + 358), (y_origem + 264), (29, 32, 37), tolerance=5):
-            # testa se tem sala com pelo menos um lugar vazio, olha se tem preto no inicio da barra de ocupação
-            pyautogui.doubleClick(490 + x_origem, 263 + y_origem)  # clica para entar na sala vazia
+        if pyautogui.pixelMatchesColor((x_origem + 358), (y_origem + posi), (29, 32, 37), tolerance=5):
+            # testa se tem sala com todos lugares vazios, olha se tem preto no inicio da barra de ocupação
+            pyautogui.doubleClick(358 + x_origem, posi + y_origem)  # clica para entar na sala vazia
 
             for i in range(40):
-                if pyautogui.pixelMatchesColor((x_origem + 435), (y_origem + 264), (26, 29, 33), tolerance=5):
-                    # testa se tem sala com pelo menos um lugar vazio, olha se tem preto no fim da barra de ocupação
-                    pyautogui.doubleClick(490 + x_origem, 263 + y_origem)  # clica para entar na sala vazia
+                if pyautogui.pixelMatchesColor((x_origem + 358), (y_origem + posi), (29, 32, 37), tolerance=5):
+                    # testa se tem sala com todos lugares vazios, olha se tem preto no inicio da barra de ocupação
+                    pyautogui.doubleClick(358 + x_origem, posi + y_origem)  # clica para entar na sala vazia
                     cont_erro_entrar_mesa += 1
 
                 Limpa.limpa_jogando(x_origem, y_origem)
@@ -1233,31 +1237,62 @@ def passa_corre_joga(x_origem, y_origem, valor_aposta1=40, valor_aposta2=80):  #
     return jogou_uma_vez
 
 
-def apostar_pagar(x_origem, y_origem):
+def apostar_pagar(x_origem, y_origem, sorte=True):
     jogou_uma_vez = False
     # quando se tem que apostar, testa se tem a barra de ajustar a aposta
     if pyautogui.pixelMatchesColor((x_origem + 513), (y_origem + 647), (180, 202, 224), 5):
         # se tem a barra de ajustar a aposta
+        if sorte:
+            # testar se é a ultima carta
+            if pyautogui.pixelMatchesColor((x_origem + 652), (y_origem + 327), (249, 249, 249), 5):
+                print('ultima carta')
+                # cliaca no final da barra
+                pyautogui.click((x_origem + 660), (y_origem + 647))
 
-        # testar se é a ultima carta
-        if pyautogui.pixelMatchesColor((x_origem + 652), (y_origem + 327), (249, 249, 249), 5):
-            print('ultima carta')
-            # cliaca no final da barra
-            pyautogui.click((x_origem + 660), (y_origem + 647))
+            else:
+                print('NÂO é a ultima carta')
+                # clicar no meio da barra de ajuste
+                pyautogui.click((x_origem + 595), (y_origem + 647))
 
+            for _ in range(150):
+                #  teste se a barra foi deslocada, nao esta mais na posição inicial
+                if not pyautogui.pixelMatchesColor((x_origem + 652), (y_origem + 327), (184, 212, 237), 5):
+                    break
+                time.sleep(0.01)
+            # clica no apostar
+            print('tem que aposta')
+            pyautogui.click((x_origem + 380), (y_origem + 650))
         else:
-            print('NÂO é a ultima carta')
-            # clicar no meio da barra de ajuste
-            pyautogui.click((x_origem + 595), (y_origem + 647))
+            # vai perder de proposito
+            # testar se é a ultima carta
+            if pyautogui.pixelMatchesColor((x_origem + 652), (y_origem + 327), (249, 249, 249), 5):
+                print('ultima carta')
+                # cliaca no correr
+                pyautogui.click((x_origem + 600), (y_origem + 600))
 
-        for _ in range(150):
-            #  teste se a barra foi deslocada, nao esta mais na posição inicial
-            if not pyautogui.pixelMatchesColor((x_origem + 652), (y_origem + 327), (184, 212, 237), 5):
-                break
-            time.sleep(0.01)
-        # clica no apostar
-        print('tem que aposta')
-        pyautogui.click((x_origem + 380), (y_origem + 650))
+            elif pyautogui.pixelMatchesColor((x_origem + 585), (y_origem + 327), (249, 249, 249), 5):
+                print('penultima carta')
+                # cliaca no final da barra
+                pyautogui.click((x_origem + 660), (y_origem + 647))
+                time.sleep(0.3)
+                # clica para voltar a barra um pouquinho de nada
+                pyautogui.click((x_origem + 509), (y_origem + 647))
+                time.sleep(0.3)
+
+            else:
+                print('NÂO é a ultima carta nem a penultima')
+                # clicar no meio da barra de ajuste
+                pyautogui.click((x_origem + 595), (y_origem + 647))
+
+            for _ in range(150):
+                #  teste se a barra foi deslocada, nao esta mais na posição inicial
+                if not pyautogui.pixelMatchesColor((x_origem + 652), (y_origem + 327), (184, 212, 237), 5):
+                    break
+                time.sleep(0.01)
+            # clica no apostar
+            print('tem que aposta')
+            pyautogui.click((x_origem + 380), (y_origem + 650))
+
         jogou_uma_vez = True
         return jogou_uma_vez
 

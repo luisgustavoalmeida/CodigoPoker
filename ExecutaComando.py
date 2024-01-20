@@ -46,6 +46,8 @@ linha_novo = ""
 cont_IP_novo = ""
 continuar_tarefa = False
 
+posi_lista = 0
+
 # Semaphore para iniciar a tarefa independente
 iniciar_tarefa = threading.Semaphore(0)
 # Semaphore para a tarefa independente indicar que terminou e aguardar novo comando
@@ -239,7 +241,7 @@ while True:
                 # Firebase.confirmacao_comando_resposta(status_comando)
 
                 # status_comando = 'Aguardando comando'
-                status_comando = Mesa.escolher_blind(x_origem, y_origem, blind, lugares)
+                status_comando = Mesa.escolher_blind(x_origem, y_origem, blind, lugares, posi_lista)
                 Firebase.confirmacao_comando_resposta(status_comando)
 
                 recebido1 = "padrao"
@@ -279,6 +281,16 @@ while True:
                         valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem, fichas)
                         status_comando = 'Valor ficha: ' + str(valor_fichas)
 
+                    elif 'Posi_' in comando:
+                        if comando == 'Posi_0':
+                            posi_lista = 0
+                        elif comando == 'Posi_1':
+                            posi_lista = 1
+                        elif comando == 'Posi_2':
+                            posi_lista = 2
+
+                        comando = 'Executado'
+
                     elif '/' in comando:
                         blind = comando
                         if blind == '20K/40K':
@@ -286,7 +298,7 @@ while True:
                         else:
                             lugares = 9
                         comando = 'Executado'
-                        status_comando = Mesa.escolher_blind(x_origem, y_origem, blind, lugares)
+                        status_comando = Mesa.escolher_blind(x_origem, y_origem, blind, lugares, posi_lista)
 
                     elif comando == "Senta":
                         comando = 'Executado'
@@ -313,6 +325,22 @@ while True:
                                 status_comando = "Sentou"
                                 # Mesa.mesa_recolher(x_origem, y_origem, 1, blind)
                                 Recolher.mesa_recolher(x_origem, y_origem, 1, blind)
+                            else:
+                                status_comando = "Não sentou"
+                        else:
+                            status_comando = "Mesa ocupada"
+                        time.sleep(2)
+                        valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem, fichas)
+                        status_comando = 'Valor ficha: ' + str(valor_fichas)
+
+                    elif comando == "Senta3":
+                        comando = 'Executado'
+                        if Mesa.cadeiras_livres(x_origem, y_origem, lugares=lugares):
+                            sentou = Mesa.sentar_mesa(x_origem, y_origem, True, blind, True)
+                            if sentou:
+                                status_comando = "Sentou"
+                                # Mesa.mesa_recolher(x_origem, y_origem, 2, blind)
+                                Recolher.mesa_recolher(x_origem, y_origem, 2, blind, sorte=False)
                             else:
                                 status_comando = "Não sentou"
                         else:
