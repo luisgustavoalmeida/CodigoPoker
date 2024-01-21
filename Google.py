@@ -79,7 +79,7 @@ dicionari_token_credencial_n = {'PC-I5-8600K_PokerIP': ("token1.json", "credenti
                                 'PC-I7-9700KF_lgagu': ("token35.json", "credentials5.json", 35, 'lga.gustavo.a@gmail.com', 'LGlg32379089@'),
                                 'PC-I7-9700KF_Poker': ("token36.json", "credentials5.json", 36, 'luis.gustavo@engenharia.ufjf.br', 'LGlg32379089@#'),
 
-                                'PC-i3-8145U_PokerIP': ("token37.json", "credentials5.json", 37, 'gayaluisaalmeida@gmail.com', 'lglg32379089')
+                                'PC-i3-8145U_PokerIP': ("token37.json", "credentials4.json", 37, 'gayaluisaalmeida@gmail.com', 'lglg32379089')
                                 }
 
 dicionari_PC_IP = {'PC-I5-8600K': "IP!F3",
