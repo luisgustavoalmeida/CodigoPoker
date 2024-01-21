@@ -15,6 +15,7 @@ import Seleniun
 import Tarefas
 import Aneis
 import Recolher
+import Cofre
 
 # from Variaveis_Globais import alterar_global_aviso_sistema
 #
@@ -281,6 +282,11 @@ while True:
                         valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem, fichas)
                         status_comando = 'Valor ficha: ' + str(valor_fichas)
 
+                    elif comando == 'Cofre':
+                        comando = 'Executado'
+                        Cofre.cofre_abrir(x_origem, y_origem)
+                        Cofre.cofre_sacar(x_origem, y_origem)
+
                     elif 'Posi_' in comando:
                         if comando == 'Posi_0':
                             posi_lista = 0
@@ -293,10 +299,11 @@ while True:
 
                     elif '/' in comando:
                         blind = comando
-                        if blind == '20K/40K':
-                            lugares = 5
-                        else:
-                            lugares = 9
+                        lugares = 9
+                        # if blind == '20K/40K':
+                        #     lugares = 5
+                        # else:
+                        #     lugares = 9
                         comando = 'Executado'
                         status_comando = Mesa.escolher_blind(x_origem, y_origem, blind, lugares, posi_lista)
 
