@@ -305,6 +305,7 @@ while True:
                         # else:
                         #     lugares = 9
                         comando = 'Executado'
+                        Limpa.limpa_total(x_origem, y_origem)
                         status_comando = Mesa.escolher_blind(x_origem, y_origem, blind, lugares, posi_lista)
 
                     elif comando == "Senta":
