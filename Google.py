@@ -71,15 +71,15 @@ dicionari_token_credencial_n = {'PC-I5-8600K_PokerIP': ("token1.json", "credenti
                                 'PC-R5-5600G_lgagu': ("token29.json", "credentials3.json", 29, 'lga.gustavo.a@gmail.com', 'LGlg32379089@'),
                                 'PC-R5-5600G_Poker': ("token30.json", "credentials3.json", 30, 'luis.gustavo@engenharia.ufjf.br', 'LGlg32379089@#'),
 
-                                'PC-I7-11850H_PokerIP': ("token31.json", "credentials4.json", 31, 'gayaluisaalmeida@gmail.com', 'lglg32379089'),
-                                'PC-I7-11850H_lgagu': ("token32.json", "credentials4.json", 32, 'lga.gustavo.a@gmail.com', 'LGlg32379089@'),
-                                'PC-I7-11850H_Poker': ("token33.json", "credentials4.json", 33, 'luis.gustavo@engenharia.ufjf.br', 'LGlg32379089@#'),
+                                'PC-I5-13400F_PokerIP': ("token31.json", "credentials4.json", 31, 'gayaluisaalmeida@gmail.com', 'lglg32379089'),
+                                'PC-I5-13400F_lgagu': ("token32.json", "credentials4.json", 32, 'lga.gustavo.a@gmail.com', 'LGlg32379089@'),
+                                'PC-I5-13400F_Poker': ("token33.json", "credentials4.json", 33, 'luis.gustavo@engenharia.ufjf.br', 'LGlg32379089@#'),
 
                                 'PC-I7-9700KF_PokerIP': ("token34.json", "credentials5.json", 34, 'gayaluisaalmeida@gmail.com', 'lglg32379089'),
                                 'PC-I7-9700KF_lgagu': ("token35.json", "credentials5.json", 35, 'lga.gustavo.a@gmail.com', 'LGlg32379089@'),
                                 'PC-I7-9700KF_Poker': ("token36.json", "credentials5.json", 36, 'luis.gustavo@engenharia.ufjf.br', 'LGlg32379089@#'),
 
-                                'PC-i3-8145U_PokerIP': ("token37.json", "credentials4.json", 37, 'gayaluisaalmeida@gmail.com', 'lglg32379089')
+                                'PC-i3-8145U_PokerIP': ("token37.json", "credentials5.json", 37, 'gayaluisaalmeida@gmail.com', 'lglg32379089')
                                 }
 
 dicionari_PC_IP = {'PC-I5-8600K': "IP!F3",
@@ -92,7 +92,7 @@ dicionari_PC_IP = {'PC-I5-8600K': "IP!F3",
                    'PC-I5-13400C': "IP!F24",
                    'PC-I5-13400D': "IP!F27",
                    'PC-R5-5600G': "IP!F30",
-                   'PC-I7-11850H': "IP!F33",
+                   'PC-I5-13400F': "IP!F33",
                    'PC-I7-9700KF': "IP!F36",
                    'PC-i3-8145U': "IP!F39"}
 
