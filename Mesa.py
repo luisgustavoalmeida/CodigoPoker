@@ -1031,13 +1031,16 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False):
         else:
             humano = False
             print("ainda nao esta sentado")
-            for i in range(2):
+            for i in range(3):
+                print('indice_inicial', indice_inicial)
+
                 for indice, dicionario in enumerate(lista_salas_jogar):
+
+                    print('indice', indice)
 
                     if indice_inicial > indice:
                         print('pula: ', indice)
                         # faz o for interagir ate chegar na ultima sala que foi usada anteriormente
-                        indice_inicial = 0
                         # troca o valor para que na proxima interação possamos iniciar do inicios da lista
                         continue
 
@@ -1068,12 +1071,20 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False):
                         sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa, True)
                         if sentou:
                             time_entrou = time.perf_counter()
-                            print('esta tudo ok, sentado')
+                            print('esta tudo ok, sentado', indice)
                             sala_atual = indice
+                            indice_inicial = 0
                             pular_sala = False
                             break
                         else:
                             time_entrou = 0
+
+                    if indice_inicial == indice and indice_inicial != 0:
+                        indice_inicial = 0
+                        i = 0
+                        break
+
+                    indice_inicial = 0
 
                 if i == 1:
                     pular_sala = False
@@ -1091,7 +1102,7 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False):
                 pyautogui.press('f5')
                 time.sleep(25)
 
-    indice_inicial = indice
+    indice_inicial = sala_atual
 
     # print(lista_salas_jogar)
     # print(num_mesa)
