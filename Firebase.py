@@ -38,12 +38,12 @@ orderem_chave = {
 # Define listas de arranjos de computadores cada arranjo será uma mesa diferente
 arranjo1_pc = (
     'Comandos1/PC07', 'Comandos1/PC10', 'Comandos1/PC13', 'Comandos1/PC16', 'Comandos1/PC19', 'Comandos1/PC22',
-    'Comandos1/PC25', 'Comandos1/PC28', 'Comandos3/PC31'
+    'Comandos1/PC25', 'Comandos1/PC28', 'Comandos1/PC31'
 )
 
 arranjo2_pc = (
     'Comandos2/PC08', 'Comandos2/PC11', 'Comandos2/PC14', 'Comandos2/PC17', 'Comandos2/PC20', 'Comandos2/PC23',
-    'Comandos2/PC26', 'Comandos2/PC29', 'Comandos3/PC32'
+    'Comandos2/PC26', 'Comandos2/PC29', 'Comandos2/PC32'
 )
 
 arranjo3_pc = (
