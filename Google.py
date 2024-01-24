@@ -71,9 +71,9 @@ dicionari_token_credencial_n = {'PC-I5-8600K_PokerIP': ("token1.json", "credenti
                                 'PC-R5-5600G_lgagu': ("token29.json", "credentials3.json", 29, 'lga.gustavo.a@gmail.com', 'LGlg32379089@'),
                                 'PC-R5-5600G_Poker': ("token30.json", "credentials3.json", 30, 'luis.gustavo@engenharia.ufjf.br', 'LGlg32379089@#'),
 
-                                'PC-I5-13400F_PokerIP': ("token31.json", "credentials4.json", 31, 'gayaluisaalmeida@gmail.com', 'lglg32379089'),
-                                'PC-I5-13400F_lgagu': ("token32.json", "credentials4.json", 32, 'lga.gustavo.a@gmail.com', 'LGlg32379089@'),
-                                'PC-I5-13400F_Poker': ("token33.json", "credentials4.json", 33, 'luis.gustavo@engenharia.ufjf.br', 'LGlg32379089@#'),
+                                'PC-I5-13400E_PokerIP': ("token31.json", "credentials4.json", 31, 'gayaluisaalmeida@gmail.com', 'lglg32379089'),
+                                'PC-I5-13400E_lgagu': ("token32.json", "credentials4.json", 32, 'lga.gustavo.a@gmail.com', 'LGlg32379089@'),
+                                'PC-I5-13400E_Poker': ("token33.json", "credentials4.json", 33, 'luis.gustavo@engenharia.ufjf.br', 'LGlg32379089@#'),
 
                                 'PC-I7-9700KF_PokerIP': ("token34.json", "credentials5.json", 34, 'gayaluisaalmeida@gmail.com', 'lglg32379089'),
                                 'PC-I7-9700KF_lgagu': ("token35.json", "credentials5.json", 35, 'lga.gustavo.a@gmail.com', 'LGlg32379089@'),

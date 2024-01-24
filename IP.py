@@ -62,7 +62,7 @@ dicionari_PC_IP = {'PC-I5-8600K': ("F3", "modem"),
                    'PC-I5-13400C': ("F24", "modem"),
                    'PC-I5-13400D': ("F27", "modem"),
                    'PC-R5-5600G': ("F30", "modem"),
-                   'PC-I5-13400F': ("F33", "modem"),
+                   'PC-I5-13400E': ("F33", "modem"),
                    'PC-I7-9700KF': ("F36", "vero"),
                    'PC-i3-8145U': ("F39", "modem")}
 
