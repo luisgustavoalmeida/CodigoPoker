@@ -236,20 +236,28 @@ while True:
 
                 Firebase.confirmacao_comando_resposta('Terminou de limpa')
 
-
                 # codigo deve ser escrito aqui dentro ...
                 # status_comando = xp2.pega_2xp(x_origem, y_origem)
                 # Firebase.confirmacao_comando_resposta(status_comando)
-
-                # status_comando = 'Aguardando comando'
-                status_comando = Mesa.escolher_blind(x_origem, y_origem, blind, lugares, posi_lista)
-                Firebase.confirmacao_comando_resposta(status_comando)
 
                 recebido1 = "padrao"
                 recebido2 = "padrao"
                 comando = None
                 status_comando_anterior = None
-                while True:
+
+                valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem, fichas)
+                status_comando = 'Valor ficha: ' + str(valor_fichas)
+                Firebase.confirmacao_comando_resposta(status_comando)
+
+                if valor_fichas < 300000:
+                    habilitado = False
+                else:
+                    habilitado = True
+                    # status_comando = 'Aguardando comando'
+                    status_comando = Mesa.escolher_blind(x_origem, y_origem, blind, lugares, posi_lista)
+                    Firebase.confirmacao_comando_resposta(status_comando)
+
+                while habilitado:
                     time.sleep(1)
                     # Limpa.limpa_total(x_origem, y_origem)
 
