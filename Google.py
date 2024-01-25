@@ -92,7 +92,7 @@ dicionari_PC_IP = {'PC-I5-8600K': "IP!F3",
                    'PC-I5-13400C': "IP!F24",
                    'PC-I5-13400D': "IP!F27",
                    'PC-R5-5600G': "IP!F30",
-                   'PC-I5-13400F': "IP!F33",
+                   'PC-I5-13400E': "IP!F33",
                    'PC-I7-9700KF': "IP!F36",
                    'PC-i3-8145U': "IP!F39"}
 
