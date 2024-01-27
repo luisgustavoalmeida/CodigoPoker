@@ -1,3 +1,4 @@
+import datetime
 import random
 import socket
 import time
@@ -13,6 +14,7 @@ import IP
 import Tarefas
 import HoraT
 import xp2
+from UparAuto import upar
 
 # import Firebase
 # from Firebase import confirmacao_comando_resposta, comando_escravo, comando_coleetivo_escravo_escravo
@@ -52,6 +54,14 @@ lista_salas_niquel = [{'435': ('2040', 80, 40)}, {'1027': ('2040', 80, 40)}, {'1
 #                       {'1648': ('2040', 80, 40)}, {'1649': ('2040', 80, 40)}, {'1650': ('2040', 80, 40)}, {'1651': ('2040', 80, 40)},
 #                       {'1652': ('2040', 80, 40)}, {'1765': ('2040', 80, 40)}, {'1766': ('2040', 80, 40)}, {'1767': ('2040', 80, 40)},
 #                       {'1768': ('2040', 80, 40)}, {'1769': ('2040', 80, 40)}]
+
+lista_salas_jogar2 = [{'435': ('2040', 80, 40)}, {'1027': ('2040', 80, 40)}, {'1028': ('2040', 80, 40)}, {'1236': ('2040', 80, 40)},
+                      {'1535': ('2040', 80, 40)}, {'1536': ('2040', 80, 40)}, {'1537': ('2040', 80, 40)}, {'1537': ('2040', 80, 40)},
+                      {'1538': ('2040', 80, 40)}, {'1538': ('2040', 80, 40)}, {'1540': ('2040', 80, 40)}, {'1541': ('2040', 80, 40)},
+                      {'1542': ('2040', 80, 40)}, {'1543': ('2040', 80, 40)}, {'1545': ('2040', 80, 40)}, {'1546': ('2040', 80, 40)},
+                      {'1648': ('2040', 80, 40)}, {'1649': ('2040', 80, 40)}, {'1650': ('2040', 80, 40)}, {'1651': ('2040', 80, 40)},
+                      {'1652': ('2040', 80, 40)}, {'1765': ('2040', 80, 40)}, {'1766': ('2040', 80, 40)}, {'1767': ('2040', 80, 40)},
+                      {'1768': ('2040', 80, 40)}, {'1769': ('2040', 80, 40)}]
 
 lista_salas_jogar = [{'134': ('2550', 100, 50)}, {'135': ('2550', 100, 50)}, {'999': ('2550', 100, 50)}, {'1003': ('2550', 100, 50)},
                      {'1004': ('2550', 100, 50)}, {'1243': ('2550', 100, 50)}, {'1245': ('2550', 100, 50)}, {'1246': ('2550', 100, 50)},
@@ -918,13 +928,13 @@ def joga(x_origem, y_origem, ajusta_aposta):
     return
 
 
-def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False):
+def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False, blind_mesa='2550'):
     print('mesa_upar_jogar')
 
-    global lista_salas_jogar, indice_inicial
+    global lista_salas_jogar, lista_salas_niquel, indice_inicial
     valor_aposta1 = 100
     valor_aposta2 = 50
-    blind_mesa = '2550'
+    # blind_mesa = '2550'
     sentou = False
     continua_jogando = True
     jogou_uma_vez = False
@@ -934,6 +944,13 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False):
     cont_limpa_jogando = 0
     sala_atual = None
     pular_sala = False
+
+    # Use a lista apropriada com base no valor da variável blind_mesa
+
+    if blind_mesa == '2550':
+        lista_salas = lista_salas_jogar
+    else:
+        lista_salas = lista_salas_niquel
 
     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
         return "sair da conta"
@@ -1034,7 +1051,7 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False):
             for i in range(3):
                 print('indice_inicial', indice_inicial)
 
-                for indice, dicionario in enumerate(lista_salas_jogar):
+                for indice, dicionario in enumerate(lista_salas):
 
                     print('indice', indice)
 
@@ -1053,8 +1070,6 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False):
                     valor_aposta1 = valor_tupla[1]  # Obtendo o primeiro número da tupla
                     valor_aposta2 = valor_tupla[2]  # Obtendo o segundo número da tupla
 
-                    # print('procura mesa')
-                    # print(lista_salas_jogar)
                     print('Mumero da mesa para tentar sentar: ', num_mesa)
                     IP.tem_internet()
                     Limpa.limpa_jogando(x_origem, y_origem)
@@ -1063,9 +1078,9 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False):
 
                     if not sala_existe:
                         # Remova o item da posição específica
-                        item_removido = lista_salas_jogar.pop(indice)
+                        item_removido = lista_salas.pop(indice)
                         # Adicione o item ao final da lista
-                        lista_salas_jogar.append(item_removido)
+                        lista_salas.append(item_removido)
 
                     if blind_certo:
                         sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa, True)
@@ -1104,19 +1119,11 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False):
 
     indice_inicial = sala_atual
 
-    # print(lista_salas_jogar)
-    # print(num_mesa)
-    #
-    # # Se a chave alvo foi encontrada, mova o item para o início
-    # if sala_atual is not None:
-    #     item_alvo = lista_salas_jogar.pop(sala_atual)
-    #     #  Remove o item da posição especificada
-    #     lista_salas_jogar.insert(0, item_alvo)
-    #     #   Insere o item removido no passo anterior de volta no início da lista (posição 0).
-
-    #
-    # # Exemplo de impressão para verificar a mudança
-    # print(lista_salas_jogar)
+    # Ao final da função, atribui o valor da lista utilizada dentro da função à lista global
+    if blind_mesa == '2550':
+        lista_salas_jogar = lista_salas
+    else:
+        lista_salas_niquel = lista_salas
 
     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
         return "sair da conta"
@@ -1125,85 +1132,60 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False):
     return
 
 
-def dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, time_rodou, roleta, level_conta=1):
-    if level_conta >= 10:  # (dia_da_semana == 5 or dia_da_semana == 6):  # and level_conta >= 7:  # testa se é sabado ou domingo
-        # 0 segunda, 1 terça, 2 quarta, 3 quinta, 4 sexta, 5 sabado, 6 domingo
-        print('conta para jogar mesa')
-        if roleta == 'roleta_2':
-            for i in range(20):
-                time_sair = time.perf_counter()
-                tempo_total = time_sair - time_rodou
-                print('tempo que ja clicou no rodou', tempo_total)
-                if tempo_total > 18:
-                    print('ja pode sair do r2')
-                    break
-                time.sleep(1)
-                pyautogui.doubleClick(x_origem + 683, y_origem + 14)  # clica no icone roleta, ja roda sozinho
+def dia_de_jogar_mesa(x_origem, y_origem, roleta, level_conta=1, conta_upada=True, dia_da_semana=0):
+    if roleta != 'roleta_1':
+        return level_conta
 
-        Limpa.fecha_tarefa(x_origem, y_origem)
-        Limpa.limpa_promocao(x_origem, y_origem)
-        time.sleep(2)
+    if datetime.datetime.now().time() < datetime.time(23, 0, 0):
+        if level_conta == "":
+            level_conta = OCR_tela.level_conta(x_origem, y_origem)
+    else:
+        return level_conta
+
+    if dia_da_semana % 2 == 0:
+        print("O dia da semana é par.")
+        # blind_mesa = '2550'
+        blind_mesa = '2040'
+    else:
+        print("O dia da semana é impar.")
+        # blind_mesa = '2040'
+        blind_mesa = '2550'
+
+    Limpa.fecha_tarefa(x_origem, y_origem)
+    Limpa.limpa_promocao(x_origem, y_origem)
+    time.sleep(2)
+    Limpa.limpa_total(x_origem, y_origem)
+
+    if not conta_upada:
+        upar(x_origem, y_origem)
+        level_conta = OCR_tela.level_conta(x_origem, y_origem)
         Limpa.limpa_total(x_origem, y_origem)
+
+    if level_conta >= 10:
+        print('conta para jogar mesa')
         numero_aleatorio = random.randint(2, 4)
         print('Joga vezes: ', numero_aleatorio)
-        # joga_uma_vez(x_origem, y_origem, numero_aleatorio)
-        mesa_upar_jogar(x_origem, y_origem, numero_aleatorio, False)
-        time.sleep(1)
-        Limpa.iniciantes(x_origem, y_origem)
-        Limpa.limpa_total(x_origem, y_origem)
+        mesa_upar_jogar(x_origem, y_origem, numero_aleatorio, False, blind_mesa)
 
-    elif 1 < level_conta < 10:  # (dia_da_semana == 0 or dia_da_semana == 1 or dia_da_semana == 2 or dia_da_semana == 3 or dia_da_semana == 4) and
-        # 0 segunda, 1 terça, 2 quarta, 3 quinta, 4 sexta, 5 sabado, 6 domingo
+    elif 4 <= level_conta < 10:
+        mesa_upar_jogar(x_origem, y_origem, 0, True, blind_mesa)
+        level_conta = OCR_tela.level_conta(x_origem, y_origem)
+
+    elif 1 <= level_conta < 4:
         print('conta para jogar mesa')
-        if roleta == 'roleta_2':
-            for i in range(20):
-                time_sair = time.perf_counter()
-                tempo_total = time_sair - time_rodou
-                print('tempo que ja clicou no rodou', tempo_total)
-                if tempo_total > 18:
-                    print('ja pode sair do r2')
-                    break
-                time.sleep(1)
-                pyautogui.doubleClick(x_origem + 683, y_origem + 14)  # clica no icone roleta, ja roda sozinho
-
-        Limpa.fecha_tarefa(x_origem, y_origem)
-        Limpa.limpa_promocao(x_origem, y_origem)
-        time.sleep(2)
-        Limpa.limpa_total(x_origem, y_origem)
         numero_aleatorio = random.randint(10, 15)
         print('Joga vezes: ', numero_aleatorio)
-        # joga_uma_vez(x_origem, y_origem, numero_aleatorio)
-        mesa_upar_jogar(x_origem, y_origem, numero_aleatorio, False)
-        time.sleep(1)
-        Limpa.iniciantes(x_origem, y_origem)
-        Limpa.limpa_total(x_origem, y_origem)
+        mesa_upar_jogar(x_origem, y_origem, numero_aleatorio, False, blind_mesa)
+        level_conta = OCR_tela.level_conta(x_origem, y_origem)
 
-    else:  # (dia_da_semana == 0 or dia_da_semana == 1 or dia_da_semana == 2 or dia_da_semana == 3 or dia_da_semana == 4) and
-        # 0 segunda, 1 terça, 2 quarta, 3 quinta, 4 sexta, 5 sabado, 6 domingo
+    else:
         print('conta para jogar mesa')
-        if roleta == 'roleta_2':
-            for i in range(20):
-                time_sair = time.perf_counter()
-                tempo_total = time_sair - time_rodou
-                print('tempo que ja clicou no rodou', tempo_total)
-                if tempo_total > 18:
-                    print('ja pode sair do r2')
-                    break
-                time.sleep(1)
-                pyautogui.doubleClick(x_origem + 683, y_origem + 14)  # clica no icone roleta, ja roda sozinho
-
-        Limpa.fecha_tarefa(x_origem, y_origem)
-        Limpa.limpa_promocao(x_origem, y_origem)
-        time.sleep(2)
-        Limpa.limpa_total(x_origem, y_origem)
         numero_aleatorio = random.randint(2, 4)
         print('Joga vezes: ', numero_aleatorio)
-        # joga_uma_vez(x_origem, y_origem, numero_aleatorio)
-        mesa_upar_jogar(x_origem, y_origem, numero_aleatorio, False)
-        time.sleep(1)
-        Limpa.iniciantes(x_origem, y_origem)
-        Limpa.limpa_total(x_origem, y_origem)
-    return
+        mesa_upar_jogar(x_origem, y_origem, numero_aleatorio, False, blind_mesa)
+
+    Limpa.limpa_total(x_origem, y_origem)
+    return level_conta
 
 
 def passa_corre_joga(x_origem, y_origem, valor_aposta1=40, valor_aposta2=80):  # para se fazer tarefas

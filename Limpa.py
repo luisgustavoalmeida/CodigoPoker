@@ -672,6 +672,7 @@ def iniciantes(x_origem, y_origem):
                 time.sleep(2)
             # time.sleep(1)
         pyautogui.click(777 + x_origem, 173 + y_origem)  # clica no fechar
+    return
 
 
 def faz_tutorial(x_origem, y_origem):

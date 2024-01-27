@@ -6,6 +6,7 @@ import time
 
 import pyautogui
 
+import Aneis
 import Cartas
 import Genius
 import Google
@@ -19,8 +20,6 @@ import Roletas
 import Seleniun
 import Slot
 import Tarefas
-import Aneis
-from UparAuto import upar
 from Variaveis_Globais import alterar_global_aviso_sistema
 
 global aviso_sistema_global
@@ -143,6 +142,7 @@ while True:
         entrou_corretamente = True
         stataus_facebook = 'Carregada'
         hora_fim_tarefa = False
+        ja_fez_tutorial = True
 
         while roda:
             # if cont_IP >= LIMITE_IP or cont_IP < 0:  # se a contagem de ip ta fora da faixa vai para a função
@@ -155,30 +155,24 @@ while True:
             continuar_tarefa = True
             iniciar_tarefa.release()
 
-            if entrou_corretamente is False:  # se nao entrou no face
+            if not entrou_corretamente:  # se nao entrou no face
                 print("conta nao entou no Facebook")
-
                 break
 
             while True:
-
-                if entrou_corretamente is True:
+                if entrou_corretamente:
                     x_origem, y_origem, status_poker = Origem_pg.carregado_origem()
                     print(status_poker)
                     if status_poker is not None:
                         break
 
                 entrou_corretamente, stataus_facebook = Seleniun.teste_logado()
-                if entrou_corretamente is False:  # se nao entrou no face
+                if not entrou_corretamente:  # se nao entrou no face
                     print("conta nao entou no Facebook")
-
                     break
 
-            if entrou_corretamente is False:  # se nao entrou no face
-
+            if not entrou_corretamente:  # se nao entrou no face
                 break
-
-            ja_fez_tutorial = True
 
             if status_poker != 'Carregada':  # testa status da conta
                 if status_poker == 'Banida':  # se aconta esta banida
@@ -187,7 +181,6 @@ while True:
                 elif status_poker == 'Bloqueado Temporariamente':  # se aconta esta Bloqueado Temporariamente
                     print("conta Temporariamente bloqueado tem que marcar na plinilha")
                     break
-
                 elif status_poker == 'Tutorial':
                     ja_fez_tutorial = False
                     print('vai fazer tutorial')
@@ -200,13 +193,11 @@ while True:
                     Limpa.faz_tutorial(x_origem, y_origem)
                     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
                         break
-
                 elif status_poker == 'Atualizar':
                     break
 
             entrou_corretamente, stataus_facebook = Seleniun.teste_logado()
-            if entrou_corretamente is False:  # se nao entrou no face
-
+            if not entrou_corretamente:  # se nao entrou no face
                 break
 
             if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
@@ -215,45 +206,34 @@ while True:
             ###########Roletas
             if guia != "T1":
 
-                if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
-                    break
-
-                # valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem)
-                # valor_fichas = OCR_tela.valor_fichas_perfil(x_origem, y_origem)
-                # level_conta = OCR_tela.level_conta(x_origem, y_origem)
-
                 roleta, hora_que_rodou, time_rodou = Roletas.roletas(x_origem, y_origem)
                 print("roleta: ", roleta)
-
-                if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
-                    break
-
-                if ja_fez_tutorial:  # so entra se a conta ja é velha
-                    # para pegar os pontos das tarefas
-                    if roleta == 'roleta_1':  # saber se roleta R1
-
-                        print("dia da semana", dia_da_semana)
-
-                        conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem)  # retorna se a conta ta upada ou nao
-                        if conta_upada:
-                            IP.f5_quando_internete_ocila()
-                            entrou_corretamente, stataus_facebook = Seleniun.teste_logado()
-                            if not entrou_corretamente:  # se nao entrou no face
-
-                                break
-                            pontuacao_tarefas = OCR_tela.pontuacao_tarefas(x_origem, y_origem)
-                            Limpa.fecha_tarefa(x_origem, y_origem)
-
-                entrou_corretamente, stataus_facebook = Seleniun.teste_logado()
-                if entrou_corretamente is False:  # se nao entrou no face
-
-                    break
 
                 if hora_que_rodou is None:
                     hora_que_rodou = datetime.datetime.now().strftime('%H:%M:%S')
 
+                if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
+                    break
+
+                entrou_corretamente, stataus_facebook = Seleniun.teste_logado()
+                if not entrou_corretamente:  # se nao entrou no face
+                    break
+
                 if roleta == 'roleta_1':  # saber se roleta R1 ja terminou de rodar para sair da conta
+
+                    # if ja_fez_tutorial:  # so entra se a conta ja é velha
+                    # para pegar os pontos das tarefas
+                    conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem)  # retorna se a conta ta upada ou nao
+                    if conta_upada:
+                        IP.f5_quando_internete_ocila()
+                        entrou_corretamente, stataus_facebook = Seleniun.teste_logado()
+                        if not entrou_corretamente:  # se nao entrou no face
+                            break
+                        pontuacao_tarefas = OCR_tela.pontuacao_tarefas(x_origem, y_origem)
+                        Limpa.fecha_tarefa(x_origem, y_origem)
+
                     level_conta = OCR_tela.level_conta(x_origem, y_origem)
+
                     for i in range(50):
                         time_sair = time.perf_counter()
                         tempo_total = time_sair - time_rodou
@@ -271,6 +251,8 @@ while True:
                             # testa de roleta 1 ta aberta
                             pyautogui.doubleClick(x_origem + 492, y_origem + 383)  # clica no meio da roleta para rodar
 
+                    level_conta = Mesa.dia_de_jogar_mesa(x_origem, y_origem, roleta, level_conta, conta_upada, dia_da_semana)
+
                 elif roleta == 'roleta_2':
                     for i in range(20):
                         pyautogui.doubleClick(x_origem + 683, y_origem + 14)  # clica no icone roleta, ja roda sozinho
@@ -282,37 +264,12 @@ while True:
                             break
                         time.sleep(0.3)
 
-                Aneis.recolhe_aneis(x_origem, y_origem)
-
-                if roleta == 'roleta_1':
-                    # Joga mesa
-                    if datetime.datetime.now().time() < datetime.time(23, 0, 0):
-                        if level_conta == "":
-                            level_conta = OCR_tela.level_conta(x_origem, y_origem)
-                        # Mesa.dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, time_rodou, roleta, level_conta)
-
-                        if not conta_upada:
-                            Limpa.limpa_total(x_origem, y_origem)
-                            Tarefas.recolher_tarefa_upando(x_origem, y_origem)
-                            Limpa.limpa_total(x_origem, y_origem)
-                            # chama o modulo de UparAutomatico
-                            upar(x_origem, y_origem)
-                            Mesa.dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, time_rodou, roleta, level_conta)
-                            level_conta = OCR_tela.level_conta(x_origem, y_origem)
-                        elif 10 > level_conta >= 4:
-                            # testa se a conta nao esta upada e se o hoprario atuial é menor que 23h
-                            Mesa.mesa_upar_jogar(x_origem, y_origem, 0, True)
-                            level_conta = OCR_tela.level_conta(x_origem, y_origem)
-                        else:
-                            Mesa.dia_de_jogar_mesa(x_origem, y_origem, dia_da_semana, time_rodou, roleta, level_conta)
-
-                Aneis.recolhe_aneis(x_origem, y_origem)
-
                 Tarefas.recolher_tarefa_upando(x_origem, y_origem)
+
+                Aneis.recolhe_aneis(x_origem, y_origem)
 
                 valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem, fichas)
 
-                # valores = [valor_fichas, pontuacao_tarefas, hora_que_rodou, ip]
                 roda = False
                 break
 
