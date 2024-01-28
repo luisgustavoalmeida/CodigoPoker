@@ -349,22 +349,6 @@ while True:
                         valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem, fichas)
                         status_comando = 'Valor ficha: ' + str(valor_fichas)
 
-                    elif comando == "Senta3":
-                        comando = 'Executado'
-                        if Mesa.cadeiras_livres(x_origem, y_origem, lugares=lugares):
-                            sentou = Mesa.sentar_mesa(x_origem, y_origem, True, blind, True)
-                            if sentou:
-                                status_comando = "Sentou"
-                                # Mesa.mesa_recolher(x_origem, y_origem, 2, blind)
-                                Recolher.mesa_recolher(x_origem, y_origem, 2, blind, sorte=False)
-                            else:
-                                status_comando = "Não sentou"
-                        else:
-                            status_comando = "Mesa ocupada"
-                        time.sleep(2)
-                        valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem, fichas)
-                        status_comando = 'Valor ficha: ' + str(valor_fichas)
-
                     if status_comando_anterior != status_comando:
                         Firebase.confirmacao_comando_resposta(status_comando)
                         status_comando_anterior = status_comando
