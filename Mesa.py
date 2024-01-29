@@ -1252,6 +1252,7 @@ def apostar_pagar(x_origem, y_origem, sorte=True):
             # vai perder de proposito
             # testar se é a ultima carta
             print('\n\nperde\n\n')
+
             if pyautogui.pixelMatchesColor((x_origem + 652), (y_origem + 327), (249, 249, 249), 5):
                 print('ultima carta')
                 # cliaca no correr
