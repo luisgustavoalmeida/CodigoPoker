@@ -52,7 +52,7 @@ config1 = {
 # Variável para armazenar a última data de acesso
 ultima_data_acesso = None
 
-tempo_sem_uso_ip = 34
+tempo_sem_uso_ip = 30
 
 
 def escolher_configuracao_e_db():
