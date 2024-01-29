@@ -325,7 +325,7 @@ def lista_ip_banidos():
             # Mostra quantos itens existem na lista sem duplicatas
             quantidade_ips_banidos = len(ips_banidos)
             print(f"Quantidade de IPs banidos: {quantidade_ips_banidos}")
-            print(ips_banidos)
+            # print(ips_banidos)
 
             return ips_banidos
         except Exception as e:
