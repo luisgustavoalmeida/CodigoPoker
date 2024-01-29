@@ -1225,6 +1225,7 @@ def passa_corre_joga(x_origem, y_origem, valor_aposta1=40, valor_aposta2=80):  #
 
 def apostar_pagar(x_origem, y_origem, sorte=True):
     jogou_uma_vez = False
+    print('apostar_pagar    sorte: ', sorte)
     # quando se tem que apostar, testa se tem a barra de ajustar a aposta
     if pyautogui.pixelMatchesColor((x_origem + 513), (y_origem + 647), (180, 202, 224), 5):
         # se tem a barra de ajustar a aposta
