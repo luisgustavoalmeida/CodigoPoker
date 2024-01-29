@@ -1225,11 +1225,11 @@ def passa_corre_joga(x_origem, y_origem, valor_aposta1=40, valor_aposta2=80):  #
 
 def apostar_pagar(x_origem, y_origem, sorte=True):
     jogou_uma_vez = False
-    print('apostar_pagar    sorte: ', sorte)
-    # quando se tem que apostar, testa se tem a barra de ajustar a aposta
-    if pyautogui.pixelMatchesColor((x_origem + 513), (y_origem + 647), (180, 202, 224), 5):
-        # se tem a barra de ajustar a aposta
-        if sorte:
+    if sorte:
+        # quando se tem que apostar, testa se tem a barra de ajustar a aposta
+        if pyautogui.pixelMatchesColor((x_origem + 513), (y_origem + 647), (180, 202, 224), 5):
+            print('barra de ajustar valor')
+            # se tem a barra de ajustar a aposta
             # testar se é a ultima carta
             if pyautogui.pixelMatchesColor((x_origem + 652), (y_origem + 327), (249, 249, 249), 5):
                 print('ultima carta')
@@ -1249,10 +1249,28 @@ def apostar_pagar(x_origem, y_origem, sorte=True):
             # clica no apostar
             print('tem que aposta')
             pyautogui.click((x_origem + 380), (y_origem + 650))
-        else:
-            # vai perder de proposito
+
+            jogou_uma_vez = True
+            return jogou_uma_vez
+
+        elif pyautogui.pixelMatchesColor((x_origem + 342), (y_origem + 601), (255, 255, 255), 5):
+            # branco de interceção de pagar e passar sem o quadrado brando
+            print('clicou no Passar ou no Pagar')
+            # se nao tem a barra de ajusta a posta e se tem o pagar
+            pyautogui.click((x_origem + 380), (y_origem + 604))
+            jogou_uma_vez = True
+            return jogou_uma_vez
+        return jogou_uma_vez
+
+    else:
+        # vai perder de proposito
+        # testar se é a ultima carta
+        print('\n\nperde\n\n')
+        # quando se tem que apostar, testa se tem a barra de ajustar a aposta
+        if pyautogui.pixelMatchesColor((x_origem + 513), (y_origem + 647), (180, 202, 224), 5):
+            print('barra de ajustar valor')
+            # se tem a barra de ajustar a aposta
             # testar se é a ultima carta
-            print('\n\nperde\n\n')
 
             if pyautogui.pixelMatchesColor((x_origem + 652), (y_origem + 327), (249, 249, 249), 5):
                 print('ultima carta')
@@ -1282,17 +1300,22 @@ def apostar_pagar(x_origem, y_origem, sorte=True):
             print('tem que aposta')
             pyautogui.click((x_origem + 380), (y_origem + 650))
 
-        jogou_uma_vez = True
-        return jogou_uma_vez
+        elif pyautogui.pixelMatchesColor((x_origem + 342), (y_origem + 601), (255, 255, 255), 5):
+            # branco de interceção de pagar e passar sem o quadrado brando
 
-    elif pyautogui.pixelMatchesColor((x_origem + 342), (y_origem + 601), (255, 255, 255), 5):
-        # branco de interceção de pagar e passar sem o quadrado brando
-        print('clicou no Passar ou no Pagar')
-        # se nao tem a barra de ajusta a posta e se tem o pagar
-        pyautogui.click((x_origem + 380), (y_origem + 604))
-        jogou_uma_vez = True
+            if pyautogui.pixelMatchesColor((x_origem + 652), (y_origem + 327), (249, 249, 249), 5):
+                print('ultima carta')
+                print('clicou no Correr')
+                # cliaca no correr
+                pyautogui.click((x_origem + 600), (y_origem + 600))
+            else:
+                print('Não é a ultima carta')
+                print('clicou no Passar ou no Pagar')
+                # se nao tem a barra de ajusta a posta e se tem o pagar
+                pyautogui.click((x_origem + 380), (y_origem + 604))
+            jogou_uma_vez = True
+            return jogou_uma_vez
         return jogou_uma_vez
-    return jogou_uma_vez
 
 
 # def testa_blind(x_origem, y_origem, blind):

@@ -623,7 +623,7 @@ def testa_lista_negra_ip(meu_ip_agora):
         # lista_negra_ip = Google.lista_ip_banidos()
         lista_negra_ip = ListaIpFirebase.lista_ip_banidos()
 
-    if cont_lista_negra >= 20:
+    if cont_lista_negra >= 40:
         cont_lista_negra = 0
         # lista_negra_ip = Google.lista_ip_banidos()
         lista_negra_ip = ListaIpFirebase.lista_ip_banidos()

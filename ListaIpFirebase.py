@@ -67,17 +67,19 @@ def escolher_configuracao_e_db():
     dia_atual = datetime.datetime.now().day
 
     if dia_atual < 8:
-        configuracao = config2
-        print('Sera usado o banco 2')
-    elif 8 <= dia_atual < 16:
         configuracao = config1
         print('Sera usado o banco 1')
-    elif 16 <= dia_atual < 24:
+    elif 8 <= dia_atual < 16:
         configuracao = config3
         print('Sera usado o banco 3')
-    else:
+    elif 16 <= dia_atual < 24:
         configuracao = config4
         print('Sera usado o banco 4')
+    else:
+        configuracao = config2
+        print('Sera usado o banco 2')
+
+
 
     # Inicializa o Firebase com a configuração escolhida
     firebase = pyrebase.initialize_app(configuracao)

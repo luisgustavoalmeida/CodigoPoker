@@ -85,8 +85,6 @@ def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K', sorte=Tru
                     return
 
         if apostar:
-            print('\n\n         Hora de apostar         \n\n')
-            print(sorte)
             jogou = apostar_pagar(x_origem, y_origem, sorte)
             if jogou:
                 jogou_uma_vez = True
