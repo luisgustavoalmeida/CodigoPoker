@@ -1265,7 +1265,7 @@ def apostar_pagar(x_origem, y_origem, sorte=True):
     else:
         # vai perder de proposito
         # testar se é a ultima carta
-        print('\n\nperde\n\n')
+        print('perde')
         # quando se tem que apostar, testa se tem a barra de ajustar a aposta
         if pyautogui.pixelMatchesColor((x_origem + 513), (y_origem + 647), (180, 202, 224), 5):
             print('barra de ajustar valor')
@@ -1277,7 +1277,9 @@ def apostar_pagar(x_origem, y_origem, sorte=True):
                 # cliaca no correr
                 pyautogui.click((x_origem + 600), (y_origem + 600))
 
-            elif pyautogui.pixelMatchesColor((x_origem + 585), (y_origem + 327), (249, 249, 249), 5):
+            elif (pyautogui.pixelMatchesColor((x_origem + 585), (y_origem + 327), (249, 249, 249), 5)
+                  and not pyautogui.pixelMatchesColor((x_origem + 652), (y_origem + 327), (249, 249, 249), 5)):
+                # tem a penultima carta e nao tem a ultima
                 print('penultima carta')
                 # cliaca no final da barra
                 pyautogui.click((x_origem + 660), (y_origem + 647))
