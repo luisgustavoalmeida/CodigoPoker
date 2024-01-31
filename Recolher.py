@@ -7,6 +7,7 @@ from Mesa import blinb_rolagem, levantar_mesa, apostar_pagar, passa_corre_joga
 
 def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K', sorte=True):
     print('mesa_recolher')
+    print(sorte)
 
     sentou = False
     continua_jogando = True
@@ -18,6 +19,9 @@ def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K', sorte=Tru
     status_comando_anterior = None
     recebido1 = "padrao"
     recebido2 = "padrao"
+
+    if not sorte:
+        apostar = True
 
     cont_limpa_jogando = 0
 

@@ -351,6 +351,7 @@ while True:
                         status_comando = 'Valor ficha: ' + str(valor_fichas)
 
                     elif comando == "Senta3":
+                        print('Vai perder')
                         sorte = False
                         comando = 'Executado'
 
