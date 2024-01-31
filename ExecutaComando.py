@@ -251,13 +251,18 @@ while True:
                 status_comando = 'Valor ficha: ' + str(valor_fichas)
                 Firebase.confirmacao_comando_resposta(status_comando)
 
-                if valor_fichas < 300000:
-                    habilitado = False
-                else:
-                    habilitado = True
-                    # status_comando = 'Aguardando comando'
-                    status_comando = Mesa.escolher_blind(x_origem, y_origem, blind, lugares, posi_lista)
-                    Firebase.confirmacao_comando_resposta(status_comando)
+                # if valor_fichas < 300000:
+                #     habilitado = False
+                # else:
+                #     habilitado = True
+                #     # status_comando = 'Aguardando comando'
+                #     status_comando = Mesa.escolher_blind(x_origem, y_origem, blind, lugares, posi_lista)
+                #     Firebase.confirmacao_comando_resposta(status_comando)
+
+                habilitado = True
+                # status_comando = 'Aguardando comando'
+                status_comando = Mesa.escolher_blind(x_origem, y_origem, blind, lugares, posi_lista)
+                Firebase.confirmacao_comando_resposta(status_comando)
 
                 while habilitado:
                     time.sleep(1)
