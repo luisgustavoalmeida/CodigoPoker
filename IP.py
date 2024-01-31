@@ -396,11 +396,13 @@ def conexao():
                 continue
         # time.sleep(0.5)
         if tipo_conexao == "vero":
+            app_top_window.set_focus()
             print("conexão vero")
             cont_erro = 0
             clicou_conecar = False
 
             for _ in range(200):
+                app_top_window.set_focus()
                 posicao_telefone = localizar_imagem(telefone, regiao_telefone, precisao)
                 if posicao_telefone is not None:
                     centro_discada = pyautogui.center(posicao_telefone)  # Obtém o centro da posição da imagem encontrada
@@ -432,6 +434,7 @@ def conexao():
                 time.sleep(0.3)
 
             if clicou_conecar:
+                app_top_window.set_focus()
                 for _ in range(200):
                     cont_erro += 1
                     posicao_conectado = localizar_imagem(conectado, regiao_conectado, precisao)
@@ -471,7 +474,7 @@ def conexao():
             print('modem')
 
             for _ in range(400):
-                # app_top_window.set_focus()
+                app_top_window.set_focus()
                 posicao_celular = localizar_imagem(celular, regiao_celular, precisao)
                 if posicao_celular is not None:
                     centro_celular = pyautogui.center(posicao_celular)  # Obtém o centro da posição da imagem encontrada

@@ -134,6 +134,7 @@ while True:
         entrou_corretamente = True
         stataus_facebook = 'Carregada'
         hora_fim_tarefa = False
+        sorte = True
 
         while roda:
             # if cont_IP >= LIMITE_IP or cont_IP < 0:  # se a contagem de ip ta fora da faixa vai para a função
@@ -340,7 +341,7 @@ while True:
                             if sentou:
                                 status_comando = "Sentou"
                                 # Mesa.mesa_recolher(x_origem, y_origem, 1, blind)
-                                Recolher.mesa_recolher(x_origem, y_origem, 1, blind)
+                                Recolher.mesa_recolher(x_origem, y_origem, 1, blind, sorte)
                             else:
                                 status_comando = "Não sentou"
                         else:
@@ -348,6 +349,10 @@ while True:
                         time.sleep(2)
                         valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem, fichas)
                         status_comando = 'Valor ficha: ' + str(valor_fichas)
+
+                    elif comando == "Senta3":
+                        sorte = False
+                        comando = 'Executado'
 
                     if status_comando_anterior != status_comando:
                         Firebase.confirmacao_comando_resposta(status_comando)
