@@ -54,6 +54,7 @@ def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K', sorte=Tru
         elif comando == "Senta3":
             status_comando = 'Vai correr'
             sorte = False
+            apostar = True
 
         if cont_limpa_jogando > 20:
             cont_limpa_jogando = 0
