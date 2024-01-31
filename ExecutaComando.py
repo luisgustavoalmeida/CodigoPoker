@@ -40,6 +40,7 @@ guia_recebida = ""
 ja_fez_tutorial = True
 
 # Variáveis globais para as variáveis e controle da tarefa independente
+time_id = 0
 id_novo = "x"
 senha_novo = ""
 fichas_novo = ""
@@ -64,6 +65,7 @@ def tarefa_independente():
     global fichas_novo
     global linha_novo
     global cont_IP_novo
+    global time_id
 
     while True:
         # Aguardar o comando para iniciar a execução
@@ -75,7 +77,7 @@ def tarefa_independente():
 
             # Atualizar as variáveis
             id_novo, senha_novo, fichas_novo, linha_novo, cont_IP_novo = Google.credenciais(guia, False)  # pega id e senha para o proximo login
-
+            time_id = time.perf_counter()
             continuar_tarefa = False
 
             # Indicar que a tarefa terminou e está pronta para aguardar novo comando
@@ -135,10 +137,17 @@ while True:
         stataus_facebook = 'Carregada'
         hora_fim_tarefa = False
 
-
         while roda:
-            # if cont_IP >= LIMITE_IP or cont_IP < 0:  # se a contagem de ip ta fora da faixa vai para a função
-            IP.ip(LIMITE_IP)  # testa se o numero de contas esta dentro do limite antes de trocar ip
+            print('\n\n')
+            time_atual = time.perf_counter()
+            # print('time_id: ', time_id)
+            # print('time_atua: ', time_atual)
+            time_decorrido_id = time_atual - time_id
+            print('time_decorrido_id: ', time_decorrido_id)
+            print('cont_IP: ', cont_IP)
+            print('\n\n')
+            if (1 + cont_IP) >= LIMITE_IP or cont_IP < 0 or time_decorrido_id > 120:  # se a contagem de ip ta fora da faixa vai para a função
+                IP.ip(LIMITE_IP)  # testa se o numero de contas esta dentro do limite antes de trocar ip
 
             entrou_corretamente, stataus_facebook = Seleniun.fazer_login(id, senha, url)
 
