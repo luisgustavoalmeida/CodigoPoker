@@ -1,23 +1,32 @@
 # Importa a biblioteca necessária
 import datetime  # Adicionado para manipulação de datas
-
 import time
 
 import pyrebase
 
-
-
 # Configuração dos bancos de dados
-# luis.gustavo@engenharia.ufjf.br
-config4 = firebaseConfig = {
-    "apiKey": "AIzaSyD0OgT6l5HcMVM4HKPFRD7BGbKbCRgDeaM",
-    "authDomain": "poker-dados-3-3e7cc.firebaseapp.com",
-    "databaseURL": "https://poker-dados-3-3e7cc-default-rtdb.firebaseio.com",
-    "projectId": "poker-dados-3-3e7cc",
-    "storageBucket": "poker-dados-3-3e7cc.appspot.com",
-    "messagingSenderId": "370013391029",
-    "appId": "1:370013391029:web:acaa0cfbe3e53d269116fc"
+
+# gayaluisaalmeida@gmail.com
+config1 = {
+    "apiKey": "AIzaSyDDzQMVxpKKqBZrDlhA9E4sInXB5toVRT8",
+    "authDomain": "pokerdados-6884e.firebaseapp.com",
+    "databaseURL": "https://pokerdados-6884e-default-rtdb.firebaseio.com",
+    "projectId": "pokerdados-6884e",
+    "storageBucket": "pokerdados-6884e.appspot.com",
+    "messagingSenderId": "240019464920",
+    "appId": "1:240019464920:web:a746cddaf41f43642aadad"
 }
+# luis.almeida@estudante.ufjf.br
+config2 = {
+    "apiKey": "AIzaSyBWJEh-hD6UIkpMz8J4V2Es4mP2AtuHx9k",
+    "authDomain": "poker-dados.firebaseapp.com",
+    "databaseURL": "https://poker-dados-default-rtdb.firebaseio.com",
+    "projectId": "poker-dados",
+    "storageBucket": "poker-dados.appspot.com",
+    "messagingSenderId": "968238353891",
+    "appId": "1:968238353891:web:b0026783a590efa99c24d6"
+}
+
 # lga.gustavo.a@gmail.com
 config3 = {
     "apiKey": "AIzaSyBMhul_wFoi-7LFtS6PP22vCi8Op3RYIlE",
@@ -28,25 +37,16 @@ config3 = {
     "messagingSenderId": "712512083103",
     "appId": "1:712512083103:web:6afab600554fdf1287beaa"
 }
-# gayaluisaalmeida@gmail.com
-config2 = {
-    "apiKey": "AIzaSyDDzQMVxpKKqBZrDlhA9E4sInXB5toVRT8",
-    "authDomain": "pokerdados-6884e.firebaseapp.com",
-    "databaseURL": "https://pokerdados-6884e-default-rtdb.firebaseio.com",
-    "projectId": "pokerdados-6884e",
-    "storageBucket": "pokerdados-6884e.appspot.com",
-    "messagingSenderId": "240019464920",
-    "appId": "1:240019464920:web:a746cddaf41f43642aadad"
-}
-# luis.almeida@estudante.ufjf.br
-config1 = {
-    "apiKey": "AIzaSyBWJEh-hD6UIkpMz8J4V2Es4mP2AtuHx9k",
-    "authDomain": "poker-dados.firebaseapp.com",
-    "databaseURL": "https://poker-dados-default-rtdb.firebaseio.com",
-    "projectId": "poker-dados",
-    "storageBucket": "poker-dados.appspot.com",
-    "messagingSenderId": "968238353891",
-    "appId": "1:968238353891:web:b0026783a590efa99c24d6"
+
+# luis.gustavo@engenharia.ufjf.br
+config4 = firebaseConfig = {
+    "apiKey": "AIzaSyD0OgT6l5HcMVM4HKPFRD7BGbKbCRgDeaM",
+    "authDomain": "poker-dados-3-3e7cc.firebaseapp.com",
+    "databaseURL": "https://poker-dados-3-3e7cc-default-rtdb.firebaseio.com",
+    "projectId": "poker-dados-3-3e7cc",
+    "storageBucket": "poker-dados-3-3e7cc.appspot.com",
+    "messagingSenderId": "370013391029",
+    "appId": "1:370013391029:web:acaa0cfbe3e53d269116fc"
 }
 
 # Variável para armazenar a última data de acesso
@@ -70,16 +70,20 @@ def escolher_configuracao_e_db():
         configuracao = config1
         print('Sera usado o banco 1')
     elif 8 <= dia_atual < 16:
-        configuracao = config3
-        print('Sera usado o banco 3')
-    elif 16 <= dia_atual < 24:
+        # configuracao = config2
+        # print('Sera usado o banco 2')
+
         configuracao = config4
         print('Sera usado o banco 4')
+    elif 16 <= dia_atual < 24:
+        configuracao = config3
+        print('Sera usado o banco 3')
     else:
+        # configuracao = config4
+        # print('Sera usado o banco 4')
+
         configuracao = config2
         print('Sera usado o banco 2')
-
-
 
     # Inicializa o Firebase com a configuração escolhida
     firebase = pyrebase.initialize_app(configuracao)
@@ -306,8 +310,6 @@ def escrever_IP_banido(ip):
         except Exception as e:
             print(f"Erro ao adicionar IP banido do Firebase: {e}")
             time.sleep(1)
-
-
 
 
 def lista_ip_banidos():

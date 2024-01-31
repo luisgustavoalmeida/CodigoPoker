@@ -119,11 +119,12 @@ while True:
     else:
         id, senha, fichas, linha, cont_IP = id_novo, senha_novo, fichas_novo, linha_novo, cont_IP_novo
 
-    dia_da_semana = int(datetime.datetime.now().weekday())
+
     # 0 segunda, 1 terça, 2 quarta, 3 quinta, 4 sexta, 5 sabado,6 domingo
 
     # login
     while True:
+        dia_da_semana = int(datetime.datetime.now().weekday())
         # dia_da_semana = int(datetime.datetime.now().weekday())  # busca o dia da semana 0 segunda 1 terça ... 6 domeingo
         print('dia_da_semana: ', dia_da_semana)
         # parte deo codigo que faz loguin
