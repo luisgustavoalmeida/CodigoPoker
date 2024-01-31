@@ -324,7 +324,7 @@ while True:
                             if sentou:
                                 status_comando = "Sentou"
                                 # Mesa.mesa_recolher(x_origem, y_origem, 2, blind)
-                                Recolher.mesa_recolher(x_origem, y_origem, 2, blind)
+                                Recolher.mesa_recolher(x_origem, y_origem, 2, blind, sorte)
                             else:
                                 status_comando = "Não sentou"
                         else:
