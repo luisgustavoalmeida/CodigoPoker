@@ -1272,14 +1272,17 @@ def apostar_pagar(x_origem, y_origem, sorte=True):
             # se tem a barra de ajustar a aposta
             # testar se é a ultima carta
 
-            if pyautogui.pixelMatchesColor((x_origem + 652), (y_origem + 327), (249, 249, 249), 5):
+            if (pyautogui.pixelMatchesColor((x_origem + 652), (y_origem + 327), (249, 249, 249), 5)
+                    or pyautogui.pixelMatchesColor((x_origem + 512), (y_origem + 232), (234, 239, 233), 5)):
+                # testa se é a ultima carta ou se a a aposta do river
                 print('ultima carta')
                 # cliaca no correr
                 pyautogui.click((x_origem + 600), (y_origem + 600))
 
-            elif (pyautogui.pixelMatchesColor((x_origem + 585), (y_origem + 327), (249, 249, 249), 5)
-                  and not pyautogui.pixelMatchesColor((x_origem + 652), (y_origem + 327), (249, 249, 249), 5)):
-                # tem a penultima carta e nao tem a ultima
+            elif ((pyautogui.pixelMatchesColor((x_origem + 585), (y_origem + 327), (249, 249, 249), 5)
+                  and not pyautogui.pixelMatchesColor((x_origem + 652), (y_origem + 327), (249, 249, 249), 5))
+                  or pyautogui.pixelMatchesColor((x_origem + 517), (y_origem + 233), (234, 239, 233), 5)):
+                # (tem a penultima carta e nao tem a ultima) ou aposta do Turn
                 print('penultima carta')
                 # cliaca no final da barra
                 pyautogui.click((x_origem + 660), (y_origem + 647))
@@ -1305,7 +1308,9 @@ def apostar_pagar(x_origem, y_origem, sorte=True):
         elif pyautogui.pixelMatchesColor((x_origem + 342), (y_origem + 601), (255, 255, 255), 5):
             # branco de interceção de pagar e passar sem o quadrado brando
 
-            if pyautogui.pixelMatchesColor((x_origem + 652), (y_origem + 327), (249, 249, 249), 5):
+            if (pyautogui.pixelMatchesColor((x_origem + 652), (y_origem + 327), (249, 249, 249), 5)
+                    or pyautogui.pixelMatchesColor((x_origem + 512), (y_origem + 232), (234, 239, 233), 5)):
+                # testa se é a ultima carta ou se a a aposta do river
                 print('ultima carta')
                 print('clicou no Correr')
                 # cliaca no correr
