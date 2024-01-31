@@ -134,7 +134,7 @@ while True:
         entrou_corretamente = True
         stataus_facebook = 'Carregada'
         hora_fim_tarefa = False
-        sorte = True
+
 
         while roda:
             # if cont_IP >= LIMITE_IP or cont_IP < 0:  # se a contagem de ip ta fora da faixa vai para a função
@@ -223,6 +223,7 @@ while True:
                 lista_tarefas_fazer = []
                 blind = '2K/4K'
                 lugares = 9
+                sorte = True
 
                 if Limpa.ja_esta_logado(x_origem, y_origem) == "sair da conta":
                     parar_tarefas = True
