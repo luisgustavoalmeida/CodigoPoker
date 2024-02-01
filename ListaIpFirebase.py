@@ -175,48 +175,58 @@ def verifica_e_adiciona_ip(ip):
     global db
     global configuracao_banco
 
-    print('Testa se IP já foi usado')
+    while True:
+        print('Testa se IP já foi usado')
+        try:
+            # Obtém a lista atual de IPs do Firebase
+            lista_ips = db.child('ips').get().val()
 
-    # Obtém a lista atual de IPs do Firebase
-    lista_ips = db.child('ips').get().val()
+            # Se a lista de IPs está vazia ou não existe, inicializa uma lista vazia
+            if lista_ips is None:
+                lista_ips = []
 
-    # Se a lista de IPs está vazia ou não existe, inicializa uma lista vazia
-    if lista_ips is None:
-        lista_ips = []
+            print(lista_ips)
 
-    # Verifica se a última data de acesso é nula ou se o dia mudou desde o último acesso
-    if ultima_data_acesso is None or ultima_data_acesso.day != datetime.datetime.now().day:
-        # Escolhe a configuração do banco com base na data atual
-        nova_configuracao, novo_db = escolher_configuracao_e_db()
+            # Verifica se a última data de acesso é nula ou se o dia mudou desde o último acesso
+            if ultima_data_acesso is None or ultima_data_acesso.day != datetime.datetime.now().day:
+                # Escolhe a configuração do banco com base na data atual
+                nova_configuracao, novo_db = escolher_configuracao_e_db()
 
-        # Atualiza a referência e o banco se a configuração mudou
-        if nova_configuracao != configuracao_banco:
-            print("Configuração do banco alterada. Unindo e atualizando dados.")
-            unir_e_atualizar_dados()
-            configuracao_banco, db = nova_configuracao, novo_db
+                # Atualiza a referência e o banco se a configuração mudou
+                if nova_configuracao != configuracao_banco:
+                    print("Configuração do banco alterada. Unindo e atualizando dados.")
+                    unir_e_atualizar_dados()
+                    configuracao_banco, db = nova_configuracao, novo_db
 
-        # Atualiza a última data de acesso
-        ultima_data_acesso = datetime.datetime.now()
+                # Atualiza a última data de acesso
+                ultima_data_acesso = datetime.datetime.now()
 
-    # Remove IPs que estão na lista por mais de 24 horas
-    lista_ips = [ip_info for ip_info in lista_ips if time.time() - ip_info['timestamp'] <= tempo_sem_uso_ip * 3600]
+            # Remove IPs que estão na lista por mais de 24 horas
+            lista_ips = [ip_info for ip_info in lista_ips if time.time() - ip_info['timestamp'] <= tempo_sem_uso_ip * 3600]
 
-    # Verifica se o IP já está na lista
-    for ip_info in lista_ips:
-        if ip_info['ip'] == ip:
-            print(f"IP {ip} já está na lista.")
-            return False  # O IP já está na lista, retorna False
+            print(lista_ips)
 
-    # Adiciona o IP à lista com o timestamp atual
-    lista_ips.append({
-        'ip': ip,
-        'timestamp': time.time()
-    })
+            # Verifica se o IP já está na lista
+            for ip_info in lista_ips:
+                if ip_info['ip'] == ip:
+                    print(f"IP {ip} já está na lista.")
+                    return False  # O IP já está na lista, retorna False
 
-    # Atualiza a lista de IPs no Firebase
-    db.child('ips').set(lista_ips)
-    print(f"IP {ip} adicionado à lista de IPs.")
-    return True  # O IP não estava na lista, retorna True e foi adicionado
+            # Adiciona o IP à lista com o timestamp atual
+            lista_ips.append({
+                'ip': ip,
+                'timestamp': time.time()
+            })
+
+            print(lista_ips)
+
+            # Atualiza a lista de IPs no Firebase
+            db.child('ips').set(lista_ips)
+            print(f"IP {ip} adicionado à lista de IPs.")
+            return True  # O IP não estava na lista, retorna True e foi adicionado
+        except Exception as e:
+            print(f"Erro verifica_e_adiciona_ip: {e}")
+            time.sleep(1)
 
 
 # def escrever_IP_banido(ip):
@@ -338,7 +348,7 @@ def lista_ip_banidos():
             # return []
 
 # # Chama a função para verificar e adicionar IP (substitua pelo IP desejado)
-# verifica_e_adiciona_ip('1.1.1.1')
+# verifica_e_adiciona_ip('1.1.1.3')
 
 # unir_e_atualizar_dados()
 #
