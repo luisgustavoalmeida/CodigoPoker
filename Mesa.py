@@ -1100,6 +1100,7 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False, blind_mesa
                     time_entrou = 0
 
             if not sentou:
+                indice_inicial = 0
                 time_entrou = 0
                 print("rodou a lista de mesas 2x, da um F5 para recarregar as mesas")
                 IP.tem_internet()
