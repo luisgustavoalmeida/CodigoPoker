@@ -185,8 +185,6 @@ def verifica_e_adiciona_ip(ip):
             if lista_ips is None:
                 lista_ips = []
 
-            print(lista_ips)
-
             # Verifica se a última data de acesso é nula ou se o dia mudou desde o último acesso
             if ultima_data_acesso is None or ultima_data_acesso.day != datetime.datetime.now().day:
                 # Escolhe a configuração do banco com base na data atual
@@ -204,8 +202,6 @@ def verifica_e_adiciona_ip(ip):
             # Remove IPs que estão na lista por mais de 24 horas
             lista_ips = [ip_info for ip_info in lista_ips if time.time() - ip_info['timestamp'] <= tempo_sem_uso_ip * 3600]
 
-            print(lista_ips)
-
             # Verifica se o IP já está na lista
             for ip_info in lista_ips:
                 if ip_info['ip'] == ip:
@@ -217,8 +213,6 @@ def verifica_e_adiciona_ip(ip):
                 'ip': ip,
                 'timestamp': time.time()
             })
-
-            print(lista_ips)
 
             # Atualiza a lista de IPs no Firebase
             db.child('ips').set(lista_ips)
