@@ -39,7 +39,7 @@ ativado = fr"C:\Users\{nome_usuario}\PycharmProjects\CodigoPoker\Imagens\Conexao
 desativado = fr"C:\Users\{nome_usuario}\PycharmProjects\CodigoPoker\Imagens\Conexao\desativado.png"
 regiao_ativado_desativado = (conexao_x + 75, conexao_y + 292, 73, 22)
 
-tipo_conexao = "vero"
+tipo_conexao = "modem"
 
 lista_negra_ip = []
 cont_lista_negra = 0
