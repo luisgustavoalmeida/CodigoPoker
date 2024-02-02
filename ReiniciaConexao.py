@@ -46,7 +46,7 @@ cont_lista_negra = 0
 
 
 def conexao():
-    print("espera 5 segudos")
+    print("espera 10 segudos")
     time.sleep(10)
     while True:
         while True:
