@@ -94,10 +94,12 @@ def tarefa_independente():
 tarefa = threading.Thread(target=tarefa_independente)
 tarefa.start()
 
+navegador = Seleniun.cria_nevegador()
+
 url = str(Google.pega_valor('Dados', 'F1'))
 pega_url = False
 
-navegador = Seleniun.cria_nevegador()
+# navegador = Seleniun.cria_nevegador()
 Seleniun.abrir_navegador(url)
 
 while True:
@@ -121,7 +123,6 @@ while True:
 
     else:
         id, senha, fichas, linha, cont_IP = id_novo, senha_novo, fichas_novo, linha_novo, cont_IP_novo
-
 
     # 0 segunda, 1 terça, 2 quarta, 3 quinta, 4 sexta, 5 sabado,6 domingo
 
@@ -157,7 +158,7 @@ while True:
             print('time_decorrido_id: ', time_decorrido_id)
             print('cont_IP: ', cont_IP)
             print('\n\n')
-            if (1 + cont_IP) >= LIMITE_IP or cont_IP < 0 or time_decorrido_id > 90:  # se a contagem de ip ta fora da faixa vai para a função
+            if (1 + cont_IP) >= LIMITE_IP or cont_IP < 0 or time_decorrido_id > 120:  # se a contagem de ip ta fora da faixa vai para a função
                 IP.ip(LIMITE_IP)  # testa se o numero de contas esta dentro do limite antes de trocar ip
 
             entrou_corretamente, stataus_facebook = Seleniun.fazer_login(id, senha, url)
