@@ -665,4 +665,4 @@ def testa_lista_negra_ip(meu_ip_agora):
 # # # print("chma conexao")
 # conexao(tipo_conexao)
 
-conexao()
+# conexao()
