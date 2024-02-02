@@ -253,6 +253,7 @@ def obter_status_conexao(nome_conexao):
 conexao()
 
 # instalar via CMD:
+# python.exe -m pip install --upgrade pip
 # pip install psutil
 # pip install pyautogui
 # pip install pywinauto
