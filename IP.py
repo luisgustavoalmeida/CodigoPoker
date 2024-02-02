@@ -239,11 +239,11 @@ def meu_ip():
 
 
 def nao_tem_internet():
-    for i in range(20):
+    for i in range(80):
         try:
-            response = requests.get('http://www.google.com', timeout=3)
+            response = requests.get('http://www.google.com', timeout=2)
             if response.status_code == 200:
-                print("Conexão com a internet ativa..")
+                print("Conexão com a internet ativa...")
                 time.sleep(0.5)  # Espera por 5 segundos antes de fazer o próximo teste
         except Exception as e:
             print("Sem conexão com a internet. Encerrando os testes...")
@@ -665,4 +665,4 @@ def testa_lista_negra_ip(meu_ip_agora):
 # # # print("chma conexao")
 # conexao(tipo_conexao)
 
-# conexao()
+conexao()
