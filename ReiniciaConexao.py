@@ -47,7 +47,7 @@ cont_lista_negra = 0
 
 def conexao():
     print("espera 5 segudos")
-    time.sleep(2)
+    time.sleep(10)
     while True:
         while True:
             # Tempo máximo para esperar (em segundos)
