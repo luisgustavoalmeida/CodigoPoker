@@ -1,3 +1,3 @@
 @echo off
-python C:\Users\lgagu\PycharmProjects\CodigoPoker\ReiniciaConexao.py
+python C:\Users\PokerIP\PycharmProjects\CodigoPoker\ReiniciaConexao.py
 pause
