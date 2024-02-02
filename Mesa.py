@@ -1158,7 +1158,7 @@ def dia_de_jogar_mesa(x_origem, y_origem, roleta, level_conta=1, conta_upada=Tru
         print('Joga vezes: ', numero_aleatorio)
         mesa_upar_jogar(x_origem, y_origem, numero_aleatorio, False, blind_mesa)
 
-    elif 4 <= level_conta < 10:
+    elif (4 <= level_conta < 10) and (blind_mesa == '2550'):
         mesa_upar_jogar(x_origem, y_origem, 0, True, blind_mesa)
         level_conta = OCR_tela.level_conta(x_origem, y_origem)
 

@@ -69,21 +69,18 @@ def escolher_configuracao_e_db():
     if dia_atual < 8:
         configuracao = config1
         print('Sera usado o banco 1')
-    elif 8 <= dia_atual < 16:
-        # configuracao = config2
-        # print('Sera usado o banco 2')
 
-        configuracao = config4
-        print('Sera usado o banco 4')
+    elif 8 <= dia_atual < 16:
+        configuracao = config2
+        print('Sera usado o banco 2')
+
     elif 16 <= dia_atual < 24:
         configuracao = config3
         print('Sera usado o banco 3')
-    else:
-        # configuracao = config4
-        # print('Sera usado o banco 4')
 
-        configuracao = config2
-        print('Sera usado o banco 2')
+    else:
+        configuracao = config4
+        print('Sera usado o banco 4')
 
     # Inicializa o Firebase com a configuração escolhida
     firebase = pyrebase.initialize_app(configuracao)
@@ -350,5 +347,5 @@ def lista_ip_banidos():
 
 # lista_ip_banidos()
 # escrever_IP_banido("0.1.1.1")
-# verifica_e_adiciona_ip('1.1.1.1')
+# verifica_e_adiciona_ip('2.1.1.3')
 # unir_e_atualizar_dados()
