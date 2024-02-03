@@ -252,6 +252,8 @@ def obter_status_conexao(nome_conexao):
 
 conexao()
 
+# testar se o python esta intalado:
+# python --version
 # instalar via CMD:
 # python.exe -m pip install --upgrade pip
 # pip install psutil
