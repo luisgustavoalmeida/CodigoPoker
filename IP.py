@@ -239,7 +239,7 @@ def meu_ip():
 
 
 def nao_tem_internet():
-    for i in range(80):
+    for i in range(60):
         try:
             response = requests.get('http://www.google.com', timeout=2)
             if response.status_code == 200:
@@ -248,7 +248,8 @@ def nao_tem_internet():
         except Exception as e:
             print("Sem conexão com a internet. Encerrando os testes...")
             print(e)
-            time.sleep(5)
+            print()
+            time.sleep(15)
             break
 
 
