@@ -239,18 +239,22 @@ def meu_ip():
 
 
 def nao_tem_internet():
+    falhou = False
     for i in range(60):
         try:
             response = requests.get('http://www.google.com', timeout=2)
             if response.status_code == 200:
                 print("Conexão com a internet ativa...")
                 time.sleep(0.5)  # Espera por 5 segundos antes de fazer o próximo teste
+                if falhou:
+                    return
         except Exception as e:
             print("Sem conexão com a internet. Encerrando os testes...")
             print(e)
             print()
             time.sleep(15)
-            break
+            falhou = True
+
 
 
 def ip_troca_agora():
