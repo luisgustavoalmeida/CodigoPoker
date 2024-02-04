@@ -247,12 +247,13 @@ def nao_tem_internet():
                 print("Conexão com a internet ativa...")
                 time.sleep(0.5)  # Espera por 5 segundos antes de fazer o próximo teste
                 if falhou:
+                    time.sleep(15)
                     return
         except Exception as e:
             print("Sem conexão com a internet. Encerrando os testes...")
             print(e)
             print()
-            time.sleep(15)
+            time.sleep(5)
             falhou = True
 
 
