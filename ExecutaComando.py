@@ -127,6 +127,7 @@ while True:
         ip = ""
         hora_que_rodou = 0
         valor_fichas = ""
+        valor_fichas_perfil = ""
         pontuacao_tarefas = ""
         hora_atual = ""
         level_conta = ""
@@ -378,7 +379,8 @@ while True:
 
                 Firebase.confirmacao_comando_resposta('Saindo da conta')
 
-                valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem, fichas)
+                valor_fichas_perfil = OCR_tela.valor_fichas_perfil(x_origem, y_origem)
+                valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem, fichas, valor_fichas_perfil)
                 hora_que_rodou = datetime.datetime.now().strftime('%H:%M:%S')
 
                 print('\n\nvalor_fichas', valor_fichas, '\n\n')

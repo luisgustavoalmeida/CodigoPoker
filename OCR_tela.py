@@ -344,8 +344,7 @@ def tratar_valor_numerico(texto):
         return 0
 
 
-def valor_fichas(x_origem, y_origem, fichas=""):
-
+def valor_fichas(x_origem, y_origem, valor_planilha="", fichas_perfil=""):
     """
     Esta função realiza a leitura do valor das fichas em uma determinada região da tela.
 
@@ -404,27 +403,44 @@ def valor_fichas(x_origem, y_origem, fichas=""):
             print('OCR nao recolheceu a imagem')
             valor = valor_fichas_perfil(x_origem, y_origem)
 
-    if fichas != "":
-        print('fichas diferente se vazio')
-        valor_planilha = tratar_valor_numerico(fichas)
+    if valor_planilha != "":
+        print('fichas e valor_fichas_level ')
+
+        valor_planilha = tratar_valor_numerico(valor_planilha)
         print('Valor planilha: ', valor_planilha)
 
-        if (valor < valor_planilha + 15000) and (valor >= valor_planilha):
-            print('\n valor compativel com fichas da planilha \n')
+        if valor_planilha - 15000 < valor < valor_planilha + 15000:
+            print('\n valor compativel com valor_planilha \n')
             return valor
+
+        if fichas_perfil != "":
+            fichas_perfil = tratar_valor_numerico(fichas_perfil)
+            if valor_planilha - 15000 < fichas_perfil < valor_planilha + 15000:
+                print('\n fichas_perfil compativel com valor_planilha  \n')
+                return fichas_perfil
+
+            if (valor - 15000) < fichas_perfil < (valor + 15000):
+                print('\n fichas_perfil compativel com valor \n')
+                return valor
 
         valor_perfil = valor_fichas_perfil(x_origem, y_origem)
-        if (valor_perfil < valor_planilha + 15000) and (valor_perfil >= valor_planilha):
-            print('\n valor perfil compativel com fichas da planilha \n')
+
+        if valor_planilha - 15000 < valor_perfil < valor_planilha + 15000:
+            print('\n valor_perfil compativel com valor_planilha \n')
             return valor_perfil
 
-        if valor_perfil == valor:
-            print('\n valor igual a valor perfil \n')
-            return valor
+        if valor - 15000 < valor_perfil < valor + 15000:
+            print('\n valor_perfil compativel com valor \n')
+            return valor_perfil
 
-        return valor_planilha
+        if fichas_perfil != "":
+            if fichas_perfil - 15000 < valor_perfil < fichas_perfil + 15000:
+                print('\n fichas_perfil compativel com fichas_perfil  \n')
+                return valor_perfil
 
-    return valor
+    return valor_planilha
+
+
 
 def valor_fichas_perfil(x_origem, y_origem):
     """
@@ -470,24 +486,24 @@ def valor_fichas_perfil(x_origem, y_origem):
     for config in configuracoes:
         # print(config)
         # Realiza o OCR com a configuração atual
-        lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
-        print(lido)
-        if lido is not None:
-            lido = tratar_valor_numerico(lido)
+        fichas = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
+        print(fichas)
+        if fichas is not None:
+            fichas = tratar_valor_numerico(fichas)
             # Verifica se o valor está na faixa desejada
-            if 500 < lido < 50000000:
-                print(f"Valor das fichas perfil: {lido}")
+            if 500 < fichas < 50000000:
+                print(f"Valor das fichas perfil: {fichas}")
                 # clica para fechar a tela do perfil
                 pyautogui.click(772 + x_origem, 160 + y_origem)
-                return lido
+                return fichas
                 # break
             else:
                 print("Valor fora da faixa desejada")
-                lido = 0
+                fichas = 0
         else:
             print("Erro na leitura do OCR")
-            lido = 0
-    return lido
+            fichas = 0
+    return fichas
 
 
 def tempo_roleta(x_origem, y_origem):
@@ -1106,8 +1122,8 @@ def tarefas_diaris_upando(x_origem, y_origem):
 
 
 lista_blind = (
-'500K1M', '100K200K', '50K100K', '20K40K', '10K20K', '5K10K', '2K4K', '1K2K', '5001K', '200400', '100200', '50100', '2550', '2040', '1020', '510',
-'24', '12')
+    '500K1M', '100K200K', '50K100K', '20K40K', '10K20K', '5K10K', '2K4K', '1K2K', '5001K', '200400', '100200', '50100', '2550', '2040', '1020', '510',
+    '24', '12')
 
 
 def blind_sala(x_origem, y_origem):
@@ -1360,26 +1376,33 @@ def level_conta(x_origem, y_origem):
             pyautogui.click(16 + x_origem, 24 + y_origem)
             # print(config)
             # Realiza a leitura do nível usando OCR
-            lido = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
+            level = OCR_regiao(regiao_ficha, config, inveter_cor, fator_ampliacao, contraste_pre, contraste_pos, esca_ciza)
             # print('lido ', lido)
-            if lido is not None:
-                lido = tratar_valor_numerico(lido)
+            if level is not None:
+                level = tratar_valor_numerico(level)
                 # Verifica se o valor está na faixa desejada
-                if 1 < lido < 30:
-                    print("\n   Nível da conta:", lido, '\n')
+                if 1 < level < 30:
+                    print("\n   Nível da conta:", level, '\n')
+                    fichas = valor_fichas_perfil(x_origem, y_origem)
+
                     if pyautogui.pixelMatchesColor((x_origem + 241), (y_origem + 170), (227, 18, 5), tolerance=2):
                         pyautogui.click(771 + x_origem, 162 + y_origem)  # clica para fechar a tela do perfil
-                    return lido
+
+                    return level, fichas
+
                 else:
                     print("Nível da contar fora da faixa desejada")
-                    lido = 1
+                    level = 1
             else:
                 print("Erro na leitura do OCR")
-                lido = 1
+                level = 1
+
+    fichas = valor_fichas_perfil(x_origem, y_origem)
+
     if pyautogui.pixelMatchesColor((x_origem + 241), (y_origem + 170), (227, 18, 5), tolerance=2):
         pyautogui.click(771 + x_origem, 162 + y_origem)  # clica para fechar a tela do perfil
     print('Erro na leitura do nivel da comta')
-    return lido
+    return level, fichas
 
 # aviso_do_sistema()
 # x_origem, y_origem = Origem_pg.x_y()

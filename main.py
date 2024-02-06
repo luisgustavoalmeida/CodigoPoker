@@ -136,6 +136,7 @@ while True:
         ip = ""
         hora_que_rodou = 0
         valor_fichas = ""
+        valor_fichas_perfil = ""
         pontuacao_tarefas = ""
         level_conta = ""
         roleta = 'roleta_1'
@@ -245,7 +246,7 @@ while True:
                         pontuacao_tarefas = OCR_tela.pontuacao_tarefas(x_origem, y_origem)
                         Limpa.fecha_tarefa(x_origem, y_origem)
 
-                    level_conta = OCR_tela.level_conta(x_origem, y_origem)
+                    level_conta, valor_fichas_perfil = OCR_tela.level_conta(x_origem, y_origem)
 
                     for i in range(50):
                         time_sair = time.perf_counter()
@@ -281,7 +282,7 @@ while True:
 
                 Aneis.recolhe_aneis(x_origem, y_origem)
 
-                valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem, fichas)
+                valor_fichas = OCR_tela.valor_fichas(x_origem, y_origem, fichas, valor_fichas_perfil)
 
                 roda = False
                 break
