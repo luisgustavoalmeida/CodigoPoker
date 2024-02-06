@@ -219,7 +219,8 @@ def verifica_e_adiciona_ip(ip):
             # Verifica se o IP já está na lista
             for ip_info in lista_ips:
                 if ip_info['ip'] == ip:
-                    print(f"IP {ip} já está na lista.")
+                    quantidade_itens = len(lista_ips)
+                    print(f"IP {ip} já está na lista. Quantidade de ips usados: {quantidade_itens}")
                     # Atualiza a lista local com os novos valores
                     with open('ips_backup.json', 'w') as file:
                         json.dump(lista_ips, file)
@@ -238,7 +239,10 @@ def verifica_e_adiciona_ip(ip):
             with open('ips_backup.json', 'w') as file:
                 json.dump(lista_ips, file)
 
-            print(f"IP {ip} adicionado à lista de IPs.")
+            # Calcula o tamanho da lista
+            quantidade_itens = len(lista_ips)
+
+            print(f"IP {ip} adicionado à lista de IPs. Quantidade de ips usados: {quantidade_itens}")
             return True  # O IP não estava na lista, retorna True e foi adicionado
         except Exception as e:
             print(f"Erro verifica_e_adiciona_ip: {e}")
@@ -364,7 +368,7 @@ def lista_ip_banidos():
             # return []
 
 # # Chama a função para verificar e adicionar IP (substitua pelo IP desejado)
-# verifica_e_adiciona_ip('1.1.1.2')
+# verifica_e_adiciona_ip('1.1.1.3')
 
 # unir_e_atualizar_dados()
 #
