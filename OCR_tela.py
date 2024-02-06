@@ -336,7 +336,7 @@ def tratar_valor_numerico(texto):
     """
     try:
         # texto = ''.join(c for c in texto if c.isdigit())
-        texto = re.sub(r"\D+", "", texto)  # Remove caracteres não numéricos
+        texto = re.sub(r"\D+", "", str(texto))  # Remove caracteres não numéricos
         numero = int(texto)
         return numero
     except ValueError:
