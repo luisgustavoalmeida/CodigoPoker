@@ -1154,7 +1154,7 @@ def dia_de_jogar_mesa(x_origem, y_origem, roleta, level_conta=1, conta_upada=Tru
 
     if level_conta >= 10:
         print('conta para jogar mesa')
-        numero_aleatorio = random.randint(2, 4)
+        numero_aleatorio = random.randint(2, 6)
         print('Joga vezes: ', numero_aleatorio)
         mesa_upar_jogar(x_origem, y_origem, numero_aleatorio, False, blind_mesa)
 
@@ -1171,7 +1171,7 @@ def dia_de_jogar_mesa(x_origem, y_origem, roleta, level_conta=1, conta_upada=Tru
 
     else:
         print('conta para jogar mesa')
-        numero_aleatorio = random.randint(2, 4)
+        numero_aleatorio = random.randint(2, 6)
         print('Joga vezes: ', numero_aleatorio)
         mesa_upar_jogar(x_origem, y_origem, numero_aleatorio, False, blind_mesa)
 
