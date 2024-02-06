@@ -403,6 +403,9 @@ def valor_fichas(x_origem, y_origem, valor_planilha="", fichas_perfil=""):
             print('OCR nao recolheceu a imagem')
             valor = valor_fichas_perfil(x_origem, y_origem)
 
+    print('valor_planilha', valor_planilha)
+    print('fichas_perfil ', fichas_perfil)
+
     if valor_planilha != "":
         print('fichas e valor_fichas_level ')
 
@@ -413,30 +416,34 @@ def valor_fichas(x_origem, y_origem, valor_planilha="", fichas_perfil=""):
             print('\n valor compativel com valor_planilha \n')
             return valor
 
-        if fichas_perfil != "":
-            fichas_perfil = tratar_valor_numerico(fichas_perfil)
-            if valor_planilha - 15000 < fichas_perfil < valor_planilha + 15000:
-                print('\n fichas_perfil compativel com valor_planilha  \n')
-                return fichas_perfil
+    if fichas_perfil != "":
+        fichas_perfil = tratar_valor_numerico(fichas_perfil)
+        if valor_planilha - 15000 < fichas_perfil < valor_planilha + 15000:
+            print('\n fichas_perfil compativel com valor_planilha  \n')
+            return fichas_perfil
 
-            if (valor - 15000) < fichas_perfil < (valor + 15000):
-                print('\n fichas_perfil compativel com valor \n')
-                return valor
+        if (valor - 15000) < fichas_perfil < (valor + 15000):
+            print('\n fichas_perfil compativel com valor \n')
+            return valor
 
+    if valor_planilha != "":
         valor_perfil = valor_fichas_perfil(x_origem, y_origem)
 
         if valor_planilha - 15000 < valor_perfil < valor_planilha + 15000:
             print('\n valor_perfil compativel com valor_planilha \n')
             return valor_perfil
 
+    if fichas_perfil != "":
         if valor - 15000 < valor_perfil < valor + 15000:
             print('\n valor_perfil compativel com valor \n')
             return valor_perfil
 
-        if fichas_perfil != "":
-            if fichas_perfil - 15000 < valor_perfil < fichas_perfil + 15000:
-                print('\n fichas_perfil compativel com fichas_perfil  \n')
-                return valor_perfil
+        if fichas_perfil - 15000 < valor_perfil < fichas_perfil + 15000:
+            print('\n fichas_perfil compativel com fichas_perfil  \n')
+            return valor_perfil
+
+    if valor_planilha == "":
+        return valor
 
     return valor_planilha
 
