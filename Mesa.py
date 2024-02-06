@@ -1135,8 +1135,8 @@ def dia_de_jogar_mesa(x_origem, y_origem, roleta, level_conta=1, conta_upada=Tru
 
     if dia_da_semana % 2 == 0:
         print("O dia da semana é par.")
-        # blind_mesa = '2550'
-        blind_mesa = '2040'
+        blind_mesa = '2550'
+        # blind_mesa = '2040'
     else:
         print("O dia da semana é impar.")
         # blind_mesa = '2040'

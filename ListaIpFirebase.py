@@ -213,6 +213,9 @@ def verifica_e_adiciona_ip(ip):
             # Remove itens duplicados da lista_ips
             lista_ips = [dict(t) for t in {tuple(d.items()) for d in lista_ips}]
 
+            # Ordena a lista com base no timestamp
+            lista_ips.sort(key=lambda x: x['timestamp'])
+
             # Verifica se o IP já está na lista
             for ip_info in lista_ips:
                 if ip_info['ip'] == ip:
@@ -361,7 +364,7 @@ def lista_ip_banidos():
             # return []
 
 # # Chama a função para verificar e adicionar IP (substitua pelo IP desejado)
-# verifica_e_adiciona_ip('1.1.1.1')
+verifica_e_adiciona_ip('1.1.1.2')
 
 # unir_e_atualizar_dados()
 #
