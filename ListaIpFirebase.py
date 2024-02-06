@@ -1,7 +1,8 @@
 # Importa a biblioteca necessária
 import datetime  # Adicionado para manipulação de datas
 import time
-
+import json
+import os
 import pyrebase
 
 # Configuração dos bancos de dados
@@ -182,6 +183,13 @@ def verifica_e_adiciona_ip(ip):
             if lista_ips is None:
                 lista_ips = []
 
+            # Verifica se o arquivo de backup existe e carrega a lista local de IPs a partir dele
+            if os.path.exists('ips_backup.json'):
+                with open('ips_backup.json', 'r') as file:
+                    lista_ips_local = json.load(file)
+            else:
+                lista_ips_local = []
+
             # Verifica se a última data de acesso é nula ou se o dia mudou desde o último acesso
             if ultima_data_acesso is None or ultima_data_acesso.day != datetime.datetime.now().day:
                 # Escolhe a configuração do banco com base na data atual
@@ -196,13 +204,22 @@ def verifica_e_adiciona_ip(ip):
                 # Atualiza a última data de acesso
                 ultima_data_acesso = datetime.datetime.now()
 
+            # Unir as duas listas
+            lista_ips += lista_ips_local
+
             # Remove IPs que estão na lista por mais de 24 horas
             lista_ips = [ip_info for ip_info in lista_ips if time.time() - ip_info['timestamp'] <= tempo_sem_uso_ip * 3600]
+
+            # Remove itens duplicados da lista_ips
+            lista_ips = [dict(t) for t in {tuple(d.items()) for d in lista_ips}]
 
             # Verifica se o IP já está na lista
             for ip_info in lista_ips:
                 if ip_info['ip'] == ip:
                     print(f"IP {ip} já está na lista.")
+                    # Atualiza a lista local com os novos valores
+                    with open('ips_backup.json', 'w') as file:
+                        json.dump(lista_ips, file)
                     return False  # O IP já está na lista, retorna False
 
             # Adiciona o IP à lista com o timestamp atual
@@ -213,6 +230,11 @@ def verifica_e_adiciona_ip(ip):
 
             # Atualiza a lista de IPs no Firebase
             db.child('ips').set(lista_ips)
+
+            # Atualiza a lista local com os novos valores
+            with open('ips_backup.json', 'w') as file:
+                json.dump(lista_ips, file)
+
             print(f"IP {ip} adicionado à lista de IPs.")
             return True  # O IP não estava na lista, retorna True e foi adicionado
         except Exception as e:
@@ -339,7 +361,7 @@ def lista_ip_banidos():
             # return []
 
 # # Chama a função para verificar e adicionar IP (substitua pelo IP desejado)
-# verifica_e_adiciona_ip('1.1.1.3')
+# verifica_e_adiciona_ip('1.1.1.1')
 
 # unir_e_atualizar_dados()
 #
