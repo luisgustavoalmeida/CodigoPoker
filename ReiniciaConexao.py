@@ -45,6 +45,18 @@ tipo_conexao = "modem"
 lista_negra_ip = []
 cont_lista_negra = 0
 
+# Obtém a hora atual em segundos desde a época
+hora_atual_em_segundos = time.time()
+
+# Converte a hora atual em uma estrutura de tempo local
+hora_local = time.localtime(hora_atual_em_segundos)
+
+# Formata a hora local em uma string legível
+hora_formatada = time.strftime("%H:%M:%S", hora_local)
+
+# Imprime a hora formatada
+print("Hora atual inicio:", hora_formatada)
+
 
 def tem_internet():
     cont_erro2 = 0
@@ -77,13 +89,12 @@ def tem_internet():
                 cont_erro = 0
                 cont_erro2 = 0
                 conexao()  # chama a função que troca ip
-            continue
 
         if cont_erro2 >= 20:
             cont_erro = 0
             cont_erro2 = 0
             conexao()  # chama a função que troca ip
-            continue
+
         print('contagem de erro 1: ', cont_erro)
         print('contagem de erro 2: ', cont_erro2)
     return True
@@ -91,17 +102,6 @@ def tem_internet():
 
 def conexao():
     print("espera 5 minutos para reeniciar a conexão")
-    # Obtém a hora atual em segundos desde a época
-    hora_atual_em_segundos = time.time()
-
-    # Converte a hora atual em uma estrutura de tempo local
-    hora_local = time.localtime(hora_atual_em_segundos)
-
-    # Formata a hora local em uma string legível
-    hora_formatada = time.strftime("%H:%M:%S", hora_local)
-
-    # Imprime a hora formatada
-    print("Hora atual inicio:", hora_formatada)
 
     time.sleep(300)
 
@@ -320,7 +320,7 @@ hora_local = time.localtime(hora_atual_em_segundos)
 hora_formatada = time.strftime("%H:%M:%S", hora_local)
 
 # Imprime a hora formatada
-print("Hora atual inicio:", hora_formatada)
+print("Hora atual fim:", hora_formatada)
 
 # testar se o python esta intalado:
 # python --version
