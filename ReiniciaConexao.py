@@ -5,6 +5,7 @@ import psutil
 import pyautogui
 import pygetwindow as gw
 import pywinauto
+import requests
 
 conexao_x = 930
 conexao_y = 710
@@ -43,6 +44,49 @@ tipo_conexao = "modem"
 
 lista_negra_ip = []
 cont_lista_negra = 0
+
+
+def tem_internet():
+    cont_erro2 = 0
+    cont_erro = 0
+    # print('tem_internet')
+
+    com_internete = True
+    while com_internete:
+        print('testa a internete')
+        cont_erro2 += 1
+        # site_aleatorio = random.choice(sites)
+        # print(site_aleatorio)
+        try:
+            # response = requests.get(site_aleatorio, timeout=10)
+            response = requests.get('http://www.google.com', timeout=5)
+            if response.status_code == 200 or response.status_code == 429:
+                print("Conexão com a internet ativa...")
+                cont_erro = 0
+                cont_erro2 = 0
+                com_internete = False
+                return True
+
+        except Exception as e:
+            print("Sem conexão com a internet. Encerrando os testes...")
+            print(e)
+            time.sleep(3)
+            cont_erro += 1
+            print('contagem de erro 1: ', cont_erro)
+            if cont_erro >= 5:
+                cont_erro = 0
+                cont_erro2 = 0
+                conexao()  # chama a função que troca ip
+            continue
+
+        if cont_erro2 >= 20:
+            cont_erro = 0
+            cont_erro2 = 0
+            conexao()  # chama a função que troca ip
+            continue
+        print('contagem de erro 1: ', cont_erro)
+        print('contagem de erro 2: ', cont_erro2)
+    return True
 
 
 def conexao():
@@ -240,7 +284,6 @@ def conexao():
         time.sleep(1)
 
 
-
 def localizar_imagem(imagem, regiao, precisao):
     try:
         posicao = pyautogui.locateOnScreen(imagem, region=regiao, confidence=precisao, grayscale=True)
@@ -265,7 +308,7 @@ def obter_status_conexao(nome_conexao):
         return "Conexão não encontrada"
 
 
-conexao()
+tem_internet()
 
 # Obtém a hora atual em segundos desde a época
 hora_atual_em_segundos = time.time()
@@ -289,3 +332,4 @@ print("Hora atual inicio:", hora_formatada)
 # pip install PyScreeze==0.1.29
 # pip install opencv-python
 # pip install Pillow
+# pip install requests
