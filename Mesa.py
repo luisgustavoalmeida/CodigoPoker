@@ -986,9 +986,9 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False, blind_mesa
                 cont_jogou += 1
                 print("Jogou vezes igua a: ", cont_jogou)
                 if upar:
-                    level_conta = OCR_tela.level_conta(x_origem, y_origem)
+                    level_conta, valor_fichas_perfil = OCR_tela.level_conta(x_origem, y_origem)
                     if level_conta >= 10:
-                        level_conta = OCR_tela.level_conta(x_origem, y_origem)
+                        level_conta, valor_fichas_perfil = OCR_tela.level_conta(x_origem, y_origem)
                         if level_conta >= 10:
                             break
 
@@ -1129,13 +1129,13 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False, blind_mesa
     return
 
 
-def dia_de_jogar_mesa(x_origem, y_origem, roleta, level_conta=1, conta_upada=True, dia_da_semana=0):
+def dia_de_jogar_mesa(x_origem, y_origem, roleta, level_conta=1, valor_fichas_perfil=0, conta_upada=True, dia_da_semana=0):
     if roleta != 'roleta_1':
         return level_conta
 
     if datetime.datetime.now().time() < datetime.time(23, 0, 0):
         if level_conta == "":
-            level_conta = OCR_tela.level_conta(x_origem, y_origem)
+            level_conta, valor_fichas_perfil = OCR_tela.level_conta(x_origem, y_origem)
     else:
         return level_conta
 
@@ -1155,7 +1155,7 @@ def dia_de_jogar_mesa(x_origem, y_origem, roleta, level_conta=1, conta_upada=Tru
 
     if not conta_upada:
         upar(x_origem, y_origem)
-        level_conta = OCR_tela.level_conta(x_origem, y_origem)
+        level_conta, valor_fichas_perfil = OCR_tela.level_conta(x_origem, y_origem)
         Limpa.limpa_total(x_origem, y_origem)
 
     if level_conta >= 10:
@@ -1164,16 +1164,16 @@ def dia_de_jogar_mesa(x_origem, y_origem, roleta, level_conta=1, conta_upada=Tru
         print('Joga vezes: ', numero_aleatorio)
         mesa_upar_jogar(x_origem, y_origem, numero_aleatorio, False, blind_mesa)
 
-    elif (4 <= level_conta < 10) and (blind_mesa == '50100'):
+    elif 4 <= level_conta < 10:
         mesa_upar_jogar(x_origem, y_origem, 0, True, blind_mesa)
-        level_conta = OCR_tela.level_conta(x_origem, y_origem)
+        level_conta, valor_fichas_perfil = OCR_tela.level_conta(x_origem, y_origem)
 
     elif 1 <= level_conta < 4:
         print('conta para jogar mesa')
         numero_aleatorio = random.randint(10, 15)
         print('Joga vezes: ', numero_aleatorio)
         mesa_upar_jogar(x_origem, y_origem, numero_aleatorio, False, blind_mesa)
-        level_conta = OCR_tela.level_conta(x_origem, y_origem)
+        level_conta, valor_fichas_perfil = OCR_tela.level_conta(x_origem, y_origem)
 
     else:
         print('conta para jogar mesa')
@@ -1182,7 +1182,7 @@ def dia_de_jogar_mesa(x_origem, y_origem, roleta, level_conta=1, conta_upada=Tru
         mesa_upar_jogar(x_origem, y_origem, numero_aleatorio, False, blind_mesa)
 
     Limpa.limpa_total(x_origem, y_origem)
-    return level_conta
+    return level_conta, valor_fichas_perfil
 
 
 def passa_corre_joga(x_origem, y_origem, valor_aposta1=40, valor_aposta2=80):  # para se fazer tarefas

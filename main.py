@@ -265,7 +265,8 @@ while True:
                             # testa de roleta 1 ta aberta
                             pyautogui.doubleClick(x_origem + 492, y_origem + 383)  # clica no meio da roleta para rodar
 
-                    level_conta = Mesa.dia_de_jogar_mesa(x_origem, y_origem, roleta, level_conta, conta_upada, dia_da_semana)
+                    level_conta, valor_fichas_perfil = Mesa.dia_de_jogar_mesa(x_origem, y_origem, roleta, level_conta, valor_fichas_perfil,
+                                                                              conta_upada, dia_da_semana)
 
                 elif roleta == 'roleta_2':
                     for i in range(20):

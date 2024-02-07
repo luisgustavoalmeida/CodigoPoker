@@ -1366,6 +1366,8 @@ def level_conta(x_origem, y_origem):
         time.sleep(0.2)
 
     # Configurações para o processo OCR
+    level = 0
+    fichas = 0
     inveter_cor = False
     esca_ciza = True
     fator_ampliacao = 3

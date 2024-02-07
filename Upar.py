@@ -5,8 +5,8 @@ import pyautogui
 
 from Cartas import abre_cartas_premidas
 from Genius import abre_genius, localizar_imagem
-from Limpa import limpa_total, limpa_jogando, limpa_abre_tarefa2
-from OCR_tela import tarefas_diaris_upando, level_conta
+from Limpa import limpa_total
+from OCR_tela import tarefas_diaris_upando
 from Slot import abre_slot
 from Tarefas import recolher_tarefa_upando
 
