@@ -70,6 +70,12 @@ lista_salas_jogar = [
     {'1674': ('2550', 100, 50)}, {'1675': ('2550', 100, 50)}, {'1676': ('2550', 100, 50)}, {'1677': ('2550', 100, 50)}, {'1678': ('2550', 100, 50)}
 ]
 
+lista_salas_jogar2 = [
+    {'1590': ('50100', 200, 100)}, {'1591': ('50100', 200, 100)}, {'1592': ('50100', 200, 100)}, {'1593': ('50100', 200, 100)},
+    {'1683': ('50100', 200, 100)}, {'1684': ('50100', 200, 100)}, {'1685': ('50100', 200, 100)}, {'1686': ('50100', 200, 100)},
+    {'1687': ('50100', 200, 100)}, {'1688': ('50100', 200, 100)}, {'1689': ('50100', 200, 100)}
+]
+
 dicionari_PC_cadeira = {
     'PC-I5-8600K': {'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452),
                     'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)},
@@ -1139,7 +1145,7 @@ def dia_de_jogar_mesa(x_origem, y_origem, roleta, level_conta=1, conta_upada=Tru
         # blind_mesa = '2040'
     else:
         print("O dia da semana é impar.")
-        # blind_mesa = '2040'
+        # blind_mesa = '50100'
         blind_mesa = '2550'
 
     Limpa.fecha_tarefa(x_origem, y_origem)
@@ -1154,11 +1160,11 @@ def dia_de_jogar_mesa(x_origem, y_origem, roleta, level_conta=1, conta_upada=Tru
 
     if level_conta >= 10:
         print('conta para jogar mesa')
-        numero_aleatorio = random.randint(2, 6)
+        numero_aleatorio = random.randint(5, 10)
         print('Joga vezes: ', numero_aleatorio)
         mesa_upar_jogar(x_origem, y_origem, numero_aleatorio, False, blind_mesa)
 
-    elif (4 <= level_conta < 10) and (blind_mesa == '2550'):
+    elif (4 <= level_conta < 10) and (blind_mesa == '50100'):
         mesa_upar_jogar(x_origem, y_origem, 0, True, blind_mesa)
         level_conta = OCR_tela.level_conta(x_origem, y_origem)
 
