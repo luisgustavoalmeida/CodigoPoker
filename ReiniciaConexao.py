@@ -42,8 +42,10 @@ regiao_ativado_desativado = (conexao_x + 75, conexao_y + 292, 73, 22)
 
 tipo_conexao = "modem"
 
-lista_negra_ip = []
-cont_lista_negra = 0
+
+print("Espera 5 minutos para testar a conexão")
+
+time.sleep(300)
 
 # Obtém a hora atual em segundos desde a época
 hora_atual_em_segundos = time.time()
@@ -73,7 +75,7 @@ def tem_internet():
             # response = requests.get(site_aleatorio, timeout=10)
             response = requests.get('http://www.google.com', timeout=5)
             if response.status_code == 200 or response.status_code == 429:
-                print("Conexão com a internet ativa...")
+                print("Conexão com a internet ativa!")
                 cont_erro = 0
                 cont_erro2 = 0
                 com_internete = False
@@ -101,9 +103,7 @@ def tem_internet():
 
 
 def conexao():
-    print("espera 5 minutos para reeniciar a conexão")
-
-    time.sleep(300)
+    print("Reinicia a conexão")
 
     while True:
         while True:
