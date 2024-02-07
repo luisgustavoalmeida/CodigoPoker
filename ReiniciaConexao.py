@@ -46,8 +46,21 @@ cont_lista_negra = 0
 
 
 def conexao():
-    print("espera 60 segudos")
-    time.sleep(60)
+    print("espera 5 minutos para reeniciar a conexão")
+    # Obtém a hora atual em segundos desde a época
+    hora_atual_em_segundos = time.time()
+
+    # Converte a hora atual em uma estrutura de tempo local
+    hora_local = time.localtime(hora_atual_em_segundos)
+
+    # Formata a hora local em uma string legível
+    hora_formatada = time.strftime("%H:%M:%S", hora_local)
+
+    # Imprime a hora formatada
+    print("Hora atual inicio:", hora_formatada)
+
+    time.sleep(300)
+
     while True:
         while True:
             # Tempo máximo para esperar (em segundos)
@@ -123,7 +136,7 @@ def conexao():
                         centro_desconectar = pyautogui.center(posicao_desconectar)  # Obtém o centro da posição da imagem encontrada
                         pyautogui.click(centro_desconectar)  # Clica no centro da posição encontrada
                         print("clica no desconectar")
-                        time.sleep(1)
+                        time.sleep(2)
 
                     posicao_fechar = localizar_imagem(fechar, regiao_fechar, precisao)
                     if posicao_fechar is not None:
@@ -136,8 +149,9 @@ def conexao():
                     if posicao_conectar is not None:
                         centro_conectar = pyautogui.center(posicao_conectar)  # Obtém o centro da posição da imagem encontrada
                         pyautogui.click(centro_conectar)  # Clica no centro da posição encontrada
-                        time.sleep(1)
+
                         print("clica no conectar")
+                        time.sleep(2)
                         clicou_conecar = True
                         break
                 time.sleep(0.3)
@@ -158,7 +172,7 @@ def conexao():
                         centro_conectar = pyautogui.center(posicao_conectar)  # Obtém o centro da posição da imagem encontrada
                         pyautogui.click(centro_conectar)  # Clica no centro da posição encontrada
                         print("clica no conectar 2")
-                        time.sleep(1)
+                        time.sleep(2)
 
                     # se deu algum erro e nao conectou aparece um mensagem de erro e opção de fechar
                     posicao_fechar = localizar_imagem(fechar, regiao_fechar, precisao)
@@ -226,6 +240,7 @@ def conexao():
         time.sleep(1)
 
 
+
 def localizar_imagem(imagem, regiao, precisao):
     try:
         posicao = pyautogui.locateOnScreen(imagem, region=regiao, confidence=precisao, grayscale=True)
@@ -246,11 +261,23 @@ def obter_status_conexao(nome_conexao):
         else:
             return "Desconectado"
     else:
-        time.sleep(0.5)
+        time.sleep(1)
         return "Conexão não encontrada"
 
 
 conexao()
+
+# Obtém a hora atual em segundos desde a época
+hora_atual_em_segundos = time.time()
+
+# Converte a hora atual em uma estrutura de tempo local
+hora_local = time.localtime(hora_atual_em_segundos)
+
+# Formata a hora local em uma string legível
+hora_formatada = time.strftime("%H:%M:%S", hora_local)
+
+# Imprime a hora formatada
+print("Hora atual inicio:", hora_formatada)
 
 # testar se o python esta intalado:
 # python --version
