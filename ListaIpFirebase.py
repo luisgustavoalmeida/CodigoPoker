@@ -148,8 +148,14 @@ def unir_e_atualizar_dados():
 
         dados_combinados_banidos = [dict(t) for t in {tuple(d.items()) for d in dados_combinados_banidos}]
 
+        # Ordena a lista com base no timestamp em ordem crescente
+        dados_combinados_banidos = sorted(dados_combinados_banidos, key=lambda x: x['timestamp'])
+
         # Remove IPs que estão na lista por mais de 24 horas
         dados_combinados = [ip_info for ip_info in dados_combinados if time.time() - ip_info['timestamp'] <= tempo_sem_uso_ip * 3600]
+
+        # Ordena a lista com base no timestamp
+        dados_combinados.sort(key=lambda x: x['timestamp'])
 
         # Atualiza a referência 'ips' nos dois bancos
         db_1.child('ips').set(dados_combinados)
@@ -370,11 +376,11 @@ def lista_ip_banidos():
 # # Chama a função para verificar e adicionar IP (substitua pelo IP desejado)
 # verifica_e_adiciona_ip('1.1.1.3')
 
-# unir_e_atualizar_dados()
+unir_e_atualizar_dados()
 #
 # unir_e_atualizar_dados()
 
 # lista_ip_banidos()
-# escrever_IP_banido("0.1.1.1")
+# escrever_IP_banido("0.0.1.1")
 # verifica_e_adiciona_ip('2.1.1.3')
 # unir_e_atualizar_dados()
