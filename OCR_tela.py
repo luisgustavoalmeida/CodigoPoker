@@ -337,8 +337,7 @@ def tratar_valor_numerico(texto):
     try:
         # texto = ''.join(c for c in texto if c.isdigit())
         texto = re.sub(r"\D+", "", str(texto))  # Remove caracteres não numéricos
-        numero = int(texto)
-        return numero
+        return int(texto)
     except ValueError:
         print("Erro ao converter para inteiro.")
         return 0
@@ -448,7 +447,6 @@ def valor_fichas(x_origem, y_origem, valor_planilha="", fichas_perfil=""):
     return valor_planilha
 
 
-
 def valor_fichas_perfil(x_origem, y_origem):
     """
     Extrai e retorna o valor de fichas da conta.
@@ -461,7 +459,7 @@ def valor_fichas_perfil(x_origem, y_origem):
     - int: valor de fichas da conta ou 0 se não for encontrado ou estiver fora da faixa desejada.
     """
     print('valor_fichas_perfil')
-    lido = 0
+    fichas = 0
     for _ in range(50):
         # clica para abrir a tela do perfil
         pyautogui.click(16 + x_origem, 24 + y_origem)

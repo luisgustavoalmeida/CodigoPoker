@@ -247,6 +247,8 @@ while True:
                         Limpa.fecha_tarefa(x_origem, y_origem)
 
                     level_conta, valor_fichas_perfil = OCR_tela.level_conta(x_origem, y_origem)
+                    print('level_conta', level_conta)
+                    print('valor_fichas_perfil', valor_fichas_perfil)
 
                     for i in range(50):
                         time_sair = time.perf_counter()
@@ -267,6 +269,8 @@ while True:
 
                     level_conta, valor_fichas_perfil = Mesa.dia_de_jogar_mesa(x_origem, y_origem, roleta, level_conta, valor_fichas_perfil,
                                                                               conta_upada, dia_da_semana)
+                    print('level_conta', level_conta)
+                    print('valor_fichas_perfil', valor_fichas_perfil)
 
                 elif roleta == 'roleta_2':
                     for i in range(20):

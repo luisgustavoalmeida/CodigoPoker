@@ -1131,13 +1131,13 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False, blind_mesa
 
 def dia_de_jogar_mesa(x_origem, y_origem, roleta, level_conta=1, valor_fichas_perfil=0, conta_upada=True, dia_da_semana=0):
     if roleta != 'roleta_1':
-        return level_conta
+        return level_conta, valor_fichas_perfil
 
     if datetime.datetime.now().time() < datetime.time(23, 0, 0):
         if level_conta == "":
             level_conta, valor_fichas_perfil = OCR_tela.level_conta(x_origem, y_origem)
     else:
-        return level_conta
+        return level_conta, valor_fichas_perfil
 
     if dia_da_semana % 2 == 0:
         print("O dia da semana é par.")
@@ -1150,6 +1150,8 @@ def dia_de_jogar_mesa(x_origem, y_origem, roleta, level_conta=1, valor_fichas_pe
 
     Limpa.fecha_tarefa(x_origem, y_origem)
     Limpa.limpa_promocao(x_origem, y_origem)
+    print('level_conta', level_conta)
+    print('valor_fichas_perfil', valor_fichas_perfil)
     time.sleep(2)
     Limpa.limpa_total(x_origem, y_origem)
 
@@ -1160,7 +1162,7 @@ def dia_de_jogar_mesa(x_origem, y_origem, roleta, level_conta=1, valor_fichas_pe
 
     if level_conta >= 10:
         print('conta para jogar mesa')
-        numero_aleatorio = random.randint(5, 10)
+        numero_aleatorio = random.randint(3, 7)
         print('Joga vezes: ', numero_aleatorio)
         mesa_upar_jogar(x_origem, y_origem, numero_aleatorio, False, blind_mesa)
 
@@ -1181,6 +1183,8 @@ def dia_de_jogar_mesa(x_origem, y_origem, roleta, level_conta=1, valor_fichas_pe
         print('Joga vezes: ', numero_aleatorio)
         mesa_upar_jogar(x_origem, y_origem, numero_aleatorio, False, blind_mesa)
 
+    print('level_conta', level_conta)
+    print('valor_fichas_perfil', valor_fichas_perfil)
     Limpa.limpa_total(x_origem, y_origem)
     return level_conta, valor_fichas_perfil
 
