@@ -376,7 +376,7 @@ def lista_ip_banidos():
 # # Chama a função para verificar e adicionar IP (substitua pelo IP desejado)
 # verifica_e_adiciona_ip('1.1.1.3')
 
-unir_e_atualizar_dados()
+# unir_e_atualizar_dados()
 #
 # unir_e_atualizar_dados()
 
