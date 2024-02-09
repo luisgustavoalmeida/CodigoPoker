@@ -946,7 +946,7 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False, blind_mesa
     if blind_mesa == '2550':
         lista_salas = lista_salas_jogar
     else:
-        lista_salas = lista_salas_niquel
+        lista_salas = lista_salas_jogar2
 
     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
         return "sair da conta"
@@ -1141,12 +1141,16 @@ def dia_de_jogar_mesa(x_origem, y_origem, roleta, level_conta=1, valor_fichas_pe
 
     if dia_da_semana % 2 == 0:
         print("O dia da semana é par.")
-        blind_mesa = '2550'
+        blind_mesa = '50100'
         # blind_mesa = '2040'
+        num_vezes_maximo = 5
+        num_vezes_minimo = 2
     else:
         print("O dia da semana é impar.")
         # blind_mesa = '50100'
         blind_mesa = '2550'
+        num_vezes_maximo = 7
+        num_vezes_minimo = 3
 
     Limpa.fecha_tarefa(x_origem, y_origem)
     Limpa.limpa_promocao(x_origem, y_origem)
@@ -1162,7 +1166,7 @@ def dia_de_jogar_mesa(x_origem, y_origem, roleta, level_conta=1, valor_fichas_pe
 
     if level_conta >= 10:
         print('conta para jogar mesa')
-        numero_aleatorio = random.randint(3, 7)
+        numero_aleatorio = random.randint(num_vezes_minimo, num_vezes_maximo)
         print('Joga vezes: ', numero_aleatorio)
         mesa_upar_jogar(x_origem, y_origem, numero_aleatorio, False, blind_mesa)
 
