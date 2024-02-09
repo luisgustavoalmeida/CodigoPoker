@@ -5,8 +5,10 @@ from tkinter import scrolledtext
 import Firebase
 from Firebase import global_variables
 
-dicionario_comandos = {0: 'Senta', 1: 'Levanta', 2: 'Senta2', 3: 'Aposta', 4: 'Sair', 5: '1K/2K', 6: '2K/4K', 7: '5K/10K', 8: '10K/20K', 9: '20K/40K',
-                       10: 'Limpa', 11: 'Senta3', 12: 'Posi_0', 13: 'Posi_1', 14: 'Posi_2', 15: 'Cofre'}
+dicionario_comandos = \
+    {0: 'Senta', 1: 'Levanta', 2: 'Senta2', 3: 'Aposta', 4: 'Sair', 5: '1K/2K',
+     6: '2K/4K', 7: '5K/10K', 8: '10K/20K', 9: '20K/40K', 10: 'Limpa',
+     11: 'Senta3', 12: 'Posi_0', 13: 'Posi_1', 14: 'Posi_2', 15: 'Cofre'}
 
 
 # Função que será chamada quando um botão for pressionado
