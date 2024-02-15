@@ -13,7 +13,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.common.keys import Keys
 
 import Google
 import IP
@@ -56,7 +55,6 @@ options.add_argument("--mute-audio")  # desativar o áudio
 # options.add_argument("--disable-session-storage") # Desabilita o uso de armazenamento de sessão pelo navegador. Isso inclui o armazenamento temporário de dados relacionados a sessões de navegação.
 
 options.add_experimental_option("detach", True)  # para manter o navegador aberto
-
 
 # options.add_argument("--headless")# faz com que o browser não abra durante o processo
 # options.add_argument("--disable-popup-blocking")                            #desabilitar o bloqueio de pop-ups no Chrome. Quando o Selenium abre o navegador, por padrão, o bloqueio de pop-ups é habilitado
@@ -399,10 +397,11 @@ def fazer_login(id_novo='', senha_novo='', url_novo='', loga_pk=True):
                                     continue
 
                             # lista de elemento clicaveis
-                            elementos_para_clicar = ['Começar', 'Gerenciar configurações', 'Salvar', 'Continuar',
-                                                     'Voltar para o Facebook', 'Usar essa atividade',
-                                                     'Usar esta atividade', 'Usar gratuitamente', 'Concordo',
-                                                     'Concordo', 'Fechar']
+                            elementos_para_clicar = [
+                                'Começar', 'Gerenciar configurações', 'Salvar', 'Continuar', 'Voltar para o Facebook', 'Usar essa atividade',
+                                'Usar esta atividade', 'Usar gratuitamente', 'Concordo', 'Concordo', 'Fechar', 'Começar', 'Manter jogos sociais',
+                                'Confirmar', 'Concluir'
+                            ]
                             time.sleep(3)
                             for i in range(2):
                                 for elemento in elementos_para_clicar:
