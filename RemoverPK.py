@@ -63,12 +63,11 @@ while True:
     else:
         id, senha, fichas, linha, cont_IP = id_novo, senha_novo, fichas_novo, linha_novo, cont_IP_novo
 
-    dia_da_semana = int(datetime.datetime.now().weekday())
-    # 0 segunda, 1 terça, 2 quarta, 3 quinta, 4 sexta, 5 sabado,6 domingo
+
 
     # login
     while True:
-        print('dia_da_semana: ', dia_da_semana)
+
         # parte deo codigo que faz loguin
         # ip, com_internet = IP.meu_ip()  # obtem meu endereço de IP
         ip = ""
@@ -179,8 +178,6 @@ while True:
                 if ja_fez_tutorial:  # so entra se a conta ja é velha
                     # para pegar os pontos das tarefas
                     if roleta == 'roleta_1':  # saber se roleta R1
-
-                        print("dia da semana", dia_da_semana)
 
                         conta_upada = Limpa.limpa_abre_tarefa(x_origem, y_origem)  # retorna se a conta ta upada ou nao
                         if conta_upada:

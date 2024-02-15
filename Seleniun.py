@@ -244,7 +244,7 @@ def fazer_login(id_novo='', senha_novo='', url_novo='', loga_pk=True):
                             # Aguarda até que o texto seja visível na página
                             texto_a_procurar = ["Você não tem nenhum app ou site para analisar", 'Não tens apps ou sites para rever']
 
-                            for _ in range(7):
+                            for i in range(7):
                                 pyautogui.click(914, 368)  # clique bobo, agora na central de contas
                                 print("Tentativa: ", i)
                                 for texto in texto_a_procurar:
@@ -263,27 +263,26 @@ def fazer_login(id_novo='', senha_novo='', url_novo='', loga_pk=True):
 
                                 for _ in range(15):
                                     print('procurando 1')
-
-                                    if (pyautogui.pixelMatchesColor(1207, 609, (235, 245, 255), tolerance=10)
-                                            or pyautogui.pixelMatchesColor(1207, 609, (223, 233, 242), tolerance=10)):
-                                        # testa se esta visivel o segundo botao azul de removert
-                                        pyautogui.click(1207, 609)  # clique no segundo remover
+                                    if (pyautogui.pixelMatchesColor(1207, 574, (235, 245, 255), tolerance=15)
+                                            or pyautogui.pixelMatchesColor(1207, 574, (223, 233, 242), tolerance=15)):
+                                        # testa se esta visivel o segundo botao azul de remover
+                                        pyautogui.click(1207, 574)  # clique no segundo remover
                                         print('Clicou no primeiro remover')
 
                                         for _ in range(15):
                                             print('procurando 2')
-                                            if (pyautogui.pixelMatchesColor(805, 730, (8, 102, 255), tolerance=10)
-                                                    or pyautogui.pixelMatchesColor(805, 730, (8, 94, 242), tolerance=10)
-                                                    or pyautogui.pixelMatchesColor(805, 730, (27, 116, 228), tolerance=10)):
-                                                # testa se esta visivel o segundo botao azul de removert
+                                            if (pyautogui.pixelMatchesColor(805, 730, (8, 102, 255), tolerance=15)
+                                                    or pyautogui.pixelMatchesColor(805, 730, (8, 94, 242), tolerance=15)
+                                                    or pyautogui.pixelMatchesColor(805, 730, (27, 116, 228), tolerance=15)):
+                                                # testa se esta visivel o segundo botao azul de remover
                                                 pyautogui.click(853, 730)  # clique no segundo remover
                                                 print('Clicou no segundo remover')
                                                 clicou_no_segundo = True
                                                 break
-                                            elif (pyautogui.pixelMatchesColor(805, 741, (8, 102, 255), tolerance=10)
-                                                  or pyautogui.pixelMatchesColor(805, 741, (8, 94, 242), tolerance=10)
-                                                  or pyautogui.pixelMatchesColor(805, 741, (27, 116, 228), tolerance=10)):
-                                                # testa se esta visivel o segundo botao azul de removert
+                                            elif (pyautogui.pixelMatchesColor(805, 741, (8, 102, 255), tolerance=15)
+                                                  or pyautogui.pixelMatchesColor(805, 741, (8, 94, 242), tolerance=15)
+                                                  or pyautogui.pixelMatchesColor(805, 741, (27, 116, 228), tolerance=15)):
+                                                # testa se esta visivel o segundo botao azul de remover
                                                 pyautogui.click(853, 741)  # clique no segundo remover
                                                 print('Clicou no segundo remover')
                                                 clicou_no_segundo = True
