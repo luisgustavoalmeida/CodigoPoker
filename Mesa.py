@@ -950,10 +950,14 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False, blind_mesa
 
     # Use a lista apropriada com base no valor da variável blind_mesa
 
-    if blind_mesa == '2550':
+    if blind_mesa == '100200':
+        lista_salas = lista_salas_jogar3
+    elif blind_mesa == '50100':
+        lista_salas = lista_salas_jogar2
+    elif blind_mesa == '2550':
         lista_salas = lista_salas_jogar
     else:
-        lista_salas = lista_salas_jogar2
+        lista_salas = lista_salas_jogar
 
     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
         return "sair da conta"
@@ -1147,18 +1151,18 @@ def dia_de_jogar_mesa(x_origem, y_origem, roleta, level_conta=1, valor_fichas_pe
         return level_conta, valor_fichas_perfil
 
     if dia_da_semana in [3]:
-        print("O dia da semana é par.")
+        print("O dia da semana é 100/200.")
         blind_mesa = '100200'
         num_vezes_maximo = 5
         num_vezes_minimo = 2
 
     elif dia_da_semana in [0, 2, 5]:
-        print("O dia da semana é par.")
+        print("O dia da semana é 50/100.")
         blind_mesa = '50100'
         num_vezes_maximo = 5
         num_vezes_minimo = 2
     else:
-        print("O dia da semana é impar.")
+        print("O dia da semana é 25/50.")
         blind_mesa = '2550'
         num_vezes_maximo = 7
         num_vezes_minimo = 3
