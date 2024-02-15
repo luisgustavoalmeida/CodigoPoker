@@ -77,6 +77,12 @@ lista_salas_jogar2 = [
     {'1687': ('50100', 200, 100)}, {'1688': ('50100', 200, 100)}, {'1689': ('50100', 200, 100)}
 ]
 
+lista_salas_jogar3 = [
+    {'172': ('100200', 200, 400)}, {'1694': ('100200', 200, 400)}, {'1695': ('100200', 200, 400)}, {'1696': ('100200', 200, 400)},
+    {'1697': ('100200', 200, 400)}, {'1698': ('100200', 200, 400)}, {'1699': ('100200', 200, 400)}, {'1700': ('100200', 200, 400)},
+    {'1701': ('100200', 200, 400)}, {'1702': ('100200', 200, 400)}, {'1703': ('100200', 200, 400)}
+]
+
 dicionari_PC_cadeira = {
     'PC-I5-8600K': {'cadeira_1': (659, 127), 'cadeira_2': (828, 211), 'cadeira_3': (847, 366), 'cadeira_4': (690, 451), 'cadeira_5': (495, 452),
                     'cadeira_6': (276, 451), 'cadeira_7': (118, 360), 'cadeira_8': (134, 194), 'cadeira_9': (312, 131)},
@@ -1140,15 +1146,19 @@ def dia_de_jogar_mesa(x_origem, y_origem, roleta, level_conta=1, valor_fichas_pe
     else:
         return level_conta, valor_fichas_perfil
 
-    if dia_da_semana % 2 == 0:
+    if dia_da_semana in [3]:
+        print("O dia da semana é par.")
+        blind_mesa = '100200'
+        num_vezes_maximo = 5
+        num_vezes_minimo = 2
+
+    elif dia_da_semana in [0, 2, 5]:
         print("O dia da semana é par.")
         blind_mesa = '50100'
-        # blind_mesa = '2040'
         num_vezes_maximo = 5
         num_vezes_minimo = 2
     else:
         print("O dia da semana é impar.")
-        # blind_mesa = '50100'
         blind_mesa = '2550'
         num_vezes_maximo = 7
         num_vezes_minimo = 3
@@ -1336,132 +1346,6 @@ def apostar_pagar(x_origem, y_origem, sorte=True):
             jogou_uma_vez = True
             return jogou_uma_vez
         return jogou_uma_vez
-
-
-# def testa_blind(x_origem, y_origem, blind):
-#     ''' Recebe uma estring com o valor do blind da mesa e retorna se esta no blind certo ou não e retorna o numero da mesa '''
-#     dentro_mesa = False
-#     numero = 0
-#     blind_certo = False
-#     if pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 674), (27, 92, 155), tolerance=5):
-#         # testa se esta dentro da mesa
-#         print('Esta dentro de uma mesa')
-#         dentro_mesa = True
-#         blind_sala = OCR_tela.blind_sala(x_origem, y_origem)
-#         try:
-#             blind = (blind.replace("/", "")).upper()
-#         except:
-#             print('erro blind')
-#
-#         if blind == blind_sala:
-#             blind_certo = True
-#             print("Sentar mesa: Está na sala certa")
-#             numero = OCR_tela.numero_sala(x_origem, y_origem)
-#             return dentro_mesa, blind_certo, numero
-#         else:
-#             blind_certo = False
-#             print("Sentar mesa: Está na sala errada")
-#             numero = OCR_tela.numero_sala(x_origem, y_origem)
-#             return dentro_mesa, blind_certo, numero
-#
-#     else:
-#         print('Não esta dentro de uma mesa')
-#         return dentro_mesa, blind_certo, numero
-
-
-# def mesa_recolher(x_origem, y_origem, numero_jogadas=2, blind='2K/4K'):
-#     print('mesa_recolher')
-#
-#     sentou = False
-#     continua_jogando = True
-#     jogou_uma_vez = False
-#     apostar = False
-#     cont_jogou = 0
-#     status_comando = 'Iniciado o recolhimento'
-#     humano = False
-#     status_comando_anterior = None
-#     recebido1 = "padrao"
-#     recebido2 = "padrao"
-#
-#     cont_limpa_jogando = 0
-#
-#     valor_aposta1, valor_aposta2 = list(blinb_rolagem[blind])[-2:]
-#     print('Valores das apostas')
-#     print(valor_aposta1, valor_aposta2)
-#
-#     while continua_jogando:  # permanece joghando
-#
-#         if status_comando_anterior != status_comando:
-#             confirmacao_comando_resposta(status_comando)
-#             status_comando_anterior = status_comando
-#
-#         recebido1 = str(comando_escravo())
-#         if recebido1 != recebido2:
-#             recebido2 = recebido1
-#             comando = recebido1.strip().title()  # remove espaços vasiao e coloca a primeira letra amiusculo
-#             print('comando :', comando)
-#
-#         if comando == 'Levanta':
-#             levantar_mesa(x_origem, y_origem)
-#             Limpa.limpa_jogando(x_origem, y_origem)
-#             # Firebase.comando_coleetivo_escravo_escravo("Levanta")
-#             return
-#         elif comando == 'Limpa':
-#             Limpa.limpa_jogando(x_origem, y_origem)
-#             Limpa.limpa_total(x_origem, y_origem)
-#             Limpa.limpa_jogando(x_origem, y_origem)
-#             return
-#         if comando == 'Aposta':
-#             apostar = True
-#             cont_jogou = numero_jogadas
-#
-#         if cont_limpa_jogando > 20:
-#             cont_limpa_jogando = 0
-#             Limpa.fecha_tarefa(x_origem, y_origem)
-#             Limpa.limpa_jogando(x_origem, y_origem)
-#         cont_limpa_jogando += 1
-#
-#         if jogou_uma_vez:
-#             if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=20):
-#                 # testa se apareceu as mensagens verdes na parte de baixo
-#                 jogou_uma_vez = False
-#                 cont_jogou += 1
-#                 print("Jogou vezes igua a: ", cont_jogou)
-#                 status_comando = 'Jogada: ' + str(cont_jogou)
-#
-#                 if cont_jogou == numero_jogadas:
-#                     apostar = True
-#                     status_comando = 'Hora de apostar'
-#
-#                 if apostar and cont_jogou > numero_jogadas:
-#                     apostar = False
-#                     status_comando = 'Hora de jogar sem apostar'
-#
-#                 if cont_jogou >= numero_jogadas + 3:
-#                     print('Fim do recolher')
-#                     comando_coleetivo_escravo_escravo("Levanta")
-#                     levantar_mesa(x_origem, y_origem)
-#                     Limpa.limpa_jogando(x_origem, y_origem)
-#                     return
-#
-#         if apostar:
-#             # print('\n\n         Hora de apostar         \n\n')
-#             jogou = apostar_pagar(x_origem, y_origem)
-#             if jogou:
-#                 jogou_uma_vez = True
-#         else:
-#             (jogou, apostar) = passa_corre_joga(x_origem, y_origem, valor_aposta1, valor_aposta2)
-#             if apostar:
-#                 cont_jogou = numero_jogadas + 1
-#             if jogou:
-#                 jogou_uma_vez = True
-#
-#     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
-#         return "sair da conta"
-#
-#     levantar_mesa(x_origem, y_origem)
-#     Limpa.limpa_jogando(x_origem, y_origem)
-#     return
 
 
 def levantar_mesa(x_origem, y_origem):
