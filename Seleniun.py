@@ -399,11 +399,11 @@ def fazer_login(id_novo='', senha_novo='', url_novo='', loga_pk=True):
                             # lista de elemento clicaveis
                             elementos_para_clicar = [
                                 'Começar', 'Gerenciar configurações', 'Salvar', 'Continuar', 'Voltar para o Facebook', 'Usar essa atividade',
-                                'Usar esta atividade', 'Usar gratuitamente', 'Concordo', 'Concordo', 'Fechar', 'Começar', 'Manter jogos sociais',
+                                'Usar esta atividade', 'Usar gratuitamente', 'Concordo', 'Concordo', 'Fechar', 'Manter jogos sociais',
                                 'Confirmar', 'Concluir'
                             ]
                             time.sleep(3)
-                            for i in range(2):
+                            for _ in range(2):
                                 for elemento in elementos_para_clicar:
                                     print("procura: ", elemento)
                                     elemento_seletor = f'div[aria-label="{elemento}"]'
