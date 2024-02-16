@@ -142,13 +142,6 @@ def se_esta_lagado():
             print("Erro ao obter o URL do navegador, erro: ", e)
             IP.tem_internet()
 
-    # if navegador.get_cookie("c_user"):
-    #     print("Está logado no Facebook.")
-    #     return True
-    # else:
-    #     print("Não está logado no Facebook.")
-    #     return False
-
 
 def pega_url():
     global navegador
@@ -202,7 +195,7 @@ def fazer_login(id_novo='', senha_novo='', url_novo='', loga_pk=True):
         print('continua login')
         url_atual = pega_url()
 
-        # print(url_atual)
+        print(url_atual)
 
         if (("/login/" in url_atual) and loga_pk) or (not loga_pk and ("facebook.com" in url_atual)):
             print('Padrao de URL poker')
@@ -225,7 +218,6 @@ def fazer_login(id_novo='', senha_novo='', url_novo='', loga_pk=True):
                             break
                         time.sleep(0.02)
 
-                    # print(url_atual)
                     if "/login/" not in url_atual:
 
                         if ("/pokerbrasil?" in url_atual) or ("/rallyacespoker" in url_atual):
@@ -255,11 +247,12 @@ def fazer_login(id_novo='', senha_novo='', url_novo='', loga_pk=True):
                             status = 'Bloqueado temporariamente'
                             return entrou, status
 
-                        elif "/settings?" in url_atual:
+                        elif ("/settings?" in url_atual) and (not loga_pk):
                             # https://www.facebook.com/settings?tab=applications&ref=settings
 
                             print("A conta está com a pagina carregada diponivel para remover o poker")
                             entrou = True
+                            treminou_de_remover = False
                             status = 'Remover Poker não ok'
 
                             # Aguarda até que o texto seja visível na página
@@ -276,9 +269,13 @@ def fazer_login(id_novo='', senha_novo='', url_novo='', loga_pk=True):
                                         print(f'O texto "{texto_a_procurar}" está visível na página.')
                                         status = 'Remover Poker ok'
                                         print('Terminou de remover')
-                                        return entrou, status
+                                        treminou_de_remover = True
+                                        break
+                                        # return entrou, status
                                     except TimeoutException:
                                         print(f'O texto "{texto_a_procurar}" não está visível na página.')
+                                if treminou_de_remover:
+                                    break
 
                                 clicou_no_segundo = False
 
@@ -313,8 +310,25 @@ def fazer_login(id_novo='', senha_novo='', url_novo='', loga_pk=True):
                                         break
                                     time.sleep(1)
 
-                            print('Terminou de remover')
-                            return entrou, status
+                            if status == 'Remover Poker não ok':
+                                while True:
+                                    print('\n\nOlhar manualmente o poker pode nao ter sido removido\n\n')
+                                    time.sleep(20)
+
+                            print('Terminou de remover e espera 5 segundos')
+                            url_atual = pega_url()
+                            print(url_atual)
+
+                            time.sleep(5)
+                            urlpkrl = "https://apps.facebook.com/rallyacespoker/?fb_source=appcenter&fb_appcenter=1"
+                            navegador.get(urlpkrl)
+                            print('Loga no RL e espera 6 segundos')
+                            time.sleep(3)
+                            url_atual = pega_url()
+                            print(url_atual)
+                            time.sleep(3)
+                            print('Continua os testes')
+                            # return entrou, status
 
                         elif "/checkpoint/" in url_atual:
                             # https://www.facebook.com/checkpoint/1501092823525282/?next=https%3A%2F%2Fwww.facebook.com%2F%3Fsk%3Dwelcome
@@ -353,8 +367,7 @@ def fazer_login(id_novo='', senha_novo='', url_novo='', loga_pk=True):
                                     continue
                             # se nao for algum item da lista retorna uma mensagem generica
 
-                            elementos_para_clicar = ['Começar', 'Avançar', 'Avançar', 'Avançar',
-                                                     'Voltar para o Facebook', 'Ignorar']
+                            elementos_para_clicar = ['Começar', 'Avançar', 'Avançar', 'Avançar', 'Voltar para o Facebook', 'Ignorar']
                             encontrou = False
                             for _ in range(2):
                                 for elemento in elementos_para_clicar:
@@ -476,7 +489,6 @@ def fazer_login(id_novo='', senha_novo='', url_novo='', loga_pk=True):
                         entrou = False
                         status = "Senha incorreta"
                         return entrou, status
-
                     else:
                         lista_face = ['Você não pode usar este recurso no momento', 'Limitamos a frequência',
                                       'senha inserida está incorreta', 'Esqueceu a senha', 'Esqueceu a conta?', 'Tentar outra forma',
@@ -502,9 +514,9 @@ def fazer_login(id_novo='', senha_novo='', url_novo='', loga_pk=True):
                 print(e)
                 sair_face(url)
                 continue
-
         else:
             print('Padrao de URL não esperado')
+            time.sleep(5)
             sair_face(url)
 
         # abrir_navegador()

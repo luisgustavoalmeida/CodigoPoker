@@ -36,6 +36,7 @@ ja_fez_tutorial = True
 # Variáveis globais para as variáveis e controle da tarefa independente
 id_novo = "x"
 senha_novo = ""
+fichas_novo = ""
 linha_novo = ""
 cont_IP_novo = ""
 continuar_tarefa = False
@@ -104,10 +105,11 @@ while True:
                     print('Olhar manualmente')
                     time.sleep(10)
 
-            print('Loga no RL')
-            navegador.get(urlpkrl)
-            print('espera 5 segundos')
-            time.sleep(5)
+            # print('Loga no RL')
+            # time.sleep(5)
+            # navegador.get(urlpkrl)
+            # print('espera 5 segundos')
+            # time.sleep(15)
 
             while True:
 
