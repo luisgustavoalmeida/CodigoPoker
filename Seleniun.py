@@ -22,7 +22,8 @@ import IP
 pyautogui.FAILSAFE = False
 
 # def criar_drive():
-servico = Service(ChromeDriverManager().install())  # criar um objeto Service com o caminho do webdriver
+# servico = Service(ChromeDriverManager().install())  # criar um objeto Service com o caminho do webdriver
+
 nome_computador = socket.gethostname()
 nome_usuario = os.getlogin()
 pasta_cookies = os.path.join(os.getcwd(), fr'C:\Cookie\{nome_usuario}')
@@ -36,8 +37,8 @@ options.add_argument("--disable-infobars")  # Desabilitar a barra de informaçõ
 options.add_argument("--disable-notifications")  # Desabilitar as notificações do Chrome
 options.add_argument("--disable-save-password-bubble")  # Desabilitar a caixa de diálogo para salvar senhas
 options.add_argument("--disable-password-generation")  # desabilita a geração automática de senhas pelo navegado
-# options.add_argument('--disable-cookies')  # desabilita o envio de cookies durante a navegação.
-# options.add_argument('--disable-first-party-cookies')  # Desativa o uso de cookies de primeira parte.
+# options.add_argument('--disable-cookies') # desabilita o envio de cookies durante a navegação.
+# options.add_argument('--disable-first-party-cookies') # Desativa o uso de cookies de primeira parte.
 # options.add_argument('--disable-third-party-cookies') # Desativa o uso de cookies de terceiros.
 # options.add_argument('--block-new-cookie-requests') # Bloqueia solicitações de criação de novos cookies.
 # options.add_argument("--enable-cookies") # abilita o envio de cookies durante a navegação.
@@ -76,13 +77,13 @@ def cria_nevegador():
     while True:
         try:
             print('Criando o navegador')
+            servico = Service(ChromeDriverManager().install())  # criar um objeto Service com o caminho do webdriver
             navegador = webdriver.Chrome(service=servico, options=options)  # Inicializar o driver do navegador
-            # Redefina o tempo limite para 10 segundos para a segunda parte do código
-            navegador.set_page_load_timeout(80)
+            navegador.set_page_load_timeout(80)  # Redefina o tempo limite para XX segundos
             print('Navegador criado com sucesso')
             return navegador
-        except:
-            print("Erro ao criar o navegador:")
+        except Exception as e:
+            print("Erro ao criar o navegador:", e)
             time.sleep(1)
             fechar_janelas_chrome()
             print('Iniciando nova tentativa para criar o navegador')
