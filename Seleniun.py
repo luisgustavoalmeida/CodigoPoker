@@ -81,8 +81,8 @@ def cria_nevegador():
             navegador.set_page_load_timeout(80)
             print('Navegador criado com sucesso')
             return navegador
-        except Exception as e:
-            print("Erro ao criar o navegador:", e)
+        except:
+            print("Erro ao criar o navegador:")
             time.sleep(1)
             fechar_janelas_chrome()
             print('Iniciando nova tentativa para criar o navegador')
