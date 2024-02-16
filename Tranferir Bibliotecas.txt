@@ -23,7 +23,8 @@ para atualizar
 python.exe -m pip install --upgrade pip
 
 
+NÃO ATUALIZAR
 
-# não att PyScreeze==0.1.29
-# não att requests-toolbelt==0.9.1
-# não att urllib3==1.26.16
+PyScreeze==0.1.29
+requests-toolbelt==0.9.1
+urllib3==1.26.16
