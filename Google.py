@@ -390,7 +390,7 @@ def reservar_linha(guia, endereco, salta_linhas=True):
                 if salta_linhas:
                     linha_vazia_anterior += 40
                 else:
-                    linha_vazia_anterior += 5
+                    linha_vazia_anterior += 10
                 return False, id, senha, fichas, linha, contagem_ip
             # print("values :",values)
         except:
