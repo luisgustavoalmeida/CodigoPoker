@@ -316,15 +316,16 @@ def fazer_login(id_novo='', senha_novo='', url_novo='', loga_pk=True):
                                     print('\n\nOlhar manualmente o poker pode nao ter sido removido\n\n')
                                     time.sleep(20)
 
-                            print('Terminou de remover e espera 5 segundos')
+                            print('Terminou de remover')
                             url_atual = pega_url()
                             print(url_atual)
 
-                            time.sleep(5)
+                            time.sleep(1)
                             urlpkrl = "https://apps.facebook.com/rallyacespoker/?fb_source=appcenter&fb_appcenter=1"
+                            url = "https://apps.facebook.com/rallyacespoker/?fb_source=appcenter&fb_appcenter=1"
                             navegador.get(urlpkrl)
-                            print('Loga no RL e espera 6 segundos')
-                            time.sleep(3)
+                            print('Loga no RL e espera 5 segundos')
+                            time.sleep(2)
                             url_atual = pega_url()
                             print(url_atual)
                             time.sleep(3)
@@ -338,23 +339,13 @@ def fazer_login(id_novo='', senha_novo='', url_novo='', loga_pk=True):
                             status = "Anomalia Fecebook"
                             print("A conta está suspensa.")
                             time.sleep(6)
-                            lista_face_caidas = ['você recorreu da decisão',
-                                                 'confirmar que é você',
-                                                 'confirmar que és tu',
-                                                 'Insira o número de celular',
-                                                 'Insere o número de telemóvel',
-                                                 'Carregue uma foto sua',
-                                                 'Carrega uma foto tua',
-                                                 'Carregar uma selfie',
-                                                 'Sua conta foi desativada',
-                                                 'Sua conta foi suspensa',
-                                                 'sua conta foi bloqueada',
-                                                 'Suspendemos a tua conta',
-                                                 'Desabilitamos sua conta',
-                                                 'você apresentou um recurso',
-                                                 'Confirme seu número de celular',
-                                                 'precisamos confirmar que esta conta pertence a você',
-                                                 'Verifique']
+                            lista_face_caidas = [
+                                'você recorreu da decisão', 'confirmar que é você', 'confirmar que és tu', 'Insira o número de celular',
+                                'Insere o número de telemóvel', 'Carregue uma foto sua', 'Carrega uma foto tua', 'Carregar uma selfie',
+                                'Sua conta foi desativada', 'Sua conta foi suspensa', 'sua conta foi bloqueada', 'Suspendemos a tua conta',
+                                'Desabilitamos sua conta', 'você apresentou um recurso', 'Confirme seu número de celular',
+                                'precisamos confirmar que esta conta pertence a você', 'Verifique'
+                            ]
                             # 'Suspeitamos que o comportamento da sua conta seja automatizado'
 
                             for item in lista_face_caidas:
@@ -382,7 +373,7 @@ def fazer_login(id_novo='', senha_novo='', url_novo='', loga_pk=True):
                                         time.sleep(5)
                                         encontrou = True
                                     except Exception as e:  # Corrigido o erro aqui, "as e" ao invés de "e Exception:"
-                                        print("Elememto para clicar não encontrado: ", elemento)
+                                        print("Elememto para clicar não encontrado: ", elemento, e)
                                         continue
                             if encontrou:
                                 time.sleep(3)
@@ -491,9 +482,11 @@ def fazer_login(id_novo='', senha_novo='', url_novo='', loga_pk=True):
                         status = "Senha incorreta"
                         return entrou, status
                     else:
-                        lista_face = ['Você não pode usar este recurso no momento', 'Limitamos a frequência',
-                                      'senha inserida está incorreta', 'Esqueceu a senha', 'Esqueceu a conta?', 'Tentar outra forma',
-                                      'Enviaremos um código para o seu email', 'Insira o código de segurança']
+                        lista_face = [
+                            'Você não pode usar este recurso no momento', 'Limitamos a frequência', 'senha inserida está incorreta',
+                            'Esqueceu a senha', 'Esqueceu a conta?', 'Tentar outra forma', 'Enviaremos um código para o seu email',
+                            'Insira o código de segurança'
+                        ]
                         for item in lista_face:  # percorre os textos que tem quando tem conta caida para o face
                             try:
                                 elemento = navegador.find_element(By.XPATH, f"//span[contains(text(), '{item}')]")
@@ -519,13 +512,6 @@ def fazer_login(id_novo='', senha_novo='', url_novo='', loga_pk=True):
             print('Padrao de URL não esperado')
             time.sleep(5)
             sair_face(url)
-
-        # abrir_navegador()
-
-
-# def fechar_navegador():
-#     global navegador
-#     navegador.quit()
 
 
 def abrir_fechar_guia(max_tentativas=5):
@@ -567,21 +553,6 @@ def abrir_fechar_guia(max_tentativas=5):
 
     print(f"Atenção: Todas as {max_tentativas} tentativas falharam. Encerrando.")
     return
-
-
-# def recarregar_pagina(navegador, url):
-#     try:
-#         # Aguarde até que haja uma única guia aberta
-#         WebDriverWait(navegador, 10).until(lambda x: len(x.window_handles) == 1)
-#
-#         # Mude para a única guia aberta
-#         navegador.switch_to.window(navegador.window_handles[0])
-#
-#         # Recarregue a página
-#         navegador.get(url)
-#
-#     except TimeoutException:
-#         print("Tempo limite excedido ao aguardar única guia aberta.")
 
 
 def sair_face(url_novo=''):
