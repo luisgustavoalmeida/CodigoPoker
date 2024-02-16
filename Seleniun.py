@@ -2,8 +2,9 @@ import datetime
 import os
 import socket
 import time
-import pygetwindow as gw
+
 import pyautogui
+import pygetwindow as gw
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import TimeoutException
@@ -85,6 +86,7 @@ def cria_nevegador():
             time.sleep(1)
             fechar_janelas_chrome()
             print('Iniciando nova tentativa para criar o navegador')
+            time.sleep(3)
             raise
 
 
