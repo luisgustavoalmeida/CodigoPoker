@@ -2,7 +2,7 @@ import datetime
 import os
 import socket
 import time
-
+import pygetwindow as gw
 import pyautogui
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
@@ -72,11 +72,33 @@ senha = ''
 
 def cria_nevegador():
     global navegador  # Referenciar a variável global
-    print('Criando o navegador')
-    navegador = webdriver.Chrome(service=servico, options=options)  # Inicializar o driver do navegador
-    # Redefina o tempo limite para 10 segundos para a segunda parte do código
-    navegador.set_page_load_timeout(80)
-    return navegador
+    while True:
+        try:
+            print('Criando o navegador')
+            navegador = webdriver.Chrome(service=servico, options=options)  # Inicializar o driver do navegador
+            # Redefina o tempo limite para 10 segundos para a segunda parte do código
+            navegador.set_page_load_timeout(80)
+            print('Navegador criado com sucesso')
+            return navegador
+        except Exception as e:
+            print("Erro ao criar o navegador:", e)
+            time.sleep(1)
+            fechar_janelas_chrome()
+            print('Iniciando nova tentativa para criar o navegador')
+            raise
+
+
+def fechar_janelas_chrome():
+    # Lista todas as janelas abertas
+    janelas = gw.getWindowsWithTitle('Google Chrome')
+
+    # Itera sobre as janelas do Google Chrome e fecha cada uma delas
+    for janela in janelas:
+        # Fecha a janela
+        janela.close()
+        print('Navegador fechado', janelas)
+        # Aguarda um curto período de tempo para a janela fechar
+        time.sleep(1)
 
 
 def abrir_navegador(urli):
