@@ -87,7 +87,6 @@ def cria_nevegador():
             fechar_janelas_chrome()
             print('Iniciando nova tentativa para criar o navegador')
             time.sleep(3)
-            raise
 
 
 def fechar_janelas_chrome():
