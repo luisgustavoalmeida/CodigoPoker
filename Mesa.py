@@ -935,7 +935,7 @@ def joga(x_origem, y_origem, ajusta_aposta):
 def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False, blind_mesa='2550'):
     print('mesa_upar_jogar')
 
-    global lista_salas_jogar, lista_salas_niquel, indice_inicial
+    global lista_salas_jogar, lista_salas_jogar2, lista_salas_jogar3, lista_salas_niquel, indice_inicial
     valor_aposta1 = 100
     valor_aposta2 = 50
     # blind_mesa = '2550'
@@ -966,16 +966,14 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False, blind_mesa
     if upar:
         xp2.pega_2xp(x_origem, y_origem)
 
-    time_entrou = time.perf_counter()
-
     Limpa.fecha_tarefa(x_origem, y_origem)
     Limpa.limpa_jogando(x_origem, y_origem)
     Limpa.limpa_promocao(x_origem, y_origem)
     sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa, True)
 
-    while continua_jogando:  # permanece joghando
+    time_entrou = time.perf_counter()
 
-        # print('joga mesa')
+    while continua_jogando:  # permanece joghando
 
         if cont_limpa_jogando > 40:
             cont_limpa_jogando = 0
@@ -988,9 +986,12 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False, blind_mesa
                 Limpa.limpa_jogando(x_origem, y_origem)
                 Limpa.limpa_promocao(x_origem, y_origem)
             sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa, True)
-        cont_limpa_jogando += 1
 
-        # print("Sentou :", sentou)
+            if ((time.perf_counter() - time_entrou) >= 300) and (not upar):
+                print('Limite de tempo jogando mesa.')
+                break
+
+        cont_limpa_jogando += 1
 
         if jogou_uma_vez:
             if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=20):
@@ -1128,11 +1129,15 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False, blind_mesa
 
     indice_inicial = sala_atual
 
-    # Ao final da função, atribui o valor da lista utilizada dentro da função à lista global
-    if blind_mesa == '2550':
+    # # Ao final da função, atribui o valor da lista utilizada dentro da função à lista global
+    if blind_mesa == '100200':
+        lista_salas_jogar3 = lista_salas
+    elif blind_mesa == '50100':
+        lista_salas_jogar2 = lista_salas
+    elif blind_mesa == '2550':
         lista_salas_jogar = lista_salas
     else:
-        lista_salas_niquel = lista_salas
+        lista_salas_jogar = lista_salas
 
     if Limpa.limpa_total(x_origem, y_origem) == "sair da conta":
         return "sair da conta"
@@ -1165,8 +1170,8 @@ def dia_de_jogar_mesa(x_origem, y_origem, roleta, level_conta=1, valor_fichas_pe
     else:
         print("O dia da semana é 25/50.")
         blind_mesa = '2550'
-        num_vezes_maximo = 7
-        num_vezes_minimo = 3
+        num_vezes_maximo = 5
+        num_vezes_minimo = 2
 
     Limpa.fecha_tarefa(x_origem, y_origem)
     Limpa.limpa_promocao(x_origem, y_origem)
@@ -1199,7 +1204,7 @@ def dia_de_jogar_mesa(x_origem, y_origem, roleta, level_conta=1, valor_fichas_pe
 
     else:
         print('conta para jogar mesa')
-        numero_aleatorio = random.randint(2, 6)
+        numero_aleatorio = random.randint(2, 5)
         print('Joga vezes: ', numero_aleatorio)
         mesa_upar_jogar(x_origem, y_origem, numero_aleatorio, False, blind_mesa)
 
