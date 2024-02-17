@@ -503,7 +503,7 @@ while True:
         guia_recebida = HoraT.mudar_guia(id, guia)
         if guia != guia_recebida:
 
-            if (nome_computador == "PC-I5-8600K") and (nome_usuario == "PokerIP"):
+            if (nome_computador == "PC-I5-9400A") and (nome_usuario == "PokerIP"):
                 Seleniun.busca_link()
             elif nome_computador == "PC-I7-9700KF":
                 Seleniun.busca_link()
