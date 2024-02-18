@@ -1208,14 +1208,14 @@ def dia_de_jogar_mesa(x_origem, y_origem, roleta, level_conta=1, valor_fichas_pe
 
     elif 1 <= level_conta < 4:
         print('conta para jogar mesa')
-        numero_aleatorio = random.randint(10, 15)
+        numero_aleatorio = random.randint(num_vezes_minimo, num_vezes_maximo)
         print('Joga vezes: ', numero_aleatorio)
         mesa_upar_jogar(x_origem, y_origem, numero_aleatorio, False, blind_mesa)
         level_conta, valor_fichas_perfil = OCR_tela.level_conta(x_origem, y_origem)
 
     else:
         print('conta para jogar mesa')
-        numero_aleatorio = random.randint(2, 5)
+        numero_aleatorio = random.randint(num_vezes_minimo, num_vezes_maximo)
         print('Joga vezes: ', numero_aleatorio)
         mesa_upar_jogar(x_origem, y_origem, numero_aleatorio, False, blind_mesa)
 
