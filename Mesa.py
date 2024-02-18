@@ -971,7 +971,7 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False, blind_mesa
     Limpa.limpa_promocao(x_origem, y_origem)
     sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa, True)
 
-    time_entrou = time.perf_counter()
+    time_comecou = time_entrou = time.perf_counter()
 
     while continua_jogando:  # permanece joghando
 
@@ -981,13 +981,28 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False, blind_mesa
             if (pyautogui.pixelMatchesColor((x_origem + 534), (y_origem + 357), (70, 126, 56), tolerance=10)
                     or pyautogui.pixelMatchesColor((x_origem + 534), (y_origem + 357), (23, 121, 166), tolerance=10)):
                 print('mesa esta limpa')
+                if pyautogui.pixelMatchesColor((x_origem + 38), (y_origem + 526), (187, 153, 111), tolerance=19):
+                    pyautogui.click(x_origem + 38, y_origem + 526)
+                    print("Presentinho de dentro da mesa")
+
             else:
                 Limpa.fecha_tarefa(x_origem, y_origem)
                 Limpa.limpa_jogando(x_origem, y_origem)
                 Limpa.limpa_promocao(x_origem, y_origem)
             sentou = sentar_mesa(x_origem, y_origem, senta_com_maximo, blind_mesa, True)
 
-            if ((time.perf_counter() - time_entrou) >= 300) and (not upar):
+            # Cálculo do tempo decorrido desde que o jogador entrou no jogo
+            tempo_decorrido = time.perf_counter() - time_comecou
+
+            # Conversão de segundos para horas, minutos e segundos
+            horas = int(tempo_decorrido // 3600)
+            minutos = int((tempo_decorrido % 3600) // 60)
+            segundos = int(tempo_decorrido % 60)
+
+            # Impressão do tempo decorrido
+            print(f"Tempo jogando: {horas:02d}:{minutos:02d}:{segundos:02d}")
+
+            if (tempo_decorrido >= 300) and (not upar):
                 print('Limite de tempo jogando mesa.')
                 break
 
@@ -996,19 +1011,21 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False, blind_mesa
         if jogou_uma_vez:
             if pyautogui.pixelMatchesColor((x_origem + 663), (y_origem + 538), (86, 169, 68), tolerance=20):
                 # testa se apareceu as mensagens verdes na parte de baixo
+                print('Fim da partida')
                 cont_jogou += 1
-                print("Jogou vezes igua a: ", cont_jogou)
                 if upar:
+                    print("Esta upando a conta. Jogou vezes igua a: ", cont_jogou)
                     level_conta, valor_fichas_perfil = OCR_tela.level_conta(x_origem, y_origem)
                     if level_conta >= 10:
                         level_conta, valor_fichas_perfil = OCR_tela.level_conta(x_origem, y_origem)
                         if level_conta >= 10:
                             break
 
-                    if cont_jogou % 5 == 0:  # testa se tem que trocar ip a casa 5 jogadas
+                    if cont_jogou % 10 == 0:  # testa se tem que trocar ip a casa 5 jogadas
                         xp2.pega_2xp(x_origem, y_origem)
                         IP.testa_trocar_IP()  # ve se tem que trocar ip
                 else:
+                    print('Não esta upando. Jogou vezes igua a: ', cont_jogou, ' .Limite de jogadas: ', numero_jogadas)
                     if cont_jogou >= numero_jogadas:
                         break
 
@@ -1025,18 +1042,14 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False, blind_mesa
                         print('Sair da mesa fim da jogada com humanos na mesa')
                         humano = True
                         break
-
-        time_sair = time.perf_counter()
-        tempo_total = time_sair - time_entrou
         # print('tempo que esta esperando', tempo_total)
-        if tempo_total > 60:  # troica de mesa se ficar muito tempo parado sem entrar alguem para jogar
+        if (time.perf_counter() - time_entrou) > 60:  # troica de mesa se ficar muito tempo parado sem entrar alguem para jogar
             time_entrou = time.perf_counter()
             cont_limpa_jogando = 45
             print("tempo limite atingido sem outro jogador, sai da mesa para tentar em outra")
             Limpa.limpa_total(x_origem, y_origem)
             Limpa.limpa_jogando(x_origem, y_origem)
             pular_sala = True
-        # time.sleep(0.3)
 
         if humano:
             print('Jogador humano na mesa, troca de mesa')
@@ -1051,8 +1064,6 @@ def mesa_upar_jogar(x_origem, y_origem, numero_jogadas=3, upar=False, blind_mesa
             (jogou, humano) = passa_corre_joga(x_origem, y_origem, valor_aposta1, valor_aposta2)
             if jogou:
                 jogou_uma_vez = True
-            # print('jogou_uma_vez: ', jogou_uma_vez)
-            # print('humano: ', humano)
 
         else:
             humano = False

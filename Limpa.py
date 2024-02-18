@@ -53,33 +53,33 @@ def limpa_jogando(x_origem, y_origem):
 
     # voce ganhou 2500
     elif pyautogui.pixelMatchesColor((x_origem + 700), (y_origem + 179), (71, 0, 148), tolerance=6):
-        pyautogui.click(x_origem + 490, y_origem + 480, button='left')
+        pyautogui.click(x_origem + 490, y_origem + 480)
         print("Voce ganhou 2500")
 
     # Subiu de nivel
     elif pyautogui.pixelMatchesColor((x_origem + 492), (y_origem + 443), (25, 118, 188), tolerance=6) \
             or pyautogui.pixelMatchesColor((x_origem + 492), (y_origem + 443), (29, 139, 200), tolerance=6):
-        pyautogui.click(x_origem + 492, y_origem + 443, button='left')
+        pyautogui.click(x_origem + 492, y_origem + 443)
         print("Subiu de nivel")
 
     # Quebou seu recorde
     elif pyautogui.pixelMatchesColor((x_origem + 639), (y_origem + 266), (255, 136, 29), tolerance=20):
-        pyautogui.click(x_origem + 703, y_origem + 170, button='left')
+        pyautogui.click(x_origem + 703, y_origem + 170)
         print("Quebou seu recorde")
 
     # Você avançou para broinse II e ganhou 100 fichas
     elif pyautogui.pixelMatchesColor((x_origem + 365), (y_origem + 235), (255, 237, 151), tolerance=20):
-        pyautogui.click(x_origem + 490, y_origem + 435, button='left')  # continuar
+        pyautogui.click(x_origem + 490, y_origem + 435)  # continuar
         print("Você avançou para broinse II e ganhou 100 fichas")
 
     # nivel 2
     elif pyautogui.pixelMatchesColor((x_origem + 492), (y_origem + 390), (237, 105, 0), tolerance=10):
-        pyautogui.click(x_origem + 492, y_origem + 390, button='left')
+        pyautogui.click(x_origem + 492, y_origem + 390)
         print("nivel 2")
 
     # Presentinho de dentro da mesa
     elif pyautogui.pixelMatchesColor((x_origem + 38), (y_origem + 526), (187, 153, 111), tolerance=19):
-        pyautogui.click(x_origem + 38, y_origem + 526, button='left')
+        pyautogui.click(x_origem + 38, y_origem + 526)
         print("Presentinho de dentro da mesa")
 
     # aviso do sistema dentro da mesa
@@ -92,7 +92,7 @@ def limpa_jogando(x_origem, y_origem):
     elif (pyautogui.pixelMatchesColor((x_origem + 237), (y_origem + 165), (224, 9, 5), tolerance=20)
           or pyautogui.pixelMatchesColor((x_origem + 240), (y_origem + 167), (228, 22, 5), tolerance=20)
           or pyautogui.pixelMatchesColor((x_origem + 237), (y_origem + 167), (239, 68, 3), tolerance=20)):
-        pyautogui.click(768 + x_origem, 160 + y_origem, button='left')
+        pyautogui.click(768 + x_origem, 160 + y_origem)
         print("promoçao laranja")
 
     # Fecha promoçoes
