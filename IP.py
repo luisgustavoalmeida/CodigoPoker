@@ -19,7 +19,7 @@ pyautogui.FAILSAFE = False
 
 LIMITE_IP = 6
 
-conexao_x = 930
+conexao_x = 850
 conexao_y = 710
 
 # Título e nome da classe da janela que você deseja verificar
